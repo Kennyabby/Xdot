@@ -1,0 +1,401 @@
+.body {
+  padding: 10px;
+  text-align: center;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+}
+.usernameshadow {
+  color: black;
+  text-shadow: white 1px 1px 1px;
+}
+.userimg {
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 0px;
+}
+.imgCover {
+  position: fixed;
+  margin: 0px;
+  padding: 0px;
+  right: 5px;
+  top: 2px;
+  display: inline-flex;
+  gap: 10px;
+}
+.hometoggle {
+  text-shadow: white 1px 1px 1px;
+  display: inline-flex;
+  gap: 50px;
+  margin: 20px;
+}
+.hometoggleitem {
+  cursor: pointer;
+  border-radius: 5px;
+  height: fit-content;
+  width: 50px;
+}
+.coverDetail {
+  margin: 5px;
+  font-family: monospace;
+  font-size: 0.6rem;
+}
+.userbar {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  height: 100vh;
+  overflow-y: auto;
+  width: 150px;
+  background-color: rgba(7, 7, 40);
+  color: white;
+  display: block;
+}
+.usersidebar {
+  position: relative;
+  border-top-right-radius: 20px;
+  margin: 0px;
+  padding: 0px;
+  width: 150px;
+  overflow-y: auto;
+  height: 'fit-content';
+  list-style: none;
+  float: left;
+  font-size: 1rem;
+  font-family: monospace;
+}
+.userleft {
+  position: relative;
+  display: block;
+  margin: auto;
+  padding: 0px;
+  margin-top: 30px;
+  color: white;
+  padding: 7px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.userleftitem {
+  margin: 0px;
+  margin-left: 5px;
+  flex-wrap: wrap;
+  display: inline-flex;
+  gap: 10px;
+  cursor: pointer;
+}
+.userlefttop {
+  display: block;
+  margin: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 70px;
+  background-color: darkorange;
+  padding: 7px;
+  border-radius: 10px;
+  box-shadow: white 3px 3px 4px;
+}
+.userleftbottom {
+  float: left;
+  margin: 20px;
+  margin-top: 150px;
+  cursor: pointer;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.sideicons {
+  position: absolute;
+  left: 5px;
+  background-color: white;
+  border-radius: 50%;
+}
+.srch {
+  padding: 15px;
+  border-width: 0px;
+  width: 70%;
+  outline: none;
+  text-align: left;
+}
+.srchcover {
+  /* background-color: blue; */
+  border-radius: 50px;
+  border: solid black 1px;
+  width: 50%;
+  float: left;
+  margin-left: 20px;
+}
+.profimg {
+  position: relative;
+  width: 150px;
+  background-size: contain;
+  background-color: rgba(230, 230, 230, 1);
+  height: 150px;
+  margin-top: -70px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.imgcover {
+  padding: 0px;
+  margin: 0px;
+  background-size: cover;
+  background-color: rgba(230, 230, 230, 1);
+  height: 300px;
+}
+.profmenu {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: contain;
+  cursor: pointer;
+}
+.profcover {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+}
+.drop {
+  background-color: black;
+  width: auto;
+  margin: 0px;
+
+  text-align: left;
+  list-style: none;
+  font-size: 0.8rem;
+  font-weight: lighter;
+  font-style: italic;
+  padding: 10px;
+}
+.dropitem {
+  margin: 15px;
+  margin-left: 0px;
+  cursor: pointer;
+}
+.profmenudrop {
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+  bottom: 15px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  list-style: none;
+  width: max-content;
+  text-align: left;
+}
+.menuitem {
+  font-size: 0.8rem;
+  font-family: monospace;
+  color: white;
+  margin: 3px;
+  padding: 7px;
+  border: solid black 2px;
+  cursor: pointer;
+}
+.adminboard {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+}
+.admintopbar {
+  list-style: none;
+  display: inline-flex;
+  padding: 5px;
+}
+.adminbaritem {
+  text-align: center;
+  font-family: monospace;
+  width: initial;
+  padding: 7px;
+  margin: 3px;
+  cursor: pointer;
+}
+.searchfilter {
+  position: absolute;
+  right: 0px;
+  list-style: none;
+  font-size: 1rem;
+  background-color: rgba(7, 7, 40, 0.8);
+  padding: 10px;
+  z-index: 1;
+  cursor: auto;
+  text-align: left;
+}
+.searchfilteritem {
+  font-size: 0.8rem;
+  padding: 3px;
+  margin: 2px;
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+.napsitesearchcover {
+  display: flex;
+  margin: auto;
+  gap: 10px;
+  margin-top: 30px;
+  width: 50%;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: rgba(7, 7, 40, 0.6);
+  border: solid rgba(7, 7, 40, 0.6) 3px;
+}
+.napsitesearchinput {
+  width: 80%;
+  margin: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border: none;
+  color: white;
+  outline: none;
+}
+.searchby {
+  border-radius: 5px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+}
+.searchbyitem {
+  background-color: black;
+}
+.ftr {
+  position: relative;
+  padding: 5px;
+  margin: 5px;
+  margin-left: 20px;
+  border-radius: 5px;
+  background-color: rgba(230, 230, 230, 1);
+  color: black;
+}
+.removeftr {
+  position: absolute;
+  top: 13px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.napsiteviewarea {
+  overflow-y: auto;
+  flex-wrap: wrap;
+  margin: auto;
+  margin-top: 30px;
+  height: 450px;
+  width: 450px;
+  justify-content: center;
+}
+.napsiteview {
+  position: relative;
+  background-color: rgba(240, 240, 240, 0.8);
+  color: black;
+  font-family: monospace;
+  font-size: 0.9rem;
+  border-radius: 30px;
+  width: 300px;
+  height: 150px;
+  margin: 40px;
+  /* margin-bottom: 10px; */
+  cursor: pointer;
+}
+.usercontrolopts {
+  position: absolute;
+  right: 0px;
+  top: 10px;
+  z-index: 1;
+  padding: 0px;
+  display: inline-block;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.usercontrolitem {
+  text-align: left;
+  color: lightgreen;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 0.9rem;
+  padding: 5px;
+  margin: 5px;
+  width: max-content;
+  background-color: black;
+  cursor: pointer;
+}
+.profiledetails {
+  width: fit-content;
+  padding: 15px;
+}
+.profiledetailsitem {
+  padding: 30px;
+}
+@media screen and (max-width: 700px) {
+  .body {
+    padding: 2px;
+  }
+  .userbar {
+    height: 90vh;
+    background-color: rgba(7, 7, 40, 0.8);
+    z-index: 1;
+  }
+  .hometoggle {
+    margin: 0px;
+    position: fixed;
+    justify-content: center;
+    background-color: rgba(120, 120, 120, 0.9);
+    text-shadow: none;
+    font-weight: bold;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    display: inline-flex;
+    gap: 50px;
+    padding: 15px;
+  }
+  .profiledetails {
+    width: fit-content;
+    padding: 7px;
+    padding-bottom: 70px;
+  }
+  .profiledetailsitem {
+    padding: 4px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .napsitesearchcover {
+    width: 90%;
+  }
+  .napsitesearchinput {
+    width: 80%;
+  }
+  .napsiteviewarea {
+    overflow-y: auto;
+    flex-wrap: wrap;
+    margin: auto;
+    margin-top: 30px;
+    /* height: 450px; */
+    width: 350px;
+    justify-content: center;
+  }
+  .napsiteview {
+    position: relative;
+    background-color: rgba(240, 240, 240, 0.8);
+    color: black;
+    font-family: monospace;
+    font-size: 0.9rem;
+    border-radius: 30px;
+    width: 300px;
+    height: 150px;
+    margin: 20px;
+    /* margin-bottom: 10px; */
+    cursor: pointer;
+  }
+}

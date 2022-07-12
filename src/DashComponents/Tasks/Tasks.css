@@ -1,0 +1,150 @@
+.addcourse {
+  position: fixed;
+  bottom: 120px;
+  right: 15px;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.1rem;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: solid white 1px;
+  cursor: pointer;
+}
+.scrollpos {
+  position: fixed;
+  bottom: 120px;
+  left: 170px;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.1rem;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: solid white 1px;
+  cursor: pointer;
+}
+.cgpa {
+  padding: 10px;
+  position: fixed;
+  top: 5px;
+  left: 155px;
+  z-index: 1;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: monospace;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  color: white;
+}
+.updateinput {
+  padding: 10px;
+  border: solid black 0px;
+  color: black;
+  font-size: 0.9rem;
+  border-radius: 10px;
+}
+.updatebutton {
+  padding: 10px;
+  font-size: 1rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.selectsession {
+  padding: 5px;
+  border-radius: 5px;
+  margin: 50px;
+  cursor: pointer;
+}
+.updatebtn {
+  cursor: pointer;
+}
+.cgpamessage {
+  font-style: italic;
+  border-radius: 10px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: rgba(50, 50, 50, 1) 6px 6px 7px;
+  margin: auto;
+  padding: 50px;
+  height: 'fit-content';
+}
+.cgpaview {
+  font-family: monospace;
+  font-size: 0.9rem;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+.backtoquiz {
+  position: fixed;
+  left: 155px;
+  top: 5px;
+  padding: 5px;
+  background-color: white;
+  width: fit-content;
+  font-family: monospace;
+  font-size: 0.9rem;
+  font-weight: bold;
+  z-index: 1;
+  color: blue;
+  border: solid rgba(0, 0, 0, 0.6) 1px;
+  border-radius: 10px;
+  box-shadow: black 5px 5px 6px;
+  cursor: pointer;
+}
+.quizview {
+  position: relative;
+  display: flex;
+  gap: 60px;
+  background-color: rgba(240, 240, 240, 0.8);
+  border-radius: 15px;
+  border: solid rgba(240, 240, 240, 0.8) 3px;
+  box-shadow: rgba(0, 0, 0, 0.9) 6px 6px 7px;
+  color: black;
+  width: 87%;
+  overflow-x: auto;
+  margin: 10px;
+  padding: 15px;
+}
+.questionview {
+  display: flex;
+  gap: 50px;
+  overflow-x: auto;
+  font-family: monospace;
+  background-color: black;
+  box-shadow: rgba(0, 0, 0, 0.6) 6px 6px 7px;
+  border-radius: 10px;
+  color: white;
+  margin: 10px;
+  padding: 10px;
+  font-size: 0.8rem;
+  width: 87%;
+}
+@media screen and (max-width: 700px) {
+  .selectsession {
+    padding: 5px;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+  }
+  .scrollpos {
+    left: 20px;
+  }
+  .cgpa {
+    left: 0px;
+  }
+  .backtoquiz {
+    left: 5px;
+  }
+  .quizview {
+    gap: 25px;
+  }
+  .questionview {
+    gap: 15px;
+  }
+}
