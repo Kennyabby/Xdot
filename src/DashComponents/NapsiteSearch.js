@@ -62,7 +62,7 @@ const NapsiteSearch = ({
           },
           body: JSON.stringify(newFilter),
         }
-        const resp = await fetch('http://localhost:3001/getUsersDetails', opts)
+        const resp = await fetch('https://napsuiserver.herokuapp.com/getUsersDetails', opts)
         const response = await resp.json()
         const users = response.users
         setUsers(users)
@@ -121,7 +121,7 @@ const NapsiteSearch = ({
           },
           body: JSON.stringify({}),
         }
-        const resp = await fetch('http://localhost:3001/getUsersDetails', opts)
+        const resp = await fetch('https://napsuiserver.herokuapp.com/getUsersDetails', opts)
         const response = await resp.json()
         const users = response.users
         const usrs = users.filter((user) => {

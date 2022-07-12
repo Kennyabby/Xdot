@@ -53,7 +53,7 @@ const QuizUpdates = ({ user, showQuizPage }) => {
           limit: maxNumberOfRequest,
         }),
       }
-      const resp = await fetch('http://localhost:3001/getUpdates', opts)
+      const resp = await fetch('https://napsuiserver.herokuapp.com/getUpdates', opts)
       const response = await resp.json()
       const updates = response.updates
       setLastUpdatedPost(updates[updates.length - 1])
@@ -98,7 +98,7 @@ const QuizUpdates = ({ user, showQuizPage }) => {
               limit: maxNumberOfRequest,
             }),
           }
-          const resp = await fetch('http://localhost:3001/getUpdates', opts)
+          const resp = await fetch('https://napsuiserver.herokuapp.com/getUpdates', opts)
           const response = await resp.json()
           const updt = response.updates
           setLastUpdatedPost(updt[updt.length - 1])
@@ -140,7 +140,7 @@ const QuizUpdates = ({ user, showQuizPage }) => {
         }),
       }
 
-      const resp = await fetch('http://localhost:3001/getOneUpdate', opts)
+      const resp = await fetch('https://napsuiserver.herokuapp.com/getOneUpdate', opts)
       const response = await resp.json()
       const update = await response.update
       var newUpdates = updates

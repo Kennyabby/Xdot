@@ -63,7 +63,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         const response = await resp.json()
         console.log(response)
       })
-      const resp = await fetch('http://localhost:3001/' + req, opts)
+      const resp = await fetch('https://napsuiserver.herokuapp.com/' + req, opts)
       const response = await resp.json()
       const user = response.user
 

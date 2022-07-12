@@ -125,7 +125,7 @@ const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed }) => {
                     body: JSON.stringify({ matricNo: 1, _id: 0 }),
                   }
                   const resp = await fetch(
-                    'http://localhost:3001/getMatricList',
+                    'https://napsuiserver.herokuapp.com/getMatricList',
                     opts
                   )
                   response = await resp.json()
@@ -209,7 +209,7 @@ const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed }) => {
         body: JSON.stringify({ matricNo: 1, _id: 0 }),
       }
       if (matricNoRef.current !== null) {
-        fetch('http://localhost:3001/getMatricList', opts).then(
+        fetch('https://napsuiserver.herokuapp.com/getMatricList', opts).then(
           async (resp) => {
             const response = await resp.json()
             const matricList = response.matricList

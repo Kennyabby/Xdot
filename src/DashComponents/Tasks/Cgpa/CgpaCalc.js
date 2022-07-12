@@ -108,7 +108,7 @@ const CgpaCalc = ({ user, updateUser, winSize }) => {
         },
         body: JSON.stringify({ sessionSettings: 1 }),
       }
-      const resp = await fetch('http://localhost:3001/getNapsSettings', opts)
+      const resp = await fetch('https://napsuiserver.herokuapp.com/getNapsSettings', opts)
       const response = await resp.json()
       const settings = response.settings
       const currentSession = settings.sessionSettings.currentSession
@@ -192,7 +192,7 @@ const CgpaCalc = ({ user, updateUser, winSize }) => {
           ],
         }),
       }
-      const resp = await fetch('http://localhost:3001/updateOneUser', opts)
+      const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {

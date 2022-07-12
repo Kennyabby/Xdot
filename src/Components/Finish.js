@@ -167,7 +167,7 @@ const Finish = ({
           },
           body: JSON.stringify(studentInfo),
         }
-        const resp = await fetch('http://localhost:3001/postUserDetails', opts)
+        const resp = await fetch('https://napsuiserver.herokuapp.com/postUserDetails', opts)
         const feedBack = await resp.json()
         if (feedBack.isDelivered === true) {
           setShow(false)

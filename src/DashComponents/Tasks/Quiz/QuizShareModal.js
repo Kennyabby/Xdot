@@ -48,7 +48,7 @@ const QuizShareModal = ({ closeModal, notifyUpdate, editQuiz, user }) => {
           },
         }),
       }
-      const resp = await fetch('http://localhost:3001/postQuiz', opts)
+      const resp = await fetch('https://napsuiserver.herokuapp.com/postQuiz', opts)
       const response = await resp.json()
       const isDelivered = response.isDelivered
       if (isDelivered) {

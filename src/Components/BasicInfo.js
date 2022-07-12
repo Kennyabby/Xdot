@@ -232,7 +232,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
           name='firstName'
           show={false}
           placeholder='Enter First Name'
-          defaultValue={basicInfo.firstName}
+          value={basicInfo.firstName}
           required
           title='Enter First Name'
         />
@@ -245,7 +245,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
           type='text'
           name='middleName'
           placeholder='Enter Middle Name'
-          defaultValue={basicInfo.middleName}
+          value={basicInfo.middleName}
           title='Enter Middle Name'
         />
         <p className='inputStyle'></p>
@@ -257,7 +257,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
           type='text'
           name='lastName'
           placeholder='Enter Last Name'
-          defaultValue={basicInfo.lastName}
+          value={basicInfo.lastName}
           required
           title='Enter Last Name'
         />
@@ -298,7 +298,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
           type='text'
           name='guardianName'
           placeholder='Enter Your Guardian Name'
-          defaultValue={basicInfo.guardianName}
+          value={basicInfo.guardianName}
           required
           title='Enter Your Guardian Name'
         />
@@ -311,7 +311,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
           type='date'
           name='dateOfBirth'
           placeholder='Select Your Date of Birth'
-          defaultValue={basicInfo.dateOfBirth}
+          value={basicInfo.dateOfBirth}
           required
           title='Select Your Date of Birth'
         />

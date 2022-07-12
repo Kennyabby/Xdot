@@ -63,7 +63,7 @@ const QuizPost = ({
         },
         body: JSON.stringify({ matricNo: updt.matricNo }),
       }
-      const resp = await fetch('http://localhost:3001/getUserDetails', opts)
+      const resp = await fetch('https://napsuiserver.herokuapp.com/getUserDetails', opts)
       const response = await resp.json()
       const user = response.user
 
@@ -238,7 +238,7 @@ const QuizPost = ({
               ],
             }),
           }
-          const resp = await fetch('http://localhost:3001/updateOneDoc', opts)
+          const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneDoc', opts)
           const response = await resp.json()
           const updated = response.updated
           if (updated) {

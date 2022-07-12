@@ -84,7 +84,7 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz }) => {
           ],
         }),
       }
-      const resp = await fetch('http://localhost:3001/updateOneUser', opts)
+      const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {

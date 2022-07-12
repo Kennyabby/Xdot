@@ -95,7 +95,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId }) => {
       body: JSON.stringify({ matricNo: fields.matricNo }),
     }
 
-    fetch('http://localhost:3001/getpassList', opts1).then(async (resp) => {
+    fetch('https://napsuiserver.herokuapp.com/getpassList', opts1).then(async (resp) => {
       const response = await resp.json()
       const idVal = await response.id
 
