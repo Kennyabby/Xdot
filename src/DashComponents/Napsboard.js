@@ -36,7 +36,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
   const [labelRefs, setLabelRefs] = useState([])
   const [tasksLabelRefs, setTasksLabelRefs] = useState([])
   const [eventsLabelRefs, setEventsLabelRefs] = useState([])
-
+  const [userImgUrl, setUserImgUrl] = useState(userimg)
   const homeRef = useRef(null)
   const chatsRef = useRef(null)
   const notificationsRef = useRef(null)
@@ -58,16 +58,21 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         },
         body: JSON.stringify(data),
       }
-      console.log('fetching...')
-      fetch('http://localhost:5000/show_success', opts).then(async (resp) => {
-        const response = await resp.json()
-        console.log(response)
-      })
       const resp = await fetch('https://napsuiserver.herokuapp.com/' + req, opts)
       const response = await resp.json()
       const user = response.user
-
       setUser(user)
+      const opts1 = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({imgUrl: user.img}),
+      }
+      const resp1 = await fetch('https://napsuiserver.herokuapp.com/getImgUrl', opts1)
+      const response1 = await resp1.json()
+      const url = response1.url
+      setUserImgUrl(url)
       setIsNewSession(true)
     } catch (TypeError) {}
   }
@@ -596,7 +601,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
                 <Link to='/dashboard/profile'>
                   <img
                     className='userimg'
-                    src={userimg}
+                    src={userImgUrl}
                     height='50px'
                     title='go to your profile'
                     style={{
