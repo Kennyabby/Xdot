@@ -187,11 +187,10 @@ const Finish = ({
       try {
         const opts = {
           method: 'POST',
-          mode:'no-cors',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({info:studentInfo, imageInfo:imageInfo}),
+          body: JSON.stringify({info:studentInfo, imageInfo:imageInfo})
         }
         const resp = await fetch('https://napsuiserver.herokuapp.com/postUserDetails', opts)
         const feedBack = await resp.json()
