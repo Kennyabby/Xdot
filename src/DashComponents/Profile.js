@@ -25,6 +25,7 @@ const Profile = ({
   const [showStatus, setShowStatus] = useState('Show All Details')
   const [showAdminBoard, setShowAdminBoard] = useState(false)
   const [showControlOpt, setShowControlOpt] = useState(false)
+  const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [editStatus, setEditStatus] = useState(
     user.isEditable === 'false' ? 'Enable Edit Access' : 'Disable Edit Access'
   )
@@ -65,6 +66,21 @@ const Profile = ({
     'otherGuardianContactNo',
     'guardianCurrentAddress',
   ]
+  useEffect(async()=>{
+    if(user!==null){
+      const opts1 = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({imgUrl: user.img}),
+      }
+      const resp1 = await fetch('https://napsuiserver.herokuapp.com/getImgUrl', opts1)
+      const response1 = await resp1.json()
+      const url = response1.url
+      setUserImgUrl(url)
+    }
+  },[user])
   useEffect(() => {
     if (homerf !== undefined && chatrf !== undefined) {
       homerf.current.style.borderBottom = 'solid blue 0px'
@@ -191,7 +207,7 @@ const Profile = ({
           ></div>
           <div
             className='profimg'
-            style={{ backgroundImage: `url(${profimg})` }}
+            style={{ backgroundImage: `url(${userImgUrl})` }}
           >
             <div
               onClick={handleProfMenuDrop}

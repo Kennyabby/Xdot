@@ -354,6 +354,22 @@ const NapsiteView = ({
   viewProfile,
   viewCurrentUserProfile,
 }) => {
+  const [userImgUrl, setUserImgUrl] = useState(napsimg)
+  useEffect(async()=>{
+    if(user!==null){
+      const opts1 = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({imgUrl: user.img}),
+      }
+      const resp1 = await fetch('https://napsuiserver.herokuapp.com/getImgUrl', opts1)
+      const response1 = await resp1.json()
+      const url = response1.url
+      setUserImgUrl(url)
+    }
+  },[user])
   return (
     <div
       key={id}
@@ -373,7 +389,7 @@ const NapsiteView = ({
           bottom: '20px',
           borderRadius: '50%',
         }}
-        src={napsimg}
+        src={userImgUrl}
         alt='napsite profile image'
         height='80px'
       />
