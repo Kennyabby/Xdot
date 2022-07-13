@@ -67,7 +67,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({imgUrl: user.img}),
+        body: JSON.stringify({imgUrl: user.img, matricNo: user.matricNo}),
       }
       const resp1 = await fetch('https://napsuiserver.herokuapp.com/getImgUrl', opts1)
       const response1 = await resp1.json()
