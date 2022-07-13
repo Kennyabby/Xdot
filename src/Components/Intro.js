@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 const Intro = () => {
   return (
     <>
-      <div>
-        <div className='infos' style={{ color: 'white' }}>
+      <div style={{overflowY:"auto", marginBottom:'70px'}}>
+        <div className='infos'>
           <p>
             This page is strictly for members of the National Association of
             Physics Students University of Ibadan Division <b>(NAPS UI)</b>, as
@@ -57,10 +57,11 @@ const Intro = () => {
             </li>
           </ul>
         </div>
+        <Link to='/signup/basicInfo'>
+          <button className='close' style={{color:'lightgreen', marginBottom:"70px"}}>Continue</button>
+        </Link>
       </div>
-      <Link to='/signup/basicInfo'>
-        <button className='close'>Continue</button>
-      </Link>
+      
     </>
   )
 }

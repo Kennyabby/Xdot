@@ -498,7 +498,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
                 {winSize <= 700 && showNavigator && (
                   <div
                     name='menu'
-                    title='toggle to see or close navigator'
+                    title='toggle to open or close navigator'
                     className='hometoggleitem'
                     onClick={() => {
                       if (showNav) {
@@ -513,6 +513,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
                         cursor: 'pointer',
                       }}
                       name='menu'
+                      alt='menu'
                       src={showNav ? close : navigatormenu}
                       height='18px'
                     />{' '}

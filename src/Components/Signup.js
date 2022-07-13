@@ -371,7 +371,7 @@ const Signup = ({ showNavbar }) => {
                 getLabelRefs={getLabelRefs}
               />
             ) : undefined}
-            <div>
+            <div style={{overflowY:'auto', height:"100vh"}}>
               {content}
               {showView ? (
                 <div className='currv' ref={currRef}>

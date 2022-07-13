@@ -104,6 +104,7 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz }) => {
           position: 'fixed',
           top: '0px',
           left: '0px',
+          overflowY:'auto',
           width: '100%',
           height: '100%',
           zIndex: '1',

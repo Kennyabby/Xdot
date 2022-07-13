@@ -223,7 +223,7 @@ const Finish = ({
       {regInfos.map((regInfo, i) => {
         return (
           <p className='regInfo' key={i}>
-            {regInfo}: {regInfoValues[i]}
+            {regInfo}: <label style={{fontWeight:'light', fontStyle:'italic'}}>{regInfoValues[i]}</label>
           </p>
         )
       })}
