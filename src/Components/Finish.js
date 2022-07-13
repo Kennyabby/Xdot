@@ -184,13 +184,18 @@ const Finish = ({
         imageName: imgSrc,
         imageType: file.type
       }
+      const studentBody={
+        studentInfo: studentInfo,
+        imageInfo: imageInfo
+      }
+      console.log(studentBody)
       try {
         const opts = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({info:studentInfo, imageInfo:imageInfo})
+          body: JSON.stringify(studentBody)
         }
         const resp = await fetch('https://napsuiserver.herokuapp.com/postUserDetails', opts)
         const feedBack = await resp.json()
