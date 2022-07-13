@@ -191,6 +191,7 @@ code {
   top:0px;
   left:0px;
   text-align: center;
+  padding-bottom: 70px;
   overflow-y: auto;
   background-color: rgba(0,0,220,0.3);
   background-image: url('coverimg.jpg');
@@ -478,6 +479,7 @@ code {
     overflow-y: auto;
     top:0px;
     left:0px;
+    padding-bottom: 70px;
     text-align: center;
     background-color: rgba(0,0,220,0.3);
     background-image: url('coverimg.jpg');
