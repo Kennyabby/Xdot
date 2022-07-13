@@ -58,7 +58,7 @@ const Intro = () => {
           </ul>
         </div>
         <Link to='/signup/basicInfo'>
-          <button className='close' style={{color:'lightgreen', marginBottom:"70px"}}>Continue</button>
+          <button className='close' style={{color:'green', marginBottom:"70px"}}>Continue</button>
         </Link>
       </div>
       

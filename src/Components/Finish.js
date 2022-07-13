@@ -187,7 +187,6 @@ const Finish = ({
       try {
         const opts = {
           method: 'POST',
-          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/json',
           },
