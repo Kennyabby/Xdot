@@ -117,7 +117,7 @@ const CreateQuiz = ({ user, viewQuestions }) => {
           height='25px'
         />
 
-        <div style={{ display: 'block', margin: '0px' }}>
+        <div style={{ display: 'block', margin: '0px', paddingBottom:'70px'}}>
           {user.createQuiz.length ? (
             <div
               style={{

@@ -197,7 +197,7 @@ const CreateQuestion = ({ user, quiz, viewQuiz }) => {
             height='25px'
           />
         ) : undefined}
-        <div>
+        <div style={{paddingBottom:'70px'}}> 
           {filteredQuizQuestions().length ? (
             filteredQuizQuestions().map((question, i) => {
               return (
