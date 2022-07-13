@@ -390,7 +390,7 @@ const Profile = ({
                           style={{
                             fontWeight: 'bold',
                             fontSize: '1rem',
-                            marginRight: '50px',
+                            
                           }}
                         >
                           {userDetailName[i]}
@@ -400,7 +400,7 @@ const Profile = ({
                             fontWeight: 'lighter',
                             fontSize: '.9rem',
                             fontStyle: 'italic',
-                            marginRight: '50px',
+                            
                           }}
                         >
                           {user[prop]}
@@ -424,7 +424,6 @@ const Profile = ({
                             style={{
                               fontWeight: 'bold',
                               fontSize: '1rem',
-                              marginRight: '50px',
                             }}
                           >
                             {userDetailName[i]}
@@ -434,7 +433,7 @@ const Profile = ({
                               fontWeight: 'lighter',
                               fontSize: '.9rem',
                               fontStyle: 'italic',
-                              marginRight: '50px',
+                              
                             }}
                           >
                             {user[prop]}

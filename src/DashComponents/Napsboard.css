@@ -331,7 +331,7 @@
   cursor: pointer;
 }
 .profiledetails {
-  width: fit-content;
+  width: 97%;
   padding: 15px;
 }
 .profiledetailsitem {
@@ -366,12 +366,16 @@
     padding-right: 15px;
   }
   .profiledetails {
-    width: fit-content;
+    width: 97%;
     padding: 7px;
     padding-bottom: 70px;
   }
   .profiledetailsitem {
-    padding: 4px;
+    display: flex;
+    width:95%;
+    gap:20px;
+    overflow-x: auto;
+    padding: 10px;
     padding-top: 30px;
     padding-bottom: 30px;
   }
