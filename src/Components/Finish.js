@@ -188,7 +188,6 @@ const Finish = ({
         studentInfo: studentInfo,
         imageInfo: imageInfo
       }
-      console.log(studentBody)
       try {
         const opts = {
           method: 'POST',
