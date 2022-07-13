@@ -18,6 +18,7 @@ const Finish = ({
   const [warnImage, setWarnImage] = useState(false)
   const [userImg, setUserImg] = useState('')
   const [file, setFile] = useState(null)
+  const [convertedFile, setConvertedFile] = useState(null)
   const [pos, setPos] = useState(0)
   const [show, setShow] = useState(true)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -43,7 +44,11 @@ const Finish = ({
     "Guardian's Current Address",
     'Username',
   ]
-
+  const setCamelCase = (text) => {
+      var first = text.slice(0, 1).toUpperCase()
+      var others = text.slice(1).toLowerCase()
+      return first + others
+  }
   const regInfoValues = [
     localStorage.getItem('firstName'),
     localStorage.getItem('middleName'),
@@ -68,9 +73,9 @@ const Finish = ({
   ]
 
   const studentInfo = {
-    firstName: localStorage.getItem('firstName'),
-    middleName: localStorage.getItem('middleName'),
-    lastName: localStorage.getItem('lastName'),
+    firstName: setCamelCase(localStorage.getItem('firstName')),
+    middleName: setCamelCase(localStorage.getItem('middleName')),
+    lastName: setCamelCase(localStorage.getItem('lastName')),
     gender: localStorage.getItem('gender'),
     guardianName: localStorage.getItem('guardianName'),
     dateOfBirth: localStorage.getItem('dateOfBirth'),
@@ -87,7 +92,7 @@ const Finish = ({
     guardianContactNo: localStorage.getItem('guardianContactNo'),
     otherGuardianContactNo: localStorage.getItem('otherGuardianContactNo'),
     guardianCurrentAddress: localStorage.getItem('guardianCurrentAddress'),
-    userName: localStorage.getItem('userName'),
+    userName: setCamelCase(localStorage.getItem('userName')),
     img: '',
     password: confidentials.password,
     identificationKey: confidentials.identificationKey,
@@ -133,6 +138,21 @@ const Finish = ({
       }
     }
   }
+  const convertToBase64 = (file)=>{
+    return new Promise (resolve =>{
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload=()=>{
+        resolve(reader.result)
+      }
+    })
+  }
+  useEffect(async ()=>{
+    if (file!==null){
+      const newFile = await convertToBase64(file)
+      setConvertedFile(newFile)
+    }
+  },[file])
   useEffect(() => {
     if (userImg === '') {
     } else {
@@ -141,11 +161,11 @@ const Finish = ({
   }, [userImg])
   const fileHandler = (e) => {
     var file = e.target.files[0]
+    console.log('type: '+file.type)
     setFile(file)
     const url = URL.createObjectURL(file)
     setImgUrl(url)
-    const imgSrc = Date.now() + file.name
-    setUserImg(imgSrc)
+    setUserImg(url)
     // studentInfo.img=imgSrc;
   }
   const uploadImg = () => {
@@ -159,13 +179,19 @@ const Finish = ({
       const imgSrc = Date.now() + file.name
       setUserImg(imgSrc)
       studentInfo.img = imgSrc
+      const imageInfo={
+        image: convertedFile,
+        imageName: imgSrc,
+        imageType: file.type
+      }
       try {
         const opts = {
           method: 'POST',
+          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(studentInfo),
+          body: JSON.stringify({info:studentInfo, imageInfo:imageInfo}),
         }
         const resp = await fetch('https://napsuiserver.herokuapp.com/postUserDetails', opts)
         const feedBack = await resp.json()
@@ -242,11 +268,7 @@ const Finish = ({
       {prevNext}
     </div>,
   ]
-  const setCamelCase = (text) => {
-    var first = text.slice(0, 1).toUpperCase()
-    var others = text.slice(1).toLowerCase()
-    return first + others
-  }
+  
   return (
     <div ref={finishCoverRef}>
       {show && finishList[pos]}

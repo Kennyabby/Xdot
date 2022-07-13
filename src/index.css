@@ -191,6 +191,7 @@ code {
   top:0px;
   left:0px;
   text-align: center;
+  overflow-y: auto;
   background-color: rgba(0,0,220,0.3);
   background-image: url('coverimg.jpg');
   background-size: cover;
@@ -338,7 +339,6 @@ code {
   color: brown;
 }
 .regInfo{
-  margin-top: -8px;
   text-align:left;
 }
 .signin{
@@ -475,7 +475,7 @@ code {
   }
   .signBack{
     position: fixed;
-    overflow-x: scroll;
+    overflow-y: auto;
     top:0px;
     left:0px;
     text-align: center;
@@ -632,7 +632,6 @@ code {
     color: brown;
   }
   .regInfo{
-    margin-top: -12px;
     text-align:left;
   }
 }
