@@ -603,6 +603,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
                     className='userimg'
                     src={userImgUrl}
                     height='50px'
+                    width='50px'
                     title='go to your profile'
                     style={{
                       ...shade({

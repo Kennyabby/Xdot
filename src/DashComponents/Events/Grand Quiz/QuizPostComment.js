@@ -25,6 +25,7 @@ const QuizPostComment = ({
   const [showCommentReactions, setShowCommentReactions] = useState(false)
   const [isCommentReacted, setIsCommentReacted] = useState(false)
   const [elemUser, setElemUser] = useState('')
+  const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [commentReaction, setCommentReaction] = useState('')
   const [commentReactionList, setCommentReactionList] = useState(elem.comment.reaction)
   const [statement, setStatement] = useState(elem.comment.statement)
@@ -42,12 +43,29 @@ const QuizPostComment = ({
   useEffect(()=>{
     setCommentReactionList(elem.comment.reaction)
   },[elem])
+  useEffect(async()=>{
+    if(elem.matricNo!==undefined){
+      const opts1 = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({imgUrl: elem.img, matricNo:elem.matricNo}),
+      }
+      const resp1 = await fetch('https://napsuiserver.herokuapp.com/getImgUrl', opts1)
+      const response1 = await resp1.json()
+      const url = response1.url
+      setUserImgUrl(url)
+    }
+  },[elem])
   useEffect(() => {
+
     elem.comment.reaction.forEach((rct) => {
       if (rct.matricNo === user.matricNo) {
         setIsCommentReacted(true)
       }
     })
+    
   }, [])
   const userName = elem.userName
 
@@ -143,7 +161,7 @@ const QuizPostComment = ({
         </div>
       ) : undefined}
       <div style={{ display: 'flex' }}>
-        <img src={profimg} style={{ borderRadius: '50%' }} height='50px' />
+        <img src={userImgUrl} style={{ borderRadius: '50%' }} height='50px' width='50px' />
         <label style={{ fontWeight: 'bold' }}>
           {userName.slice(0, 1).toUpperCase() + userName.slice(1)}
         </label>

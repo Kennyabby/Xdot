@@ -30,6 +30,7 @@ const QuizPost = ({
   const commentInputRef = useRef(null)
   const [postUser, setPostUser] = useState({})
   const [quiz, setQuiz] = useState({})
+  const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [isReacted, setIsReacted] = useState(false)
   const [isCommented, setIsCommented] = useState(false)
   const [showReactions, setShowReactions] = useState(false)
@@ -52,6 +53,21 @@ const QuizPost = ({
     { name: 'sad', src: sad },
     { name: 'angry', src: angry },
   ]
+  useEffect(async()=>{
+    if(postUser.matricNo!==undefined){
+      const opts1 = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({imgUrl: postUser.img, matricNo:postUser.matricNo}),
+      }
+      const resp1 = await fetch('https://napsuiserver.herokuapp.com/getImgUrl', opts1)
+      const response1 = await resp1.json()
+      const url = response1.url
+      setUserImgUrl(url)
+    }
+  },[postUser])
   useEffect(async () => {
     setUpdate(updt)
     try {
@@ -339,12 +355,13 @@ const QuizPost = ({
               <div style={{ textAlign: 'left' }}>
                 <div>
                   <img
-                    src={profimg}
+                    src={userImgUrl}
                     alt='profile image'
                     height='40px'
+                    width='40px'
                     style={{
                       borderRadius: '50%',
-                      padding: '5px',
+                      padding: '2px',
                       backgroundColor: 'rgba(255,255,255,1)',
                     }}
                   />

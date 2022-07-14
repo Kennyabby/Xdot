@@ -233,7 +233,7 @@ const Finish = ({
       {prevNext}
     </div>,
     <div className='container'>
-      <img className='usr' src={imgUrl} alt='user' height='100px' />
+      <img className='usr' src={imgUrl} alt='user' height='100px' width='100px' />
       <input
         ref={imgRef}
         type='file'
