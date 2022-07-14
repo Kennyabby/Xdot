@@ -52,7 +52,6 @@ const QuizPost = ({
     { name: 'sad', src: sad },
     { name: 'angry', src: angry },
   ]
-
   useEffect(async () => {
     setUpdate(updt)
     try {
@@ -745,7 +744,7 @@ const QuizPost = ({
                 )
               ) : (
                 <QuizPostComment
-                  elem={postShow}
+                  elem={newPostShow === null ? postShow : newPostShow}
                   user={user}
                   postShow={newPostShow === null ? postShow : newPostShow}
                   updateReactions={(value) => {

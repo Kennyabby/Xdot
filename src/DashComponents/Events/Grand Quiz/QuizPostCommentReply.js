@@ -176,7 +176,7 @@ const QuizPostCommentReply = ({
           display: 'flex',
           gap: isCommentReacted ? '20px' : '30px',
           fontSize: '.9rem',
-          marginLeft: '30px',
+          marginLeft: '15px',
           marginBottom: '20px',
         }}
       >

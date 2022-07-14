@@ -26,6 +26,8 @@ const QuizPostComment = ({
   const [isCommentReacted, setIsCommentReacted] = useState(false)
   const [elemUser, setElemUser] = useState('')
   const [commentReaction, setCommentReaction] = useState('')
+  const [commentReactionList, setCommentReactionList] = useState(elem.comment.reaction)
+  const [statement, setStatement] = useState(elem.comment.statement)
   const [showReactionList, setShowReactionList] = useState(false)
   const emojis = [
     { name: 'like', src: like },
@@ -36,7 +38,10 @@ const QuizPostComment = ({
     { name: 'sad', src: sad },
     { name: 'angry', src: angry },
   ]
-
+  
+  useEffect(()=>{
+    setCommentReactionList(elem.comment.reaction)
+  },[elem])
   useEffect(() => {
     elem.comment.reaction.forEach((rct) => {
       if (rct.matricNo === user.matricNo) {
@@ -45,8 +50,6 @@ const QuizPostComment = ({
     })
   }, [])
   const userName = elem.userName
-  const statement = elem.comment.statement
-  const commentReactionList = elem.comment.reaction
 
   useEffect(() => {
     elem.comment.reaction.forEach((rct) => {

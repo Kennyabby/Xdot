@@ -164,6 +164,8 @@ const QuizUpdates = ({ user, showQuizPage }) => {
               if (comment.createdAt === currentPostShow.createdAt) {
                 setNewPostShow(comment)
               }
+            }else{
+              setNewPostShow(null)
             }
           })
         }
