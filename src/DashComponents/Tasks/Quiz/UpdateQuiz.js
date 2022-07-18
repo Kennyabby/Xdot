@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useRef } from 'react'
 import cancel from '../assets/cancel.png'
-const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz }) => {
+const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server }) => {
   const [fields, setFields] = useState({
     title: '',
     days: 0,
@@ -84,7 +84,7 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz }) => {
           ],
         }),
       }
-      const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneUser', opts)
+      const resp = await fetch(server+'/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {

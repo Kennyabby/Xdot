@@ -3,7 +3,7 @@ import { useParams, useHistory, Link } from 'react-router-dom'
 import './Napsboard.css'
 
 import SideNavigator from './SideNavigator'
-import Home from './Home'
+import Home from './Home/Home'
 import Chats from './Chats'
 import Profile from './Profile'
 import Settings from './Settings'
@@ -11,11 +11,12 @@ import Events from './Events/Events'
 import Tasks from './Tasks/Tasks'
 import Notifications from './Notifications'
 import CgpaCalc from './Tasks/Cgpa/CgpaCalc'
-import TodoList from './Tasks/TodoList'
+import TodoList from './Tasks/TodoList/TodoList'
 import QuizApp from './Tasks/Quiz/QuizApp'
 import GrandQuiz from './Events/Grand Quiz/GrandQuiz'
-import DailyPuzzles from './Events/DailyPuzzles'
-import StudyTable from './Events/StudyTable'
+import DailyPuzzles from './Events/DailyPuzzles/DailyPuzzles'
+import StudyTable from './Events/StudyTable/StudyTable'
+import EVoting from './Events/EVoting/EVoting'
 
 import userimg from './assets/user.png'
 import home from './assets/home.png'
@@ -24,7 +25,7 @@ import notifications from './assets/notifications.png'
 import navigatormenu from './assets/navigatormenu.png'
 import close from './assets/close.png'
 
-const Napsboard = ({ rootView, userId, winSize }) => {
+const Napsboard = ({ rootView, userId, winSize, server }) => {
   const { id } = useParams()
   const history = useHistory()
   const [isNewSession, setIsNewSession] = useState(false)
@@ -58,7 +59,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         },
         body: JSON.stringify(data),
       }
-      const resp = await fetch('https://napsuiserver.herokuapp.com/' + req, opts)
+      const resp = await fetch(server+'/' + req, opts)
       const response = await resp.json()
       const user = response.user
       setUser(user)
@@ -69,7 +70,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         },
         body: JSON.stringify({imgUrl: user.img, matricNo: user.matricNo}),
       }
-      const resp1 = await fetch('https://napsuiserver.herokuapp.com/getImgUrl', opts1)
+      const resp1 = await fetch(server+'/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
@@ -91,6 +92,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
     if (id === 'chats') {
       setView(
         <Chats
+          server={server}
           chatrf={chatsRef}
           homerf={homeRef}
           notificationsrf={notificationsRef}
@@ -107,6 +109,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
       if (user !== null) {
         setView(
           <Profile
+            server={server}
             chatrf={chatsRef}
             homerf={homeRef}
             notificationsrf={notificationsRef}
@@ -123,6 +126,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
     } else if (id === 'tasks') {
       setView(
         <Tasks
+          server={server}
           setBodyLeft={setBodyLeft('150px')}
           chatrf={chatsRef}
           homerf={homeRef}
@@ -133,6 +137,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
     } else if (id === 'events') {
       setView(
         <Events
+          server={server}
           setBodyLeft={setBodyLeft('150px')}
           chatrf={chatsRef}
           homerf={homeRef}
@@ -143,6 +148,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
     } else if (id === 'notifications') {
       setView(
         <Notifications
+          server={server}
           setBodyLeft={setBodyLeft('150px')}
           chatrf={chatsRef}
           homerf={homeRef}
@@ -154,6 +160,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
     } else if (id === 'settings') {
       setView(
         <Settings
+          server={server}
           setBodyLeft={setBodyLeft('150px')}
           chatrf={chatsRef}
           homerf={homeRef}
@@ -162,11 +169,29 @@ const Napsboard = ({ rootView, userId, winSize }) => {
           setShowNav={setShowNav(false)}
         />
       )
-    } else {
+    } else if (id===undefined){
+      setView(
+        <Home
+          server={server}
+          user={user}
+          chatrf={chatsRef}
+          homerf={homeRef}
+          notificationsrf={notificationsRef}
+          setBodyLeft={() => {
+            setBodyLeft('150px')
+          }}
+          setShowNavigator={() => {
+            setShowNavigator(true)
+          }}
+          setShowNav={setShowNav(false)}
+        />
+      )  
+    }else {
       if (rootView === 'tasks') {
         if (id === 'cgpa') {
           setView(
             <CgpaCalc
+              server={server}
               user={user}
               updateUser={() => {
                 fetchUserAPI({
@@ -183,6 +208,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         } else if (id === 'todolist') {
           setView(
             <TodoList
+              server={server}
               user={user}
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
@@ -192,6 +218,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         } else if (id === 'quizapp') {
           setView(
             <QuizApp
+              server={server}
               user={user}
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
@@ -201,6 +228,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         } else {
           setView(
             <Tasks
+              server={server}
               setBodyLeft={setBodyLeft('150px')}
               chatrf={chatsRef}
               homerf={homeRef}
@@ -212,6 +240,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         if (id === 'grandquiz') {
           setView(
             <GrandQuiz
+              server={server}
               user={user}
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
@@ -221,6 +250,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         } else if (id === 'dailypuzzles') {
           setView(
             <DailyPuzzles
+              server={server}
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
@@ -229,6 +259,16 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         } else if (id === 'studytable') {
           setView(
             <StudyTable
+              server={server}
+              setBodyLeft={setBodyLeft('150px')}
+              setShowNavigator={setShowNavigator(true)}
+              setShowNav={setShowNav(false)}
+            />
+          )
+        } else if (id === 'e-voting'){
+          setView(
+            <EVoting
+              server={server}
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
@@ -237,6 +277,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
         } else {
           setView(
             <Events
+              server={server}
               setBodyLeft={setBodyLeft('150px')}
               chatrf={chatsRef}
               homerf={homeRef}
@@ -245,20 +286,24 @@ const Napsboard = ({ rootView, userId, winSize }) => {
           )
         }
       } else {
-        setView(
-          <Home
-            chatrf={chatsRef}
-            homerf={homeRef}
-            notificationsrf={notificationsRef}
-            setBodyLeft={() => {
-              setBodyLeft('150px')
-            }}
-            setShowNavigator={() => {
-              setShowNavigator(true)
-            }}
-            setShowNav={setShowNav(false)}
-          />
-        )
+        if (rootView!==undefined){
+          setView(
+            <Home
+              server={server}
+              user={user}
+              chatrf={chatsRef}
+              homerf={homeRef}
+              notificationsrf={notificationsRef}
+              setBodyLeft={() => {
+                setBodyLeft('150px')
+              }}
+              setShowNavigator={() => {
+                setShowNavigator(true)
+              }}
+              setShowNav={setShowNav(false)}
+            />
+          )  
+        }
       }
     }
   }, [id])
@@ -266,6 +311,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
     if (id === 'profile') {
       setView(
         <Profile
+          server={server}
           chatrf={chatsRef}
           homerf={homeRef}
           notificationsrf={notificationsRef}
@@ -277,11 +323,29 @@ const Napsboard = ({ rootView, userId, winSize }) => {
           isSearched={false}
         />
       )
+    }else if (id===undefined){
+      setView(
+        <Home
+          server={server}
+          user={user}
+          chatrf={chatsRef}
+          homerf={homeRef}
+          notificationsrf={notificationsRef}
+          setBodyLeft={() => {
+            setBodyLeft('150px')
+          }}
+          setShowNavigator={() => {
+            setShowNavigator(true)
+          }}
+          setShowNav={setShowNav(false)}
+        />
+      )  
     }
     if (rootView === 'tasks') {
       if (id === 'cgpa') {
         setView(
           <CgpaCalc
+            server={server}
             user={user}
             updateUser={() => {
               fetchUserAPI({
@@ -298,6 +362,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
       } else if (id === 'todolist') {
         setView(
           <TodoList
+            server={server}
             user={user}
             setBodyLeft={setBodyLeft('150px')}
             setShowNavigator={setShowNavigator(true)}
@@ -307,6 +372,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
       } else if (id === 'quizapp') {
         setView(
           <QuizApp
+            server={server}
             user={user}
             setBodyLeft={setBodyLeft('150px')}
             setShowNavigator={setShowNavigator(true)}
@@ -316,6 +382,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
       } else {
         setView(
           <Tasks
+            server={server}
             setBodyLeft={setBodyLeft('150px')}
             chatrf={chatsRef}
             homerf={homeRef}
@@ -327,6 +394,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
       if (id === 'grandquiz') {
         setView(
           <GrandQuiz
+            server={server}
             user={user}
             setBodyLeft={setBodyLeft('150px')}
             setShowNavigator={setShowNavigator(true)}
@@ -336,6 +404,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
       } else if (id === 'dailypuzzles') {
         setView(
           <DailyPuzzles
+            server={server}
             setBodyLeft={setBodyLeft('150px')}
             setShowNavigator={setShowNavigator(true)}
             setShowNav={setShowNav(false)}
@@ -344,6 +413,16 @@ const Napsboard = ({ rootView, userId, winSize }) => {
       } else if (id === 'studytable') {
         setView(
           <StudyTable
+            server={server}
+            setBodyLeft={setBodyLeft('150px')}
+            setShowNavigator={setShowNavigator(true)}
+            setShowNav={setShowNav(false)}
+          />
+        )
+      } else if (id === 'e-voting'){
+        setView(
+          <EVoting
+            server={server}
             setBodyLeft={setBodyLeft('150px')}
             setShowNavigator={setShowNavigator(true)}
             setShowNav={setShowNav(false)}
@@ -352,6 +431,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
       } else {
         setView(
           <Events
+            server={server}
             setBodyLeft={setBodyLeft('150px')}
             chatrf={chatsRef}
             homerf={homeRef}
@@ -359,6 +439,26 @@ const Napsboard = ({ rootView, userId, winSize }) => {
           />
         )
       }
+    }else{
+      if (rootView!==undefined){
+        setView(
+          <Home
+            server={server}
+            user={user}
+            chatrf={chatsRef}
+            homerf={homeRef}
+            notificationsrf={notificationsRef}
+            setBodyLeft={() => {
+              setBodyLeft('150px')
+            }}
+            setShowNavigator={() => {
+              setShowNavigator(true)
+            }}
+            setShowNav={setShowNav(false)}
+          />
+        )  
+      }
+      
     }
   }, [user])
   useEffect(() => {
@@ -499,88 +599,40 @@ const Napsboard = ({ rootView, userId, winSize }) => {
             )}
 
             <div className='imgCover'>
-              <div className='hometoggle'>
-                {winSize <= 700 && showNavigator && (
-                  <div
-                    name='menu'
-                    title='toggle to open or close navigator'
-                    className='hometoggleitem'
-                    onClick={() => {
-                      if (showNav) {
-                        setShowNav(false)
-                      } else {
-                        setShowNav(true)
-                      }
-                    }}
-                  >
-                    <img
-                      style={{
-                        cursor: 'pointer',
-                      }}
+              <div className='hometoggleCover'>
+                <div className='hometoggle' style={{justifyContent: id==='chats'?' center' : 'left'}}>
+                  {winSize <= 700 && showNavigator && (
+                    <div
                       name='menu'
-                      alt='menu'
-                      src={showNav ? close : navigatormenu}
-                      height='18px'
-                    />{' '}
-                  </div>
-                )}
-                <Link
-                  to='/dashboard'
-                  style={{ textDecoration: 'none', height: 'fit-content' }}
-                >
-                  <div
-                    ref={homeRef}
-                    name='home'
-                    title='Clck to go to Home Page'
-                    className='hometoggleitem'
-                  >
-                    <img
-                      style={{
-                        borderRadius: '50%',
-                        cursor: 'pointer',
+                      title='toggle to open or close navigator'
+                      className='hometoggleitem'
+                      onClick={() => {
+                        if (showNav) {
+                          setShowNav(false)
+                        } else {
+                          setShowNav(true)
+                        }
                       }}
-                      name='home'
-                      src={home}
-                      alt='home'
-                      height='20px'
-                    />
-                  </div>
-                </Link>
-                <Link
-                  style={{
-                    textDecoration: 'none',
-                    color: 'black',
-                    height: 'fit-content',
-                  }}
-                  to='/dashboard/chats'
-                >
-                  <div
-                    ref={chatsRef}
-                    name='chats'
-                    title='Clck to go to Chats'
-                    className='hometoggleitem'
-                  >
-                    <img
-                      style={{
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                      }}
-                      name='chats'
-                      src={chats}
-                      alt='chats'
-                      height='28px'
-                    />
-                  </div>
-                </Link>
-                {winSize <= 700 && showNavigator ? (
+                    >
+                      <img
+                        style={{
+                          cursor: 'pointer',
+                        }}
+                        name='menu'
+                        alt='menu'
+                        src={showNav ? close : navigatormenu}
+                        height='18px'
+                      />{' '}
+                    </div>
+                  )}
                   <Link
-                    to='/dashboard/notifications'
+                    to='/dashboard'
                     style={{ textDecoration: 'none', height: 'fit-content' }}
                   >
                     <div
-                      ref={notificationsRef}
+                      ref={homeRef}
                       name='home'
-                      title='Clck to go to Notifications'
+                      title='Clck to go to Home Page'
                       className='hometoggleitem'
                     >
                       <img
@@ -588,16 +640,68 @@ const Napsboard = ({ rootView, userId, winSize }) => {
                           borderRadius: '50%',
                           cursor: 'pointer',
                         }}
-                        name='notifications'
-                        src={notifications}
-                        alt='notifcations'
-                        height='25px'
+                        name='home'
+                        src={home}
+                        alt='home'
+                        height='20px'
                       />
                     </div>
                   </Link>
-                ) : undefined}
+                  <Link
+                    style={{
+                      textDecoration: 'none',
+                      color: 'black',
+                      height: 'fit-content',
+                    }}
+                    to='/dashboard/chats'
+                  >
+                    <div
+                      ref={chatsRef}
+                      name='chats'
+                      title='Clck to go to Chats'
+                      className='hometoggleitem'
+                    >
+                      <img
+                        style={{
+                          borderRadius: '50%',
+                          cursor: 'pointer',
+                        }}
+                        name='chats'
+                        src={chats}
+                        alt='chats'
+                        height='28px'
+                      />
+                    </div>
+                  </Link>
+                  {winSize <= 700 && showNavigator ? (
+                    <Link
+                      to='/dashboard/notifications'
+                      style={{ textDecoration: 'none', height: 'fit-content' }}
+                    >
+                      <div
+                        ref={notificationsRef}
+                        name='home'
+                        title='Clck to go to Notifications'
+                        className='hometoggleitem'
+                      >
+                        <img
+                          style={{
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                          }}
+                          name='notifications'
+                          src={notifications}
+                          alt='notifcations'
+                          height='25px'
+                        />
+                      </div>
+                    </Link>
+                  ) : undefined}
+                </div>
               </div>
-              <div className='coverDetail'>
+              
+              {(id==='chats'|| id===undefined|| id==='profile')? undefined 
+              :(<div className='coverDetail'>
                 <Link to='/dashboard/profile'>
                   <img
                     className='userimg'
@@ -633,7 +737,7 @@ const Napsboard = ({ rootView, userId, winSize }) => {
                 >
                   {user.userName ? user.userName.toUpperCase() : user.userName}
                 </p>
-              </div>
+              </div>)}
             </div>
           </div>
         </div>

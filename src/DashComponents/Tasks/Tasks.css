@@ -1,12 +1,12 @@
 .addcourse {
   position: fixed;
-  bottom: 120px;
-  right: 15px;
+  bottom: 80px;
+  z-index: 1;
+  right: 10px;
   color: white;
   padding: 10px;
   font-weight: bold;
   font-family: monospace;
-  font-size: 1.1rem;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.8);
   border: solid white 1px;

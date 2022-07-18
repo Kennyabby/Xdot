@@ -5,7 +5,7 @@ import remove from '../assets/remove.png'
 import right from '../assets/right.png'
 import left from '../assets/left.png'
 
-const CourseView = ({ editCourse, removeCourse, course, index }) => {
+const CourseView = ({ editCourse, removeCourse, course, index}) => {
   const [showFew, setShowFew] = useState(true)
   const [showLabel, setShowLabel] = useState(right)
   const [winSize, setWinSize] = useState(window.innerWidth)

@@ -4,6 +4,7 @@ import remove from './assets/cancel.png'
 import napsimg from './assets/profile.png'
 
 const NapsiteSearch = ({
+  server,
   viewProfile,
   currentUser,
   viewCurrentUserProfile,
@@ -62,7 +63,7 @@ const NapsiteSearch = ({
           },
           body: JSON.stringify(newFilter),
         }
-        const resp = await fetch('https://napsuiserver.herokuapp.com/getUsersDetails', opts)
+        const resp = await fetch(server+'/getUsersDetails', opts)
         const response = await resp.json()
         const users = response.users
         setUsers(users)
@@ -121,7 +122,7 @@ const NapsiteSearch = ({
           },
           body: JSON.stringify({}),
         }
-        const resp = await fetch('https://napsuiserver.herokuapp.com/getUsersDetails', opts)
+        const resp = await fetch(server+'/getUsersDetails', opts)
         const response = await resp.json()
         const users = response.users
         const usrs = users.filter((user) => {
@@ -328,6 +329,7 @@ const NapsiteSearch = ({
           {users.map((user, i) => {
             return (
               <NapsiteView
+                server={server}
                 key={i}
                 id={i}
                 user={user}
@@ -348,6 +350,7 @@ const NapsiteSearch = ({
 }
 
 const NapsiteView = ({
+  server,
   id,
   user,
   currentUser,
@@ -364,7 +367,7 @@ const NapsiteView = ({
         },
         body: JSON.stringify({imgUrl: user.img, matricNo:user.matricNo}),
       }
-      const resp1 = await fetch('https://napsuiserver.herokuapp.com/getImgUrl', opts1)
+      const resp1 = await fetch(server+'/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)

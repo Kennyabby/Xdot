@@ -1,23 +1,23 @@
 import { React, useState, useEffect, useRef } from 'react'
-import '../Events.css'
+import '../Events/Events.css'
 
-import profimg from '../assets/profile.png'
-import close from '../assets/close.png'
-import back from '../assets/left.png'
-import comment from '../assets/comment.png'
-import like from '../assets/like.png'
-import love from '../assets/love.png'
-import care from '../assets/care.png'
-import haha from '../assets/haha.png'
-import wow from '../assets/wow.png'
-import sad from '../assets/sad.png'
-import angry from '../assets/angry.png'
-import send from '../assets/send.png'
-import react from '../assets/react.png'
-import QuizPostComment from './QuizPostComment'
-import QuizReactionList from './QuizReactionList'
+import profimg from '../Events/assets/profile.png'
+import close from '../Events/assets/close.png'
+import back from '../Events/assets/left.png'
+import comment from '../Events/assets/comment.png'
+import like from '../Events/assets/like.png'
+import love from '../Events/assets/love.png'
+import care from '../Events/assets/care.png'
+import haha from '../Events/assets/haha.png'
+import wow from '../Events/assets/wow.png'
+import sad from '../Events/assets/sad.png'
+import angry from '../Events/assets/angry.png'
+import send from '../Events/assets/send.png'
+import react from '../Events/assets/react.png'
+import PostComment from './PostComment'
+import ReactionList from './ReactionList'
 
-const QuizPost = ({
+const Post = ({
   server,
   status,
   currentPostShow,
@@ -26,7 +26,6 @@ const QuizPost = ({
   setHighlightedPost,
   updatePostAt,
   newPostShow,
-  showQuizPage,
 }) => {
   const commentInputRef = useRef(null)
   const [postUser, setPostUser] = useState({})
@@ -82,8 +81,6 @@ const QuizPost = ({
       const resp = await fetch(server+'/getUserDetails', opts)
       const response = await resp.json()
       const user = response.user
-
-      setQuiz(updt.quiz)
       setPostUser(user)
     } catch (TypeError) {}
   }, [updt])
@@ -125,12 +122,13 @@ const QuizPost = ({
           setIsCommented(true)
         }
       })
+    }else{
+      setIsCommented(false)
     }
     if (status !== undefined) {
       setShowComments(true)
     }
   }, [updt])
-
   const updateReactions = async ({
     rct,
     reaction,
@@ -140,7 +138,6 @@ const QuizPost = ({
   }) => {
     await updatePostAt({ createdAt: update.createdAt, refresh: false }).then(
       async (upd) => {
-        // setUpdate(upd)
         var rctBody
         if (upd[rct] !== undefined) {
           rctBody = await upd[rct]
@@ -264,7 +261,7 @@ const QuizPost = ({
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              collection: 'NapsGrandQuiz',
+              collection: 'NapsPublic',
               prop: [
                 { createdAt: update.createdAt },
                 {
@@ -376,13 +373,13 @@ const QuizPost = ({
                 <div>
                   <img
                     src={userImgUrl}
-                    height='40px'
-                    width='40px'
                     style={{
                       borderRadius: '50%',
                       padding: '2px',
                       backgroundColor: 'rgba(255,255,255,1)',
                     }}
+                    height='40px'
+                    width='40px'
                   />
                 </div>
                 {postUser.lastName !== undefined ? (
@@ -405,85 +402,12 @@ const QuizPost = ({
             </div>
             <div>
               <div style={{ textAlign: 'left', margin: '20px' }}>
-                <label>{update.quizComment}</label>
+                <label>{update.postComment}</label>
               </div>
-              <div
-                style={{
-                  textAlign: 'center',
-                  justifyContent: 'center',
-                  width: '80%',
-                  overflowX: 'auto',
-                  margin: 'auto',
-                  marginLeft: '20px',
-                  marginBottom: '10px',
-                  padding: '20px',
-                  backgroundColor: 'rgba(0,0,0,0.8)',
-                  boxShadow: 'black 6px 6px 7px',
-                  color: 'white',
-                  borderRadius: '20px',
-                }}
-              >
-                {quiz.title !== undefined ? (
-                  <div
-                    style={{
-                      display: 'flex',
-                      gap: '20px',
-                      justifyContent: 'center',
-                      fontStyle: 'italic',
-                    }}
-                  >
-                    <label style={{ fontWeight: 'bold', fontStyle: 'normal' }}>
-                      {quiz.title.toUpperCase()}
-                    </label>
-                    <label style={{ fontWeight: 'bold', fontStyle: 'normal' }}>
-                      {'Questions (' + String(quiz.questions.length) + ')'}
-                    </label>
-                    <div style={{ display: 'block' }}>
-                      <label>
-                        {Number(quiz.days) > 0
-                          ? quiz.days + (quiz.days > 1 ? ' days ' : ' day ')
-                          : ''}
-                      </label>
-                      <label>
-                        {Number(quiz.hours) > 0
-                          ? quiz.hours + (quiz.hours > 1 ? ' hours ' : ' hour ')
-                          : ''}
-                      </label>
-                      <label>
-                        {Number(quiz.minutes) > 0
-                          ? quiz.minutes +
-                            (quiz.minutes > 1 ? ' minutes ' : ' minute ')
-                          : ''}
-                      </label>
-                      <label>
-                        {Number(quiz.seconds) > 0
-                          ? quiz.seconds +
-                            (quiz.seconds > 1 ? ' seconds' : ' second')
-                          : ''}
-                      </label>
-                    </div>
-                  </div>
-                ) : undefined}
-                <div style={{ marginTop: '40px', textAlign: 'left' }}>
-                  <label
-                    onClick={() => {
-                      showQuizPage(quiz)
-                    }}
-                    style={{
-                      padding: '7px',
-                      border: 'solid lightgreen 2px',
-                      borderRadius: '5px',
-                      cursor: 'pointer',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    Take Quiz
-                  </label>
-                </div>
-              </div>
+              <div></div>
             </div>
             {showReactionList ? (
-              <QuizReactionList
+              <ReactionList
                 list={update['react']}
                 closeReactionList={() => {
                   setShowReactionList(false)
@@ -547,7 +471,7 @@ const QuizPost = ({
                       (update['react'].length - 1 > 0 && isReacted
                         ? ' Other(s)'
                         : '') +
-                      (update['react'].length ? ' Reacted to this Quiz' : '')
+                      (update['react'].length ? ' Reacted to this Post' : '')
                     : ''}
                 </label>
               </div>
@@ -755,7 +679,7 @@ const QuizPost = ({
                 update['comment'] !== undefined && update['comment'].length ? (
                   update['comment'].map((elem, i) => {
                     return (
-                      <QuizPostComment
+                      <PostComment
                         server={server}
                         key={i}
                         elem={elem}
@@ -780,7 +704,7 @@ const QuizPost = ({
                   'Be the first to comment'
                 )
               ) : (
-                <QuizPostComment
+                <PostComment
                   server={server}
                   elem={newPostShow === null ? postShow : newPostShow}
                   user={user}
@@ -934,4 +858,4 @@ const PeriodLabel = ({ createdAt }) => {
     </>
   )
 }
-export default QuizPost
+export default Post

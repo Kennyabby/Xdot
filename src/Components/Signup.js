@@ -8,7 +8,7 @@ import Finish from './Finish'
 import Intro from './Intro'
 import SideNavigator from './SideNavigator'
 import cancel from './cancel.png'
-const Signup = ({ showNavbar }) => {
+const Signup = ({ showNavbar, server}) => {
   const history = useHistory()
   const [content, setContent] = useState('Loading Form...')
   const [labelRefs, setLabelRefs] = useState([])
@@ -238,6 +238,7 @@ const Signup = ({ showNavbar }) => {
     } else if (id === 'schoolInfo') {
       setContent(
         <SchoolInfo
+          server={server}
           getCoverList={getCoverList}
           getCoverPos={getCoverPos}
           setSchoolConfirmed={(isConfirmed) => {
@@ -284,6 +285,7 @@ const Signup = ({ showNavbar }) => {
     } else if (id === 'finish') {
       setContent(
         <Finish
+          server={server}
           setViewSessionLabel={(showLabel) => {
             setViewSessionLabel(() => {
               return showLabel

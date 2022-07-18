@@ -3,7 +3,7 @@ import '../Tasks.css'
 import CreateQuiz from './CreateQuiz'
 import CreateQuestion from './CreateQuestion'
 
-const QuizApp = ({ user }) => {
+const QuizApp = ({ user,server }) => {
   const [view, setView] = useState('')
   const [quiz, setQuiz] = useState(null)
   const [showCreateQuiz, setShowCreateQuiz] = useState(true)
@@ -14,6 +14,7 @@ const QuizApp = ({ user }) => {
       setShowCreateQuestion(false)
       setView(
         <CreateQuiz
+          server={server}
           viewQuestions={(quiz) => {
             setQuiz(quiz)
             setShowCreateQuestion(true)
@@ -28,6 +29,7 @@ const QuizApp = ({ user }) => {
       setShowCreateQuiz(false)
       setView(
         <CreateQuestion
+          server={server}
           user={user}
           quiz={quiz}
           viewQuiz={() => {

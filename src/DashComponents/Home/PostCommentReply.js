@@ -1,26 +1,24 @@
 import { React, useEffect, useState, useRef } from 'react'
-import '../Events.css'
+import '../Events/Events.css'
 
-import profimg from '../assets/profile.png'
-import close from '../assets/close.png'
-import like from '../assets/like.png'
-import love from '../assets/love.png'
-import care from '../assets/care.png'
-import haha from '../assets/haha.png'
-import wow from '../assets/wow.png'
-import sad from '../assets/sad.png'
-import angry from '../assets/angry.png'
+import profimg from '../Events/assets/profile.png'
+import close from '../Events/assets/close.png'
+import like from '../Events/assets/like.png'
+import love from '../Events/assets/love.png'
+import care from '../Events/assets/care.png'
+import haha from '../Events/assets/haha.png'
+import wow from '../Events/assets/wow.png'
+import sad from '../Events/assets/sad.png'
+import angry from '../Events/assets/angry.png'
 
-import QuizReactionList from './QuizReactionList'
-import QuizPostCommentReply from './QuizPostCommentReply'
+import ReactionList from './ReactionList'
 
-const QuizPostComment = ({
+const PostCommentReply = ({
   server,
   user,
-  elem,
+  rep,
   updateReactions,
-  setPostComment,
-  setShowPost,
+  reply,
   postShow,
 }) => {
   const [showCommentReactions, setShowCommentReactions] = useState(false)
@@ -28,8 +26,6 @@ const QuizPostComment = ({
   const [elemUser, setElemUser] = useState('')
   const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [commentReaction, setCommentReaction] = useState('')
-  const [commentReactionList, setCommentReactionList] = useState(elem.comment.reaction)
-  const [statement, setStatement] = useState(elem.comment.statement)
   const [showReactionList, setShowReactionList] = useState(false)
   const emojis = [
     { name: 'like', src: like },
@@ -40,38 +36,34 @@ const QuizPostComment = ({
     { name: 'sad', src: sad },
     { name: 'angry', src: angry },
   ]
-  
-  useEffect(()=>{
-    setCommentReactionList(elem.comment.reaction)
-  },[elem])
+
+  useEffect(() => {
+    rep.commentReply.reaction.forEach((rct) => {
+      if (rct.matricNo === user.matricNo) {
+        setIsCommentReacted(true)
+      }
+    })
+  }, [])
+  const userName = rep.userName
+  const statement = rep.commentReply.statement
+  const commentReactionList = rep.commentReply.reaction
   useEffect(async()=>{
-    if(elem.matricNo!==undefined){
+    if(rep.matricNo!==undefined){
       const opts1 = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({imgUrl: elem.img, matricNo:elem.matricNo}),
+        body: JSON.stringify({imgUrl: rep.img, matricNo:rep.matricNo}),
       }
       const resp1 = await fetch(server+'/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
     }
-  },[elem])
+  },[rep])
   useEffect(() => {
-
-    elem.comment.reaction.forEach((rct) => {
-      if (rct.matricNo === user.matricNo) {
-        setIsCommentReacted(true)
-      }
-    })
-    
-  }, [])
-  const userName = elem.userName
-
-  useEffect(() => {
-    elem.comment.reaction.forEach((rct) => {
+    rep.commentReply.reaction.forEach((rct) => {
       if (rct.matricNo === user.matricNo) {
         var commentReaction = emojis.filter((emoji) => {
           return emoji.name === rct.reaction
@@ -82,7 +74,7 @@ const QuizPostComment = ({
   }, [])
 
   return (
-    <div>
+    <div style={{ marginLeft: '30px' }}>
       {showCommentReactions ? (
         <div
           style={{
@@ -116,9 +108,13 @@ const QuizPostComment = ({
                 updateReactions({
                   rct: 'comment',
                   statorBody: {
-                    action: 'react',
-                    reaction: name,
-                    createdAt: elemUser,
+                    action: 'comment',
+                    createdAt: postShow.createdAt,
+                    statorReplyBody: {
+                      action: 'react',
+                      reaction: name,
+                      createdAt: elemUser.createdAt,
+                    },
                   },
                 })
                 emojis.forEach((emoji) => {
@@ -196,22 +192,25 @@ const QuizPostComment = ({
           display: 'flex',
           gap: isCommentReacted ? '20px' : '30px',
           fontSize: '.9rem',
-          marginLeft: '30px',
+          marginLeft: '15px',
           marginBottom: '20px',
         }}
       >
-        <PeriodLabel createdAt={elem.createdAt} />
+        <PeriodLabel createdAt={rep.createdAt} />
         <div style={{ display: 'flex', gap: '10px' }}>
           <label
             onClick={() => {
-              setElemUser(elem.createdAt)
+              setElemUser(rep)
               if (isCommentReacted) {
                 updateReactions({
                   rct: 'comment',
                   statorBody: {
-                    action: 'react',
-                    matricNo: elem.matricNo,
-                    createdAt: elem.createdAt,
+                    action: 'comment',
+                    createdAt: postShow.createdAt,
+                    statorReplyBody: {
+                      action: 'react',
+                      createdAt: rep.createdAt,
+                    },
                   },
                 })
                 setIsCommentReacted(false)
@@ -240,7 +239,9 @@ const QuizPostComment = ({
         </div>
         <label
           onClick={() => {
-            setShowPost({ show: false, post: elem })
+            if (rep.matricNo !== user.matricNo) {
+              reply({ value: rep.userName + ' ', matricNo: rep.matricNo })
+            }
           }}
           style={{ fontWeight: 'bold', cursor: 'pointer' }}
         >
@@ -248,7 +249,7 @@ const QuizPostComment = ({
         </label>
 
         {showReactionList ? (
-          <QuizReactionList
+          <ReactionList
             list={commentReactionList}
             closeReactionList={() => {
               setShowReactionList(false)
@@ -297,42 +298,6 @@ const QuizPostComment = ({
           </div>
         </div>
       </div>
-      {postShow === null ? (
-        <div
-          style={{ fontSize: '1rem', fontWeight: 'bolder' }}
-          onClick={() => {
-            setShowPost({ show: false, post: elem })
-          }}
-        >
-          {elem.comment.reply.length
-            ? 'Show Previous Replies ' + elem.comment.reply.length
-            : ''}
-        </div>
-      ) : (
-        ''
-      )}
-      <div style={{ paddingTop: '10px' }}>
-        {postShow !== null
-          ? elem.comment.reply.length
-            ? elem.comment.reply.map((rep) => {
-                return (
-                  <QuizPostCommentReply
-                    server={server}
-                    user={user}
-                    rep={rep}
-                    postShow={postShow}
-                    reply={({ value, matricNo }) => {
-                      setPostComment({ value: value, matricNo: matricNo })
-                    }}
-                    updateReactions={(value) => {
-                      updateReactions(value)
-                    }}
-                  />
-                )
-              })
-            : 'Be The first to reply ' + elem.userName + '...'
-          : ''}
-      </div>
     </div>
   )
 }
@@ -376,4 +341,4 @@ const PeriodLabel = ({ createdAt }) => {
     </>
   )
 }
-export default QuizPostComment
+export default PostCommentReply

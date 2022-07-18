@@ -4,7 +4,7 @@ import '../Events.css'
 import QuizUpdates from './QuizUpdates'
 import QuizPage from './QuizPage'
 
-const GrandQuiz = ({ user }) => {
+const GrandQuiz = ({ user, server }) => {
   const [quiz, setQuiz] = useState(null)
   const [view, setView] = useState('')
   const [showQuizUpdates, setShowQuizUpdates] = useState(true)
@@ -14,6 +14,7 @@ const GrandQuiz = ({ user }) => {
       setShowQuizPage(false)
       setView(
         <QuizUpdates
+          server={server}
           showQuizPage={(quiz) => {
             setQuiz(quiz)
             setShowQuizPage(true)

@@ -7,14 +7,13 @@ import UpdateQuiz from './UpdateQuiz'
 
 import add from '../assets/add.jpg'
 
-const CreateQuiz = ({ user, viewQuestions }) => {
+const CreateQuiz = ({ user, viewQuestions, server }) => {
   const [updateRequest, setUpdateRequest] = useState('')
   const [showUpdate, setShowUpdate] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
   const [editQuiz, setEditQuiz] = useState(null)
   const [showQuizShareModal, setShowQuizShareModal] = useState(false)
-  useEffect(() => {}, [])
   const notify = ({ message }) => {
     setShowNotification(true)
     setNotificationMessage(message)
@@ -42,7 +41,7 @@ const CreateQuiz = ({ user, viewQuestions }) => {
           ],
         }),
       }
-      const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneUser', opts)
+      const resp = await fetch(server+'/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -58,25 +57,35 @@ const CreateQuiz = ({ user, viewQuestions }) => {
     <>
       <div style={{ margin: '5px' }}>
         {showNotification && (
-          <label
+          <div 
             style={{
               padding: '10px',
               position: 'fixed',
-              top: '0px',
+              top: '5px',
               zIndex: '1',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              fontFamily: 'monospace',
-              backgroundColor: 'rgba(0,0,0,0.9)',
-              borderRadius: '10px',
-              color: 'white',
+              justifyContent:'center',
+              width:'100vw',
             }}
           >
-            {notificationMessage}
-          </label>
+            <label
+              style={{
+                margin:'auto',
+                padding:'10px',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                fontFamily: 'monospace',
+                backgroundColor: 'rgba(0,0,0,0.9)',
+                borderRadius: '10px',
+                color: 'white',
+              }}
+            >
+              {notificationMessage}
+            </label>
+          </div>
         )}
         {showQuizShareModal && (
           <QuizShareModal
+            server={server}
             editQuiz={editQuiz}
             closeModal={() => {
               setShowQuizShareModal(false)
@@ -89,6 +98,7 @@ const CreateQuiz = ({ user, viewQuestions }) => {
         )}
         {showUpdate && (
           <UpdateQuiz
+            server={server}
             closeUpdate={() => {
               setShowUpdate(false)
             }}

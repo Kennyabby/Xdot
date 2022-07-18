@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import logo from './user.png'
 
-const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed }) => {
+const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed, server }) => {
   const history = useHistory()
   const schoolCoverRef = useRef(null)
   const [pos, setPos] = useState(0)
@@ -125,7 +125,7 @@ const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed }) => {
                     body: JSON.stringify({ matricNo: 1, _id: 0 }),
                   }
                   const resp = await fetch(
-                    'https://napsuiserver.herokuapp.com/getMatricList',
+                    server+'/getMatricList',
                     opts
                   )
                   response = await resp.json()
@@ -209,7 +209,7 @@ const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed }) => {
         body: JSON.stringify({ matricNo: 1, _id: 0 }),
       }
       if (matricNoRef.current !== null) {
-        fetch('https://napsuiserver.herokuapp.com/getMatricList', opts).then(
+        fetch(server+'/getMatricList', opts).then(
           async (resp) => {
             const response = await resp.json()
             const matricList = response.matricList

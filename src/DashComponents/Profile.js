@@ -9,6 +9,7 @@ import edit from './assets/edit1.png'
 import AdminBoard from './AdminBoard'
 
 const Profile = ({
+  server,
   chatrf,
   homerf,
   notificationsrf,
@@ -75,7 +76,7 @@ const Profile = ({
         },
         body: JSON.stringify({imgUrl: user.img, matricNo:user.matricNo}),
       }
-      const resp1 = await fetch('https://napsuiserver.herokuapp.com/getImgUrl', opts1)
+      const resp1 = await fetch(server+'/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
@@ -141,7 +142,7 @@ const Profile = ({
         }),
       }
 
-      const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneUser', opts)
+      const resp = await fetch(server+'/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -170,7 +171,7 @@ const Profile = ({
           ],
         }),
       }
-      const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneUser', opts)
+      const resp = await fetch(server+'/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -194,6 +195,7 @@ const Profile = ({
       >
         {showAdminBoard && (
           <AdminBoard
+            server={server}
             closeAdminBoard={() => {
               setShowAdminBoard(false)
             }}

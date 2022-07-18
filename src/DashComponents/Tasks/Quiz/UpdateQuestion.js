@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react'
 
 import cancel from '../assets/cancel.png'
 const UpdateQuestion = ({
+  server,
   closeUpdate,
   request,
   type,
@@ -138,7 +139,7 @@ const UpdateQuestion = ({
           ],
         }),
       }
-      const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneUser', opts)
+      const resp = await fetch(server+'/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {

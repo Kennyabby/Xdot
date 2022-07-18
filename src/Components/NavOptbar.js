@@ -27,10 +27,10 @@ const NavOptbar = ({ getTopBar }) => {
     return (
       <>
         <div
-          style={{ position: 'fixed', top: '3px', left: '3px' }}
+          style={{ position: 'fixed', top: '10px', left: '10px' }}
           onClick={showBar}
         >
-          <img src={menu} alt='menu' height='25px' />
+          <img src={menu} alt='menu' height='20px' />
         </div>
       </>
     )
@@ -41,18 +41,15 @@ const NavOptbar = ({ getTopBar }) => {
           <div
             style={{
               position: 'fixed',
-              top: '3px',
-              left: '3px',
+              top: '10px',
+              left: '10px',
               cursor: 'pointer',
             }}
             onClick={cancelClick}
           >
-            <img src={cancel} height='25px' alt='cancel' />
+            <img src={cancel} height='20px' alt='cancel' />
           </div>
           <ul className='opt-bar'>
-            <li className='top-left-opt'>
-              <div>NAPS-UI</div>
-            </li>
             <li>
               <Link to='/'>
                 <label className='opt-left' ref={homeRef} name='home'>
@@ -85,7 +82,7 @@ const NavOptbar = ({ getTopBar }) => {
               <Link className='opt-left' to='/signin'>
                 <div className='top'>
                   <label className='top' ref={signupRef} name='signup'>
-                    sign in
+                    Sign in
                   </label>
                 </div>
               </Link>

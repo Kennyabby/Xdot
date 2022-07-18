@@ -35,9 +35,10 @@ const SideNavigator = ({
   const grandquizRef = useRef(null)
   const dailypuzzleRef = useRef(null)
   const studytableRef = useRef(null)
+  const e_votingRef = useRef(null)
 
   const tasksLabelRefs = [cgpacalcRef, todolistRef, quizappRef]
-  const eventsLabelRefs = [grandquizRef, dailypuzzleRef, studytableRef]
+  const eventsLabelRefs = [grandquizRef, dailypuzzleRef, studytableRef, e_votingRef]
 
   const labelRefs = [
     profileLabel,
@@ -171,6 +172,15 @@ const SideNavigator = ({
                 <li ref={studytableRef} className='dropitem'>
                   {' '}
                   {'>'} Study Table{' '}
+                </li>
+              </Link>
+              <Link
+                style={{ color: 'white', textDecoration: 'none' }}
+                to='/dashboard/events/e-voting'
+              >
+                <li ref={e_votingRef} className='dropitem'>
+                  {' '}
+                  {'>'} E-Voting{' '}
                 </li>
               </Link>
             </ul>

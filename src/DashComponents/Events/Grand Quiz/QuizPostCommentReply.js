@@ -14,6 +14,7 @@ import angry from '../assets/angry.png'
 import QuizReactionList from './QuizReactionList'
 
 const QuizPostCommentReply = ({
+  server,
   user,
   rep,
   updateReactions,
@@ -55,7 +56,7 @@ const QuizPostCommentReply = ({
         },
         body: JSON.stringify({imgUrl: rep.img, matricNo:rep.matricNo}),
       }
-      const resp1 = await fetch('https://napsuiserver.herokuapp.com/getImgUrl', opts1)
+      const resp1 = await fetch(server+'/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)

@@ -4,7 +4,7 @@ import usrImg from './usrImg.png'
 import viewImg from './view.jpg'
 import noViewImg from './noview.png'
 
-const Signin = ({ showNavbar, showNavOpt, sendId }) => {
+const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   const [fields, setFields] = useState({
     matricNo: '',
     password: '',
@@ -95,7 +95,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId }) => {
       body: JSON.stringify({ matricNo: fields.matricNo }),
     }
 
-    fetch('https://napsuiserver.herokuapp.com/getpassList', opts1).then(async (resp) => {
+    fetch(server+'/getpassList', opts1).then(async (resp) => {
       const response = await resp.json()
       const idVal = await response.id
 
@@ -149,7 +149,15 @@ const Signin = ({ showNavbar, showNavOpt, sendId }) => {
           onChange={handleInput}
           onFocus={handleFocus}
         >
-          <p style={{ fontWeight: 'bold', fontSize: '1.6rem' }}>NAPS-UI</p>
+          <p 
+            style={{ 
+              fontWeight: 'bold', 
+              fontSize: '1.6rem' 
+            }}
+            onClick={()=>{
+              history.push('/')
+            }}
+          >NAPS-UI</p>
           <img
             className='usr'
             src={usrImg}

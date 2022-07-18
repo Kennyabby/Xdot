@@ -8,7 +8,7 @@
 }
 .usernameshadow {
   color: black;
-  text-shadow: white 1px 1px 1px;
+  text-shadow: white 0px 0px 10px;
 }
 .userimg {
   border-radius: 50%;
@@ -26,7 +26,7 @@
   gap: 10px;
 }
 .hometoggle {
-  text-shadow: white 1px 1px 1px;
+  text-shadow: white 0px 0px 7px;
   display: inline-flex;
   gap: 50px;
   margin: 20px;
@@ -290,6 +290,7 @@
   overflow-y: auto;
   flex-wrap: wrap;
   margin: auto;
+  padding-bottom: 70px;
   margin-top: 30px;
   height: 450px;
   width: 450px;
@@ -346,18 +347,26 @@
     background-color: rgba(7, 7, 40, 0.8);
     z-index: 1;
   }
-  .hometoggle {
+  .hometoggleCover{
     margin: 0px;
     position: fixed;
     justify-content: center;
+    width: 100vw;
+    overflow-x: auto;
+    left: 0px;
+    bottom: 2px;
+    z-index: 1;
+  }
+  .hometoggle {
+    margin: auto;
+    text-shadow: white 0px 0px 7px;
+    justify-content: left;
     background-color: rgba(120, 120, 120, 0.9);
     border-radius: 25px;
     text-shadow: none;
     font-weight: bold;
     width: 90%;
     overflow-x: auto;
-    left: 0px;
-    bottom: 5px;
     z-index: 1;
     gap:50px;
     display: inline-flex;
@@ -389,8 +398,9 @@
     overflow-y: auto;
     flex-wrap: wrap;
     margin: auto;
+    padding-bottom: 70px;
     margin-top: 30px;
-    /* height: 450px; */
+    height: 45vh; 
     width: 350px;
     justify-content: center;
   }

@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import cancel from '../assets/close.png'
-const QuizShareModal = ({ closeModal, notifyUpdate, editQuiz, user }) => {
+const QuizShareModal = ({ closeModal, notifyUpdate, editQuiz, user, server }) => {
   const history = useHistory()
   const shareLabel = ['grandQuiz', 'public', 'group']
   const [showUpdateStatus, setShowUpdateStatus] = useState(false)
@@ -48,7 +48,7 @@ const QuizShareModal = ({ closeModal, notifyUpdate, editQuiz, user }) => {
           },
         }),
       }
-      const resp = await fetch('https://napsuiserver.herokuapp.com/postQuiz', opts)
+      const resp = await fetch(server+'/postQuiz', opts)
       const response = await resp.json()
       const isDelivered = response.isDelivered
       if (isDelivered) {

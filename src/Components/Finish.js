@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import logo from './user.png'
 
 const Finish = ({
+  server,
   getCoverList,
   confidentials,
   getCoverPos,
@@ -196,7 +197,7 @@ const Finish = ({
           },
           body: JSON.stringify(studentBody)
         }
-        const resp = await fetch('https://napsuiserver.herokuapp.com/postUserDetails', opts)
+        const resp = await fetch(server+'/postUserDetails', opts)
         const feedBack = await resp.json()
         if (feedBack.isDelivered === true) {
           setShow(false)

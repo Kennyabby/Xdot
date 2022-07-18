@@ -2,6 +2,7 @@ import { React, useState, useEffect, useRef } from 'react'
 import cancel from '../assets/cancel.png'
 
 const UpdateCourse = ({
+  server,
   user,
   course,
   session,
@@ -138,7 +139,7 @@ const UpdateCourse = ({
           ],
         }),
       }
-      const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneUser', opts)
+      const resp = await fetch(server+'/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {

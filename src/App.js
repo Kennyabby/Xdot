@@ -12,6 +12,7 @@ import Napsboard from './DashComponents/Napsboard'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const App = () => {
+  const SERVER = 'https://napsuiserver.herokuapp.com'
   const [bars, setBars] = useState([])
   const [size, setSize] = useState(window.innerWidth)
   const getTopBar = (bars) => {
@@ -53,6 +54,7 @@ const App = () => {
         </Route>
         <Route path='/signin'>
           <Signin
+            server={SERVER}
             showNavbar={(show) => {
               setShowNavbar(() => {
                 return show
@@ -84,20 +86,21 @@ const App = () => {
           />
         </Route>
         <Route path={'/dashboard/tasks/:id'}>
-          <Napsboard rootView='tasks' userId={userId} winSize={size} />
+          <Napsboard rootView='tasks' server={SERVER} userId={userId} winSize={size} />
         </Route>
         <Route path={'/dashboard/events/:id'}>
-          <Napsboard rootView='events' userId={userId} winSize={size} />
+          <Napsboard rootView='events' server={SERVER} userId={userId} winSize={size} />
         </Route>
         <Route
           path={'/dashboard/:' + 'id'}
-          children={<Napsboard userId={userId} winSize={size} />}
+          children={<Napsboard server={SERVER} userId={userId} winSize={size} />}
         ></Route>
         <Route path={'/dashboard'}>
-          <Napsboard userId={userId} winSize={size} />
+          <Napsboard server={SERVER} userId={userId} winSize={size} />
         </Route>
-        <Route path='/signup/:id' children={<Signup />}>
+        <Route path='/signup/:id' children={<Signup server={SERVER}/>}>
           <Signup
+            server={SERVER}
             showNavbar={(show) => {
               setShowNavbar(() => {
                 return show

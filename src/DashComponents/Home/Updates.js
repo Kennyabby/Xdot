@@ -1,23 +1,37 @@
 import { React, useState, useEffect, useRef } from 'react'
-import '../Events.css'
+import '../Events/Events.css'
 import { Link } from 'react-router-dom'
 
-import QuizPost from './QuizPost'
+import profimg from '../Events/assets/profile.png'
+import Post from './Post'
+import PostPageModal from './PostPageModal'
 
-const QuizUpdates = ({ user, showQuizPage, server }) => {
+const Updates = ({user, server}) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
   const lastPostRef = useRef(null)
   const [lastPostDimension, setLastPostDimension] = useState('')
   const [lastUpdatedPost, setLastUpdatedPost] = useState('')
-  const [showPostUpdatesStatus, setShowPostUpdatesStatus] = useState(true)
+  const [showPostUpdatesStatus, setShowPostUpdatesStatus] = useState(false)
+  const [showPostPage, setShowPostPage] = useState(false)
   const [gotUpdates, setGotUpdates] = useState(false)
+  const [showNotification, setShowNotification] = useState(false)
+  const [notificationMessage, setNotificationMessage] = useState('')
   const [postUpdatesStatus, setPostUpdatesStatus] = useState('')
+  const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [highlightedPost, setHighlightedPost] = useState(null)
   const [currentPostShow, setCurrentPostShow] = useState(null)
   const [newPostShow, setNewPostShow] = useState(null)
   const maxNumberOfRequest = 4
 
+  const notify = ({ message }) => {
+    setShowNotification(true)
+    setNotificationMessage(message)
+    getNewUpdates(user.lastPostUpdate)
+    setTimeout(() => {
+      setShowNotification(false)
+    }, 3000)
+  }
   const shufflePosts = (array) => {
     var currentIndex = array.length,
       randomIndex,
@@ -30,14 +44,32 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
       array[randomIndex] = temporaryValue
     }
   }
+  useEffect(async()=>{
+    if(user.matricNo!==undefined){
+      try{
+        const opts1 = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({imgUrl: user.img, matricNo:user.matricNo}),
+        }
+        const resp1 = await fetch(server+'/getImgUrl', opts1)
+        const response1 = await resp1.json()
+        const url = response1.url
+        setUserImgUrl(url)  
+      }catch(TypeError){
+      }
+    }
+  },[user])
   useEffect(() => {
     setNewPostShow(currentPostShow)
   }, [currentPostShow])
   const checkLastPostDimension = async () => {
     setLastPostDimension(lastPostRef.current.getBoundingClientRect().y)
   }
-  const getNewUpdates = async (lastQuizUpdate) => {
-    var updateFrom = lastQuizUpdate
+  const getNewUpdates = async (lastPostUpdate) => {
+    var updateFrom = lastPostUpdate
     if (updateFrom === undefined) {
       updateFrom = Date.now()
     }
@@ -48,7 +80,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          collection: 'NapsGrandQuiz',
+          collection: 'NapsPublic',
           data: { createdAt: { $lt: updateFrom } },
           limit: maxNumberOfRequest,
         }),
@@ -58,23 +90,19 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
       const updates = response.updates
       setLastUpdatedPost(updates[updates.length - 1])
       shufflePosts(updates)
-      setUpdates(updates)
+      setUpdates(()=>{return updates})
       setPrevUpdates(updates)
       setGotUpdates(true)
-
     } catch (TypeError) {}
   }
-  useEffect(()=>{
-  },[lastUpdatedPost])
   useEffect(() => {
     window.addEventListener('scroll', checkLastPostDimension)
     return () => {
       window.removeEventListener('scroll', checkLastPostDimension)
     }
-
   }, [lastPostDimension])
   useEffect(() => {
-    getNewUpdates(user.lastQuizUpdate)
+    getNewUpdates(user.lastPostUpdate)
   }, [user])
   useEffect(async () => {
     if (highlightedPost === null) {
@@ -86,7 +114,6 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
       updates[updates.length - 1] !== undefined &&
       highlightedPost === null
     ) {
-      // console.log(lastUpdatedPost)
       var updateFrom = lastUpdatedPost.createdAt
       if (prevUpdates.length === maxNumberOfRequest) {
         setShowPostUpdatesStatus(true)
@@ -98,7 +125,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              collection: 'NapsGrandQuiz',
+              collection: 'NapsPublic',
               data: { createdAt: { $lt: updateFrom } },
               limit: maxNumberOfRequest,
             }),
@@ -140,7 +167,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          collection: 'NapsGrandQuiz',
+          collection: 'NapsPublic',
           data: { createdAt: createdAt },
         }),
       }
@@ -160,7 +187,6 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
         setUpdates(() => {
           return [...newUpdates]
         })
-        updates[index] = update
         if (highlightedPost !== null) {
           setHighlightedPost(() => {
             return update
@@ -189,33 +215,94 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
   return (
     <>
       <div style={{ paddingTop: highlightedPost !== null ? '50px' : '2px' }}>
+        {showNotification && (
+          <div 
+            style={{
+              padding: '10px',
+              position: 'fixed',
+              top: '5px',
+              zIndex: '1',
+              justifyContent:'center',
+              width:'100vw',
+            }}
+          >
+            <label
+              style={{
+                margin:'auto',
+                padding:'10px',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                fontFamily: 'monospace',
+                backgroundColor: 'rgba(0,0,0,0.9)',
+                borderRadius: '10px',
+                color: 'white',
+              }}
+            >
+              {notificationMessage}
+            </label>
+          </div>
+        )}
+        {showPostPage? (<PostPageModal
+          user={user}
+          server={server}
+          closeModal = {()=>{
+            setShowPostPage(false)
+          }}
+          notifyUpdate={(message) => {
+            notify({ message: message })
+          }}
+        />):undefined}
         {highlightedPost === null ? (
           <div
             style={{
               textAlign: 'center',
-              marginTop: '20px',
-              marginBottom: '20px',
+              justifyContent:'center',
             }}
           >
-            <Link to='/dashboard/tasks/quizapp'>
-              <button
-                style={{
-                  fontSize: '1rem',
-                  fontFamily: 'monospace',
-                  padding: '5px',
-                  fontWeight: 'bolder',
-                  paddingLeft: '20px',
-                  paddingRight: '20px',
-                  borderRadius: '10px',
-                  border: 'solid darkblue 2px',
-                  backgroundColor: 'blue',
-                  color: 'white',
-                  cursor: 'pointer',
+            <div style={{display:'flex', margin:'10px'}}>
+              <Link to = '/dashboard/profile'>
+                <div 
+                  style={{
+                    borderRadius:'50%', 
+                    height:'45px', 
+                    width:'45px', 
+                    backgroundColor:'rgba(240,240,240,1)',
+                    backgroundImage:`url(${userImgUrl})`,
+                    cursor:'pointer',
+                  }}>
+                </div>
+              </Link>
+              <div 
+                onClick={()=>{
+                  setShowPostPage(true)
                 }}
-              >
-                POST A QUIZ
-              </button>
-            </Link>
+                style={{
+                  borderRadius:'20px',
+                  width:'80%',
+                  padding:'10px',
+                  margin:'10px',
+                  backgroundColor:'rgba(240,240,240,1)',
+                  justifyContent:'center',
+                  textAlign:'center',
+                  cursor:'pointer',
+                }}>{'Something on your mind?'}
+              </div>
+            </div>
+            <div style={{margin:'10px', justifyContent:'center'}}>
+              <button 
+                onClick={()=>{
+                  getNewUpdates(user.lastPostUpdate)
+                }}
+                style={{
+                  padding:'10px',
+                  borderRadius:'15px',
+                  backgroundColor:'blue', 
+                  border:'solid rgba(0,0,255,0) 2px', 
+                  color:'white',
+                  cursor:'pointer'
+                }}
+              >New Posts</button>
+            </div> 
           </div>
         ) : undefined}
         {updates.length ? (
@@ -224,7 +311,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
               {highlightedPost === null ? (
                 updates.map((update, i) => {
                   return (
-                    <QuizPost
+                    <Post
                       server={server}
                       key={i}
                       user={user}
@@ -243,14 +330,11 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
                       setHighlightedPost={(post) => {
                         setHighlightedPost(post)
                       }}
-                      showQuizPage={(quiz) => {
-                        showQuizPage(quiz)
-                      }}
                     />
                   )
                 })
               ) : (
-                <QuizPost
+                <Post
                   server={server}
                   status={'highlighted'}
                   user={user}
@@ -269,9 +353,6 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
                   }}
                   setHighlightedPost={(post) => {
                     setHighlightedPost(post)
-                  }}
-                  showQuizPage={(quiz) => {
-                    showQuizPage(quiz)
                   }}
                 />
               )}
@@ -297,7 +378,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
             {gotUpdates
               ? 'Hi, ' +
                 user.firstName +
-                '. Welcome to XDot Quiz Updates.\nMark history in the department by being the first to post a quiz on this page.'
+                '. Welcome to XDot Updates.\nMark history in the department by being the first to make a post on this feed.'
               : ''}
           </div>
         )}
@@ -306,4 +387,4 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
   )
 }
 
-export default QuizUpdates
+export default Updates

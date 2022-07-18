@@ -6,7 +6,7 @@ import QuestionView from './QuestionView'
 
 import add from '../assets/add.jpg'
 
-const CreateQuestion = ({ user, quiz, viewQuiz }) => {
+const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
   const [showUpdateQuestion, setShowUpdateQuestion] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
@@ -78,7 +78,7 @@ const CreateQuestion = ({ user, quiz, viewQuiz }) => {
           ],
         }),
       }
-      const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneUser', opts)
+      const resp = await fetch(server+'/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -105,22 +105,32 @@ const CreateQuestion = ({ user, quiz, viewQuiz }) => {
           Back
         </label>
         {showNotification && (
-          <label
+          <div 
             style={{
-              padding: '10px',
               position: 'fixed',
-              top: '0px',
+              top: '5px',
               zIndex: '1',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              fontFamily: 'monospace',
-              backgroundColor: 'rgba(0,0,0,0.9)',
-              borderRadius: '10px',
-              color: 'white',
+              justifyContent:'center',
+              width:'100vw',
             }}
           >
-            {notificationMessage}
-          </label>
+            <div
+              style={{
+                width:'60%',
+                flexWrap:'wrap',
+                margin:'auto',
+                padding:'10px',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                fontFamily: 'monospace',
+                backgroundColor: 'rgba(0,0,0,0.9)',
+                borderRadius: '10px',
+                color: 'white',
+              }}
+            >
+              {notificationMessage}
+            </div>
+          </div>
         )}
         <div
           style={{
@@ -166,6 +176,7 @@ const CreateQuestion = ({ user, quiz, viewQuiz }) => {
         </div>
         {showUpdateQuestion ? (
           <UpdateQuestion
+            server={server}
             closeUpdate={() => {
               setShowUpdateQuestion(false)
             }}

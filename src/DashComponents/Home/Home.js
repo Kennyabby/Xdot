@@ -1,13 +1,17 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-
+import Updates from './Updates'
 const Home = ({
+  server,
+  user,
   homerf,
   chatrf,
   notificationsrf,
   setBodyLeft,
   setShowNavigator,
 }) => {
+  const [view, setView] = useState('')
+  const [showUpdates, setShowUpdates] = useState(true)
   useEffect(() => {
     if (notificationsrf.current !== null) {
       notificationsrf.current.style.borderBottom = 'solid blue 0px'
@@ -17,17 +21,19 @@ const Home = ({
     setBodyLeft()
     setShowNavigator()
   }, [homerf])
-
+  useEffect(() => {
+    if (showUpdates) {
+      setView(
+        <Updates
+          server={server}
+          user={user}
+        />
+      )
+    }
+  }, [showUpdates])
   return (
     <>
-      <div>
-        <div className='srchcover'>
-          <input
-            className='srch'
-            placeholder='Search for applications and view your recent pages'
-          />
-        </div>
-      </div>
+      <div>{view}</div>
     </>
   )
 }

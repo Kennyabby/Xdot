@@ -5,7 +5,7 @@ import NapsiteSearch from './NapsiteSearch'
 
 import close from './assets/close.png'
 
-const AdminBoard = ({ closeAdminBoard, currentUser }) => {
+const AdminBoard = ({ closeAdminBoard, currentUser, server }) => {
   const searchNapsiteRef = useRef(null)
   const othersRef = useRef(null)
   const [view, setView] = useState('')
@@ -13,6 +13,7 @@ const AdminBoard = ({ closeAdminBoard, currentUser }) => {
   const viewProfile = (user) => {
     setView(
       <Profile
+        server={server}
         user={user}
         padding={'10px'}
         backgroundColor={'rgba(0,0,0,0.8)'}
@@ -28,6 +29,7 @@ const AdminBoard = ({ closeAdminBoard, currentUser }) => {
     setViewBack(false)
     setView(
       <NapsiteSearch
+        server={server}
         viewProfile={viewProfile}
         currentUser={currentUser}
         viewCurrentUserProfile={() => {
@@ -40,6 +42,7 @@ const AdminBoard = ({ closeAdminBoard, currentUser }) => {
     searchNapsiteRef.current.style.borderBottom = 'solid lightgreen 2px'
     setView(
       <NapsiteSearch
+        server={server}
         viewProfile={viewProfile}
         currentUser={currentUser}
         viewCurrentUserProfile={() => {

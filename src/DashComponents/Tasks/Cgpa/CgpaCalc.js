@@ -8,7 +8,7 @@ import add from '../assets/add.jpg'
 import top from '../assets/top.png'
 import bottom from '../assets/bottom.png'
 
-const CgpaCalc = ({ user, updateUser, winSize }) => {
+const CgpaCalc = ({ user, updateUser, winSize, server }) => {
   const [currentSession, setCurrentSession] = useState(null)
   const [userSessions, setUserSessions] = useState([])
   const [updateRequest, setUpdateRequest] = useState('')
@@ -108,7 +108,7 @@ const CgpaCalc = ({ user, updateUser, winSize }) => {
         },
         body: JSON.stringify({ sessionSettings: 1 }),
       }
-      const resp = await fetch('https://napsuiserver.herokuapp.com/getNapsSettings', opts)
+      const resp = await fetch(server+'/getNapsSettings', opts)
       const response = await resp.json()
       const settings = response.settings
       const currentSession = settings.sessionSettings.currentSession
@@ -192,7 +192,7 @@ const CgpaCalc = ({ user, updateUser, winSize }) => {
           ],
         }),
       }
-      const resp = await fetch('https://napsuiserver.herokuapp.com/updateOneUser', opts)
+      const resp = await fetch(server+'/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -263,22 +263,31 @@ const CgpaCalc = ({ user, updateUser, winSize }) => {
         {showStore ? (
           <div style={{ textAlign: 'center' }}>
             {showNotification && (
-              <label
+              <div 
                 style={{
                   padding: '10px',
                   position: 'fixed',
-                  top: '0px',
+                  top: '5px',
                   zIndex: '1',
-                  fontSize: '1rem',
-                  fontWeight: 'bold',
-                  fontFamily: 'monospace',
-                  backgroundColor: 'rgba(0,0,0,0.9)',
-                  borderRadius: '10px',
-                  color: 'white',
+                  justifyContent:'center',
+                  width:'100vw',
                 }}
               >
-                {notificationMessage}
-              </label>
+                <label
+                  style={{
+                    margin:'auto',
+                    padding:'10px',
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    fontFamily: 'monospace',
+                    backgroundColor: 'rgba(0,0,0,0.9)',
+                    borderRadius: '10px',
+                    color: 'white',
+                  }}
+                >
+                  {notificationMessage}
+                </label>
+              </div>
             )}
             {cgpaDimension !== null && cgpaDimension.y <= 0 && (
               <div style={{ backgroundColor: 'blue', textAlign: 'center' }}>
@@ -297,6 +306,7 @@ const CgpaCalc = ({ user, updateUser, winSize }) => {
 
             {showUpdateForm ? (
               <UpdateCourse
+                server={server}
                 user={user}
                 course={edittingCourse}
                 session={sessionValue}
@@ -445,6 +455,7 @@ const CgpaCalc = ({ user, updateUser, winSize }) => {
               <div
                 style={{
                   margin: '50px',
+                  paddingBottom: '80px',
                   fontFamily: 'monospace',
                   fontSize: '1.1rem',
                   fontStyle: 'italic',

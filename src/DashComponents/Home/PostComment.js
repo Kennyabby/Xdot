@@ -1,20 +1,20 @@
 import { React, useEffect, useState, useRef } from 'react'
-import '../Events.css'
+import '../Events/Events.css'
 
-import profimg from '../assets/profile.png'
-import close from '../assets/close.png'
-import like from '../assets/like.png'
-import love from '../assets/love.png'
-import care from '../assets/care.png'
-import haha from '../assets/haha.png'
-import wow from '../assets/wow.png'
-import sad from '../assets/sad.png'
-import angry from '../assets/angry.png'
+import profimg from '../Events/assets/profile.png'
+import close from '../Events/assets/close.png'
+import like from '../Events/assets/like.png'
+import love from '../Events/assets/love.png'
+import care from '../Events/assets/care.png'
+import haha from '../Events/assets/haha.png'
+import wow from '../Events/assets/wow.png'
+import sad from '../Events/assets/sad.png'
+import angry from '../Events/assets/angry.png'
 
-import QuizReactionList from './QuizReactionList'
-import QuizPostCommentReply from './QuizPostCommentReply'
+import ReactionList from './ReactionList'
+import PostCommentReply from './PostCommentReply'
 
-const QuizPostComment = ({
+const PostComment = ({
   server,
   user,
   elem,
@@ -248,7 +248,7 @@ const QuizPostComment = ({
         </label>
 
         {showReactionList ? (
-          <QuizReactionList
+          <ReactionList
             list={commentReactionList}
             closeReactionList={() => {
               setShowReactionList(false)
@@ -316,7 +316,7 @@ const QuizPostComment = ({
           ? elem.comment.reply.length
             ? elem.comment.reply.map((rep) => {
                 return (
-                  <QuizPostCommentReply
+                  <PostCommentReply
                     server={server}
                     user={user}
                     rep={rep}
@@ -376,4 +376,4 @@ const PeriodLabel = ({ createdAt }) => {
     </>
   )
 }
-export default QuizPostComment
+export default PostComment
