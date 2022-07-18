@@ -267,6 +267,7 @@ const Updates = ({user, server}) => {
                     height:'45px', 
                     width:'45px', 
                     backgroundColor:'rgba(240,240,240,1)',
+                    backgroundSize:'cover',
                     backgroundImage:`url(${userImgUrl})`,
                     cursor:'pointer',
                   }}>
