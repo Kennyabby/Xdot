@@ -417,7 +417,7 @@ const Post = ({
             <div>
               <div
                 style={{
-                  margin: '15px',
+                  margin: '5px',
                   display: 'flex',
                   gap: '10px',
                 }}
@@ -455,7 +455,7 @@ const Post = ({
                 ) : (
                   ''
                 )}
-                <label>
+                <label style={{fontSize:'.8rem'}}>
                   {update['react'] !== undefined
                     ? (isReacted ? 'You ' : '') +
                       (update['react'].length

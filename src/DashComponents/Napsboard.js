@@ -476,7 +476,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   }, [labelRefs])
 
   useEffect(async () => {
-    var matric = window.sessionStorage.getItem('user-id')
+    var uid = window.sessionStorage.getItem('user-id')
     var sess = 0
     if (userId !== null) {
       userId.split('').forEach((elem) => {
@@ -490,25 +490,54 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         } else {
           setIsNewSession(false)
           history.push('/signin')
+          removeSessions()
         }
       } else {
         setIsNewSession(false)
         history.push('/signin')
+        removeSessions()
       }
     } else {
-      fetchUserAPI({ data: { matricNo: matric }, req: 'getUserDetails' })
+      var sess=0
+      if (uid!==null){
+        uid.split('').forEach((elem) => {
+          sess += elem.codePointAt(0)
+        })
+        const sesn = window.sessionStorage.getItem('sess-recg-id')
+        const session = window.sessionStorage.getItem('idt-curr-usr')
+        if (sesn !== null && session !== null) {
+          if (sesn / session === sess) {
+            fetchUserAPI({ data: { _id: uid }, req: 'getUserDetails' })
+          } else {
+            setIsNewSession(false)
+            history.push('/signin')
+            removeSessions()
+          }
+        } else {
+          setIsNewSession(false)
+          history.push('/signin')
+          removeSessions()
+        }
+      }else{
+        setIsNewSession(false)
+        history.push('/signin')
+        removeSessions()
+      }
     }
   }, [userId])
 
   const getLabelRefs = (refs) => {
     setLabelRefs(refs)
   }
-  const logout = () => {
-    history.push('/signin')
-    history.push('/signin')
+  const removeSessions = ()=>{
     window.sessionStorage.removeItem('sess-recg-id')
     window.sessionStorage.removeItem('idt-curr-usr')
     window.sessionStorage.removeItem('user-id')
+  }
+  const logout = () => {
+    history.push('/signin')
+    history.push('/signin')
+    removeSessions()
   }
 
   if (isNewSession) {

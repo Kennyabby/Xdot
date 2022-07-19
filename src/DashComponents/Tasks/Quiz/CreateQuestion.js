@@ -146,10 +146,11 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
           onClick={handleSectionValue}
           style={{
             fontFamily: 'monospace',
-            fontSize: '.8rem',
+            fontSize: '.78rem',
             marginTop: '10px',
             marginBottom: '40px',
-            flexWrap: 'wrap',
+            overflowX:'auto',
+            display:'flex'
           }}
         >
           <label

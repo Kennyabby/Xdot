@@ -26,7 +26,6 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   useEffect(() => {
     if (passValidated) {
       var idVal = fields.id
-      var matric = fields.matricNo
       sendId(idVal)
       var now = Date.now()
       setFields((fields) => {
@@ -38,7 +37,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       })
       window.sessionStorage.setItem('sess-recg-id', now * sess)
       window.sessionStorage.setItem('idt-curr-usr', now)
-      window.sessionStorage.setItem('user-id', matric)
+      window.sessionStorage.setItem('user-id', idVal)
       history.push('./dashboard')
       setPassValidated(false)
     }
