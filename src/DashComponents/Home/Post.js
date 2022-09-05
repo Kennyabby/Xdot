@@ -443,7 +443,7 @@ const Post = ({
                 ) : (
                   ''
                 )}
-                <label style={{ fontSize: '.8rem' }}>
+                <label style={{ fontSize: '0.8rem' }}>
                   {update['react'] !== undefined
                     ? (isReacted ? 'You ' : '') +
                       (update['react'].length

@@ -304,7 +304,7 @@ const PostComment = ({
       </div>
       {postShow === null ? (
         <div
-          style={{ fontSize: '1rem', fontWeight: 'bolder' }}
+          style={{ fontSize: '0.8rem', fontWeight: 'bolder' }}
           onClick={() => {
             setShowPost({ show: false, post: elem })
           }}

@@ -29,7 +29,7 @@ const QuizPost = ({
   showQuizPage,
 }) => {
   const commentInputRef = useRef(null)
-  const [postUser, setPostUser] = useState({})
+  const [postUser, setPostUser] = useState({ userName: 'Napsite' })
   const [quiz, setQuiz] = useState({})
   const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [isReacted, setIsReacted] = useState(false)
@@ -321,7 +321,7 @@ const QuizPost = ({
           marginBottom: '10px',
           padding: '5px',
           borderRadius: '20px',
-          backgroundColor: 'rgba(245,245,245,1)',
+          backgroundColor: 'rgba(220,220,220,1)',
           borderBottom: 'solid rgba(200,200,200,1) 3px',
         }}
       >
@@ -518,7 +518,7 @@ const QuizPost = ({
                 ) : (
                   ''
                 )}
-                <label>
+                <label style={{ fontSize: '0.8rem' }}>
                   {update['react'] !== undefined
                     ? (isReacted ? 'You ' : '') +
                       (update['react'].length
