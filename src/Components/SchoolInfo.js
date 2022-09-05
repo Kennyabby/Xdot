@@ -2,7 +2,12 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import logo from './user.png'
 
-const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed, server }) => {
+const SchoolInfo = ({
+  getCoverList,
+  getCoverPos,
+  setSchoolConfirmed,
+  server,
+}) => {
   const history = useHistory()
   const schoolCoverRef = useRef(null)
   const [pos, setPos] = useState(0)
@@ -56,7 +61,7 @@ const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed, server }) =
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
             infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
           } else {
-            infoRef.current.style.borderBottom = 'solid white 1px'
+            infoRef.current.style.borderBottom = 'solid black 1px'
             infoRef.current.parentElement.childNodes[1].style.display = 'none'
             infoRef.current.parentElement.childNodes[1].style.color = 'blue'
             if (infoRef.current.name === 'matricNo') {
@@ -124,10 +129,7 @@ const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed, server }) =
                     },
                     body: JSON.stringify({ matricNo: 1, _id: 0 }),
                   }
-                  const resp = await fetch(
-                    server+'/getMatricList',
-                    opts
-                  )
+                  const resp = await fetch(server + '/getMatricList', opts)
                   response = await resp.json()
                   const matricList = response.matricList
                   if (matricList.includes(infoRef.current.value)) {
@@ -209,25 +211,23 @@ const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed, server }) =
         body: JSON.stringify({ matricNo: 1, _id: 0 }),
       }
       if (matricNoRef.current !== null) {
-        fetch(server+'/getMatricList', opts).then(
-          async (resp) => {
-            const response = await resp.json()
-            const matricList = response.matricList
-            if (matricList.includes(matricNoRef.current.value)) {
-              matricValidated = true
-            }
-            if (validateInputs()) {
-              if (pos === 2) {
-                history.push('./contactInfo')
-                setPos(0)
-              } else {
-                setPos((pos) => {
-                  return pos + 1
-                })
-              }
+        fetch(server + '/getMatricList', opts).then(async (resp) => {
+          const response = await resp.json()
+          const matricList = response.matricList
+          if (matricList.includes(matricNoRef.current.value)) {
+            matricValidated = true
+          }
+          if (validateInputs()) {
+            if (pos === 2) {
+              history.push('./contactInfo')
+              setPos(0)
+            } else {
+              setPos((pos) => {
+                return pos + 1
+              })
             }
           }
-        )
+        })
       } else {
         if (validateInputs()) {
           console.log('yes')
@@ -257,7 +257,7 @@ const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed, server }) =
     var name = e.target.getAttribute('name')
     infoRefList.forEach((infoRef) => {
       if (infoRef.current != null) {
-        infoRef.current.style.borderBottom = 'solid white 1px'
+        infoRef.current.style.borderBottom = 'solid black 1px'
         infoRef.current.parentElement.childNodes[1].style.display = 'none'
         infoRef.current.placeholder = infoRef.current.title
         if (infoRef.current.value === '' && infoRef.current.required) {
@@ -340,12 +340,12 @@ const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed, server }) =
     <div className='np' onClick={getButtonEvent}>
       {
         <button className='nxt' type='submit' name='button' value='Prev'>
-          Prev
+          {'<< Prev'}
         </button>
       }
       {
         <button className='nxt' type='submit' name='button' value='Next'>
-          Next
+          {'Next >>'}
         </button>
       }
     </div>
@@ -483,7 +483,12 @@ const SchoolInfo = ({ getCoverList, getCoverPos, setSchoolConfirmed, server }) =
       {prevNext}
     </div>,
   ]
-  return <div ref={schoolCoverRef}>{schoolList[pos]}</div>
+  return (
+    <div ref={schoolCoverRef}>
+      <div className='infotag'>School Info</div>
+      {schoolList[pos]}
+    </div>
+  )
 }
 
 export default SchoolInfo

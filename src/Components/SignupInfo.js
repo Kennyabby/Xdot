@@ -61,7 +61,7 @@ const SignupInfo = ({
             infoRef.current.parentElement.childNodes[1].style.display = 'block'
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
           } else {
-            infoRef.current.style.borderBottom = 'solid white 1px'
+            infoRef.current.style.borderBottom = 'solid black 1px'
             infoRef.current.parentElement.childNodes[1].style.display = 'none'
             infoRef.current.parentElement.childNodes[1].style.color = 'blue'
             if (infoRef.current.name === 'identificationKey') {
@@ -232,7 +232,7 @@ const SignupInfo = ({
     var name = e.target.getAttribute('name')
     infoRefList.forEach((infoRef) => {
       if (infoRef.current != null) {
-        infoRef.current.style.borderBottom = 'solid white 1px'
+        infoRef.current.style.borderBottom = 'solid black 1px'
         infoRef.current.parentElement.childNodes[1].style.display = 'none'
         infoRef.current.placeholder = infoRef.current.title
         if (infoRef.current.value === '' && infoRef.current.required) {
@@ -295,12 +295,12 @@ const SignupInfo = ({
     <div className='np' onClick={getButtonEvent}>
       {
         <button className='nxt' type='submit' name='button' value='Prev'>
-          Prev
+          {'<< Prev'}
         </button>
       }
       {
         <button className='nxt' type='submit' name='button' value='Next'>
-          Finish
+          {'Finish >>'}
         </button>
       }
     </div>
@@ -369,7 +369,12 @@ const SignupInfo = ({
       {prevNext}
     </div>,
   ]
-  return <div ref={signupCoverRef}>{signupList[pos]}</div>
+  return (
+    <div ref={signupCoverRef}>
+      <div className='infotag'>Signup Info</div>
+      {signupList[pos]}
+    </div>
+  )
 }
 
 export default SignupInfo

@@ -6,7 +6,7 @@ import SideNavigator from './SideNavigator'
 import Home from './Home/Home'
 import Chats from './Chats'
 import Profile from './Profile'
-import Settings from './Settings'
+import Settings from './Settings/Settings'
 import Events from './Events/Events'
 import Tasks from './Tasks/Tasks'
 import Notifications from './Notifications'
@@ -16,7 +16,14 @@ import QuizApp from './Tasks/Quiz/QuizApp'
 import GrandQuiz from './Events/Grand Quiz/GrandQuiz'
 import DailyPuzzles from './Events/DailyPuzzles/DailyPuzzles'
 import StudyTable from './Events/StudyTable/StudyTable'
-import EVoting from './Events/EVoting/EVoting'
+import EVoting from './EVoting/EVoting'
+import Vote from './EVoting/Vote/Vote'
+import Apply from './EVoting/Apply/Apply'
+import Admin from './Settings/Admin/Admin'
+import Messaging from './Settings/Messaging/Messaging'
+import Notifier from './Settings/Notifications/Notifier'
+import Preferences from './Settings/Preferences/Preferences'
+import Privacy from './Settings/Privacy/Privacy'
 
 import userimg from './assets/user.png'
 import home from './assets/home.png'
@@ -37,6 +44,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   const [labelRefs, setLabelRefs] = useState([])
   const [tasksLabelRefs, setTasksLabelRefs] = useState([])
   const [eventsLabelRefs, setEventsLabelRefs] = useState([])
+  const [eVotingLabelRefs, setEvotingLabelRefs] = useState([])
   const [userImgUrl, setUserImgUrl] = useState(userimg)
   const homeRef = useRef(null)
   const chatsRef = useRef(null)
@@ -59,7 +67,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         },
         body: JSON.stringify(data),
       }
-      const resp = await fetch(server+'/' + req, opts)
+      const resp = await fetch(server + '/' + req, opts)
       const response = await resp.json()
       const user = response.user
       setUser(user)
@@ -68,9 +76,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({imgUrl: user.img, matricNo: user.matricNo}),
+        body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
       }
-      const resp1 = await fetch(server+'/getImgUrl', opts1)
+      const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
@@ -145,6 +153,17 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           setShowNavigator={setShowNavigator(true)}
         />
       )
+    } else if (id === 'e-voting') {
+      setView(
+        <EVoting
+          server={server}
+          chatrf={chatsRef}
+          homerf={homeRef}
+          notificationsrf={notificationsRef}
+          setBodyLeft={setBodyLeft('150px')}
+          setShowNavigator={setShowNavigator(true)}
+        />
+      )
     } else if (id === 'notifications') {
       setView(
         <Notifications
@@ -169,7 +188,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           setShowNav={setShowNav(false)}
         />
       )
-    } else if (id===undefined){
+    } else if (id === undefined) {
       setView(
         <Home
           server={server}
@@ -185,8 +204,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           }}
           setShowNav={setShowNav(false)}
         />
-      )  
-    }else {
+      )
+    } else {
       if (rootView === 'tasks') {
         if (id === 'cgpa') {
           setView(
@@ -265,15 +284,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               setShowNav={setShowNav(false)}
             />
           )
-        } else if (id === 'e-voting'){
-          setView(
-            <EVoting
-              server={server}
-              setBodyLeft={setBodyLeft('150px')}
-              setShowNavigator={setShowNavigator(true)}
-              setShowNav={setShowNav(false)}
-            />
-          )
         } else {
           setView(
             <Events
@@ -285,8 +295,104 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             />
           )
         }
+      } else if (rootView === 'e-voting') {
+        if (id === 'apply') {
+          setView(
+            <Apply
+              server={server}
+              user={user}
+              setBodyLeft={setBodyLeft('150px')}
+              setShowNavigator={setShowNavigator(true)}
+              setShowNav={setShowNav(false)}
+            />
+          )
+        } else if (id === 'vote') {
+          setView(
+            <Vote
+              server={server}
+              user={user}
+              setBodyLeft={setBodyLeft('150px')}
+              setShowNavigator={setShowNavigator(true)}
+              setShowNav={setShowNav(false)}
+            />
+          )
+        } else {
+          setView(
+            <EVoting
+              server={server}
+              chatrf={chatsRef}
+              homerf={homeRef}
+              setBodyLeft={setBodyLeft('150px')}
+              setShowNavigator={setShowNavigator(true)}
+            />
+          )
+        }
+      } else if (rootView === 'settings') {
+        if (id === 'admin') {
+          setView(
+            <Admin
+              server={server}
+              user={user}
+              setBodyLeft={setBodyLeft('150px')}
+              setShowNavigator={setShowNavigator(true)}
+              setShowNav={setShowNav(false)}
+            />
+          )
+        } else if (id === 'messaging') {
+          setView(
+            <Messaging
+              server={server}
+              user={user}
+              setBodyLeft={setBodyLeft('150px')}
+              setShowNavigator={setShowNavigator(true)}
+              setShowNav={setShowNav(false)}
+            />
+          )
+        } else if (id === 'notifier') {
+          setView(
+            <Notifier
+              server={server}
+              user={user}
+              setBodyLeft={setBodyLeft('150px')}
+              setShowNavigator={setShowNavigator(true)}
+              setShowNav={setShowNav(false)}
+            />
+          )
+        } else if (id === 'preferences') {
+          setView(
+            <Preferences
+              server={server}
+              user={user}
+              setBodyLeft={setBodyLeft('150px')}
+              setShowNavigator={setShowNavigator(true)}
+              setShowNav={setShowNav(false)}
+            />
+          )
+        } else if (id === 'privacy') {
+          setView(
+            <Privacy
+              server={server}
+              user={user}
+              setBodyLeft={setBodyLeft('150px')}
+              setShowNavigator={setShowNavigator(true)}
+              setShowNav={setShowNav(false)}
+            />
+          )
+        } else {
+          setView(
+            <Settings
+              server={server}
+              setBodyLeft={setBodyLeft('150px')}
+              chatrf={chatsRef}
+              homerf={homeRef}
+              notificationsrf={notificationsRef}
+              setShowNavigator={setShowNavigator(true)}
+              setShowNav={setShowNav(false)}
+            />
+          )
+        }
       } else {
-        if (rootView!==undefined){
+        if (rootView !== undefined) {
           setView(
             <Home
               server={server}
@@ -302,7 +408,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               }}
               setShowNav={setShowNav(false)}
             />
-          )  
+          )
         }
       }
     }
@@ -323,7 +429,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           isSearched={false}
         />
       )
-    }else if (id===undefined){
+    } else if (id === undefined) {
       setView(
         <Home
           server={server}
@@ -339,7 +445,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           }}
           setShowNav={setShowNav(false)}
         />
-      )  
+      )
     }
     if (rootView === 'tasks') {
       if (id === 'cgpa') {
@@ -419,15 +525,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             setShowNav={setShowNav(false)}
           />
         )
-      } else if (id === 'e-voting'){
-        setView(
-          <EVoting
-            server={server}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
       } else {
         setView(
           <Events
@@ -439,8 +536,104 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           />
         )
       }
-    }else{
-      if (rootView!==undefined){
+    } else if (rootView === 'e-voting') {
+      if (id === 'apply') {
+        setView(
+          <Apply
+            server={server}
+            user={user}
+            setBodyLeft={setBodyLeft('150px')}
+            setShowNavigator={setShowNavigator(true)}
+            setShowNav={setShowNav(false)}
+          />
+        )
+      } else if (id === 'vote') {
+        setView(
+          <Vote
+            user={user}
+            server={server}
+            setBodyLeft={setBodyLeft('150px')}
+            setShowNavigator={setShowNavigator(true)}
+            setShowNav={setShowNav(false)}
+          />
+        )
+      } else {
+        setView(
+          <EVoting
+            server={server}
+            chatrf={chatsRef}
+            homerf={homeRef}
+            setBodyLeft={setBodyLeft('150px')}
+            setShowNavigator={setShowNavigator(true)}
+          />
+        )
+      }
+    } else if (rootView === 'settings') {
+      if (id === 'admin') {
+        setView(
+          <Admin
+            server={server}
+            user={user}
+            setBodyLeft={setBodyLeft('150px')}
+            setShowNavigator={setShowNavigator(true)}
+            setShowNav={setShowNav(false)}
+          />
+        )
+      } else if (id === 'messaging') {
+        setView(
+          <Messaging
+            server={server}
+            user={user}
+            setBodyLeft={setBodyLeft('150px')}
+            setShowNavigator={setShowNavigator(true)}
+            setShowNav={setShowNav(false)}
+          />
+        )
+      } else if (id === 'notifier') {
+        setView(
+          <Notifier
+            server={server}
+            user={user}
+            setBodyLeft={setBodyLeft('150px')}
+            setShowNavigator={setShowNavigator(true)}
+            setShowNav={setShowNav(false)}
+          />
+        )
+      } else if (id === 'preferences') {
+        setView(
+          <Preferences
+            server={server}
+            user={user}
+            setBodyLeft={setBodyLeft('150px')}
+            setShowNavigator={setShowNavigator(true)}
+            setShowNav={setShowNav(false)}
+          />
+        )
+      } else if (id === 'privacy') {
+        setView(
+          <Privacy
+            server={server}
+            user={user}
+            setBodyLeft={setBodyLeft('150px')}
+            setShowNavigator={setShowNavigator(true)}
+            setShowNav={setShowNav(false)}
+          />
+        )
+      } else {
+        setView(
+          <Settings
+            server={server}
+            setBodyLeft={setBodyLeft('150px')}
+            chatrf={chatsRef}
+            homerf={homeRef}
+            notificationsrf={notificationsRef}
+            setShowNavigator={setShowNavigator(true)}
+            setShowNav={setShowNav(false)}
+          />
+        )
+      }
+    } else {
+      if (rootView !== undefined) {
         setView(
           <Home
             server={server}
@@ -456,9 +649,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             }}
             setShowNav={setShowNav(false)}
           />
-        )  
+        )
       }
-      
     }
   }, [user])
   useEffect(() => {
@@ -498,8 +690,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         removeSessions()
       }
     } else {
-      var sess=0
-      if (uid!==null){
+      var sess = 0
+      if (uid !== null) {
         uid.split('').forEach((elem) => {
           sess += elem.codePointAt(0)
         })
@@ -518,7 +710,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           history.push('/signin')
           removeSessions()
         }
-      }else{
+      } else {
         setIsNewSession(false)
         history.push('/signin')
         removeSessions()
@@ -529,7 +721,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   const getLabelRefs = (refs) => {
     setLabelRefs(refs)
   }
-  const removeSessions = ()=>{
+  const removeSessions = () => {
     window.sessionStorage.removeItem('sess-recg-id')
     window.sessionStorage.removeItem('idt-curr-usr')
     window.sessionStorage.removeItem('user-id')
@@ -562,6 +754,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           getEventsLabelRefs={(eventsLabelRefs) => {
                             setEventsLabelRefs(eventsLabelRefs)
                           }}
+                          getEvotingLabelRefs={(eVotingLabelRefs) => {
+                            setEvotingLabelRefs(eVotingLabelRefs)
+                          }}
                           logOut={logout}
                         />
                       </div>
@@ -576,6 +771,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           }}
                           getEventsLabelRefs={(eventsLabelRefs) => {
                             setEventsLabelRefs(eventsLabelRefs)
+                          }}
+                          getEvotingLabelRefs={(eVotingLabelRefs) => {
+                            setEvotingLabelRefs(eVotingLabelRefs)
                           }}
                           logOut={logout}
                         />
@@ -629,7 +827,12 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
 
             <div className='imgCover'>
               <div className='hometoggleCover'>
-                <div className='hometoggle' style={{justifyContent: id==='chats'?' center' : 'left'}}>
+                <div
+                  className='hometoggle'
+                  style={{
+                    justifyContent: id === 'chats' ? ' center' : 'left',
+                  }}
+                >
                   {winSize <= 700 && showNavigator && (
                     <div
                       name='menu'
@@ -728,45 +931,50 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                   ) : undefined}
                 </div>
               </div>
-              
-              {(id==='chats'|| id===undefined|| id==='profile')? undefined 
-              :(<div className='coverDetail'>
-                <Link to='/dashboard/profile'>
-                  <img
-                    className='userimg'
-                    src={userImgUrl}
-                    height='50px'
-                    width='50px'
-                    title='go to your profile'
+
+              {id === 'chats' ||
+              id === undefined ||
+              id === 'profile' ? undefined : (
+                <div className='coverDetail'>
+                  <Link to='/dashboard/profile'>
+                    <img
+                      className='userimg'
+                      src={userImgUrl}
+                      height='50px'
+                      width='50px'
+                      title='go to your profile'
+                      style={{
+                        ...shade({
+                          shade: 'rgba(230,230,230,1)',
+                          prevPadding: '0px',
+                          newPadding: '0px',
+                          radius: '50%',
+                          width: '50px',
+                        }),
+                      }}
+                    />
+                  </Link>
+                  <p
+                    className='usernameshadow'
                     style={{
+                      fontWeight: 'bold',
+                      fontSize: '.8rem',
+
                       ...shade({
-                        shade: 'rgba(230,230,230,1)',
+                        width: '100px',
                         prevPadding: '0px',
                         newPadding: '0px',
-                        radius: '50%',
-                        width: '50px',
+                        radius: '5px',
+                        shade: 'rgba(230,230,230,1)',
                       }),
                     }}
-                  />
-                </Link>
-                <p
-                  className='usernameshadow'
-                  style={{
-                    fontWeight: 'bold',
-                    fontSize: '.8rem',
-
-                    ...shade({
-                      width: '100px',
-                      prevPadding: '0px',
-                      newPadding: '0px',
-                      radius: '5px',
-                      shade: 'rgba(230,230,230,1)',
-                    }),
-                  }}
-                >
-                  {user.userName ? user.userName.toUpperCase() : user.userName}
-                </p>
-              </div>)}
+                  >
+                    {user.userName
+                      ? user.userName.toUpperCase()
+                      : user.userName}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

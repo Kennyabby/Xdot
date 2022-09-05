@@ -54,21 +54,24 @@ const QuizPost = ({
     { name: 'sad', src: sad },
     { name: 'angry', src: angry },
   ]
-  useEffect(async()=>{
-    if(postUser.matricNo!==undefined){
+  useEffect(async () => {
+    if (postUser.matricNo !== undefined) {
       const opts1 = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({imgUrl: postUser.img, matricNo:postUser.matricNo}),
+        body: JSON.stringify({
+          imgUrl: postUser.img,
+          matricNo: postUser.matricNo,
+        }),
       }
-      const resp1 = await fetch(server+'/getImgUrl', opts1)
+      const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
     }
-  },[postUser])
+  }, [postUser])
   useEffect(async () => {
     setUpdate(updt)
     try {
@@ -79,7 +82,7 @@ const QuizPost = ({
         },
         body: JSON.stringify({ matricNo: updt.matricNo }),
       }
-      const resp = await fetch(server+'/getUserDetails', opts)
+      const resp = await fetch(server + '/getUserDetails', opts)
       const response = await resp.json()
       const user = response.user
 
@@ -90,33 +93,33 @@ const QuizPost = ({
 
   useEffect(() => {
     if (updt['react'] !== undefined) {
-      var bd={}
+      var bd = {}
       var ind
       updt['react'].forEach((bdy, index) => {
         if (bdy.matricNo === user.matricNo) {
-          bd=bdy
-          ind=index
+          bd = bdy
+          ind = index
         }
       })
-      if (updt['react'].includes(bd)){
+      if (updt['react'].includes(bd)) {
         setIsReacted(true)
         emojis.forEach((emoji, i) => {
           if (emoji.name === updt['react'][ind].reaction) {
             setPostReaction(emoji)
           }
         })
-      }else{
+      } else {
         setIsReacted(false)
         setPostReaction({
           name: 'react',
-          src: react
-        })  
+          src: react,
+        })
       }
-    }else{
+    } else {
       setIsReacted(false)
       setPostReaction({
         name: 'react',
-        src: react
+        src: react,
       })
     }
     if (updt['comment'] !== undefined) {
@@ -273,7 +276,7 @@ const QuizPost = ({
               ],
             }),
           }
-          const resp = await fetch(server+'/updateOneDoc', opts)
+          const resp = await fetch(server + '/updateOneDoc', opts)
           const response = await resp.json()
           const updated = response.updated
           if (updated) {
@@ -315,27 +318,15 @@ const QuizPost = ({
       <div
         style={{
           fontFamily: 'monospace',
-          margin: '5px',
+          marginBottom: '10px',
           padding: '5px',
+          borderRadius: '20px',
           backgroundColor: 'rgba(245,245,245,1)',
-          borderRadius: '10px',
+          borderBottom: 'solid rgba(200,200,200,1) 3px',
         }}
       >
         {status !== undefined ? (
-          <div
-            className='toppostlabel'
-            style={{
-              position: 'fixed',
-              top: '5px',
-              margin: 'auto',
-              width: '250px',
-              backgroundColor: 'rgba(0,0,0,0.8)',
-              color: 'white',
-              padding: '10px',
-              fontWeight: 'bold',
-              fontSize: '1rem',
-            }}
-          >
+          <div className='toppostlabel'>
             <img
               onClick={() => {
                 if (postShow === null) {
@@ -388,11 +379,7 @@ const QuizPost = ({
                 {postUser.lastName !== undefined ? (
                   <div>
                     <label style={{ fontWeight: 'bold' }}>
-                      {(
-                        postUser.lastName +
-                        ' ' +
-                        postUser.firstName
-                      ).toUpperCase()}
+                      {postUser.userName.toUpperCase()}
                     </label>
                   </div>
                 ) : undefined}
@@ -564,7 +551,7 @@ const QuizPost = ({
                 <div
                   style={{
                     position: 'absolute',
-                    left: '20px',
+                    left: '5px',
                     display: 'flex',
                     width: 'fit-content',
                     padding: '5px',
@@ -572,7 +559,7 @@ const QuizPost = ({
                     paddingRight: '20px',
                     backgroundColor: 'white',
                     color: 'black',
-                    boxShadow: 'black 4px 4px 5px',
+                    boxShadow: 'black 0px 0px 7px',
                     borderRadius: '10px',
                     cursor: 'pointer',
                   }}
@@ -683,7 +670,7 @@ const QuizPost = ({
                     paddingLeft: '20px',
                     paddingRight: '20px',
                     backgroundColor: 'white',
-                    boxShadow: 'black 4px 4px 5px',
+                    boxShadow: 'black 0px 0px 7px',
                     borderRadius: '10px',
                     cursor: 'pointer',
                   }}
@@ -719,14 +706,14 @@ const QuizPost = ({
                 <div
                   style={{
                     position: 'absolute',
-                    right: '20px',
+                    right: '5px',
                     display: 'flex',
                     width: 'fit-content',
                     padding: '10px',
                     paddingLeft: '20px',
                     paddingRight: '20px',
                     backgroundColor: 'white',
-                    boxShadow: 'black 4px 4px 5px',
+                    boxShadow: 'black 0px 0px 7px',
                     borderRadius: '10px',
                     cursor: 'pointer',
                   }}
@@ -801,80 +788,66 @@ const QuizPost = ({
                 />
               )}
             </div>
-            <div
-              className='commentinput'
-              style={{
-                position: 'fixed',
-                left: 'auto',
-                right: 'auto',
-                backgroundColor: 'black',
-                borderRadius: '15px',
-                padding: '5px',
-                color: 'white',
-              }}
-            >
-              <textarea
-                ref={commentInputRef}
-                value={postComment}
-                onChange={(e) => {
-                  setPostComment(e.target.value)
-                }}
-                placeholder='Type...'
-                style={{
-                  width: '80%',
-                  padding: '10px',
-                  fontSize: '16px',
-                  backgroundColor: 'rgba(0,0,0,0)',
-                  border: 'none',
-                  outline: 'none',
-                  color: 'white',
-                }}
-                rows={
-                  commentInputRef.current !== null
-                    ? postComment.length * 16 >
-                      commentInputRef.current.getBoundingClientRect().width * 2
-                      ? (16 * postComment.length) /
-                          (commentInputRef.current.getBoundingClientRect()
-                            .width *
-                            2) >
-                        10
-                        ? 10
-                        : (16 * postComment.length) /
-                          (commentInputRef.current.getBoundingClientRect()
-                            .width *
-                            2)
-                      : 1
-                    : 1
-                }
-              />
-              {postComment ? (
-                <img
-                  onClick={() => {
-                    if (postShow === null) {
-                      updateReactions({ rct: 'comment', comment: postComment })
-                      setPostComment('')
-                    } else {
-                      updateReactions({
-                        rct: 'comment',
-                        statorBody: {
-                          createdAt: postShow.createdAt,
-                          comment: postComment,
-                          action: 'comment',
-                        },
-                      })
-                      setPostComment('')
-                    }
+            <div className='cmCover'>
+              <div className='commentinput'>
+                <div
+                  contentEditable='true'
+                  placeholder='Comment...'
+                  ref={commentInputRef}
+                  onInput={(e) => {
+                    const value = e.currentTarget.textContent
+                    setPostComment(value)
                   }}
-                  src={send}
                   style={{
-                    margin: '5px',
+                    width: '80%',
+                    padding: '15px',
                     fontSize: '1rem',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
+                    maxHeight: '200px',
+                    overflowY: 'auto',
+                    textAlign: 'left',
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    border: 'none',
+                    outline: 'none',
+                    color: 'black',
                   }}
-                  height='25px'
-                />
-              ) : undefined}
+                ></div>
+                {postComment ? (
+                  <img
+                    onClick={() => {
+                      commentInputRef.current.innerText = ''
+                      if (postShow === null) {
+                        updateReactions({
+                          rct: 'comment',
+                          comment: postComment,
+                        })
+                        setPostComment('')
+                      } else {
+                        updateReactions({
+                          rct: 'comment',
+                          statorBody: {
+                            createdAt: postShow.createdAt,
+                            comment: postComment,
+                            action: 'comment',
+                          },
+                        })
+                        setPostComment('')
+                      }
+                    }}
+                    src={send}
+                    style={{
+                      padding: '0px',
+                      float: 'right',
+                      marginTop: 'auto',
+                      marginLeft: 'auto',
+                      marginRight: '10px',
+                      marginBottom: '5px',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                    }}
+                    height='25px'
+                  />
+                ) : undefined}
+              </div>
             </div>
           </div>
         ) : undefined}

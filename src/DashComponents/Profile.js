@@ -67,21 +67,21 @@ const Profile = ({
     'otherGuardianContactNo',
     'guardianCurrentAddress',
   ]
-  useEffect(async()=>{
-    if(user!==null){
+  useEffect(async () => {
+    if (user !== null) {
       const opts1 = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({imgUrl: user.img, matricNo:user.matricNo}),
+        body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
       }
-      const resp1 = await fetch(server+'/getImgUrl', opts1)
+      const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
     }
-  },[user])
+  }, [user])
   useEffect(() => {
     if (homerf !== undefined && chatrf !== undefined) {
       homerf.current.style.borderBottom = 'solid blue 0px'
@@ -142,7 +142,7 @@ const Profile = ({
         }),
       }
 
-      const resp = await fetch(server+'/updateOneUser', opts)
+      const resp = await fetch(server + '/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -171,7 +171,7 @@ const Profile = ({
           ],
         }),
       }
-      const resp = await fetch(server+'/updateOneUser', opts)
+      const resp = await fetch(server + '/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -373,9 +373,19 @@ const Profile = ({
             <div className='profiledetails'>
               {userDetailValue
                 .filter((prop) => {
-                  return user[prop] !== undefined && user[prop].length
+                  if (!isSearched) {
+                    return user[prop] !== undefined && user[prop].length
+                  } else {
+                    console.log('yes')
+                    return (
+                      user[prop] !== undefined &&
+                      user[prop].length &&
+                      prop !== 'dateOfBirth'
+                    )
+                  }
                 })
                 .map((prop, i) => {
+                  console.log(prop)
                   if (showAllDetails) {
                     return (
                       <div
@@ -392,7 +402,6 @@ const Profile = ({
                           style={{
                             fontWeight: 'bold',
                             fontSize: '1rem',
-                            
                           }}
                         >
                           {userDetailName[i]}
@@ -402,7 +411,6 @@ const Profile = ({
                             fontWeight: 'lighter',
                             fontSize: '.9rem',
                             fontStyle: 'italic',
-                            
                           }}
                         >
                           {user[prop]}
@@ -435,7 +443,6 @@ const Profile = ({
                               fontWeight: 'lighter',
                               fontSize: '.9rem',
                               fontStyle: 'italic',
-                              
                             }}
                           >
                             {user[prop]}

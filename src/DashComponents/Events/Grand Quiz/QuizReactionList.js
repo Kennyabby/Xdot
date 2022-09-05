@@ -32,7 +32,7 @@ const QuizReactionList = ({ list, closeReactionList }) => {
           left: '0px',
           width: '100%',
           height: '100%',
-          backgroundColor: 'rgba(250,250,250,0.8)',
+          backgroundColor: 'rgba(250,250,250,1)',
           overflowY: 'auto',
           zIndex: '1',
         }}
@@ -49,7 +49,7 @@ const QuizReactionList = ({ list, closeReactionList }) => {
             right: '5px',
             cursor: 'pointer',
           }}
-          height='25px'
+          height='20px'
         />
         <div style={{ margin: '10px' }}>
           {list.map((reaction, i) => {
@@ -62,7 +62,7 @@ const QuizReactionList = ({ list, closeReactionList }) => {
                   src={profimg}
                   alt='profile image'
                   style={{ borderRadius: '50%', cursor: 'pointer' }}
-                  height='40px'
+                  height='50px'
                 />
 
                 <label style={{ fontSize: '1rem', fontWeight: 'bold' }}>
@@ -75,7 +75,13 @@ const QuizReactionList = ({ list, closeReactionList }) => {
                     )
                   }
                 })}
-                <label style={{ fontSize: '1rem', fontStyle: 'italic' }}>
+                <label
+                  style={{
+                    fontSize: '1rem',
+                    fontStyle: 'italic',
+                    marginTop: '25px',
+                  }}
+                >
                   <PeriodLabel createdAt={reaction.createdAt} />{' '}
                 </label>
               </div>

@@ -46,9 +46,9 @@ const Finish = ({
     'Username',
   ]
   const setCamelCase = (text) => {
-      var first = text.slice(0, 1).toUpperCase()
-      var others = text.slice(1).toLowerCase()
-      return first + others
+    var first = text.slice(0, 1).toUpperCase()
+    var others = text.slice(1).toLowerCase()
+    return first + others
   }
   const regInfoValues = [
     localStorage.getItem('firstName'),
@@ -139,21 +139,21 @@ const Finish = ({
       }
     }
   }
-  const convertToBase64 = (file)=>{
-    return new Promise (resolve =>{
+  const convertToBase64 = (file) => {
+    return new Promise((resolve) => {
       const reader = new FileReader()
       reader.readAsDataURL(file)
-      reader.onload=()=>{
+      reader.onload = () => {
         resolve(reader.result)
       }
     })
   }
-  useEffect(async ()=>{
-    if (file!==null){
+  useEffect(async () => {
+    if (file !== null) {
       const newFile = await convertToBase64(file)
       setConvertedFile(newFile)
     }
-  },[file])
+  }, [file])
   useEffect(() => {
     if (userImg === '') {
     } else {
@@ -162,7 +162,7 @@ const Finish = ({
   }, [userImg])
   const fileHandler = (e) => {
     var file = e.target.files[0]
-    console.log('type: '+file.type)
+    console.log('type: ' + file.type)
     setFile(file)
     const url = URL.createObjectURL(file)
     setImgUrl(url)
@@ -180,14 +180,14 @@ const Finish = ({
       const imgSrc = Date.now() + file.name
       setUserImg(imgSrc)
       studentInfo.img = imgSrc
-      const imageInfo={
+      const imageInfo = {
         image: convertedFile,
         imageName: imgSrc,
-        imageType: file.type
+        imageType: file.type,
       }
-      const studentBody={
+      const studentBody = {
         studentInfo: studentInfo,
-        imageInfo: imageInfo
+        imageInfo: imageInfo,
       }
       try {
         const opts = {
@@ -195,9 +195,9 @@ const Finish = ({
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(studentBody)
+          body: JSON.stringify(studentBody),
         }
-        const resp = await fetch(server+'/postUserDetails', opts)
+        const resp = await fetch(server + '/postUserDetails', opts)
         const feedBack = await resp.json()
         if (feedBack.isDelivered === true) {
           setShow(false)
@@ -212,29 +212,39 @@ const Finish = ({
     <div className='np' style={{ margin: '0px' }} onClick={getButtonEvent}>
       {
         <button className='nxt' type='submit' name='button' value='Prev'>
-          Prev
+          {'<< Prev'}
         </button>
       }
       {viewNext && (
         <button className='nxt' type='submit' name='button' value='Next'>
-          Next
+          {'Next >>'}
         </button>
       )}
     </div>
   )
   const finishList = [
     <div className='container'>
+      <h3>Info Summary</h3>
       {regInfos.map((regInfo, i) => {
         return (
           <p className='regInfo' key={i}>
-            {regInfo}: <label style={{fontWeight:'light', fontStyle:'italic'}}>{regInfoValues[i]}</label>
+            <label style={{ fontWeight: 'bold' }}>{regInfo}: </label>
+            <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
+              {regInfoValues[i]}
+            </label>
           </p>
         )
       })}
       {prevNext}
     </div>,
     <div className='container'>
-      <img className='usr' src={imgUrl} alt='user' height='100px' width='100px' />
+      <img
+        className='usr'
+        src={imgUrl}
+        alt='user'
+        height='100px'
+        width='100px'
+      />
       <input
         ref={imgRef}
         type='file'
@@ -272,7 +282,7 @@ const Finish = ({
       {prevNext}
     </div>,
   ]
-  
+
   return (
     <div ref={finishCoverRef}>
       {show && finishList[pos]}

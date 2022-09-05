@@ -8,7 +8,7 @@ import Finish from './Finish'
 import Intro from './Intro'
 import SideNavigator from './SideNavigator'
 import cancel from './cancel.png'
-const Signup = ({ showNavbar, server}) => {
+const Signup = ({ showNavbar, server }) => {
   const history = useHistory()
   const [content, setContent] = useState('Loading Form...')
   const [labelRefs, setLabelRefs] = useState([])
@@ -222,8 +222,9 @@ const Signup = ({ showNavbar, server}) => {
         }
       }
     })
-
+    window.scrollTo(0, 0)
     if (id === 'basicInfo') {
+      window.scrollTo(0, 0)
       setContent(
         <BasicInfo
           getCoverList={getCoverList}
@@ -236,6 +237,7 @@ const Signup = ({ showNavbar, server}) => {
         />
       )
     } else if (id === 'schoolInfo') {
+      window.scrollTo(0, 0)
       setContent(
         <SchoolInfo
           server={server}
@@ -249,6 +251,7 @@ const Signup = ({ showNavbar, server}) => {
         />
       )
     } else if (id === 'contactInfo') {
+      window.scrollTo(0, 0)
       setContent(
         <ContactInfo
           getCoverList={getCoverList}
@@ -261,6 +264,7 @@ const Signup = ({ showNavbar, server}) => {
         />
       )
     } else if (id === 'signupInfo') {
+      window.scrollTo(0, 0)
       setContent(
         <SignupInfo
           basicConfirmed={basicConfirmed}
@@ -283,6 +287,7 @@ const Signup = ({ showNavbar, server}) => {
         />
       )
     } else if (id === 'finish') {
+      window.scrollTo(0, 0)
       setContent(
         <Finish
           server={server}
@@ -307,6 +312,7 @@ const Signup = ({ showNavbar, server}) => {
         />
       )
     } else {
+      window.scrollTo(0, 0)
       setContent(<Intro />)
     }
   }, [id])
@@ -334,7 +340,7 @@ const Signup = ({ showNavbar, server}) => {
                 cursor: 'pointer',
               }}
             >
-              <img src={cancel} height='30px' title='Close Sign up Page' />
+              <img src={cancel} height='20px' title='Close Sign up Page' />
             </div>
           </Link>
           {sessionStatus ? (
@@ -373,7 +379,7 @@ const Signup = ({ showNavbar, server}) => {
                 getLabelRefs={getLabelRefs}
               />
             ) : undefined}
-            <div style={{overflowY:'auto', height:"100vh"}}>
+            <div style={{ overflowY: 'auto', height: '100vh' }}>
               {content}
               {showView ? (
                 <div className='currv' ref={currRef}>

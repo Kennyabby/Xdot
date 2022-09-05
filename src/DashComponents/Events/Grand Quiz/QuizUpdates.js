@@ -53,7 +53,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
           limit: maxNumberOfRequest,
         }),
       }
-      const resp = await fetch(server+'/getUpdates', opts)
+      const resp = await fetch(server + '/getUpdates', opts)
       const response = await resp.json()
       const updates = response.updates
       setLastUpdatedPost(updates[updates.length - 1])
@@ -61,17 +61,14 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
       setUpdates(updates)
       setPrevUpdates(updates)
       setGotUpdates(true)
-
     } catch (TypeError) {}
   }
-  useEffect(()=>{
-  },[lastUpdatedPost])
+  useEffect(() => {}, [lastUpdatedPost])
   useEffect(() => {
     window.addEventListener('scroll', checkLastPostDimension)
     return () => {
       window.removeEventListener('scroll', checkLastPostDimension)
     }
-
   }, [lastPostDimension])
   useEffect(() => {
     getNewUpdates(user.lastQuizUpdate)
@@ -90,7 +87,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
       var updateFrom = lastUpdatedPost.createdAt
       if (prevUpdates.length === maxNumberOfRequest) {
         setShowPostUpdatesStatus(true)
-        setPostUpdatesStatus('Getting More Updates...')
+        setPostUpdatesStatus('More Updates...')
         try {
           const opts = {
             method: 'POST',
@@ -103,13 +100,13 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
               limit: maxNumberOfRequest,
             }),
           }
-          const resp = await fetch(server+'/getUpdates', opts)
+          const resp = await fetch(server + '/getUpdates', opts)
           const response = await resp.json()
           const updt = response.updates
           setLastUpdatedPost(updt[updt.length - 1])
           if (updt.length < maxNumberOfRequest) {
             setShowPostUpdatesStatus(true)
-            setPostUpdatesStatus('No More Updates Availble!')
+            setPostUpdatesStatus('No More Updates Available!')
           }
           var isIncludeItem = false
           prevUpdates.forEach((item) => {
@@ -125,7 +122,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
         } catch (TypeError) {}
       } else {
         setShowPostUpdatesStatus(true)
-        setPostUpdatesStatus('No More Updates Availble!')
+        setPostUpdatesStatus('No More Updates Available!')
       }
     } else {
       setShowPostUpdatesStatus(false)
@@ -145,7 +142,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
         }),
       }
 
-      const resp = await fetch(server+'/getOneUpdate', opts)
+      const resp = await fetch(server + '/getOneUpdate', opts)
       const response = await resp.json()
       const update = await response.update
       var newUpdates = updates
@@ -170,7 +167,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
               if (comment.createdAt === currentPostShow.createdAt) {
                 setNewPostShow(comment)
               }
-            }else{
+            } else {
               setNewPostShow(null)
             }
           })
@@ -207,9 +204,7 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
                   paddingLeft: '20px',
                   paddingRight: '20px',
                   borderRadius: '10px',
-                  border: 'solid darkblue 2px',
-                  backgroundColor: 'blue',
-                  color: 'white',
+                  color: 'blue',
                   cursor: 'pointer',
                 }}
               >

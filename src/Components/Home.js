@@ -61,6 +61,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt }) => {
     <>
       <div className='home' ref={refHome}>
         <div className='info'>
+          <h2>Notice</h2>
           <p>
             This page is strictly for members of the National Association of
             Physics Students University of Ibadan Division <b>(NAPS UI)</b>, as
@@ -69,15 +70,16 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt }) => {
             <b>MATRIC NUMBER</b>. Click the button below to proceed.
           </p>
         </div>
-        <img
-          className='ui-logo'
-          style={{ opacity: '0.7' }}
-          src='UI-logo.png'
-          height='300px'
-        />
-        <Link to='/signup'>
-          <button className='signup'>Sign Up</button>
-        </Link>
+        <div
+          style={{
+            justifyContent: 'center',
+            textAlign: 'center',
+          }}
+        >
+          <Link style={{ margin: 'atuo' }} to='/signup'>
+            <button className='signup'>Sign Up</button>
+          </Link>
+        </div>
       </div>
       <Events
         setRef={(ref) => {

@@ -1,12 +1,12 @@
 import { React, useState, useEffect } from 'react'
 
-const EVoting = () => {
+const Vote = () => {
   useEffect(() => {}, [])
   return (
     <>
-      <div>{'E-Voting'}</div>
+      <div>{'Vote'}</div>
     </>
   )
 }
 
-export default EVoting
+export default Vote

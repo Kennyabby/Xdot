@@ -94,7 +94,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       body: JSON.stringify({ matricNo: fields.matricNo }),
     }
 
-    fetch(server+'/getpassList', opts1).then(async (resp) => {
+    fetch(server + '/getpassList', opts1).then(async (resp) => {
       const response = await resp.json()
       const idVal = await response.id
 
@@ -148,15 +148,17 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
           onChange={handleInput}
           onFocus={handleFocus}
         >
-          <p 
-            style={{ 
-              fontWeight: 'bold', 
-              fontSize: '1.6rem' 
+          <p
+            style={{
+              fontWeight: 'bold',
+              fontSize: '1.6rem',
             }}
-            onClick={()=>{
+            onClick={() => {
               history.push('/')
             }}
-          >NAPS-UI</p>
+          >
+            NAPS-UI
+          </p>
           <img
             className='usr'
             src={usrImg}
@@ -177,6 +179,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
             />
             <p className='inputStyle'></p>
             <img
+              style={{ marginLeft: '10px' }}
               src={usrImg}
               name='userMatric'
               alt='user matric'
@@ -198,7 +201,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
             <p className='inputStyle'></p>
             {view && (
               <img
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', marginLeft: '10px' }}
                 title='show password'
                 src={viewImg}
                 name='view'

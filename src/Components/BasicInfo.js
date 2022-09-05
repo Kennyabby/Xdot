@@ -57,7 +57,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
             infoRef.current.parentElement.childNodes[1].style.display = 'block'
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
           } else {
-            infoRef.current.style.borderBottom = 'solid white 1px'
+            infoRef.current.style.borderBottom = 'solid black 1px'
             infoRef.current.parentElement.childNodes[1].style.display = 'none'
             infoRef.current.parentElement.childNodes[1].style.color = 'blue'
             count++
@@ -166,7 +166,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
     var name = e.target.getAttribute('name')
     infoRefList.forEach((infoRef) => {
       if (infoRef.current != null) {
-        infoRef.current.style.borderBottom = 'solid white 1px'
+        infoRef.current.style.borderBottom = 'solid black 1px'
         infoRef.current.parentElement.childNodes[1].style.display = 'none'
         infoRef.current.placeholder = infoRef.current.title
         if (infoRef.current.value === '' && infoRef.current.required) {
@@ -211,12 +211,12 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
     <div className='np' onClick={getButtonEvent}>
       {viewPrev ? (
         <button className='nxt' type='submit' name='button' value='Prev'>
-          Prev
+          {'<< Prev'}
         </button>
       ) : undefined}
       {
         <button className='nxt' type='submit' name='button' value='Next'>
-          Next
+          {'Next >>'}
         </button>
       }
     </div>
@@ -285,7 +285,9 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
           name='gender'
           value='Female'
         />
-        {genderClicked ? <p style={{ color: 'red' }}>Choose Your Gender</p> : undefined}
+        {genderClicked ? (
+          <p style={{ color: 'red' }}>Choose Your Gender</p>
+        ) : undefined}
       </div>
       {prevNext}
     </div>,
@@ -322,6 +324,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
   ]
   return (
     <div style={{ display: 'block' }} ref={basicCoverRef}>
+      <div className='infotag'>Basic Info</div>
       {basicList[pos]}
     </div>
   )

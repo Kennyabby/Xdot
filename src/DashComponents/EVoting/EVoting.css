@@ -1,0 +1,24 @@
+.bpd {
+  position: fixed;
+  top: 5px;
+  left: 155px;
+  z-index: 1;
+  padding: 10px;
+  border: solid lightgreen 2px;
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.ebtn {
+  padding: 10px;
+  font-family: monospace;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+@media screen and (max-width: 700px) {
+  .bpd {
+    left: 5px;
+  }
+}

@@ -49,7 +49,7 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
             infoRef.current.parentElement.childNodes[1].style.display = 'block'
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
           } else {
-            infoRef.current.style.borderBottom = 'solid white 1px'
+            infoRef.current.style.borderBottom = 'solid black 1px'
             infoRef.current.parentElement.childNodes[1].style.display = 'none'
             infoRef.current.parentElement.childNodes[1].style.color = 'blue'
             count++
@@ -149,7 +149,7 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
     var name = e.target.getAttribute('name')
     infoRefList.forEach((infoRef) => {
       if (infoRef.current != null) {
-        infoRef.current.style.borderBottom = 'solid white 1px'
+        infoRef.current.style.borderBottom = 'solid black 1px'
         infoRef.current.parentElement.childNodes[1].style.display = 'none'
         infoRef.current.placeholder = infoRef.current.title
         if (infoRef.current.value === '' && infoRef.current.required) {
@@ -190,12 +190,12 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
     <div className='np' onClick={getButtonEvent}>
       {
         <button className='nxt' type='submit' name='button' value='Prev'>
-          Prev
+          {'<< Prev'}
         </button>
       }
       {
         <button className='nxt' type='submit' name='button' value='Next'>
-          Next
+          {'Next >>'}
         </button>
       }
     </div>
@@ -286,7 +286,12 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
       {prevNext}
     </div>,
   ]
-  return <div ref={contactCoverRef}>{contactList[pos]}</div>
+  return (
+    <div ref={contactCoverRef}>
+      <div className='infotag'>Contact Info</div>
+      {contactList[pos]}
+    </div>
+  )
 }
 
 export default ContactInfo

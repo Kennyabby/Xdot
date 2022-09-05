@@ -13,6 +13,7 @@ const SideNavigator = ({
   user,
   getTasksLabelRefs,
   getEventsLabelRefs,
+  getEvotingLabelRefs,
   getLabelRefs,
   logOut,
   setView,
@@ -22,11 +23,14 @@ const SideNavigator = ({
   const notificationsLabel = useRef(null)
   const eventsLabel = useRef(null)
   const tasksLabel = useRef(null)
+  const eVotingLabel = useRef(null)
   const settingsLabel = useRef(null)
   const [showEventDrop, setShowEventDrop] = useState(false)
   const [showTaskDrop, setShowTaskDrop] = useState(false)
+  const [showEvotingDrop, setShowEvotingDrop] = useState(false)
   const [eventsToggleStatus, setEventsToggleStatus] = useState(downarrow)
   const [tasksToggleStatus, setTasksToggleStatus] = useState(downarrow)
+  const [eVotingToggleStatus, setEVotingToggleStatus] = useState(downarrow)
 
   const cgpacalcRef = useRef(null)
   const todolistRef = useRef(null)
@@ -35,22 +39,27 @@ const SideNavigator = ({
   const grandquizRef = useRef(null)
   const dailypuzzleRef = useRef(null)
   const studytableRef = useRef(null)
-  const e_votingRef = useRef(null)
+
+  const applyRef = useRef(null)
+  const voteRef = useRef(null)
 
   const tasksLabelRefs = [cgpacalcRef, todolistRef, quizappRef]
-  const eventsLabelRefs = [grandquizRef, dailypuzzleRef, studytableRef, e_votingRef]
+  const eventsLabelRefs = [grandquizRef, dailypuzzleRef, studytableRef]
+  const eVotingLabelRefs = [applyRef, voteRef]
 
   const labelRefs = [
     profileLabel,
     notificationsLabel,
     eventsLabel,
     tasksLabel,
+    eVotingLabel,
     settingsLabel,
   ]
   useEffect(() => {
     getLabelRefs(labelRefs)
     getTasksLabelRefs(tasksLabelRefs)
     getEventsLabelRefs(eventsLabelRefs)
+    getEvotingLabelRefs(eVotingLabelRefs)
   }, [])
 
   const logout = () => {
@@ -74,6 +83,14 @@ const SideNavigator = ({
       } else {
         setTasksToggleStatus(uparrow)
         setShowTaskDrop(true)
+      }
+    } else if (name === 'e-votingdrop') {
+      if (showEvotingDrop) {
+        setEVotingToggleStatus(downarrow)
+        setShowEvotingDrop(false)
+      } else {
+        setEVotingToggleStatus(uparrow)
+        setShowEvotingDrop(true)
       }
     }
   }
@@ -103,7 +120,6 @@ const SideNavigator = ({
             <li name='notifications' className='userleft'>
               <label
                 className='userleftitem'
-                // style={{ marginLeft: '25px' }}
                 name='notifications'
                 ref={notificationsLabel}
               >
@@ -174,15 +190,6 @@ const SideNavigator = ({
                   {'>'} Study Table{' '}
                 </li>
               </Link>
-              <Link
-                style={{ color: 'white', textDecoration: 'none' }}
-                to='/dashboard/events/e-voting'
-              >
-                <li ref={e_votingRef} className='dropitem'>
-                  {' '}
-                  {'>'} E-Voting{' '}
-                </li>
-              </Link>
             </ul>
           )}
           <Link style={{ textDecoration: 'none' }} to='/dashboard/tasks'>
@@ -240,6 +247,60 @@ const SideNavigator = ({
                 <li ref={quizappRef} className='dropitem'>
                   {' '}
                   {'>'} Quiz App{' '}
+                </li>
+              </Link>
+            </ul>
+          )}
+          <Link style={{ textDecoration: 'none' }} to='/dashboard/e-voting'>
+            <li name='e-voting' className='userleft'>
+              <label
+                className='userleftitem'
+                name='e-voting'
+                ref={eVotingLabel}
+              >
+                <img
+                  className='sideicons'
+                  name='e-voting'
+                  src={events}
+                  height='20px'
+                />{' '}
+                <img
+                  src={eVotingToggleStatus}
+                  alt='e-voting donwdrop toggle'
+                  onClick={handleDrop}
+                  name='e-votingdrop'
+                  style={{
+                    padding: '5px',
+                    cursor: 'pointer',
+                    border: 'solid rgba(0,0,0,0) 2px',
+                    color: 'white',
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    outline: 'none',
+                  }}
+                  height='7px'
+                />
+                Evoting{' '}
+              </label>
+            </li>
+          </Link>
+          {showEvotingDrop && (
+            <ul className='drop'>
+              <Link
+                style={{ color: 'white', textDecoration: 'none' }}
+                to='/dashboard/e-voting/apply'
+              >
+                <li ref={applyRef} className='dropitem'>
+                  {' '}
+                  {'>'} Apply{' '}
+                </li>
+              </Link>
+              <Link
+                style={{ color: 'white', textDecoration: 'none' }}
+                to='/dashboard/e-voting/vote'
+              >
+                <li ref={voteRef} className='dropitem'>
+                  {' '}
+                  {'>'} Vote{' '}
                 </li>
               </Link>
             </ul>

@@ -1,16 +1,71 @@
 .commentinput {
+  display: flex;
+  position: fixed;
+  left: auto;
+  right: auto;
+  background-color: rgba(220, 220, 220, 1);
+  border: solid rgba(220, 220, 220, 1) 3px;
+  border-radius: 25px;
+  padding: 0px;
+  color: black;
   width: 50%;
-  bottom: 2px;
+  bottom: 5px;
 }
 .toppostlabel {
+  position: fixed;
+  top: 0px;
+  left: 150px;
+  z-index: 1;
+  width: 250px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 15px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.qback {
+  position: fixed;
+  top: 10px;
   left: 155px;
+  z-index: 1;
+  border-radius: 50%;
+  cursor: pointer;
+}
+[contentEditable='true']:empty:before {
+  content: attr(placeholder);
+  color: '###8';
+  opacity: 0.7;
+  font-style: italic;
 }
 @media screen and (max-width: 700px) {
+  .qback {
+    left: 5px;
+  }
+  .cmCover {
+    position: fixed;
+    left: 0px;
+    bottom: 60px;
+    display: flex;
+    padding: 0px;
+    color: black;
+    text-align: center;
+    justify-content: center;
+    width: 100vw;
+  }
   .commentinput {
-    width: 92%;
-    bottom: 70px;
+    text-align: left;
+    position: unset;
+    width: 95%;
+    bottom: auto;
   }
   .toppostlabel {
-    left: 5px;
+    left: 0px;
+    top: 0px;
+    width: 100vw;
+  }
+  [data-placeholder]:empty:before {
+    content: attr(data-placehoder);
+    color: #888;
+    font-style: italic;
   }
 }

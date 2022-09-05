@@ -2,7 +2,7 @@ import { React, useRef, useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import cancel from './cancel.png'
 import menu from './menu.png'
-
+import logo from './UI-logo.png'
 const NavOptbar = ({ getTopBar }) => {
   const homeRef = useRef(null)
   const currentRef = useRef(null)
@@ -10,8 +10,22 @@ const NavOptbar = ({ getTopBar }) => {
   const aboutRef = useRef(null)
   const signupRef = useRef(null)
   const [show, setShow] = useState(true)
+  const [showBorder, setShowBorder] = useState(false)
+  const checkPageYOffset = () => {
+    if (window.pageYOffset) {
+      setShowBorder(true)
+    } else {
+      setShowBorder(false)
+    }
+  }
   useEffect(() => {
     getTopBar([homeRef, currentRef, eventRef, aboutRef, signupRef])
+  }, [])
+  useEffect(() => {
+    window.addEventListener('scroll', checkPageYOffset)
+    return () => {
+      window.removeEventListener('scroll', checkPageYOffset)
+    }
   }, [])
   const showBar = () => {
     if (show) {
@@ -27,10 +41,49 @@ const NavOptbar = ({ getTopBar }) => {
     return (
       <>
         <div
-          style={{ position: 'fixed', top: '10px', left: '10px' }}
-          onClick={showBar}
+          style={{
+            backgroundColor: showBorder ? 'rgba(50, 49, 49, 0.95)' : '',
+            borderBottom: showBorder ? 'solid black 2px' : '',
+            width: '100vw',
+            position: 'fixed',
+            top: '0px',
+            left: '0px',
+            borderBottomLeftRadius: '30px',
+            borderBottomRightRadius: '30px',
+          }}
         >
-          <img src={menu} alt='menu' height='20px' />
+          <div
+            style={{
+              padding: '15px',
+              display: 'flex',
+              justifyContent: 'center',
+              width: '90%',
+            }}
+          >
+            <div style={{ display: 'flex', gap: '20px' }}>
+              <img src={logo} alt='logo' height='45px' />
+              <label
+                style={{
+                  fontFamily: 'Courier New',
+                  fontSize: '1.5rem',
+                  color: 'white',
+                  fontWeight: 'bold',
+                }}
+              >
+                NAPS UI
+              </label>
+            </div>
+
+            <div
+              style={{
+                width: 'fit-content',
+                marginLeft: 'auto',
+              }}
+              onClick={showBar}
+            >
+              <img src={menu} alt='menu' height='20px' />
+            </div>
+          </div>
         </div>
       </>
     )
@@ -41,9 +94,13 @@ const NavOptbar = ({ getTopBar }) => {
           <div
             style={{
               position: 'fixed',
-              top: '10px',
-              left: '10px',
+              top: '15px',
+              right: '25px',
               cursor: 'pointer',
+              padding: '2px',
+              borderRadius: '10px',
+              backgroundColor: 'rgba(60,60,60)',
+              border: 'solid rgba(20,19,19,1) 3px',
             }}
             onClick={cancelClick}
           >

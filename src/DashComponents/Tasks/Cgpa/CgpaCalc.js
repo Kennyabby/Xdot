@@ -108,11 +108,11 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
         },
         body: JSON.stringify({ sessionSettings: 1 }),
       }
-      const resp = await fetch(server+'/getNapsSettings', opts)
+      const resp = await fetch(server + '/getNapsSettings', opts)
       const response = await resp.json()
       const settings = response.settings
-      const currentSession = settings.sessionSettings.currentSession
-      const gradingScale = settings.sessionSettings.gradingScale
+      const currentSession = settings[0].sessionSettings.currentSession
+      const gradingScale = settings[0].sessionSettings.gradingScale
       setCurrentSession(currentSession)
       setGradingScale(gradingScale)
     } catch (error) {}
@@ -192,7 +192,7 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
           ],
         }),
       }
-      const resp = await fetch(server+'/updateOneUser', opts)
+      const resp = await fetch(server + '/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -263,20 +263,20 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
         {showStore ? (
           <div style={{ textAlign: 'center' }}>
             {showNotification && (
-              <div 
+              <div
                 style={{
                   padding: '10px',
                   position: 'fixed',
                   top: '5px',
                   zIndex: '1',
-                  justifyContent:'center',
-                  width:'100vw',
+                  justifyContent: 'center',
+                  width: '100vw',
                 }}
               >
                 <label
                   style={{
-                    margin:'auto',
-                    padding:'10px',
+                    margin: 'auto',
+                    padding: '10px',
                     fontSize: '1rem',
                     fontWeight: 'bold',
                     fontFamily: 'monospace',

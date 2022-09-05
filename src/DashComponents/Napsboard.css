@@ -75,7 +75,7 @@
   padding: 0px;
   margin-top: 30px;
   color: white;
-  padding: 7px;
+  padding: 15px;
   text-decoration: none;
   cursor: pointer;
 }
@@ -344,10 +344,10 @@
   }
   .userbar {
     height: 90vh;
-    background-color: rgba(7, 7, 40, 0.8);
+    background-color: rgba(7, 7, 40, 0.95);
     z-index: 1;
   }
-  .hometoggleCover{
+  .hometoggleCover {
     margin: 0px;
     position: fixed;
     justify-content: center;
@@ -368,7 +368,7 @@
     width: 90%;
     overflow-x: auto;
     z-index: 1;
-    gap:50px;
+    gap: 50px;
     display: inline-flex;
     padding: 10px;
     padding-left: 15px;
@@ -381,8 +381,8 @@
   }
   .profiledetailsitem {
     display: flex;
-    width:95%;
-    gap:20px;
+    width: 95%;
+    gap: 20px;
     overflow-x: auto;
     padding: 10px;
     padding-top: 30px;
@@ -400,7 +400,7 @@
     margin: auto;
     padding-bottom: 70px;
     margin-top: 30px;
-    height: 45vh; 
+    height: 45vh;
     width: 350px;
     justify-content: center;
   }

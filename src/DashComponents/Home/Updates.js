@@ -6,7 +6,7 @@ import profimg from '../Events/assets/profile.png'
 import Post from './Post'
 import PostPageModal from './PostPageModal'
 
-const Updates = ({user, server}) => {
+const Updates = ({ user, server }) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
   const lastPostRef = useRef(null)
@@ -44,24 +44,23 @@ const Updates = ({user, server}) => {
       array[randomIndex] = temporaryValue
     }
   }
-  useEffect(async()=>{
-    if(user.matricNo!==undefined){
-      try{
+  useEffect(async () => {
+    if (user.matricNo !== undefined) {
+      try {
         const opts1 = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({imgUrl: user.img, matricNo:user.matricNo}),
+          body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
         }
-        const resp1 = await fetch(server+'/getImgUrl', opts1)
+        const resp1 = await fetch(server + '/getImgUrl', opts1)
         const response1 = await resp1.json()
         const url = response1.url
-        setUserImgUrl(url)  
-      }catch(TypeError){
-      }
+        setUserImgUrl(url)
+      } catch (TypeError) {}
     }
-  },[user])
+  }, [user])
   useEffect(() => {
     setNewPostShow(currentPostShow)
   }, [currentPostShow])
@@ -85,12 +84,14 @@ const Updates = ({user, server}) => {
           limit: maxNumberOfRequest,
         }),
       }
-      const resp = await fetch(server+'/getUpdates', opts)
+      const resp = await fetch(server + '/getUpdates', opts)
       const response = await resp.json()
       const updates = response.updates
       setLastUpdatedPost(updates[updates.length - 1])
       shufflePosts(updates)
-      setUpdates(()=>{return updates})
+      setUpdates(() => {
+        return updates
+      })
       setPrevUpdates(updates)
       setGotUpdates(true)
     } catch (TypeError) {}
@@ -117,7 +118,7 @@ const Updates = ({user, server}) => {
       var updateFrom = lastUpdatedPost.createdAt
       if (prevUpdates.length === maxNumberOfRequest) {
         setShowPostUpdatesStatus(true)
-        setPostUpdatesStatus('Getting More Updates...')
+        setPostUpdatesStatus('More Updates...')
         try {
           const opts = {
             method: 'POST',
@@ -130,13 +131,13 @@ const Updates = ({user, server}) => {
               limit: maxNumberOfRequest,
             }),
           }
-          const resp = await fetch(server+'/getUpdates', opts)
+          const resp = await fetch(server + '/getUpdates', opts)
           const response = await resp.json()
           const updt = response.updates
           setLastUpdatedPost(updt[updt.length - 1])
           if (updt.length < maxNumberOfRequest) {
             setShowPostUpdatesStatus(true)
-            setPostUpdatesStatus('No More Updates Availble!')
+            setPostUpdatesStatus('No More Updates Available!')
           }
           var isIncludeItem = false
           prevUpdates.forEach((item) => {
@@ -152,7 +153,7 @@ const Updates = ({user, server}) => {
         } catch (TypeError) {}
       } else {
         setShowPostUpdatesStatus(true)
-        setPostUpdatesStatus('No More Updates Availble!')
+        setPostUpdatesStatus('No More Updates Available!')
       }
     } else {
       setShowPostUpdatesStatus(false)
@@ -172,7 +173,7 @@ const Updates = ({user, server}) => {
         }),
       }
 
-      const resp = await fetch(server+'/getOneUpdate', opts)
+      const resp = await fetch(server + '/getOneUpdate', opts)
       const response = await resp.json()
       const update = await response.update
       var newUpdates = updates
@@ -196,7 +197,7 @@ const Updates = ({user, server}) => {
               if (comment.createdAt === currentPostShow.createdAt) {
                 setNewPostShow(comment)
               }
-            }else{
+            } else {
               setNewPostShow(null)
             }
           })
@@ -216,20 +217,20 @@ const Updates = ({user, server}) => {
     <>
       <div style={{ paddingTop: highlightedPost !== null ? '50px' : '2px' }}>
         {showNotification && (
-          <div 
+          <div
             style={{
               padding: '10px',
               position: 'fixed',
               top: '5px',
               zIndex: '1',
-              justifyContent:'center',
-              width:'100vw',
+              justifyContent: 'center',
+              width: '100vw',
             }}
           >
             <label
               style={{
-                margin:'auto',
-                padding:'10px',
+                margin: 'auto',
+                padding: '10px',
                 fontSize: '1rem',
                 fontWeight: 'bold',
                 fontFamily: 'monospace',
@@ -242,68 +243,74 @@ const Updates = ({user, server}) => {
             </label>
           </div>
         )}
-        {showPostPage? (<PostPageModal
-          user={user}
-          server={server}
-          closeModal = {()=>{
-            setShowPostPage(false)
-          }}
-          notifyUpdate={(message) => {
-            notify({ message: message })
-          }}
-        />):undefined}
+        {showPostPage ? (
+          <PostPageModal
+            user={user}
+            server={server}
+            closeModal={() => {
+              setShowPostPage(false)
+            }}
+            notifyUpdate={(message) => {
+              notify({ message: message })
+            }}
+          />
+        ) : undefined}
         {highlightedPost === null ? (
           <div
             style={{
               textAlign: 'center',
-              justifyContent:'center',
+              justifyContent: 'center',
             }}
           >
-            <div style={{display:'flex', margin:'10px'}}>
-              <Link to = '/dashboard/profile'>
-                <div 
+            <div style={{ display: 'flex', margin: '10px' }}>
+              <Link to='/dashboard/profile'>
+                <div
                   style={{
-                    borderRadius:'50%', 
-                    height:'45px', 
-                    width:'45px', 
-                    backgroundColor:'rgba(240,240,240,1)',
-                    backgroundSize:'cover',
-                    backgroundImage:`url(${userImgUrl})`,
-                    cursor:'pointer',
-                  }}>
-                </div>
+                    borderRadius: '50%',
+                    height: '45px',
+                    width: '45px',
+                    backgroundColor: 'rgba(240,240,240,1)',
+                    backgroundSize: 'cover',
+                    backgroundImage: `url(${userImgUrl})`,
+                    cursor: 'pointer',
+                  }}
+                ></div>
               </Link>
-              <div 
-                onClick={()=>{
+              <div
+                onClick={() => {
                   setShowPostPage(true)
                 }}
                 style={{
-                  borderRadius:'20px',
-                  width:'80%',
-                  padding:'10px',
-                  margin:'10px',
-                  backgroundColor:'rgba(240,240,240,1)',
-                  justifyContent:'center',
-                  textAlign:'center',
-                  cursor:'pointer',
-                }}>{'Something on your mind?'}
+                  borderRadius: '20px',
+                  width: '80%',
+                  padding: '10px',
+                  margin: '10px',
+                  backgroundColor: 'rgba(240,240,240,1)',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                }}
+              >
+                {'Something on your mind?'}
               </div>
             </div>
-            <div style={{margin:'10px', justifyContent:'center'}}>
-              <button 
-                onClick={()=>{
+            <div style={{ margin: '10px', justifyContent: 'center' }}>
+              <button
+                onClick={() => {
                   getNewUpdates(user.lastPostUpdate)
                 }}
                 style={{
-                  padding:'10px',
-                  borderRadius:'15px',
-                  backgroundColor:'blue', 
-                  border:'solid rgba(0,0,255,0) 2px', 
-                  color:'white',
-                  cursor:'pointer'
+                  padding: '10px',
+                  borderRadius: '15px',
+                  backgroundColor: 'blue',
+                  border: 'solid rgba(0,0,255,0) 2px',
+                  color: 'white',
+                  cursor: 'pointer',
                 }}
-              >New Posts</button>
-            </div> 
+              >
+                New Posts
+              </button>
+            </div>
           </div>
         ) : undefined}
         {updates.length ? (
