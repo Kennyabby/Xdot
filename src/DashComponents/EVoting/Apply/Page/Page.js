@@ -19,18 +19,20 @@ const Page = ({ server, viewForm, user }) => {
       const response = await resp.json()
       const settings = response.settings
       const currentSession = settings[0].sessionSettings.currentSession
+      setCurrentSession(currentSession)
       const formSaleStart = settings[1].eVotingSettings.formSaleStart
       const formSaleEnd = settings[1].eVotingSettings.formSaleEnd
-      setCurrentSession(currentSession)
     } catch (error) {}
   }, [])
   useEffect(() => {
     const applications = user.votingApplication
-    applications.forEach((application) => {
-      if (application.currentSession === currentSession) {
-        setApplicationDetails(application)
-      }
-    })
+    if (applications !== undefined) {
+      applications.forEach((application) => {
+        if (application.currentSession === currentSession) {
+          setApplicationDetails(application)
+        }
+      })
+    }
   }, [currentSession])
   const excos = [
     {
@@ -176,7 +178,8 @@ const Page = ({ server, viewForm, user }) => {
         <p style={{ fontFamily: 'Courier New', fontWeight: 'bold' }}>
           {'Session: ' + currentSession}
         </p>
-        {!applicationDetails.isCompleted ? (
+        {applicationDetails.isCompleted !== undefined &&
+        !applicationDetails.isCompleted ? (
           <div
             style={{
               boxShadow: '0px 0px 6px rgba(150,150,150,1)',
