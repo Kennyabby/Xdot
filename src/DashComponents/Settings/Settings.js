@@ -18,8 +18,8 @@ const Settings = ({ chatrf, homerf, notificationsrf }) => {
           style={{
             margin: '5px',
             borderRadius: '10px',
-            backgroundColor: 'rgba(240,240,240)',
-            border: 'solid rgba(230,230,230) 2px',
+            backgroundColor: 'rgba(220,220,220)',
+            border: 'solid rgba(200,200,200) 2px',
             padding: '10px',
           }}
         >
@@ -30,7 +30,7 @@ const Settings = ({ chatrf, homerf, notificationsrf }) => {
             style={{
               margin: '5px',
               borderRadius: '10px',
-              border: 'solid rgba(230,230,230) 2px',
+              border: 'solid rgba(210,210,210) 2px',
               padding: '10px',
             }}
           >
@@ -63,7 +63,7 @@ const Settings = ({ chatrf, homerf, notificationsrf }) => {
             style={{
               margin: '5px',
               borderRadius: '10px',
-              border: 'solid rgba(230,230,230) 2px',
+              border: 'solid rgba(210,210,210) 2px',
               padding: '10px',
             }}
           >
@@ -96,7 +96,7 @@ const Settings = ({ chatrf, homerf, notificationsrf }) => {
             style={{
               margin: '5px',
               borderRadius: '10px',
-              border: 'solid rgba(230,230,230) 2px',
+              border: 'solid rgba(210,210,210) 2px',
               padding: '10px',
             }}
           >
@@ -129,7 +129,7 @@ const Settings = ({ chatrf, homerf, notificationsrf }) => {
             style={{
               margin: '5px',
               borderRadius: '10px',
-              border: 'solid rgba(230,230,230) 2px',
+              border: 'solid rgba(210,210,210) 2px',
               padding: '10px',
             }}
           >
@@ -162,7 +162,7 @@ const Settings = ({ chatrf, homerf, notificationsrf }) => {
             style={{
               margin: '5px',
               borderRadius: '10px',
-              border: 'solid rgba(230,230,230) 2px',
+              border: 'solid rgba(210,210,210) 2px',
               padding: '10px',
             }}
           >

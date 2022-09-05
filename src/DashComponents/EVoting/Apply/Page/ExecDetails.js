@@ -123,8 +123,9 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
         style={{
           fontFamily: 'monospace',
           fontSize: '1rem',
-          backgroundColor: 'rgba(240,240,240)',
-          paddingBottom: '7px',
+          backgroundColor: 'rgba(220,220,220)',
+          borderRadius: '10px',
+          paddingBottom: '15px',
           margin: '7px',
         }}
       >
@@ -144,7 +145,11 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
             >
               <h3 style={{ fontWeight: 'bold' }}>Duties</h3>
               {exco.details.map((detail, id) => {
-                return <p key={id}>{detail}</p>
+                return (
+                  <p style={{ fontSize: '0.8rem' }} key={id}>
+                    {detail}
+                  </p>
+                )
               })}
             </div>
           ) : undefined}

@@ -518,7 +518,7 @@ const QuizPost = ({
                 ) : (
                   ''
                 )}
-                <label style={{ fontSize: '0.8rem' }}>
+                <label style={{ fontSize: '0.7rem' }}>
                   {update['react'] !== undefined
                     ? (isReacted ? 'You ' : '') +
                       (update['react'].length

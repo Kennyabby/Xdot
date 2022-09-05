@@ -82,7 +82,7 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
             fontFamily: 'monospace',
             padding: '20px',
             margin: '10px',
-            border: 'solid rgba(230,230,230) 2px',
+            border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             textAlign: 'left',
           }}
@@ -161,7 +161,7 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
             fontFamily: 'monospace',
             padding: '20px',
             margin: '10px',
-            border: 'solid rgba(230,230,230) 2px',
+            border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             textAlign: 'left',
           }}

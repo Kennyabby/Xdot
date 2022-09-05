@@ -182,7 +182,7 @@ const Page = ({ server, viewForm, user }) => {
         !applicationDetails.isCompleted ? (
           <div
             style={{
-              boxShadow: '0px 0px 6px rgba(150,150,150,1)',
+              boxShadow: '0px 0px 7px rgba(100,100,100,1)',
               borderRadius: '10px',
               fontFamily: 'monospace',
               fontSize: '1rem',
@@ -212,7 +212,7 @@ const Page = ({ server, viewForm, user }) => {
             textAlign: 'left',
             margin: '10px',
             padding: '10px',
-            border: 'solid rgba(240,240,240) 2px',
+            border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
           }}
@@ -231,7 +231,7 @@ const Page = ({ server, viewForm, user }) => {
             textAlign: 'left',
             margin: '10px',
             padding: '10px',
-            border: 'solid rgba(240,240,240) 2px',
+            border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
           }}
@@ -250,7 +250,7 @@ const Page = ({ server, viewForm, user }) => {
             textAlign: 'left',
             margin: '10px',
             padding: '10px',
-            border: 'solid rgba(240,240,240) 2px',
+            border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
           }}
@@ -269,7 +269,7 @@ const Page = ({ server, viewForm, user }) => {
             textAlign: 'left',
             margin: '10px',
             padding: '10px',
-            border: 'solid rgba(240,240,240) 2px',
+            border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
           }}
@@ -286,6 +286,7 @@ const Page = ({ server, viewForm, user }) => {
         <div
           style={{
             fontFamily: 'Courier New',
+            fontWeight: 'bold',
             margin: '50px',
             marginTop: '80px',
             textAlign: 'center',

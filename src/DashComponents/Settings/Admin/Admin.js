@@ -116,7 +116,7 @@ const Admin = ({ server }) => {
 
   return (
     <>
-      <div>
+      <div style={{ borderBottom: '70px' }}>
         <div className='stgTop'>
           <h2 style={{ margin: '0px' }}>Admin</h2>
         </div>
