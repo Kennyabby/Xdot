@@ -127,6 +127,7 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
           borderRadius: '10px',
           paddingBottom: '15px',
           margin: '7px',
+          marginBottom: '20px',
         }}
       >
         <div style={{ padding: '10px' }}>

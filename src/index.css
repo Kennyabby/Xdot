@@ -561,6 +561,7 @@ code {
     position: fixed;
     top: auto;
     left: 0px;
+    z-index: 1;
     bottom: 5px;
     margin: 0px;
     padding: 0px;
