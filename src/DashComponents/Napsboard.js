@@ -35,6 +35,7 @@ import close from './assets/close.png'
 const Napsboard = ({ rootView, userId, winSize, server }) => {
   const { id } = useParams()
   const history = useHistory()
+  const [showHomeToggle, setShowHomeToggle] = useState(true)
   const [isNewSession, setIsNewSession] = useState(false)
   const [view, setView] = useState('')
   const [user, setUser] = useState({})
@@ -115,6 +116,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             setShowNavigator(false)
           }}
           setShowNav={setShowNav(false)}
+          showHomeToggle={(show) => {
+            setShowHomeToggle(show)
+          }}
         />
       )
     } else if (id === 'profile') {
@@ -207,6 +211,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             setShowNavigator(true)
           }}
           setShowNav={setShowNav(false)}
+          showHomeToggle={(show) => {
+            setShowHomeToggle(show)
+          }}
         />
       )
     } else {
@@ -268,6 +275,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
+              showHomeToggle={(show) => {
+                setShowHomeToggle(show)
+              }}
             />
           )
         } else if (id === 'dailypuzzles') {
@@ -411,6 +421,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                 setShowNavigator(true)
               }}
               setShowNav={setShowNav(false)}
+              showHomeToggle={(show) => {
+                setShowHomeToggle(show)
+              }}
             />
           )
         }
@@ -448,6 +461,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             setShowNavigator(true)
           }}
           setShowNav={setShowNav(false)}
+          showHomeToggle={(show) => {
+            setShowHomeToggle(show)
+          }}
         />
       )
     }
@@ -509,6 +525,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             setBodyLeft={setBodyLeft('150px')}
             setShowNavigator={setShowNavigator(true)}
             setShowNav={setShowNav(false)}
+            showHomeToggle = {(show)=>{
+                setShowHomeToggle(show)
+              }}
           />
         )
       } else if (id === 'dailypuzzles') {
@@ -652,6 +671,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               setShowNavigator(true)
             }}
             setShowNav={setShowNav(false)}
+            showHomeToggle={(show) => {
+              setShowHomeToggle(show)
+            }}
           />
         )
       }
@@ -833,95 +855,47 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               })
             )}
 
-            <div className='imgCover'>
-              <div className='hometoggleCover'>
-                <div
-                  className='hometoggle'
-                  style={{
-                    justifyContent: id === 'chats' ? ' center' : 'left',
-                  }}
-                >
-                  {winSize <= 700 && showNavigator && (
-                    <div
-                      name='menu'
-                      title='toggle to open or close navigator'
-                      className='hometoggleitem'
-                      onClick={() => {
-                        if (showNav) {
-                          setShowNav(false)
-                        } else {
-                          setShowNav(true)
-                        }
-                      }}
-                    >
-                      <img
-                        style={{
-                          cursor: 'pointer',
-                        }}
-                        name='menu'
-                        alt='menu'
-                        src={showNav ? close : navigatormenu}
-                        height='18px'
-                      />{' '}
-                    </div>
-                  )}
-                  <Link
-                    to='/dashboard'
-                    style={{ textDecoration: 'none', height: 'fit-content' }}
-                  >
-                    <div
-                      ref={homeRef}
-                      name='home'
-                      title='Clck to go to Home Page'
-                      className='hometoggleitem'
-                    >
-                      <img
-                        style={{
-                          borderRadius: '50%',
-                          cursor: 'pointer',
-                        }}
-                        name='home'
-                        src={home}
-                        alt='home'
-                        height='20px'
-                      />
-                    </div>
-                  </Link>
-                  <Link
+            {showHomeToggle ? (
+              <div className='imgCover'>
+                <div className='hometoggleCover'>
+                  <div
+                    className='hometoggle'
                     style={{
-                      textDecoration: 'none',
-                      color: 'black',
-                      height: 'fit-content',
+                      justifyContent: id === 'chats' ? ' center' : 'left',
                     }}
-                    to='/dashboard/chats'
                   >
-                    <div
-                      ref={chatsRef}
-                      name='chats'
-                      title='Clck to go to Chats'
-                      className='hometoggleitem'
-                    >
-                      <img
-                        style={{
-                          borderRadius: '50%',
-                          cursor: 'pointer',
+                    {winSize <= 700 && showNavigator && (
+                      <div
+                        name='menu'
+                        title='toggle to open or close navigator'
+                        className='hometoggleitem'
+                        onClick={() => {
+                          if (showNav) {
+                            setShowNav(false)
+                          } else {
+                            setShowNav(true)
+                          }
                         }}
-                        name='chats'
-                        src={chats}
-                        alt='chats'
-                        height='28px'
-                      />
-                    </div>
-                  </Link>
-                  {winSize <= 700 && showNavigator ? (
+                      >
+                        <img
+                          style={{
+                            cursor: 'pointer',
+                          }}
+                          name='menu'
+                          alt='menu'
+                          src={showNav ? close : navigatormenu}
+                          height='18px'
+                        />{' '}
+                      </div>
+                    )}
                     <Link
-                      to='/dashboard/notifications'
+                      to='/dashboard'
                       style={{ textDecoration: 'none', height: 'fit-content' }}
                     >
                       <div
-                        ref={notificationsRef}
+                        ref={homeRef}
                         name='home'
-                        title='Clck to go to Notifications'
+                        title='Clck to go to Home Page'
                         className='hometoggleitem'
                       >
                         <img
@@ -929,61 +903,114 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             borderRadius: '50%',
                             cursor: 'pointer',
                           }}
-                          name='notifications'
-                          src={notifications}
-                          alt='notifcations'
-                          height='25px'
+                          name='home'
+                          src={home}
+                          alt='home'
+                          height='20px'
                         />
                       </div>
                     </Link>
-                  ) : undefined}
-                </div>
-              </div>
-
-              {id === 'chats' ||
-              id === undefined ||
-              id === 'profile' ? undefined : (
-                <div className='coverDetail'>
-                  <Link to='/dashboard/profile'>
-                    <img
-                      className='userimg'
-                      src={userImgUrl}
-                      height='50px'
-                      width='50px'
-                      title='go to your profile'
+                    <Link
                       style={{
+                        textDecoration: 'none',
+                        color: 'black',
+                        height: 'fit-content',
+                      }}
+                      to='/dashboard/chats'
+                    >
+                      <div
+                        ref={chatsRef}
+                        name='chats'
+                        title='Clck to go to Chats'
+                        className='hometoggleitem'
+                      >
+                        <img
+                          style={{
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                          }}
+                          name='chats'
+                          src={chats}
+                          alt='chats'
+                          height='28px'
+                        />
+                      </div>
+                    </Link>
+                    {winSize <= 700 && showNavigator ? (
+                      <Link
+                        to='/dashboard/notifications'
+                        style={{
+                          textDecoration: 'none',
+                          height: 'fit-content',
+                        }}
+                      >
+                        <div
+                          ref={notificationsRef}
+                          name='notifications'
+                          title='Clck to go to Notifications'
+                          className='hometoggleitem'
+                        >
+                          <img
+                            style={{
+                              borderRadius: '50%',
+                              cursor: 'pointer',
+                            }}
+                            name='notifications'
+                            src={notifications}
+                            alt='notifcations'
+                            height='25px'
+                          />
+                        </div>
+                      </Link>
+                    ) : undefined}
+                  </div>
+                </div>
+
+                {id === 'chats' ||
+                id === undefined ||
+                id === 'profile' ? undefined : (
+                  <div className='coverDetail'>
+                    <Link to='/dashboard/profile'>
+                      <img
+                        className='userimg'
+                        src={userImgUrl}
+                        height='50px'
+                        width='50px'
+                        title='go to your profile'
+                        style={{
+                          ...shade({
+                            shade: 'rgba(230,230,230,1)',
+                            prevPadding: '0px',
+                            newPadding: '0px',
+                            radius: '50%',
+                            width: '50px',
+                          }),
+                        }}
+                      />
+                    </Link>
+                    <p
+                      className='usernameshadow'
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '.8rem',
+
                         ...shade({
-                          shade: 'rgba(230,230,230,1)',
+                          width: '100px',
                           prevPadding: '0px',
                           newPadding: '0px',
-                          radius: '50%',
-                          width: '50px',
+                          radius: '5px',
+                          shade: 'rgba(230,230,230,1)',
                         }),
                       }}
-                    />
-                  </Link>
-                  <p
-                    className='usernameshadow'
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: '.8rem',
-
-                      ...shade({
-                        width: '100px',
-                        prevPadding: '0px',
-                        newPadding: '0px',
-                        radius: '5px',
-                        shade: 'rgba(230,230,230,1)',
-                      }),
-                    }}
-                  >
-                    {user.userName
-                      ? user.userName.toUpperCase()
-                      : user.userName}
-                  </p>
-                </div>
-              )}
-            </div>
+                    >
+                      {user.userName
+                        ? user.userName.toUpperCase()
+                        : user.userName}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : undefined}
           </div>
         </div>
       </>

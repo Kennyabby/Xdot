@@ -19,7 +19,6 @@ const Navbar = ({ getTopBar }) => {
   }
   useEffect(() => {
     getTopBar([homeRef, currentRef, eventRef, aboutRef, signupRef])
-    console.log(window.pageYOffset)
   }, [])
   useEffect(() => {
     window.addEventListener('scroll', checkPageYOffset)

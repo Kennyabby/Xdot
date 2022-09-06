@@ -26,6 +26,7 @@ const Post = ({
   setHighlightedPost,
   updatePostAt,
   newPostShow,
+  showHomeToggle,
 }) => {
   const commentInputRef = useRef(null)
   const [postUser, setPostUser] = useState({ userName: 'Napsite' })
@@ -132,6 +133,13 @@ const Post = ({
       setShowComments(true)
     }
   }, [updt])
+  useEffect(() => {
+    if (status !== undefined) {
+      showHomeToggle(false)
+    } else {
+      showHomeToggle(true)
+    }
+  }, [status])
   const updateReactions = async ({
     rct,
     reaction,
@@ -319,7 +327,6 @@ const Post = ({
           margin: 'auto',
           marginBottom: '10px',
           padding: '5px',
-          // borderRadius: '20px',
           backgroundColor: 'rgba(255,255,255,1)',
           borderBottom: 'solid rgba(200,200,200,1) 4px',
         }}

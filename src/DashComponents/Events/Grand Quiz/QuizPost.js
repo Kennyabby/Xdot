@@ -27,6 +27,7 @@ const QuizPost = ({
   updatePostAt,
   newPostShow,
   showQuizPage,
+  showHomeToggle,
 }) => {
   const commentInputRef = useRef(null)
   const [postUser, setPostUser] = useState({ userName: 'Napsite' })
@@ -134,6 +135,13 @@ const QuizPost = ({
     }
   }, [updt])
 
+  useEffect(() => {
+    if (status !== undefined) {
+      showHomeToggle(false)
+    } else {
+      showHomeToggle(true)
+    }
+  }, [status])
   const updateReactions = async ({
     rct,
     reaction,

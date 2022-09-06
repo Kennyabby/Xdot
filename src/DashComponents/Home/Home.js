@@ -9,6 +9,7 @@ const Home = ({
   notificationsrf,
   setBodyLeft,
   setShowNavigator,
+  showHomeToggle,
 }) => {
   const [view, setView] = useState('')
   const [showUpdates, setShowUpdates] = useState(true)
@@ -27,6 +28,9 @@ const Home = ({
         <Updates
           server={server}
           user={user}
+          showHomeToggle={(show) => {
+            showHomeToggle(show)
+          }}
         />
       )
     }

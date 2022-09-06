@@ -4,7 +4,7 @@ import '../Events.css'
 import QuizUpdates from './QuizUpdates'
 import QuizPage from './QuizPage'
 
-const GrandQuiz = ({ user, server }) => {
+const GrandQuiz = ({ user, server, showHomeToggle }) => {
   const [quiz, setQuiz] = useState(null)
   const [view, setView] = useState('')
   const [showQuizUpdates, setShowQuizUpdates] = useState(true)
@@ -20,6 +20,9 @@ const GrandQuiz = ({ user, server }) => {
             setShowQuizPage(true)
           }}
           user={user}
+          showHomeToggle={(show) => {
+            showHomeToggle(show)
+          }}
         />
       )
     }

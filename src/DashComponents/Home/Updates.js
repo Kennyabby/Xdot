@@ -6,7 +6,7 @@ import profimg from '../Events/assets/profile.png'
 import Post from './Post'
 import PostPageModal from './PostPageModal'
 
-const Updates = ({ user, server }) => {
+const Updates = ({ user, server, showHomeToggle }) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
   const lastPostRef = useRef(null)
@@ -338,6 +338,9 @@ const Updates = ({ user, server }) => {
                       setHighlightedPost={(post) => {
                         setHighlightedPost(post)
                       }}
+                      showHomeToggle={(show) => {
+                        showHomeToggle(show)
+                      }}
                     />
                   )
                 })
@@ -361,6 +364,9 @@ const Updates = ({ user, server }) => {
                   }}
                   setHighlightedPost={(post) => {
                     setHighlightedPost(post)
+                  }}
+                  showHomeToggle={(show) => {
+                    showHomeToggle(show)
                   }}
                 />
               )}

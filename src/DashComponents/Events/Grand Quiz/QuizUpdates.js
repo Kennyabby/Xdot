@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import QuizPost from './QuizPost'
 
-const QuizUpdates = ({ user, showQuizPage, server }) => {
+const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
   const lastPostRef = useRef(null)
@@ -241,6 +241,9 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
                       showQuizPage={(quiz) => {
                         showQuizPage(quiz)
                       }}
+                      showHomeToggle={(show) => {
+                        showHomeToggle(show)
+                      }}
                     />
                   )
                 })
@@ -267,6 +270,9 @@ const QuizUpdates = ({ user, showQuizPage, server }) => {
                   }}
                   showQuizPage={(quiz) => {
                     showQuizPage(quiz)
+                  }}
+                  showHomeToggle={(show) => {
+                    showHomeToggle(show)
                   }}
                 />
               )}
