@@ -21,23 +21,15 @@ const SignupInfo = ({
     userName: '',
     password: '',
     confirmPassword: '',
-    identificationKey: '',
   })
   const userNameRef = useRef(null)
   const passwordRef = useRef(null)
-  const identificationKeyRef = useRef(null)
   const confirmPasswordRef = useRef(null)
   const signupLabelRef = useRef(null)
-  const infoRefList = [
-    userNameRef,
-    passwordRef,
-    confirmPasswordRef,
-    identificationKeyRef,
-  ]
+  const infoRefList = [userNameRef, passwordRef, confirmPasswordRef]
   const confidentials = {
     password: signupInfo.password,
     confirmPassword: signupInfo.confirmPassword,
-    identificationKey: signupInfo.identificationKey,
   }
   useEffect(() => {
     getCoverList(signupList)
@@ -67,21 +59,6 @@ const SignupInfo = ({
             infoRef.current.style.borderBottom = 'solid black 1px'
             infoRef.current.parentElement.childNodes[1].style.display = 'none'
             infoRef.current.parentElement.childNodes[1].style.color = 'blue'
-            if (infoRef.current.name === 'identificationKey') {
-              if (
-                Number(infoRef.current.value) &&
-                infoRef.current.value.length === 4
-              ) {
-              } else {
-                count--
-                infoRef.current.style.borderBottom = 'solid red 1px'
-                infoRef.current.parentElement.childNodes[1].style.display =
-                  'block'
-                infoRef.current.parentElement.childNodes[1].style.color = 'red'
-                infoRef.current.parentElement.childNodes[1].innerHTML =
-                  'Kidly Enter a four digit number'
-              }
-            }
             count++
           }
         }
@@ -111,22 +88,6 @@ const SignupInfo = ({
           infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
           if (infoRef.current.value === '') {
           } else {
-            if (infoRef.current.name === 'identificationKey') {
-              if (
-                Number(infoRef.current.value) &&
-                infoRef.current.value.length === 4
-              ) {
-                infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
-              } else {
-                count--
-                infoRef.current.style.borderBottom = 'solid red 1px'
-                infoRef.current.parentElement.childNodes[1].style.display =
-                  'block'
-                infoRef.current.parentElement.childNodes[1].style.color = 'red'
-                infoRef.current.parentElement.childNodes[1].innerHTML =
-                  'Kidly Enter a four digit number'
-              }
-            }
             if (
               infoRef.current.name === 'confirmPassword' &&
               infoRef.current.value !== ''
@@ -169,7 +130,6 @@ const SignupInfo = ({
         userName: localStorage.getItem('userName'),
         password: credentials.password,
         confirmPassword: credentials.confirmPassword,
-        identificationKey: credentials.identificationKey,
       })
     }
   }, [])
@@ -324,22 +284,7 @@ const SignupInfo = ({
         />
         <p className='inputStyle'></p>
       </p>
-      <p className='over' style={{ padding: '13px' }}>
-        <input
-          ref={identificationKeyRef}
-          className='input'
-          type='password'
-          name='identificationKey'
-          placeholder='Enter a Four Digit Identification Key'
-          value={signupInfo.identificationKey}
-          onChange={(e) => {
-            setSignupInfo({ ...signupInfo, identificationKey: e.target.value })
-          }}
-          required
-          title='Enter a Four Digit Identification Key'
-        />
-        <p className='inputStyle'></p>
-      </p>
+
       <p className='over' style={{ padding: '13px' }}>
         <input
           ref={passwordRef}

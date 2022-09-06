@@ -98,7 +98,6 @@ const Finish = ({
     userName: setCamelCase(localStorage.getItem('userName')),
     img: '',
     password: confidentials.password,
-    identificationKey: confidentials.identificationKey,
     access: 'User',
     isEditable: 'false',
     createdAt: Date.now(),
@@ -107,10 +106,7 @@ const Finish = ({
   }
   useEffect(() => {
     getCoverList(finishList)
-    if (
-      confidentials.password === '' ||
-      confidentials.identificationKey === ''
-    ) {
+    if (confidentials.password === '') {
       history.push('./signupInfo')
     }
   }, [])
@@ -120,7 +116,6 @@ const Finish = ({
   const getButtonEvent = (e) => {
     if (e.target.value === 'Next') {
       if (pos === 1) {
-        // history.push('./signupInfo');
         setPos(0)
       } else {
         setViewNext(false)
