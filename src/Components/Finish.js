@@ -13,6 +13,8 @@ const Finish = ({
   const history = useHistory()
   const [viewNext, setViewNext] = useState(true)
   const finishCoverRef = useRef(null)
+  const summaryLabelRef = useRef(null)
+  const uploadLabelRef = useRef(null)
   const imgRef = useRef(null)
   const [imgUrl, setImgUrl] = useState(logo)
   const [submitStatus, setSubmitStatus] = useState('Submit')
@@ -148,6 +150,13 @@ const Finish = ({
       }
     })
   }
+  useEffect(() => {
+    if (pos) {
+      uploadLabelRef.current.scrollIntoView()
+    } else {
+      summaryLabelRef.current.scrollIntoView()
+    }
+  }, [pos])
   useEffect(async () => {
     if (file !== null) {
       const newFile = await convertToBase64(file)
@@ -224,7 +233,7 @@ const Finish = ({
   )
   const finishList = [
     <div className='container'>
-      <h3>Info Summary</h3>
+      <h3 ref={summaryLabelRef}>Info Summary</h3>
       {regInfos.map((regInfo, i) => {
         return (
           <p className='regInfo' key={i}>
@@ -238,6 +247,9 @@ const Finish = ({
       {prevNext}
     </div>,
     <div className='container'>
+      <div className='infotag' ref={uploadLabelRef}>
+        Upload Profile Picture
+      </div>
       <img
         className='usr'
         src={imgUrl}
@@ -263,13 +275,20 @@ const Finish = ({
           value='Upload'
           onClick={uploadImg}
         >
-          Upload Your Profile Picture
+          Upload Here
         </button>
       </p>
+      {prevNext}
       <p>
         <button
           className='nxt'
-          style={{ backgroundColor: 'green', color: 'white' }}
+          style={{
+            backgroundColor: 'green',
+            color: 'white',
+            paddingLeft: '100px',
+            paddingRight: '100px',
+            marginTop: '30px',
+          }}
           title='Submit'
           type='submit'
           name='button'
@@ -279,7 +298,6 @@ const Finish = ({
           {submitStatus}
         </button>
       </p>
-      {prevNext}
     </div>,
   ]
 

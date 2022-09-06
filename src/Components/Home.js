@@ -25,6 +25,16 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt }) => {
         showNavbar(true)
         showNavOpt(false)
       }
+    } else {
+      if (id !== 'signup') {
+        if (winSize <= 700) {
+          showNavbar(false)
+          showNavOpt(true)
+        } else {
+          showNavbar(true)
+          showNavOpt(false)
+        }
+      }
     }
   })
   useEffect(() => {

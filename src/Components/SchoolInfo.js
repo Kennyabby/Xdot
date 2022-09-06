@@ -27,6 +27,7 @@ const SchoolInfo = ({
   const hallOfResidenceRef = useRef(null)
   const yearOfAdmissionRef = useRef(null)
   const modeOfEntryRef = useRef(null)
+  const schoolLabelRef = useRef(null)
   const infoRefList = [
     matricNoRef,
     schoolEmailRef,
@@ -40,6 +41,9 @@ const SchoolInfo = ({
   useEffect(() => {
     getCoverList(schoolList)
   }, [])
+  useEffect(() => {
+    schoolLabelRef.current.scrollIntoView()
+  }, [pos])
   useEffect(() => {
     getCoverPos(pos)
   }, [pos])
@@ -485,7 +489,9 @@ const SchoolInfo = ({
   ]
   return (
     <div ref={schoolCoverRef}>
-      <div className='infotag'>School Info</div>
+      <div className='infotag' ref={schoolLabelRef}>
+        School Info
+      </div>
       {schoolList[pos]}
     </div>
   )

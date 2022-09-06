@@ -562,7 +562,7 @@ code {
     top: auto;
     left: 0px;
     z-index: 1;
-    bottom: 5px;
+    bottom: 0px;
     margin: 0px;
     padding: 0px;
     width: 100vw;
@@ -571,25 +571,22 @@ code {
     justify-content: center;
   }
   .sideBar {
-    margin: auto;
-    padding: 8px;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin: 0px;
+    padding: 0px;
     overflow-x: auto;
-    border-radius: 30px;
+    border-radius: 0px;
     list-style: none;
     display: inline-flex;
     font-size: 0.8rem;
-    width: 92%;
+    width: 100%;
     text-align: left;
     justify-content: left;
-    height: fit-content;
+    /* height: fit-content; */
     font-family: monospace;
     background-color: rgba(0, 0, 0, 1);
   }
   .left {
     margin: 15px;
-    margin-top: 15px;
     color: white;
     text-shadow: white 0px 0px 3px;
     padding: 0px;

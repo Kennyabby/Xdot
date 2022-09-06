@@ -147,6 +147,11 @@ const App = () => {
                   return show
                 })
               }}
+              showNavOpt={(show) => {
+                setShowNavOpt(() => {
+                  return show
+                })
+              }}
               bars={bars}
             />
           }

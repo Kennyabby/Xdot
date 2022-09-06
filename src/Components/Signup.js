@@ -171,6 +171,7 @@ const Signup = ({ showNavbar, server }) => {
         labelRef.current.style.borderRadius = '5px'
         if (labelRef.current.getAttribute('name') === id) {
           labelRef.current.style.borderBottom = 'solid lightgreen 3px'
+          labelRef.current.scrollIntoView()
         }
       }
     })
@@ -212,6 +213,7 @@ const Signup = ({ showNavbar, server }) => {
         labelRef.current.style.borderRadius = '5px'
         if (labelRef.current.getAttribute('name') === id) {
           labelRef.current.style.borderBottom = 'solid lightgreen 3px'
+          labelRef.current.scrollIntoView()
           if (isStartValidating) {
             infoConfirmedList.map((infoConfirmed) => {
               if (id === infoConfirmed.name && infoConfirmed.check === false) {
@@ -224,7 +226,6 @@ const Signup = ({ showNavbar, server }) => {
     })
     window.scrollTo(0, 0)
     if (id === 'basicInfo') {
-      window.scrollTo(0, 0)
       setContent(
         <BasicInfo
           getCoverList={getCoverList}
@@ -237,7 +238,6 @@ const Signup = ({ showNavbar, server }) => {
         />
       )
     } else if (id === 'schoolInfo') {
-      window.scrollTo(0, 0)
       setContent(
         <SchoolInfo
           server={server}
@@ -251,7 +251,6 @@ const Signup = ({ showNavbar, server }) => {
         />
       )
     } else if (id === 'contactInfo') {
-      window.scrollTo(0, 0)
       setContent(
         <ContactInfo
           getCoverList={getCoverList}
@@ -264,7 +263,6 @@ const Signup = ({ showNavbar, server }) => {
         />
       )
     } else if (id === 'signupInfo') {
-      window.scrollTo(0, 0)
       setContent(
         <SignupInfo
           basicConfirmed={basicConfirmed}
@@ -287,7 +285,6 @@ const Signup = ({ showNavbar, server }) => {
         />
       )
     } else if (id === 'finish') {
-      window.scrollTo(0, 0)
       setContent(
         <Finish
           server={server}
@@ -312,7 +309,6 @@ const Signup = ({ showNavbar, server }) => {
         />
       )
     } else {
-      window.scrollTo(0, 0)
       setContent(<Intro />)
     }
   }, [id])

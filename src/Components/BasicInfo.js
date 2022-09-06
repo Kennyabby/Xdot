@@ -14,6 +14,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
   const dateOfBirthRef = useRef(null)
   const maleRef = useRef(null)
   const femaleRef = useRef(null)
+  const basicLabelRef = useRef(null)
   const infoRefList = [
     firstNameRef,
     middleNameRef,
@@ -22,9 +23,13 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
     dateOfBirthRef,
   ]
   const [genderClicked, setGenderClicked] = useState(false)
+
   useEffect(() => {
     getCoverList(basicList)
   }, [])
+  useEffect(() => {
+    basicLabelRef.current.scrollIntoView()
+  }, [pos])
   useEffect(() => {
     getCoverPos(pos)
     if (pos) {
@@ -324,7 +329,9 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
   ]
   return (
     <div style={{ display: 'block' }} ref={basicCoverRef}>
-      <div className='infotag'>Basic Info</div>
+      <div className='infotag' ref={basicLabelRef}>
+        Basic Info
+      </div>
       {basicList[pos]}
     </div>
   )

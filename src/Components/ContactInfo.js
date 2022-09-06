@@ -20,6 +20,7 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
   const guardianContactNoRef = useRef(null)
   const otherGuardianContactNoRef = useRef(null)
   const guardianCurrentAddressRef = useRef(null)
+  const contactLabelRef = useRef(null)
   const infoRefList = [
     contactNoRef,
     otherContactNoRef,
@@ -31,6 +32,9 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
   useEffect(() => {
     getCoverList(contactList)
   }, [])
+  useEffect(() => {
+    contactLabelRef.current.scrollIntoView()
+  }, [pos])
   useEffect(() => {
     getCoverPos(pos)
   }, [pos])
@@ -288,7 +292,9 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
   ]
   return (
     <div ref={contactCoverRef}>
-      <div className='infotag'>Contact Info</div>
+      <div className='infotag' ref={contactLabelRef}>
+        Contact Info
+      </div>
       {contactList[pos]}
     </div>
   )

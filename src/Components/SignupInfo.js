@@ -27,6 +27,7 @@ const SignupInfo = ({
   const passwordRef = useRef(null)
   const identificationKeyRef = useRef(null)
   const confirmPasswordRef = useRef(null)
+  const signupLabelRef = useRef(null)
   const infoRefList = [
     userNameRef,
     passwordRef,
@@ -41,7 +42,9 @@ const SignupInfo = ({
   useEffect(() => {
     getCoverList(signupList)
   }, [])
-
+  useEffect(() => {
+    signupLabelRef.current.scrollIntoView()
+  }, [pos])
   useEffect(() => {
     getCoverPos(pos)
   }, [pos])
@@ -300,7 +303,7 @@ const SignupInfo = ({
       }
       {
         <button className='nxt' type='submit' name='button' value='Next'>
-          {'Finish >>'}
+          {'Finish'}
         </button>
       }
     </div>
@@ -371,7 +374,9 @@ const SignupInfo = ({
   ]
   return (
     <div ref={signupCoverRef}>
-      <div className='infotag'>Signup Info</div>
+      <div className='infotag' ref={signupLabelRef}>
+        Signup Info
+      </div>
       {signupList[pos]}
     </div>
   )
