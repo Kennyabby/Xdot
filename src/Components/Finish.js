@@ -301,7 +301,7 @@ const Finish = ({
       {show && finishList[pos]}
       {isSuccess && (
         <div>
-          <p style={{ color: 'white', marginTop: '100px' }}>
+          <p style={{ color: 'black', marginTop: '100px', margin: '50px' }}>
             Dear {setCamelCase(studentInfo.lastName)}{' '}
             {setCamelCase(studentInfo.firstName)}{' '}
             {setCamelCase(studentInfo.middleName)}, Thank You For Your Time.
