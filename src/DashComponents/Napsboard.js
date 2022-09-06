@@ -89,11 +89,16 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     labelRefs.map((elem) => {
       if (elem !== null && elem.current !== null) {
         if (elem.current.getAttribute('name') === id) {
-          elem.current.parentElement.style.backgroundColor = 'black'
-          elem.current.parentElement.style.borderLeft = 'solid white 3px'
+          elem.current.parentElement.parentElement.style.backgroundColor =
+            'black'
+          elem.current.parentElement.parentElement.style.borderLeft =
+            'solid white 3px'
         } else {
-          elem.current.parentElement.style.backgroundColor = 'rgba(0,0,0,0)'
-          elem.current.parentElement.style.borderLeft = 'solid white 0px'
+          console.log(elem.current.parentElement)
+          elem.current.parentElement.parentElement.style.backgroundColor =
+            'rgba(0,0,0,0)'
+          elem.current.parentElement.parentElement.style.borderLeft =
+            'solid white 0px'
         }
       }
     })
@@ -657,11 +662,15 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     labelRefs.map((elem) => {
       if (elem !== null && elem.current !== null) {
         if (elem.current.getAttribute('name') === id) {
-          elem.current.parentElement.style.backgroundColor = 'black'
-          elem.current.parentElement.style.borderLeft = 'solid white 3px'
+          elem.current.parentElement.parentElement.style.backgroundColor =
+            'black'
+          elem.current.parentElement.parentElement.style.borderLeft =
+            'solid white 3px'
         } else {
-          elem.current.parentElement.style.backgroundColor = 'rgba(0,0,0,0)'
-          elem.current.parentElement.style.borderLeft = 'solid white 0px'
+          elem.current.parentElement.parentElement.style.backgroundColor =
+            'rgba(0,0,0,0)'
+          elem.current.parentElement.parentElement.style.borderLeft =
+            'solid white 0px'
         }
       }
     })

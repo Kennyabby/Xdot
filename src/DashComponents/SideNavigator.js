@@ -100,25 +100,25 @@ const SideNavigator = ({
       <div className='userbar'>
         <ul className='usersidebar'>
           <label className='userlefttop'>NAPSITE</label>
-          <Link style={{ textDecoration: 'none' }} to='/dashboard/profile'>
-            <li name='profile' className='userleft'>
-              <label className='userleftitem' name='profile' ref={profileLabel}>
+          <li name='profile' className='userleft'>
+            <Link style={{ textDecoration: 'none' }} to='/dashboard/profile'>
+              <div className='userleftitem' name='profile' ref={profileLabel}>
                 <img
                   className='sideicons'
                   name='profile'
                   src={profile}
                   height='20px'
                 />{' '}
-                Profile
-              </label>
-            </li>
-          </Link>
-          <Link
-            style={{ textDecoration: 'none' }}
-            to='/dashboard/notifications'
-          >
-            <li name='notifications' className='userleft'>
-              <label
+                <span style={{ marginLeft: '15px' }}>Profile</span>
+              </div>
+            </Link>
+          </li>
+          <li name='notifications' className='userleft'>
+            <Link
+              style={{ textDecoration: 'none' }}
+              to='/dashboard/notifications'
+            >
+              <div
                 className='userleftitem'
                 name='notifications'
                 ref={notificationsLabel}
@@ -129,38 +129,31 @@ const SideNavigator = ({
                   src={notifications}
                   height='20px'
                 />{' '}
-                Updates
-              </label>
-            </li>
-          </Link>
-          <Link style={{ textDecoration: 'none' }} to='/dashboard/events'>
-            <li name='events' className='userleft'>
-              <label className='userleftitem' name='events' ref={eventsLabel}>
+                <span style={{ marginLeft: '15px' }}>Updates</span>
+              </div>
+            </Link>
+          </li>
+          <li name='events' className='userleft'>
+            <Link style={{ textDecoration: 'none' }} to='/dashboard/events'>
+              <div className='userleftitem' name='events' ref={eventsLabel}>
                 <img
                   className='sideicons'
                   name='events'
                   src={events}
                   height='20px'
                 />{' '}
+                <span style={{ marginLeft: '15px' }}>Events </span>
                 <img
                   src={eventsToggleStatus}
                   alt='events donwdrop toggle'
                   onClick={handleDrop}
                   name='eventdrop'
-                  style={{
-                    padding: '5px',
-                    cursor: 'pointer',
-                    border: 'solid rgba(0,0,0,0) 2px',
-                    color: 'white',
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    outline: 'none',
-                  }}
+                  className='taskdrop'
                   height='7px'
                 />
-                Events{' '}
-              </label>
-            </li>
-          </Link>
+              </div>
+            </Link>
+          </li>
           {showEventDrop && (
             <ul className='drop'>
               <Link
@@ -192,34 +185,27 @@ const SideNavigator = ({
               </Link>
             </ul>
           )}
-          <Link style={{ textDecoration: 'none' }} to='/dashboard/tasks'>
-            <li name='tasks' className='userleft'>
-              <label className='userleftitem' name='tasks' ref={tasksLabel}>
+          <li name='tasks' className='userleft'>
+            <Link style={{ textDecoration: 'none' }} to='/dashboard/tasks'>
+              <div className='userleftitem' name='tasks' ref={tasksLabel}>
                 <img
                   className='sideicons'
                   name='tasks'
                   src={tasks}
                   height='20px'
                 />{' '}
+                <span style={{ marginLeft: '15px' }}>Tasks</span>
                 <img
                   src={tasksToggleStatus}
                   alt='tasks downdrop toggle'
                   onClick={handleDrop}
                   name='taskdrop'
-                  style={{
-                    padding: '5px',
-                    cursor: 'pointer',
-                    border: 'solid rgba(0,0,0,0) 2px',
-                    color: 'white',
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    outline: 'none',
-                  }}
+                  className='taskdrop'
                   height='7px'
                 />
-                Tasks
-              </label>
-            </li>
-          </Link>
+              </div>
+            </Link>
+          </li>
           {showTaskDrop && (
             <ul className='drop'>
               <Link
@@ -251,38 +237,27 @@ const SideNavigator = ({
               </Link>
             </ul>
           )}
-          <Link style={{ textDecoration: 'none' }} to='/dashboard/e-voting'>
-            <li name='e-voting' className='userleft'>
-              <label
-                className='userleftitem'
-                name='e-voting'
-                ref={eVotingLabel}
-              >
+          <li name='e-voting' className='userleft'>
+            <Link style={{ textDecoration: 'none' }} to='/dashboard/e-voting'>
+              <div className='userleftitem' name='e-voting' ref={eVotingLabel}>
                 <img
                   className='sideicons'
                   name='e-voting'
                   src={events}
                   height='20px'
                 />{' '}
+                <span style={{ marginLeft: '10px' }}>Evoting</span>
                 <img
                   src={eVotingToggleStatus}
                   alt='e-voting donwdrop toggle'
                   onClick={handleDrop}
                   name='e-votingdrop'
-                  style={{
-                    padding: '5px',
-                    cursor: 'pointer',
-                    border: 'solid rgba(0,0,0,0) 2px',
-                    color: 'white',
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    outline: 'none',
-                  }}
+                  className='taskdrop'
                   height='7px'
                 />
-                Evoting{' '}
-              </label>
-            </li>
-          </Link>
+              </div>
+            </Link>
+          </li>
           {showEvotingDrop && (
             <ul className='drop'>
               <Link
@@ -305,26 +280,25 @@ const SideNavigator = ({
               </Link>
             </ul>
           )}
-          <Link style={{ textDecoration: 'none' }} to='/dashboard/settings'>
-            <li name='settings' className='userleft'>
-              <label
-                className='userleftitem'
-                name='settings'
-                ref={settingsLabel}
-              >
+          <li name='settings' className='userleft'>
+            <Link style={{ textDecoration: 'none' }} to='/dashboard/settings'>
+              <div className='userleftitem' name='settings' ref={settingsLabel}>
                 <img
                   className='sideicons'
                   name='settings'
                   src={settings}
                   height='20px'
                 />{' '}
-                Settings
-              </label>
-            </li>
-          </Link>
+                <span style={{ marginLeft: '15px' }}>Settings</span>
+              </div>
+            </Link>
+          </li>
           <li>
             <label onClick={logout} className='userleftbottom'>
-              Log out
+              {'Log out'}
+              <label style={{ fontFamily: 'monospace', fontSize: '1.3rem' }}>
+                {' ->]'}
+              </label>
             </label>
           </li>
         </ul>
