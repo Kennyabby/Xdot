@@ -79,16 +79,16 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt }) => {
             requires that all members provide their University of Ibadan student{' '}
             <b>MATRIC NUMBER</b>. Click the button below to proceed.
           </p>
-        </div>
-        <div
-          style={{
-            justifyContent: 'center',
-            textAlign: 'center',
-          }}
-        >
-          <Link style={{ margin: 'atuo' }} to='/signup'>
-            <button className='signup'>Sign Up</button>
-          </Link>
+          <div
+            style={{
+              justifyContent: 'center',
+              textAlign: 'center',
+            }}
+          >
+            <Link style={{ margin: 'atuo' }} to='/signup'>
+              <button className='signup'>Sign Up</button>
+            </Link>
+          </div>
         </div>
       </div>
       <Events
