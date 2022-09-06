@@ -331,6 +331,8 @@ const Signup = ({ showNavbar, server }) => {
             <div
               style={{
                 position: 'fixed',
+                width: 'fit-content',
+                height: 'fit-content',
                 top: '8px',
                 right: '7px',
                 cursor: 'pointer',

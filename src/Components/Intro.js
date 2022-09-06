@@ -9,8 +9,8 @@ const Intro = () => {
           <div
             style={{
               width: 'fit-content',
-              padding: '30px',
-              margin: '10px',
+              padding: '15px',
+              margin: '3px',
               fontFamily: 'monospace',
               fontSize: '1rem',
               borderRadius: '50px',
@@ -50,29 +50,25 @@ const Intro = () => {
             </div>
           </div>
 
-          <div style={{ listStyle: 'none', marginTop: '50px' }}>
+          <div style={{ marginTop: '50px' }}>
             <h4 style={{ textAlign: 'center' }}>
               Listed below are instructions that are to be followed as you fill
               the form:
             </h4>
             <li className='introLabel'>
-              <p>Click on a field to know if it is required or not.</p>
+              Click on a field to know if it is required or not.
             </li>
             <li className='introLabel'>
-              <p>The required fields are preffixed with a '*'.</p>
+              The required fields are preffixed with a '*'.
             </li>
             <li className='introLabel'>
-              <p>
-                Make sure you fill all required fields, as you may face
-                challenges finishing up if you do not.
-              </p>
+              Make sure you fill all required fields, as you may face challenges
+              finishing up if you do not.
             </li>
             <li className='introLabel'>
-              <p>
-                As you fill in the <b>signup-info section</b>, kindly take your
-                time to enter carefully a <b>four digit number</b> (This will be
-                your identification number) that you should always remember.
-              </p>
+              As you fill in the <b>signup-info section</b>, kindly take your
+              time to enter carefully a <b>four digit number</b> (This will be
+              your identification number) that you should always remember.
             </li>
           </div>
         </div>

@@ -137,7 +137,7 @@ code {
 .introLabel {
   margin: 20px;
   font-family: monospace;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 .events {
   overflow-x: auto;
@@ -182,6 +182,7 @@ code {
   left: 0px;
   text-align: center;
   background-color: white;
+  z-index: 1;
   background-size: cover;
   background-repeat: no-repeat;
   width: 100vw;
@@ -192,9 +193,8 @@ code {
   top: 0px;
   left: 0px;
   text-align: center;
-  z-index: 1;
   background-color: white;
-  width: 100vw;
+  width: 100%;
   height: 100%;
 }
 .close {
@@ -208,8 +208,8 @@ code {
   cursor: pointer;
 }
 .cover {
-  margin: 20px;
-  margin-top: 50px;
+  margin: 10px;
+  margin-top: 30px;
   display: inline-flex;
   /* border: solid white 1px; */
   border-radius: 20px;
@@ -525,19 +525,18 @@ code {
     text-align: center;
     background-color: white;
     color: 'black';
-    /* background-image: url('coverimg.jpg'); */
+    z-index: 1;
     background-size: cover;
     background-repeat: no-repeat;
     width: 100vw;
     height: 100vh;
   }
   .sign {
-    position: fixed;
+    position: absolute;
     top: 0px;
     color: black;
     left: 0px;
     text-align: center;
-    z-index: 1;
     background-color: white;
     width: 100vw;
     height: 100%;
