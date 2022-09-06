@@ -316,11 +316,12 @@ const Post = ({
       <div
         style={{
           fontFamily: 'monospace',
+          margin: 'auto',
           marginBottom: '10px',
           padding: '5px',
-          borderRadius: '20px',
-          backgroundColor: 'rgba(220,220,220,1)',
-          borderBottom: 'solid rgba(200,200,200,1) 3px',
+          // borderRadius: '20px',
+          backgroundColor: 'rgba(255,255,255,1)',
+          borderBottom: 'solid rgba(200,200,200,1) 4px',
         }}
       >
         {status !== undefined ? (
@@ -469,8 +470,11 @@ const Post = ({
                   position: 'relative',
                   display: 'flex',
                   justifyContent: 'center',
-                  margin: '10px',
-                  marginTop: '30px',
+                  margin: '5px',
+                  paddingBottom: '10px',
+                  borderBottom:
+                    status === undefined ? '' : 'solid rgba(210,210,210,1) 2px',
+                  marginTop: '15px',
                 }}
               >
                 <div
