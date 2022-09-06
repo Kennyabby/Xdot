@@ -179,10 +179,9 @@
   text-align: center;
 }
 .drop {
-  background-color: black;
+  /* background-color: black; */
   width: auto;
-  margin: 0px;
-
+  margin: 10px;
   text-align: left;
   list-style: none;
   font-size: 0.8rem;
@@ -191,6 +190,7 @@
   padding: 10px;
 }
 .dropitem {
+  width: max-content;
   margin: 15px;
   margin-left: 0px;
   cursor: pointer;

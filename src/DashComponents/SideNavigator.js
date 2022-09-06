@@ -153,38 +153,38 @@ const SideNavigator = ({
                 />
               </div>
             </Link>
+            {showEventDrop && (
+              <ul className='drop'>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/events/grandquiz'
+                >
+                  <li ref={grandquizRef} className='dropitem'>
+                    {' '}
+                    {'>'} Grand Quiz{' '}
+                  </li>
+                </Link>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/events/dailypuzzles'
+                >
+                  <li ref={dailypuzzleRef} className='dropitem'>
+                    {' '}
+                    {'>'} Daily Puzzles{' '}
+                  </li>
+                </Link>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/events/studytable'
+                >
+                  <li ref={studytableRef} className='dropitem'>
+                    {' '}
+                    {'>'} Study Table{' '}
+                  </li>
+                </Link>
+              </ul>
+            )}
           </li>
-          {showEventDrop && (
-            <ul className='drop'>
-              <Link
-                style={{ color: 'white', textDecoration: 'none' }}
-                to='/dashboard/events/grandquiz'
-              >
-                <li ref={grandquizRef} className='dropitem'>
-                  {' '}
-                  {'>'} Grand Quiz{' '}
-                </li>
-              </Link>
-              <Link
-                style={{ color: 'white', textDecoration: 'none' }}
-                to='/dashboard/events/dailypuzzles'
-              >
-                <li ref={dailypuzzleRef} className='dropitem'>
-                  {' '}
-                  {'>'} Daily Puzzles{' '}
-                </li>
-              </Link>
-              <Link
-                style={{ color: 'white', textDecoration: 'none' }}
-                to='/dashboard/events/studytable'
-              >
-                <li ref={studytableRef} className='dropitem'>
-                  {' '}
-                  {'>'} Study Table{' '}
-                </li>
-              </Link>
-            </ul>
-          )}
           <li name='tasks' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/tasks'>
               <div className='userleftitem' name='tasks' ref={tasksLabel}>
@@ -205,38 +205,38 @@ const SideNavigator = ({
                 />
               </div>
             </Link>
+            {showTaskDrop && (
+              <ul className='drop'>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/tasks/cgpa'
+                >
+                  <li ref={cgpacalcRef} className='dropitem'>
+                    {' '}
+                    {'>'} CGPA CALC{' '}
+                  </li>
+                </Link>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/tasks/todolist'
+                >
+                  <li ref={todolistRef} className='dropitem'>
+                    {' '}
+                    {'>'} To Do List{' '}
+                  </li>
+                </Link>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/tasks/quizapp'
+                >
+                  <li ref={quizappRef} className='dropitem'>
+                    {' '}
+                    {'>'} Quiz App{' '}
+                  </li>
+                </Link>
+              </ul>
+            )}
           </li>
-          {showTaskDrop && (
-            <ul className='drop'>
-              <Link
-                style={{ color: 'white', textDecoration: 'none' }}
-                to='/dashboard/tasks/cgpa'
-              >
-                <li ref={cgpacalcRef} className='dropitem'>
-                  {' '}
-                  {'>'} CGPA CALC
-                </li>
-              </Link>
-              <Link
-                style={{ color: 'white', textDecoration: 'none' }}
-                to='/dashboard/tasks/todolist'
-              >
-                <li ref={todolistRef} className='dropitem'>
-                  {' '}
-                  {'>'} To Do List{' '}
-                </li>
-              </Link>
-              <Link
-                style={{ color: 'white', textDecoration: 'none' }}
-                to='/dashboard/tasks/quizapp'
-              >
-                <li ref={quizappRef} className='dropitem'>
-                  {' '}
-                  {'>'} Quiz App{' '}
-                </li>
-              </Link>
-            </ul>
-          )}
           <li name='e-voting' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/e-voting'>
               <div className='userleftitem' name='e-voting' ref={eVotingLabel}>
@@ -257,29 +257,29 @@ const SideNavigator = ({
                 />
               </div>
             </Link>
+            {showEvotingDrop && (
+              <ul className='drop'>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/e-voting/apply'
+                >
+                  <li ref={applyRef} className='dropitem'>
+                    {' '}
+                    {'>'} Apply{' '}
+                  </li>
+                </Link>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/e-voting/vote'
+                >
+                  <li ref={voteRef} className='dropitem'>
+                    {' '}
+                    {'>'} Vote{' '}
+                  </li>
+                </Link>
+              </ul>
+            )}
           </li>
-          {showEvotingDrop && (
-            <ul className='drop'>
-              <Link
-                style={{ color: 'white', textDecoration: 'none' }}
-                to='/dashboard/e-voting/apply'
-              >
-                <li ref={applyRef} className='dropitem'>
-                  {' '}
-                  {'>'} Apply{' '}
-                </li>
-              </Link>
-              <Link
-                style={{ color: 'white', textDecoration: 'none' }}
-                to='/dashboard/e-voting/vote'
-              >
-                <li ref={voteRef} className='dropitem'>
-                  {' '}
-                  {'>'} Vote{' '}
-                </li>
-              </Link>
-            </ul>
-          )}
           <li name='settings' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/settings'>
               <div className='userleftitem' name='settings' ref={settingsLabel}>

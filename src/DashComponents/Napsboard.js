@@ -94,7 +94,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           elem.current.parentElement.parentElement.style.borderLeft =
             'solid white 3px'
         } else {
-          console.log(elem.current.parentElement)
           elem.current.parentElement.parentElement.style.backgroundColor =
             'rgba(0,0,0,0)'
           elem.current.parentElement.parentElement.style.borderLeft =
