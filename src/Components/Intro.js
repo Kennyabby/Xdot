@@ -62,8 +62,8 @@ const Intro = () => {
               The required fields are preffixed with a '*'.
             </li>
             <li className='introLabel'>
-              Make sure you fill all required fields, as you may face challenges
-              finishing up if you do not.
+              Make sure you fill all required fields, as you may face some
+              challenges finishing up if you do not.
             </li>
             <li className='introLabel'>
               As you fill in the <b>signup-info section</b>, kindly take your
