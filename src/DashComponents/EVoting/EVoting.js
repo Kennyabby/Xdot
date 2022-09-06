@@ -1,10 +1,11 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
   const [votString, setVotString] = useState('')
   const [votingHours, setVotingHours] = useState('')
   const [formSaleStart, setFormSaleStart] = useState('')
   const [formSaleEnd, setFormSaleEnd] = useState('')
+  const eVotingLabelRef = useRef(null)
   useEffect(() => {
     if (homerf !== undefined && chatrf !== undefined) {
       homerf.current.style.borderBottom = 'solid blue 0px'
@@ -36,10 +37,13 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
       setFormSaleEnd(new Date(formSaleEnd))
     } catch (error) {}
   }, [])
+  useEffect(() => {
+    eVotingLabelRef.current.scrollIntoView()
+  }, [eVotingLabelRef])
   return (
     <>
       <div style={{ paddingBottom: '70px' }}>
-        <div style={{ margin: '10px' }}>
+        <div style={{ margin: '10px' }} ref={eVotingLabelRef}>
           <label
             style={{
               fontFamily: 'monospace',

@@ -1,10 +1,11 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useRef } from 'react'
 import ExecDetails from './ExecDetails'
 
 import '../../EVoting.css'
 const Page = ({ server, viewForm, user }) => {
   const [currentSession, setCurrentSession] = useState('Current Session...')
   const [applicationDetails, setApplicationDetails] = useState({})
+  const sessionLabelRef = useRef(null)
 
   useEffect(async () => {
     try {
@@ -24,6 +25,9 @@ const Page = ({ server, viewForm, user }) => {
       const formSaleEnd = settings[1].eVotingSettings.formSaleEnd
     } catch (error) {}
   }, [])
+  useEffect(() => {
+    sessionLabelRef.current.scrollIntoView()
+  }, [sessionLabelRef])
   useEffect(() => {
     const applications = user.votingApplication
     if (applications !== undefined) {
@@ -175,7 +179,10 @@ const Page = ({ server, viewForm, user }) => {
   return (
     <>
       <div>
-        <p style={{ fontFamily: 'Courier New', fontWeight: 'bold' }}>
+        <p
+          style={{ fontFamily: 'Courier New', fontWeight: 'bold' }}
+          ref={sessionLabelRef}
+        >
           {'Session: ' + currentSession}
         </p>
         {applicationDetails.isCompleted !== undefined &&
