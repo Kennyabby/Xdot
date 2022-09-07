@@ -166,7 +166,7 @@ const Finish = ({
   }, [userImg])
   const notifyUserMail = async (mailList) => {
     const message =
-      '<h1>NAPSUI Account Created Successfully</h1><p>Hi, <b>' +
+      '<h1>Account Created Successfully</h1><p>Hi, <b>' +
       studentInfo.firstName +
       "</b>.</p><p>You are getting this email to confirm that you have just created an account with the National Association Of Physics Students, University of Ibadan Chapter <b>(NAPS UI)</b>. If This is you, you don't need to do anything.</p><p>If this was not you, kindly click <a href='https://napsui.herokuapp.com/help'>here</a>. </p><p>Regards.</p>"
     const opts = {
