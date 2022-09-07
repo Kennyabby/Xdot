@@ -525,9 +525,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             setBodyLeft={setBodyLeft('150px')}
             setShowNavigator={setShowNavigator(true)}
             setShowNav={setShowNav(false)}
-            showHomeToggle = {(show)=>{
-                setShowHomeToggle(show)
-              }}
+            showHomeToggle={(show) => {
+              setShowHomeToggle(show)
+            }}
           />
         )
       } else if (id === 'dailypuzzles') {
@@ -974,8 +974,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                       <img
                         className='userimg'
                         src={userImgUrl}
-                        height='50px'
-                        width='50px'
+                        height='35px'
+                        width='35px'
                         title='go to your profile'
                         style={{
                           ...shade({
@@ -988,11 +988,11 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                         }}
                       />
                     </Link>
-                    <p
+                    <div
                       className='usernameshadow'
                       style={{
                         fontWeight: 'bold',
-                        fontSize: '.8rem',
+                        fontSize: '.6rem',
 
                         ...shade({
                           width: '100px',
@@ -1003,10 +1003,10 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                         }),
                       }}
                     >
-                      {user.userName
-                        ? user.userName.toUpperCase()
-                        : user.userName}
-                    </p>
+                      {user.firstName
+                        ? user.firstName.toUpperCase()
+                        : user.firstName}
+                    </div>
                   </div>
                 )}
               </div>

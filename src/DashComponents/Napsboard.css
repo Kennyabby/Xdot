@@ -9,6 +9,10 @@
 .usernameshadow {
   color: black;
   text-shadow: white 0px 0px 10px;
+  font-style: italic;
+  margin-top: 3px;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.15rem;
 }
 .userimg {
   border-radius: 50%;
