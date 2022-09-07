@@ -391,6 +391,7 @@ const SchoolInfo = ({
           name='otherEmail'
           placeholder='Enter Your Personal Email'
           value={schoolInfo.otherEmail}
+          required
           title='Enter Your Personal Email'
         />
         <p className='inputStyle'></p>
