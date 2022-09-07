@@ -25,13 +25,16 @@ const Finish = ({
   const [pos, setPos] = useState(0)
   const [show, setShow] = useState(true)
   const [isSuccess, setIsSuccess] = useState(false)
-  const regInfos = [
+
+  const basicInfo = [
     'First Name',
     'Middle Name',
     'Last Name',
     'Gender',
     'Guardian Name',
     'Date of Birth',
+  ]
+  const schoolInfo = [
     'Matric No',
     'School Email',
     'Personal Email',
@@ -39,26 +42,33 @@ const Finish = ({
     'Hall of Residence Allocated',
     'Admission Mode of Entry',
     'Session Admitted',
+  ]
+  const contactInfo = [
     'Contact Number',
     'Other Contact Number',
     'Current Address',
     "Guardian's Contact Number",
     "Other Guardian's Contact Number",
     "Guardian's Current Address",
-    'Username',
   ]
+
+  const signupInfo = ['Username']
   const setCamelCase = (text) => {
     var first = text.slice(0, 1).toUpperCase()
     var others = text.slice(1).toLowerCase()
     return first + others
   }
-  const regInfoValues = [
+
+  const basicInfoValues = [
     localStorage.getItem('firstName'),
     localStorage.getItem('middleName'),
     localStorage.getItem('lastName'),
     localStorage.getItem('gender'),
     localStorage.getItem('guardianName'),
     localStorage.getItem('dateOfBirth'),
+  ]
+
+  const schoolInfoValues = [
     localStorage.getItem('matricNo'),
     localStorage.getItem('schoolEmail'),
     localStorage.getItem('otherEmail'),
@@ -66,14 +76,17 @@ const Finish = ({
     localStorage.getItem('hallOfResidence'),
     localStorage.getItem('modeOfEntry'),
     localStorage.getItem('yearOfAdmission'),
+  ]
+
+  const contactInfoValues = [
     localStorage.getItem('contactNo'),
     localStorage.getItem('otherContactNo'),
     localStorage.getItem('currentAddress'),
     localStorage.getItem('guardianContactNo'),
     localStorage.getItem('otherGuardianContactNo'),
     localStorage.getItem('guardianCurrentAddress'),
-    localStorage.getItem('userName'),
   ]
+  const signupInfoValues = [localStorage.getItem('userName')]
 
   const studentInfo = {
     firstName: setCamelCase(localStorage.getItem('firstName')),
@@ -249,17 +262,125 @@ const Finish = ({
   )
   const finishList = [
     <div className='container'>
-      <h3 ref={summaryLabelRef}>Info Summary</h3>
-      {regInfos.map((regInfo, i) => {
-        return (
-          <p className='regInfo' key={i}>
-            <label style={{ fontWeight: 'bold' }}>{regInfo}: </label>
-            <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
-              {regInfoValues[i]}
-            </label>
-          </p>
-        )
-      })}
+      <h2
+        style={{ fontFamily: 'fantasy', letterSpacing: '.2rem' }}
+        ref={summaryLabelRef}
+      >
+        Info Summary
+      </h2>
+      <div className='regInfo'>
+        <h3
+          style={{
+            marginLeft: '15px',
+            fontFamily: 'Courier New',
+            fontWeight: 'bold',
+          }}
+        >
+          Basic Info
+        </h3>
+        {basicInfo.map((info, i) => {
+          return (
+            <div
+              style={{
+                textAlign: 'left',
+                padding: '20px',
+                backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
+              }}
+              key={i}
+            >
+              <label style={{ fontWeight: 'bold' }}>{info}: </label>
+              <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
+                {basicInfoValues[i]}
+              </label>
+            </div>
+          )
+        })}
+      </div>
+      <div className='regInfo'>
+        <h3
+          style={{
+            marginLeft: '15px',
+            fontFamily: 'Courier New',
+            fontWeight: 'bold',
+          }}
+        >
+          School Info
+        </h3>
+        {schoolInfo.map((info, i) => {
+          return (
+            <div
+              style={{
+                textAlign: 'left',
+                padding: '20px',
+                backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
+              }}
+              key={i}
+            >
+              <label style={{ fontWeight: 'bold' }}>{info}: </label>
+              <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
+                {schoolInfoValues[i]}
+              </label>
+            </div>
+          )
+        })}
+      </div>
+      <div className='regInfo'>
+        <h3
+          style={{
+            marginLeft: '15px',
+            fontFamily: 'Courier New',
+            fontWeight: 'bold',
+          }}
+        >
+          Contact Info
+        </h3>
+        {contactInfo.map((info, i) => {
+          return (
+            <div
+              style={{
+                textAlign: 'left',
+                padding: '20px',
+                backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
+              }}
+              key={i}
+            >
+              <label style={{ fontWeight: 'bold' }}>{info}: </label>
+              <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
+                {contactInfoValues[i]}
+              </label>
+            </div>
+          )
+        })}
+      </div>
+      <div className='regInfo'>
+        <h3
+          style={{
+            marginLeft: '15px',
+            fontFamily: 'Courier New',
+            fontWeight: 'bold',
+          }}
+        >
+          Signup Info
+        </h3>
+        {signupInfo.map((info, i) => {
+          return (
+            <div
+              style={{
+                textAlign: 'left',
+                padding: '20px',
+                backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
+              }}
+              key={i}
+            >
+              <label style={{ fontWeight: 'bold' }}>{info}: </label>
+              <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
+                {signupInfoValues[i]}
+              </label>
+            </div>
+          )
+        })}
+      </div>
+
       {prevNext}
     </div>,
     <div className='container'>
