@@ -184,6 +184,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
           infoRef.current.style.borderBottom = 'solid blue 1px'
           infoRef.current.parentElement.childNodes[1].style.display = 'block'
           infoRef.current.placeholder = ''
+          infoRef.current.scrollIntoView()
           if (infoRef.current.required) {
             infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
           } else {
