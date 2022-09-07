@@ -164,6 +164,26 @@ const Finish = ({
       setWarnImage(false)
     }
   }, [userImg])
+  const notifyUserMail = async (mail) => {
+    const message =
+      '<h1>Naps Account Creation Confirmation</h1><p>Hi, <b>' +
+      studentInfo.firstName +
+      "</b>.</p><p>You are getting this email to confirm that you have just created an account with the National Association Of Physics Students, University of Ibadan Chapter <b>(NAPS UI)</b>. If This is you, you don't need to do anything.</p><p>If this is not you, kindly click on the link below. </p><p><a href='https://napsui.herokuapp.com/help'><button style='padding:5px; border-radius:10px; color:red'; background-color:white; font-family:monospace;>Help >></button></a></p><p>Regards.</p>"
+    const opts = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to: [mail],
+        type: 'html',
+        subject: '(NAPSUI) ACCOUNT CREATED BY YOU',
+        message: message,
+      }),
+    }
+    const resp = await fetch(server + '/mailUser', opts)
+  }
+
   const fileHandler = (e) => {
     var file = e.target.files[0]
     console.log('type: ' + file.type)
@@ -206,6 +226,7 @@ const Finish = ({
         if (feedBack.isDelivered === true) {
           setShow(false)
           setIsSuccess(true)
+          notifyUserMail(studentInfo.otherEmail)
           setViewSessionLabel(false)
           setShowView(false)
         }
