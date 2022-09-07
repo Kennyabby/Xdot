@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import logo from './user.png'
 
+import ConnectionModal from './ConnectionModal'
+
 const SchoolInfo = ({
   getCoverList,
   getCoverPos,
@@ -11,6 +13,14 @@ const SchoolInfo = ({
   const history = useHistory()
   const schoolCoverRef = useRef(null)
   const [pos, setPos] = useState(0)
+  const [showModal, setShowModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(
+    'Connection was lost, could not connect to Internet. Kindly check if you are still connected to the internet.'
+  )
+  const [validatingStatus, setValidatingStatus] = useState(
+    'Validating Details. Please Hold on...'
+  )
+  const [showValidatingStatus, setShowValidatingStatus] = useState(false)
   const [schoolInfo, setSchoolInfo] = useState({
     matricNo: '',
     schoolEmail: '',
@@ -20,6 +30,7 @@ const SchoolInfo = ({
     yearOfAdmission: '',
     modeOfEntry: '',
   })
+  const validatorRef = useRef(null)
   const matricNoRef = useRef(null)
   const schoolEmailRef = useRef(null)
   const otherEmailRef = useRef(null)
@@ -38,6 +49,10 @@ const SchoolInfo = ({
     modeOfEntryRef,
   ]
   var matricValidated = false
+  var schoolEmailValidated = false
+  var schoolEmailExist = false
+  var otherEmailValidated = false
+  var otherEmailExist = false
   useEffect(() => {
     getCoverList(schoolList)
   }, [])
@@ -48,6 +63,28 @@ const SchoolInfo = ({
     getCoverPos(pos)
   }, [pos])
 
+  const matchSchoolEmail = (email) => {
+    if (email.split('').includes('@')) {
+      let origin = email.indexOf('@')
+
+      if (
+        email.slice(origin + 1) === 'stu.ui.edu.ng' &&
+        String(Number(email.slice(origin - 3, origin))) !== 'NaN' &&
+        String(Number(email.slice(0, origin))) === 'NaN'
+      ) {
+        return true
+      }
+    }
+    return false
+  }
+  const matchEmail = (email) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    )
+  }
+  useEffect(() => {
+    // console.log('match: ' + matchSchoolEmail(''))
+  }, [])
   const validateInputs = () => {
     var count = 0
     var infos = infoRefList.filter((infoRef) => {
@@ -55,7 +92,7 @@ const SchoolInfo = ({
         return infoRef.current.required
       }
     })
-
+    setShowValidatingStatus(false)
     infoRefList.forEach(async (infoRef) => {
       if (infoRef.current !== null) {
         if (infoRef.current.required) {
@@ -93,28 +130,106 @@ const SchoolInfo = ({
                   'Enter a Valid Matric Number'
               }
             }
+            if (infoRef.current.name === 'schoolEmail') {
+              if (matchSchoolEmail(infoRef.current.value)) {
+                if (schoolEmailValidated) {
+                  if (schoolEmailExist) {
+                    infoRef.current.style.borderBottom = 'solid red 1px'
+                    infoRef.current.parentElement.childNodes[1].style.display =
+                      'block'
+                    infoRef.current.parentElement.childNodes[1].style.color =
+                      'red'
+                    infoRef.current.parentElement.childNodes[1].innerHTML =
+                      'This Email Has Been Registered!'
+                    count--
+                  } else {
+                    // count++;
+                    // console.log("increased to:",count);
+                  }
+                } else {
+                  count--
+                  infoRef.current.style.borderBottom = 'solid red 1px'
+                  infoRef.current.parentElement.childNodes[1].style.display =
+                    'block'
+                  infoRef.current.parentElement.childNodes[1].style.color =
+                    'red'
+                  infoRef.current.parentElement.childNodes[1].innerHTML =
+                    '* Could Not Validate Email Address'
+                }
+              } else {
+                infoRef.current.style.borderBottom = 'solid red 1px'
+                infoRef.current.parentElement.childNodes[1].style.display =
+                  'block'
+                infoRef.current.parentElement.childNodes[1].style.color = 'red'
+                infoRef.current.parentElement.childNodes[1].innerHTML =
+                  'Email Is Not Valid!'
+                count--
+              }
+            }
+            if (infoRef.current.name === 'otherEmail') {
+              if (matchEmail(infoRef.current.value)) {
+                if (otherEmailValidated) {
+                  if (otherEmailExist) {
+                    infoRef.current.style.borderBottom = 'solid red 1px'
+                    infoRef.current.parentElement.childNodes[1].style.display =
+                      'block'
+                    infoRef.current.parentElement.childNodes[1].style.color =
+                      'red'
+                    infoRef.current.parentElement.childNodes[1].innerHTML =
+                      'This Email Has Been Registered!'
+                    count--
+                  } else {
+                    // count++;
+                    // console.log("increased to:",count);
+                  }
+                } else {
+                  count--
+                  infoRef.current.style.borderBottom = 'solid red 1px'
+                  infoRef.current.parentElement.childNodes[1].style.display =
+                    'block'
+                  infoRef.current.parentElement.childNodes[1].style.color =
+                    'red'
+                  infoRef.current.parentElement.childNodes[1].innerHTML =
+                    '* Could Not Validate Email Address'
+                  // window.location.reload()
+                }
+              } else {
+                infoRef.current.style.borderBottom = 'solid red 1px'
+                infoRef.current.parentElement.childNodes[1].style.display =
+                  'block'
+                infoRef.current.parentElement.childNodes[1].style.color = 'red'
+                infoRef.current.parentElement.childNodes[1].innerHTML =
+                  'Email Is Not Valid!'
+                count--
+              }
+            }
             count++
+            // console.log(count)
           }
         }
       }
     })
 
+    // console.log('length: ', infos.length)
     if (infos.length === count) {
+      // console.log('yes')
       setSchoolConfirmed(true)
       return true
     } else {
       setSchoolConfirmed(false)
+      // console.log('no')
+      // window.location.reload()
       return false
     }
   }
-  const validateInput = async () => {
+  const validateInput = async ({ all, name }) => {
     var count = 0
-    var response = ''
     var infos = infoRefList.filter((infoRef) => {
       if (infoRef.current != null) {
         return infoRef.current.required
       }
     })
+
     infoRefList.forEach(async (infoRef) => {
       if (infoRef.current !== null) {
         if (infoRef.current.required) {
@@ -125,36 +240,396 @@ const SchoolInfo = ({
                 Number(infoRef.current.value) &&
                 infoRef.current.value.length === 6
               ) {
-                try {
-                  const opts = {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ matricNo: 1, _id: 0 }),
+                if (all) {
+                  try {
+                    const opts = {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ matricNo: infoRef.current.value }),
+                    }
+                    const resp = await fetch(server + '/isMatricPresent', opts)
+
+                    const response = await resp.json()
+                    const isPresent = response.isPresent
+                    if (isPresent) {
+                      matricValidated = true
+                      infoRef.current.style.borderBottom = 'solid red 1px'
+                      infoRef.current.parentElement.childNodes[1].style.display =
+                        'block'
+                      infoRef.current.parentElement.childNodes[1].style.color =
+                        'red'
+                      infoRef.current.parentElement.childNodes[1].innerHTML =
+                        'This Matric Number Has Been Registered!'
+                      count--
+                    } else {
+                      matricValidated = false
+                      // count++;
+                      // console.log("increased to:",count);
+                    }
+                    setShowModal(false)
+                  } catch (TypeError) {
+                    // console.log(TypeError)
+                    setShowModal(true)
                   }
-                  const resp = await fetch(server + '/getMatricList', opts)
-                  response = await resp.json()
-                  const matricList = response.matricList
-                  if (matricList.includes(infoRef.current.value)) {
-                    infoRef.current.style.borderBottom = 'solid red 1px'
-                    infoRef.current.parentElement.childNodes[1].style.display =
-                      'block'
-                    infoRef.current.parentElement.childNodes[1].style.color =
-                      'red'
-                    infoRef.current.parentElement.childNodes[1].innerHTML =
-                      'This Matric Number Has Been Registered!'
-                    count--
-                  } else {
-                    // count++;
-                    // console.log("increased to:",count);
+                } else {
+                  if (name === 'matricNo') {
+                    try {
+                      const opts = {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          matricNo: infoRef.current.value,
+                        }),
+                      }
+                      const resp = await fetch(
+                        server + '/isMatricPresent',
+                        opts
+                      )
+
+                      const response = await resp.json()
+                      const isPresent = response.isPresent
+                      if (isPresent) {
+                        matricValidated = true
+                        infoRef.current.style.borderBottom = 'solid red 1px'
+                        infoRef.current.parentElement.childNodes[1].style.display =
+                          'block'
+                        infoRef.current.parentElement.childNodes[1].style.color =
+                          'red'
+                        infoRef.current.parentElement.childNodes[1].innerHTML =
+                          'This Matric Number Has Been Registered!'
+                        count--
+                      } else {
+                        matricValidated = false
+                        // count++;
+                        // console.log("increased to:",count);
+                      }
+                      setShowModal(false)
+                    } catch (TypeError) {
+                      // console.log(TypeError)
+                      setShowModal(true)
+                    }
                   }
-                } catch (TypeError) {}
+                }
               } else {
                 count--
               }
             }
+            if (infoRef.current.name === 'schoolEmail') {
+              // infoRef.current.parentElement.childNodes[1].style.color = 'blue'
+              if (matchSchoolEmail(infoRef.current.value)) {
+                if (all) {
+                  try {
+                    const opts = {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ email: infoRef.current.value }),
+                    }
+                    const resp = await fetch(server + '/validateMail', opts)
+                    const response = await resp.json()
+                    const validated1 = response.isValid
 
+                    if (validated1) {
+                      schoolEmailValidated = true
+                      infoRef.current.style.borderBottom =
+                        'solid lightgreen 1px'
+                      infoRef.current.parentElement.childNodes[1].style.display =
+                        'block'
+                      infoRef.current.parentElement.childNodes[1].style.color =
+                        'lightgreen'
+                      infoRef.current.parentElement.childNodes[1].innerHTML = `* Email Validated!`
+                      try {
+                        const opts = {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            schoolEmail: infoRef.current.value,
+                          }),
+                        }
+                        const resp = await fetch(
+                          server + '/isEmailPresent',
+                          opts
+                        )
+                        const response = await resp.json()
+                        const isPresent = response.isPresent
+                        if (isPresent) {
+                          schoolEmailExist = true
+                          infoRef.current.style.borderBottom = 'solid red 1px'
+                          infoRef.current.parentElement.childNodes[1].style.display =
+                            'block'
+                          infoRef.current.parentElement.childNodes[1].style.color =
+                            'red'
+                          infoRef.current.parentElement.childNodes[1].innerHTML =
+                            'This Email Has Been Registered!'
+                          count--
+                        } else {
+                          schoolEmailExist = false
+                          // count++;
+                          // console.log("increased to:",count);
+                        }
+                      } catch (TypeError) {}
+                    } else {
+                      schoolEmailValidated = false
+                      infoRef.current.style.borderBottom = 'solid red 1px'
+                      infoRef.current.parentElement.childNodes[1].style.display =
+                        'block'
+                      infoRef.current.parentElement.childNodes[1].style.color =
+                        'red'
+                      infoRef.current.parentElement.childNodes[1].innerHTML =
+                        'Enter a Valid Email Address'
+                      count--
+                    }
+                    setShowModal(false)
+                  } catch (TypeError) {
+                    // console.log(TypeError)
+                    setShowModal(true)
+                  }
+                } else {
+                  if (name === 'schoolEmail') {
+                    try {
+                      const opts = {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email: infoRef.current.value }),
+                      }
+                      const resp = await fetch(server + '/validateMail', opts)
+                      const response = await resp.json()
+                      const validated1 = response.isValid
+
+                      if (validated1) {
+                        schoolEmailValidated = true
+                        infoRef.current.style.borderBottom =
+                          'solid lightgreen 1px'
+                        infoRef.current.parentElement.childNodes[1].style.display =
+                          'block'
+                        infoRef.current.parentElement.childNodes[1].style.color =
+                          'lightgreen'
+                        infoRef.current.parentElement.childNodes[1].innerHTML = `* Email Validated!`
+                        try {
+                          const opts = {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              schoolEmail: infoRef.current.value,
+                            }),
+                          }
+                          const resp = await fetch(
+                            server + '/isEmailPresent',
+                            opts
+                          )
+                          const response = await resp.json()
+                          const isPresent = response.isPresent
+                          if (isPresent) {
+                            schoolEmailExist = true
+                            infoRef.current.style.borderBottom = 'solid red 1px'
+                            infoRef.current.parentElement.childNodes[1].style.display =
+                              'block'
+                            infoRef.current.parentElement.childNodes[1].style.color =
+                              'red'
+                            infoRef.current.parentElement.childNodes[1].innerHTML =
+                              'This Email Has Been Registered!'
+                            count--
+                          } else {
+                            schoolEmailExist = false
+                            // count++;
+                            // console.log("increased to:",count);
+                          }
+                        } catch (TypeError) {}
+                      } else {
+                        schoolEmailValidated = false
+                        infoRef.current.style.borderBottom = 'solid red 1px'
+                        infoRef.current.parentElement.childNodes[1].style.display =
+                          'block'
+                        infoRef.current.parentElement.childNodes[1].style.color =
+                          'red'
+                        infoRef.current.parentElement.childNodes[1].innerHTML =
+                          'Enter a Valid Email Address'
+                        count--
+                      }
+                      setShowModal(false)
+                    } catch (TypeError) {
+                      // console.log(TypeError)
+                      setShowModal(true)
+                    }
+                  }
+                }
+              } else {
+                infoRef.current.style.borderBottom = 'solid red 1px'
+                infoRef.current.parentElement.childNodes[1].style.display =
+                  'block'
+                infoRef.current.parentElement.childNodes[1].style.color = 'red'
+                infoRef.current.parentElement.childNodes[1].innerHTML =
+                  'Enter A Valid School Email!'
+                count--
+              }
+            }
+            if (infoRef.current.name === 'otherEmail') {
+              // infoRef.current.parentElement.childNodes[1].style.color = 'blue'
+              if (matchEmail(infoRef.current.value)) {
+                if (all) {
+                  try {
+                    const opts = {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ email: infoRef.current.value }),
+                    }
+                    const resp = await fetch(server + '/validateMail', opts)
+                    const response = await resp.json()
+                    const validated2 = response.isValid
+
+                    if (validated2) {
+                      otherEmailValidated = true
+                      infoRef.current.style.borderBottom =
+                        'solid lightgreen 1px'
+                      infoRef.current.parentElement.childNodes[1].style.display =
+                        'block'
+                      infoRef.current.parentElement.childNodes[1].style.color =
+                        'lightgreen'
+                      infoRef.current.parentElement.childNodes[1].innerHTML = `* Email Validated!`
+                      try {
+                        const opts = {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            otherEmail: infoRef.current.value,
+                          }),
+                        }
+                        const resp = await fetch(
+                          server + '/isEmailPresent',
+                          opts
+                        )
+                        const response = await resp.json()
+                        const isPresent = response.isPresent
+                        if (isPresent) {
+                          otherEmailExist = true
+                          infoRef.current.style.borderBottom = 'solid red 1px'
+                          infoRef.current.parentElement.childNodes[1].style.display =
+                            'block'
+                          infoRef.current.parentElement.childNodes[1].style.color =
+                            'red'
+                          infoRef.current.parentElement.childNodes[1].innerHTML =
+                            'This Email Has Been Registered!'
+                          count--
+                        } else {
+                          otherEmailExist = false
+                          // count++;
+                          // console.log("increased to:",count);
+                        }
+                      } catch (TypeError) {}
+                    } else {
+                      otherEmailValidated = false
+                      infoRef.current.style.borderBottom = 'solid red 1px'
+                      infoRef.current.parentElement.childNodes[1].style.display =
+                        'block'
+                      infoRef.current.parentElement.childNodes[1].style.color =
+                        'red'
+                      infoRef.current.parentElement.childNodes[1].innerHTML =
+                        'Enter a Valid Email Address'
+                      count--
+                    }
+                    setShowModal(false)
+                  } catch (TypeError) {
+                    // console.log(TypeError)
+                    setShowModal(true)
+                  }
+                } else {
+                  if (name === 'otherEmail') {
+                    try {
+                      const opts = {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email: infoRef.current.value }),
+                      }
+                      const resp = await fetch(server + '/validateMail', opts)
+                      const response = await resp.json()
+                      const validated2 = response.isValid
+
+                      if (validated2) {
+                        otherEmailValidated = true
+                        infoRef.current.style.borderBottom =
+                          'solid lightgreen 1px'
+                        infoRef.current.parentElement.childNodes[1].style.display =
+                          'block'
+                        infoRef.current.parentElement.childNodes[1].style.color =
+                          'lightgreen'
+                        infoRef.current.parentElement.childNodes[1].innerHTML = `* Email Validated!`
+                        try {
+                          const opts = {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              otherEmail: infoRef.current.value,
+                            }),
+                          }
+                          const resp = await fetch(
+                            server + '/isEmailPresent',
+                            opts
+                          )
+                          const response = await resp.json()
+                          const isPresent = response.isPresent
+                          if (isPresent) {
+                            otherEmailExist = true
+                            infoRef.current.style.borderBottom = 'solid red 1px'
+                            infoRef.current.parentElement.childNodes[1].style.display =
+                              'block'
+                            infoRef.current.parentElement.childNodes[1].style.color =
+                              'red'
+                            infoRef.current.parentElement.childNodes[1].innerHTML =
+                              'This Email Has Been Registered!'
+                            count--
+                          } else {
+                            otherEmailExist = false
+                            // count++;
+                            // console.log("increased to:",count);
+                          }
+                        } catch (TypeError) {}
+                      } else {
+                        otherEmailValidated = false
+                        infoRef.current.style.borderBottom = 'solid red 1px'
+                        infoRef.current.parentElement.childNodes[1].style.display =
+                          'block'
+                        infoRef.current.parentElement.childNodes[1].style.color =
+                          'red'
+                        infoRef.current.parentElement.childNodes[1].innerHTML =
+                          'Enter a Valid Email Address'
+                        count--
+                      }
+                      setShowModal(false)
+                    } catch (TypeError) {
+                      // console.log(TypeError)
+                      setShowModal(true)
+                    }
+                  }
+                }
+              } else {
+                infoRef.current.style.borderBottom = 'solid red 1px'
+                infoRef.current.parentElement.childNodes[1].style.display =
+                  'block'
+                infoRef.current.parentElement.childNodes[1].style.color = 'red'
+                infoRef.current.parentElement.childNodes[1].innerHTML =
+                  'Email Is Not Valid!'
+                count--
+              }
+            }
             count++
             if (infos.length === count) {
               setSchoolConfirmed(true)
@@ -185,6 +660,14 @@ const SchoolInfo = ({
     }
   }, [])
   useEffect(() => {
+    if (pos === 0) {
+      setTimeout(() => {
+        validateInput({ all: true })
+      }, 500)
+    }
+  }, [pos])
+
+  useEffect(() => {
     window.localStorage.setItem('matricNo', schoolInfo.matricNo)
     window.localStorage.setItem('schoolEmail', schoolInfo.schoolEmail)
     window.localStorage.setItem('otherEmail', schoolInfo.otherEmail)
@@ -192,7 +675,6 @@ const SchoolInfo = ({
     window.localStorage.setItem('hallOfResidence', schoolInfo.hallOfResidence)
     window.localStorage.setItem('yearOfAdmission', schoolInfo.yearOfAdmission)
     window.localStorage.setItem('modeOfEntry', schoolInfo.modeOfEntry)
-    validateInput()
   }, [schoolInfo])
   useEffect(() => {
     const first = localStorage.getItem('firstName').slice(0, 1)
@@ -207,20 +689,107 @@ const SchoolInfo = ({
   }, [schoolInfo.matricNo])
   const getButtonEvent = async (e) => {
     if (e.target.value === 'Next') {
-      const opts = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ matricNo: 1, _id: 0 }),
-      }
-      if (matricNoRef.current !== null) {
-        fetch(server + '/getMatricList', opts).then(async (resp) => {
-          const response = await resp.json()
-          const matricList = response.matricList
-          if (matricList.includes(matricNoRef.current.value)) {
-            matricValidated = true
+      if (
+        matricNoRef.current !== null &&
+        schoolEmailRef.current !== null &&
+        otherEmailRef.current !== null
+      ) {
+        setShowValidatingStatus(true)
+        setTimeout(() => {
+          validatorRef.current.scrollIntoView()
+        }, [500])
+        try {
+          const opts = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ matricNo: matricNoRef.current.value }),
           }
+
+          const resp = await fetch(server + '/isMatricPresent', opts)
+          const response = await resp.json()
+          const isPresent = response.isPresent
+          if (isPresent) {
+            matricValidated = true
+          } else {
+            matricValidated = false
+          }
+          const opts2 = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: otherEmailRef.current.value }),
+          }
+          const resp2 = await fetch(server + '/validateMail', opts2)
+          const response2 = await resp2.json()
+          const validated2 = response2.isValid
+
+          if (validated2) {
+            otherEmailValidated = true
+            try {
+              const opts = {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  otherEmail: otherEmailRef.current.value,
+                }),
+              }
+              const resp = await fetch(server + '/isEmailPresent', opts)
+              const response = await resp.json()
+              const isPresent = response.isPresent
+              if (isPresent) {
+                otherEmailExist = true
+              } else {
+                otherEmailExist = false
+                // count++;
+                // console.log("increased to:",count);
+              }
+            } catch (TypeError) {}
+          } else {
+            otherEmailValidated = false
+          }
+          const opts1 = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: schoolEmailRef.current.value }),
+          }
+          const resp1 = await fetch(server + '/validateMail', opts1)
+          const response1 = await resp1.json()
+          const validated1 = response1.isValid
+
+          if (validated1) {
+            schoolEmailValidated = true
+            try {
+              const opts = {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  schoolEmail: schoolEmailRef.current.value,
+                }),
+              }
+              const resp = await fetch(server + '/isEmailPresent', opts)
+              const response = await resp.json()
+              const isPresent = response.isPresent
+              if (isPresent) {
+                schoolEmailExist = true
+              } else {
+                schoolEmailExist = false
+                // count++;
+                // console.log("increased to:",count);
+              }
+            } catch (TypeError) {}
+          } else {
+            schoolEmailValidated = false
+          }
+          setShowModal(false)
           if (validateInputs()) {
             if (pos === 2) {
               history.push('./contactInfo')
@@ -231,10 +800,12 @@ const SchoolInfo = ({
               })
             }
           }
-        })
+        } catch (TypeError) {
+          // console.log(TypeError)
+          setShowModal(true)
+        }
       } else {
         if (validateInputs()) {
-          console.log('yes')
           if (pos === 2) {
             history.push('./contactInfo')
             setPos(0)
@@ -247,6 +818,7 @@ const SchoolInfo = ({
       }
     }
     if (e.target.value === 'Prev') {
+      setShowValidatingStatus(false)
       if (pos === 0) {
         history.push('./basicInfo')
         setPos(0)
@@ -272,6 +844,7 @@ const SchoolInfo = ({
         if (infoRef.current.name === name) {
           infoRef.current.style.borderBottom = 'solid blue 1px'
           infoRef.current.parentElement.childNodes[1].style.display = 'block'
+          infoRef.current.parentElement.childNodes[1].style.color = 'blue'
           infoRef.current.placeholder = ''
           infoRef.current.parentElement.scrollIntoView()
           if (infoRef.current.required) {
@@ -336,10 +909,10 @@ const SchoolInfo = ({
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
             infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
           }
+          validateInput({ all: false, name: name })
         }
       }
     })
-    validateInput()
   }
   const prevNext = (
     <div className='np' onClick={getButtonEvent}>
@@ -491,9 +1064,45 @@ const SchoolInfo = ({
   ]
   return (
     <div ref={schoolCoverRef}>
+      {showModal ? (
+        <ConnectionModal
+          title='Ooops... Connection Error'
+          message={errorMessage}
+          multiple={true}
+          button1='Ok'
+          button2='Reload'
+          func1={() => {
+            setShowModal(false)
+            setShowValidatingStatus(false)
+          }}
+          func2={() => {
+            setShowModal(false)
+            setShowValidatingStatus(false)
+            window.location.reload()
+          }}
+        />
+      ) : undefined}
       <div className='infotag' ref={schoolLabelRef}>
         School Info
       </div>
+      {showValidatingStatus ? (
+        <div
+          ref={validatorRef}
+          style={{
+            padding: '10px',
+            margin: '20px',
+            fontFamily: 'Courier New',
+            fontWeight: 'bold',
+            fontSize: '0.9rem',
+            borderRadius: '10px',
+            backgroundColor: 'lightblue',
+            border: 'solid blue 1px',
+            color: 'blue',
+          }}
+        >
+          {validatingStatus}
+        </div>
+      ) : undefined}
       {schoolList[pos]}
     </div>
   )
