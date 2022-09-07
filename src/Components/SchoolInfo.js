@@ -15,7 +15,7 @@ const SchoolInfo = ({
   const [pos, setPos] = useState(0)
   const [showModal, setShowModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState(
-    'Connection was lost, could not connect to Internet. Kindly check if you are still connected to the internet.'
+    'Connection was lost, could not connect to the server. Kindly check if you are still connected to the internet.'
   )
   const [validatingStatus, setValidatingStatus] = useState(
     'Validating Details. Please Hold on...'
