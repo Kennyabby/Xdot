@@ -935,7 +935,7 @@ const SchoolInfo = ({
         <input
           ref={matricNoRef}
           className='input'
-          type='text'
+          type='number'
           name='matricNo'
           placeholder='Enter Your Matric No'
           value={schoolInfo.matricNo}

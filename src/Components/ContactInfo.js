@@ -212,7 +212,7 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
         <input
           ref={contactNoRef}
           className='input'
-          type='text'
+          type='number'
           name='contactNo'
           placeholder='Enter Your Contact Number'
           value={contactInfo.contactNo}
@@ -225,7 +225,7 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
         <input
           ref={otherContactNoRef}
           className='input'
-          type='text'
+          type='number'
           name='otherContactNo'
           placeholder='Enter Other Contact Number'
           value={contactInfo.otherContactNo}
@@ -254,7 +254,7 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
         <input
           ref={guardianContactNoRef}
           className='input'
-          type='text'
+          type='number'
           name='guardianContactNo'
           placeholder="Enter Your Guardian's Contact Number"
           value={contactInfo.guardianContactNo}
@@ -267,7 +267,7 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
         <input
           ref={otherGuardianContactNoRef}
           className='input'
-          type='text'
+          type='number'
           name='otherGuardianContactNo'
           placeholder="Enter Other Guardian's Contact Number"
           value={contactInfo.otherGuardianContactNo}
