@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useRef } from 'react'
 import '../Events/Events.css'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 import profimg from '../Events/assets/profile.png'
 import Post from './Post'
@@ -251,18 +251,20 @@ const Updates = ({ user, server, showHomeToggle }) => {
             </label>
           </div>
         )}
-        {showPostPage ? (
-          <PostPageModal
-            user={user}
-            server={server}
-            closeModal={() => {
-              setShowPostPage(false)
-            }}
-            notifyUpdate={(message) => {
-              notify({ message: message })
-            }}
-          />
-        ) : undefined}
+        <AnimatePresence>
+          {showPostPage && (
+            <PostPageModal
+              user={user}
+              server={server}
+              closeModal={() => {
+                setShowPostPage(false)
+              }}
+              notifyUpdate={(message) => {
+                notify({ message: message })
+              }}
+            />
+          )}
+        </AnimatePresence>
         {highlightedPost === null ? (
           <div
             style={{

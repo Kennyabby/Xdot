@@ -84,19 +84,21 @@ const CreateQuiz = ({ user, viewQuestions, server }) => {
             </label>
           </div>
         )}
-        {showQuizShareModal && (
-          <QuizShareModal
-            server={server}
-            editQuiz={editQuiz}
-            closeModal={() => {
-              setShowQuizShareModal(false)
-            }}
-            notifyUpdate={(message) => {
-              notify({ message: message })
-            }}
-            user={user}
-          />
-        )}
+        <AnimatePresence>
+          {showQuizShareModal && (
+            <QuizShareModal
+              server={server}
+              editQuiz={editQuiz}
+              closeModal={() => {
+                setShowQuizShareModal(false)
+              }}
+              notifyUpdate={(message) => {
+                notify({ message: message })
+              }}
+              user={user}
+            />
+          )}
+        </AnimatePresence>
         <AnimatePresence>
           {showUpdate && (
             <UpdateQuiz

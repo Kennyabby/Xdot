@@ -1,7 +1,14 @@
 import { React, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import cancel from '../assets/close.png'
-const QuizShareModal = ({ closeModal, notifyUpdate, editQuiz, user, server }) => {
+const QuizShareModal = ({
+  closeModal,
+  notifyUpdate,
+  editQuiz,
+  user,
+  server,
+}) => {
   const history = useHistory()
   const shareLabel = ['grandQuiz', 'public', 'group']
   const [showUpdateStatus, setShowUpdateStatus] = useState(false)
@@ -48,7 +55,7 @@ const QuizShareModal = ({ closeModal, notifyUpdate, editQuiz, user, server }) =>
           },
         }),
       }
-      const resp = await fetch(server+'/postQuiz', opts)
+      const resp = await fetch(server + '/postQuiz', opts)
       const response = await resp.json()
       const isDelivered = response.isDelivered
       if (isDelivered) {
@@ -66,17 +73,24 @@ const QuizShareModal = ({ closeModal, notifyUpdate, editQuiz, user, server }) =>
   }
   return (
     <>
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: '100vw' }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.7,
+          ease: 'easeOut',
+          when: 'beforeChildren',
+        }}
+        exit={{ opacity: 0, transition: { duration: 0.7, ease: 'easeIn' } }}
         style={{
           position: 'fixed',
-          top: '10%',
-          left: '2px',
+          top: '0px',
+          left: '0px',
           overflowY: 'auto',
-          zIndex: '1',
-          backgroundColor: 'rgba(255,255,255,0.9)',
-          border: 'solid blue 1px',
-          width: '98%',
-          height: '70%',
+          zIndex: '2',
+          backgroundColor: 'rgba(255,255,255,1)',
+          width: '100%',
+          height: '100%',
         }}
       >
         <img
@@ -93,15 +107,46 @@ const QuizShareModal = ({ closeModal, notifyUpdate, editQuiz, user, server }) =>
           }}
           src={cancel}
           alt='close add quiz'
-          height='40px'
+          height='25px'
         />
         <div
-          style={{ margin: '20px', fontWeight: '1.2rem', fontWeight: 'bold' }}
+          style={{
+            fontWeight: '1.1rem',
+            width: 'fit-content',
+            margin: '20px auto',
+            fontWeight: 'bold',
+            fontFamily: 'Courier New',
+            padding: '10px',
+            boxShadow: '0px 0px 7px',
+            borderRadius: '10px',
+          }}
         >
           <label>{('Share ' + editQuiz.title).toUpperCase()}</label>
         </div>
-        <div style={{ margin: '20px', fontWeight: '1rem' }}>
-          <label>Say Something...</label>
+        <div
+          style={{
+            gap: '20px',
+            margin: '10px',
+            marginLeft: '35px',
+            fontWeight: 'bold',
+            textAlign: 'left',
+            justifyContent: 'left',
+          }}
+        >
+          <select
+            className='updateinput'
+            style={{
+              border: 'solid lightgreen 2px',
+              cursor: 'pointer',
+              fontSize: '.8rem',
+            }}
+            name='shareQuizTo'
+            value={fields.shareQuizTo}
+          >
+            {shareLabel.map((labl) => {
+              return <option>{label[labl].value}</option>
+            })}
+          </select>
         </div>
         <div onChange={handleInputChange}>
           <div>
@@ -118,54 +163,42 @@ const QuizShareModal = ({ closeModal, notifyUpdate, editQuiz, user, server }) =>
               }}
             />
           </div>
-          <div
-            style={{
-              display: 'inline-flex',
-              gap: '20px',
-              margin: '10px',
-              fontWeight: 'bold',
-              justifyContent: 'center',
-            }}
-          >
-            <div style={{ margin: '5px' }}>
-              <label>Share To</label>
-            </div>
-            <select
-              className='updateinput'
-              style={{ border: 'solid lightgreen 2px', cursor: 'pointer' }}
-              name='shareQuizTo'
-              value={fields.shareQuizTo}
-            >
-              {shareLabel.map((labl) => {
-                return <option>{label[labl].value}</option>
-              })}
-            </select>
-          </div>
         </div>
         <div style={{ margin: '50px' }}>
-          <label
+          <button
             onClick={handleShareQuiz}
             style={{
               fontSize: '1rem',
               padding: '10px',
               borderRadius: '10px',
-              backgroundColor: 'rgba(0,0,0,0.8)',
-              color: 'lightgreen',
-              border: 'solid white 2px',
+              fontFamily: 'monospace',
+              color: 'green',
+              border: 'solid green 2px',
               cursor: 'pointer',
             }}
           >
-            Share Quiz
-          </label>
+            {'Share Quiz >>'}
+          </button>
         </div>
         {showUpdateStatus && (
           <p>
-            <label style={{ color: 'lightgreen' }}>
+            <label
+              style={{
+                color: 'blue',
+                backgroundColor: 'lightblue',
+                borderRadius: '10px',
+                padding: '10px',
+                marginBottom: '50px',
+                fontStyle: 'italic',
+                fontSize: '.8rem',
+                border: 'solid blue 2px',
+              }}
+            >
               {'Sharing. Please Wait...'}
             </label>
           </p>
         )}
-      </div>
+      </motion.div>
     </>
   )
 }

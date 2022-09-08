@@ -102,27 +102,16 @@
   position: relative;
   display: flex;
   gap: 60px;
-  background-color: rgba(240, 240, 240, 0.8);
-  border-radius: 15px;
-  border: solid rgba(240, 240, 240, 0.8) 3px;
-  box-shadow: rgba(0, 0, 0, 0.9) 6px 6px 7px;
   color: black;
   width: 87%;
   overflow-x: auto;
-  margin: 10px;
-  padding: 15px;
 }
 .questionview {
   display: flex;
   gap: 50px;
   overflow-x: auto;
   font-family: monospace;
-  background-color: black;
-  box-shadow: rgba(0, 0, 0, 0.6) 6px 6px 7px;
-  border-radius: 10px;
   color: white;
-  margin: 10px;
-  padding: 10px;
   font-size: 0.8rem;
   width: 87%;
 }

@@ -1,9 +1,10 @@
 import { React, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import cancel from '../Events/assets/close.png'
 const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
   const history = useHistory()
-  const postLabel = ['public', 'group','napsite']
+  const postLabel = ['public', 'group', 'napsite']
   const [showUpdateStatus, setShowUpdateStatus] = useState(false)
   const label = {
     napsite: { collection: 'NapsitesFeed', value: 'Napsites' },
@@ -47,33 +48,37 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
           },
         }),
       }
-      const resp = await fetch(server+'/postQuiz', opts)
+      const resp = await fetch(server + '/postQuiz', opts)
       const response = await resp.json()
       const isDelivered = response.isDelivered
       if (isDelivered) {
         closeModal()
-        notifyUpdate(
-          'Posted to ' +
-            postTo +
-            ' Successfully'
-        )
+        notifyUpdate('Posted to ' + postTo + ' Successfully')
         closeModal()
       }
     } catch (TypeError) {}
   }
   return (
     <>
-      <div
+      <motion.div
+        initial={{ opacity: 0, x: '100vw' }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+          duration: 0.7,
+          ease: 'easeOut',
+          when: 'beforeChildren',
+        }}
+        exit={{ opacity: 0, transition: { duration: 0.7, ease: 'easeIn' } }}
         style={{
           position: 'fixed',
           top: '0px',
           left: '0px',
-          backgroundColor: 'rgba(255,255,255,0.9)',
-          zIndex: '1',
+          backgroundColor: 'rgba(255,255,255,1)',
+          zIndex: '2',
           width: '100vw',
           height: '100vh',
-          justifyContent:'center',
-          textAlign:'center',
+          justifyContent: 'center',
+          textAlign: 'center',
         }}
       >
         <img
@@ -94,19 +99,25 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
         />
         <div
           style={{
-            margin:'auto',
+            margin: 'auto',
             overflowY: 'auto',
-            width:'90%',
-            height:'90%',
+            width: '90%',
+            height: '90%',
           }}
         >
           <div
-            style={{ display:'flex', justifyContent:'center', margin:'10px',fontWeight: '1.2rem', fontWeight: 'bold' }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              margin: '10px',
+              fontWeight: '1.2rem',
+              fontWeight: 'bold',
+            }}
           >
             <label
               onClick={handlePost}
               style={{
-                marginRight:'auto',
+                marginRight: 'auto',
                 fontSize: '1rem',
                 padding: '10px',
                 borderRadius: '10px',
@@ -118,7 +129,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
             >
               Post
             </label>
-            <label style={{margin:'auto'}}>Create a Post</label>
+            <label style={{ margin: 'auto' }}>Create a Post</label>
           </div>
           <div style={{ margin: '20px', fontWeight: '1rem' }}>
             <label>Say Something...</label>
@@ -159,9 +170,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
               </select>
             </div>
           </div>
-          <div style={{ margin: '50px' }}>
-            
-          </div>
+          <div style={{ margin: '50px' }}></div>
           {showUpdateStatus && (
             <p>
               <label style={{ color: 'lightgreen' }}>
@@ -170,7 +179,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
             </p>
           )}
         </div>
-      </div>
+      </motion.div>
     </>
   )
 }
