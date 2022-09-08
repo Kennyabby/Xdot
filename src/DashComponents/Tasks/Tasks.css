@@ -125,7 +125,27 @@
   font-size: 0.8rem;
   width: 87%;
 }
+.saysm {
+  border-radius: 20px;
+  width: 60%;
+  padding: 10px;
+  margin: 10px;
+  background-color: rgba(230, 230, 230, 1);
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
 @media screen and (max-width: 700px) {
+  .saysm {
+    border-radius: 20px;
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+    background-color: rgba(230, 230, 230, 1);
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+  }
   .selectsession {
     padding: 5px;
     border-radius: 5px;

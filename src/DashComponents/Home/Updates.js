@@ -294,16 +294,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 onClick={() => {
                   setShowPostPage(true)
                 }}
-                style={{
-                  borderRadius: '20px',
-                  width: '80%',
-                  padding: '10px',
-                  margin: '10px',
-                  backgroundColor: 'rgba(230,230,230,1)',
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                }}
+                className='saysm'
               >
                 {'Something on your mind?'}
               </motion.div>
@@ -321,7 +312,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 margin: '10px',
                 padding: '10px',
                 borderRadius: '10px',
-                border: 'solid rgba(220,220,220,1) 2px',
+                // border: 'solid rgba(220,220,220,1) 2px',
+                boxShadow: '0px 0px 6px rgba(49,49,50,1)',
                 textAlign: 'left',
                 fontFamily: 'monospace',
               }}
@@ -359,8 +351,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
                         margin: '12px',
                         width: '120px',
                         height: '120px',
-                        border: 'solid rgba(0,0,220,0.8) 1px',
-                        boxShadow: '0px 0px 6px rgba(0,0,150,1)',
+                        // border: 'solid rgba(0,0,220,0.8) 1px',
+                        boxShadow: '0px 0px 7px rgba(0,0,210,1)',
                         padding: '7px',
                         borderRadius: '10px',
                         textAlign: 'center',

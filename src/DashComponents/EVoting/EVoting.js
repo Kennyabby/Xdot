@@ -1,11 +1,13 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+
 const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
   const [votString, setVotString] = useState('')
   const [votingHours, setVotingHours] = useState('')
   const [formSaleStart, setFormSaleStart] = useState('')
   const [formSaleEnd, setFormSaleEnd] = useState('')
-  const eVotingLabelRef = useRef(null)
+
   useEffect(() => {
     if (homerf !== undefined && chatrf !== undefined) {
       homerf.current.style.borderBottom = 'solid blue 0px'
@@ -37,30 +39,38 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
       setFormSaleEnd(new Date(formSaleEnd))
     } catch (error) {}
   }, [])
-  useEffect(() => {
-    eVotingLabelRef.current.scrollIntoView()
-  }, [eVotingLabelRef])
+
   return (
     <>
       <div style={{ paddingBottom: '70px' }}>
-        <div style={{ margin: '10px' }} ref={eVotingLabelRef}>
+        <motion.div
+          initial={{ y: '-100vh', opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            y: { duration: 0.7, ease: 'easeOut' },
+            opacity: { delay: 0.7, ease: 'easeOut', duration: 0.7 },
+          }}
+          style={{ margin: '25px' }}
+        >
           <label
             style={{
-              fontFamily: 'monospace',
+              fontFamily: 'fantasy',
+              letterSpacing: '.2rem',
               fontSize: '1.1rem',
-              fontWeight: 'bold',
+              boxShadow: '0px 0px 6px black',
+              // fontWeight: 'bold',
               // fontStyle: 'italic',
               borderRadius: '15px',
-              padding: '10px',
-              borderBottom: 'solid lightblue 4px',
+              padding: '10px 15px',
+              borderBottom: 'solid rgba(0,50,0,0.9) 4px',
             }}
           >
             E-Voting
           </label>
-        </div>
+        </motion.div>
         <div style={{ textAlign: 'left', padding: '10px' }}>
-          <h2 style={{ fontFamily: 'monospace' }}>GENERAL REQUIREMENTS</h2>
-          <p>
+          <h2 style={{ fontFamily: 'fantasy' }}>GENERAL REQUIREMENTS</h2>
+          <p style={{ fontFamily: 'Courier New', fontWeight: 'bold' }}>
             {' '}
             <i>The following are required of both aspirants and voters</i>
           </p>
@@ -69,15 +79,32 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
               style={{
                 margin: '10px',
                 display: 'block',
-                fontFamily: 'Courier New',
+                fontFamily: 'monospace',
+                listStyle: 'none',
               }}
             >
-              <li>
+              <li
+                style={{
+                  padding: '10px',
+                  boxShadow: '0px 0px 7px black',
+                  fontSize: '.9rem',
+                  textAlign: 'left',
+                }}
+              >
                 Both aspirants and voters must be bonafide NAPSITE according to
                 the provisions of the constitution.
               </li>
               <br></br>
-              <li>Must have paid his/her NAPS due for the session.</li>
+              <li
+                style={{
+                  padding: '10px',
+                  boxShadow: '0px 0px 7px black',
+                  fontSize: '.9rem',
+                  textAlign: 'left',
+                }}
+              >
+                Must have paid his/her NAPS due for the session.
+              </li>
             </div>
           </div>
         </div>
@@ -87,6 +114,7 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
             padding: '20px',
             margin: '10px',
             border: 'solid rgba(210,210,210) 2px',
+            boxShadow: '0px 0px 8px rgba(0,0,0,1)',
             borderRadius: '10px',
             textAlign: 'left',
           }}
@@ -94,7 +122,7 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
           {votString && new Date(votString).getTime() > Date.now() ? (
             <div>
               <h2>Voting Commences By</h2>
-              <div style={{ textAlign: 'left', fontSize: '1rem' }}>
+              <div style={{ textAlign: 'left', fontSize: '.9rem' }}>
                 <label>{new Date(votString).toString()}</label>
                 <p style={{ fontStyle: 'italic' }}>
                   {'The Voting Will Go On For A Period Of ' +
@@ -105,7 +133,7 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
             </div>
           ) : (
             <div>
-              <div style={{ textAlign: 'left', fontSize: '1rem' }}>
+              <div style={{ textAlign: 'left', fontSize: '.9rem' }}>
                 <p style={{ fontStyle: 'italic' }}>
                   {'The Voting Will Go On For A Period Of ' +
                     votingHours +
@@ -158,7 +186,9 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
           }}
         >
           <h3>Do You Wish To Be An Executive?</h3>
-          <p>Apply Below. You can check your eligibiliy for each post</p>
+          <p>
+            <i>Apply Below. You can check your eligibiliy for each post</i>
+          </p>
         </div>
         <div
           style={{
@@ -166,12 +196,13 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
             padding: '20px',
             margin: '10px',
             border: 'solid rgba(210,210,210) 2px',
+            boxShadow: '0px 0px 8px rgba(0,0,0,1)',
             borderRadius: '10px',
             textAlign: 'left',
           }}
         >
           <div>
-            <div style={{ textAlign: 'left', fontSize: '1rem' }}>
+            <div style={{ textAlign: 'left', fontSize: '.9rem' }}>
               {formSaleEnd && new Date(formSaleEnd).getTime() > Date.now() ? (
                 <div>
                   {formSaleStart && new Date(formSaleStart) > Date.now() ? (
