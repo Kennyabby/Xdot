@@ -75,7 +75,10 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
             <i>The following are required of both aspirants and voters</i>
           </p>
           <div>
-            <div
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, staggerChildren: 1, delay: 0.7 }}
               style={{
                 margin: '10px',
                 display: 'block',
@@ -87,7 +90,8 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
                 style={{
                   padding: '10px',
                   boxShadow: '0px 0px 7px black',
-                  fontSize: '.9rem',
+                  fontSize: '.8rem',
+                  fontWeight: 'bold',
                   textAlign: 'left',
                 }}
               >
@@ -99,13 +103,14 @@ const EVoting = ({ chatrf, homerf, notificationsrf, server }) => {
                 style={{
                   padding: '10px',
                   boxShadow: '0px 0px 7px black',
-                  fontSize: '.9rem',
+                  fontSize: '.8rem',
+                  fontWeight: 'bold',
                   textAlign: 'left',
                 }}
               >
                 Must have paid his/her NAPS due for the session.
               </li>
-            </div>
+            </motion.div>
           </div>
         </div>
         <div

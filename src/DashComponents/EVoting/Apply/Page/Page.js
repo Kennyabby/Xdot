@@ -180,8 +180,12 @@ const Page = ({ server, viewForm, user }) => {
     <>
       <div>
         <p
-          style={{ fontFamily: 'Courier New', fontWeight: 'bold' }}
           ref={sessionLabelRef}
+          style={{
+            fontFamily: 'Courier New',
+            fontWeight: 'bold',
+            padding: '10px',
+          }}
         >
           {'Session: ' + currentSession}
         </p>
@@ -192,14 +196,15 @@ const Page = ({ server, viewForm, user }) => {
               boxShadow: '0px 0px 7px rgba(100,100,100,1)',
               borderRadius: '10px',
               fontFamily: 'monospace',
+              border: 'solid blue 1px',
               fontSize: '1rem',
-              margin: '10px',
+              margin: '30px',
               marginTop: '40px',
-              padding: '10px',
+              padding: '15px',
             }}
           >
             <p>
-              {'Your Application For The Post Of ' +
+              {'Your Application For The Office Of ' +
                 applicationDetails.post +
                 ' Is Currently Pending.'}
             </p>
@@ -218,7 +223,9 @@ const Page = ({ server, viewForm, user }) => {
           style={{
             textAlign: 'left',
             margin: '10px',
+            marginTop: '20px',
             padding: '10px',
+            boxShadow: '0px 0px 8px rgba(49,49,50,1)',
             border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
@@ -237,7 +244,9 @@ const Page = ({ server, viewForm, user }) => {
           style={{
             textAlign: 'left',
             margin: '10px',
+            marginTop: '20px',
             padding: '10px',
+            boxShadow: '0px 0px 8px rgba(49,49,50,1)',
             border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
@@ -256,7 +265,9 @@ const Page = ({ server, viewForm, user }) => {
           style={{
             textAlign: 'left',
             margin: '10px',
+            marginTop: '20px',
             padding: '10px',
+            boxShadow: '0px 0px 8px rgba(49,49,50,1)',
             border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
@@ -275,7 +286,9 @@ const Page = ({ server, viewForm, user }) => {
           style={{
             textAlign: 'left',
             margin: '10px',
+            marginTop: '20px',
             padding: '10px',
+            boxShadow: '0px 0px 8px rgba(49,49,50,1)',
             border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
