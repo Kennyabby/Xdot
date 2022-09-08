@@ -169,7 +169,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
             className='usr'
             src={usrImg}
             alt='profImg'
-            height='100px'
+            height='120px'
             width='120px'
           />
           <div className='signover' style={{ padding: '13px' }}>

@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useRef } from 'react'
 import '../Events.css'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 import QuizPost from './QuizPost'
 
@@ -290,17 +291,31 @@ const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
                 >
                   {postUpdatesStatus}
                 </label>
-              ) : undefined}
+              ) : (
+                'Loading...'
+              )}
             </div>
           </div>
         ) : (
-          <div style={{ fontFamily: 'Courier New', margin: '50px' }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7 }}
+            style={{
+              fontFamily: 'Courier New',
+              fontWeight: 'bold',
+              margin: '40px',
+              borderRadius: '15px',
+              boxShadow: '0px 0px 7px rgba(20,20,20,1)',
+              padding: '20px',
+            }}
+          >
             {gotUpdates
               ? 'Hi, ' +
                 user.firstName +
                 '. Welcome to XDot Quiz Updates.\nMark history in the department by being the first to post a quiz on this page.'
-              : ''}
-          </div>
+              : 'Loading...'}
+          </motion.div>
         )}
       </div>
     </>

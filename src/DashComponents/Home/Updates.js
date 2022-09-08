@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useRef } from 'react'
 import '../Events/Events.css'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 import profimg from '../Events/assets/profile.png'
 import Post from './Post'
@@ -273,6 +274,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
               <Link to='/dashboard/profile'>
                 <div
                   style={{
+                    border: 'solid lightgreen 1px',
+                    boxShadow: '0px 0px 6px lightgreen',
                     borderRadius: '50%',
                     height: '45px',
                     width: '45px',
@@ -283,7 +286,10 @@ const Updates = ({ user, server, showHomeToggle }) => {
                   }}
                 ></div>
               </Link>
-              <div
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, ease: 'easeOut' }}
                 onClick={() => {
                   setShowPostPage(true)
                 }}
@@ -299,9 +305,16 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 }}
               >
                 {'Something on your mind?'}
-              </div>
+              </motion.div>
             </div>
-            <div
+            <motion.div
+              initial={{ x: '-100vw' }}
+              animate={{ x: 0 }}
+              transition={{
+                duration: 0.5,
+                ease: 'easeInOut',
+                when: 'beforeChildren',
+              }}
               style={{
                 margin: '10px',
                 padding: '10px',
@@ -312,7 +325,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
               }}
             >
               <label style={{ fontWeight: 'bold' }}>Go To</label>
-              <div
+              <motion.div
+                transition={{ when: 'beforeChildren', staggerChildren: 1 }}
                 style={{
                   margin: '10px',
                   overflowX: 'auto',
@@ -331,12 +345,21 @@ const Updates = ({ user, server, showHomeToggle }) => {
                   { it: 'Chats', img: chat, endpoint: 'chats' },
                 ].map((item, i) => {
                   return (
-                    <div
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        opacity: { duration: 0.6, delay: 0.7 },
+                        scale: { duration: 0.3, ease: 'easeOut' },
+                      }}
+                      whileHover={{ scale: 1.1 }}
                       style={{
+                        margin: '12px',
                         width: '120px',
                         height: '120px',
-                        border: 'solid rgba(220,220,220,1) 1px',
-                        paddingTop: '20px',
+                        border: 'solid rgba(0,0,220,0.8) 1px',
+                        boxShadow: '0px 0px 6px rgba(0,0,150,1)',
+                        padding: '7px',
                         borderRadius: '10px',
                         textAlign: 'center',
                       }}
@@ -359,22 +382,23 @@ const Updates = ({ user, server, showHomeToggle }) => {
                           }}
                         ></div>
                       </Link>
-                    </div>
+                    </motion.div>
                   )
                 })}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
             <div style={{ margin: '10px', justifyContent: 'center' }}>
               <button
                 onClick={() => {
                   getNewUpdates(user.lastPostUpdate)
                 }}
                 style={{
-                  padding: '10px',
+                  padding: '7px 20px',
                   borderRadius: '15px',
-                  backgroundColor: 'blue',
-                  border: 'solid rgba(0,0,255,0) 2px',
-                  color: 'white',
+                  backgroundColor: 'white',
+                  color: 'blue',
+                  fontFamily: 'monospace',
+                  border: 'solid rgba(0,0,255,1) 2px',
                   cursor: 'pointer',
                 }}
               >
@@ -454,17 +478,31 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 >
                   {postUpdatesStatus}
                 </label>
-              ) : undefined}
+              ) : (
+                'Loading...'
+              )}
             </div>
           </div>
         ) : (
-          <div style={{ fontFamily: 'Courier New', margin: '50px' }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7 }}
+            style={{
+              fontFamily: 'Courier New',
+              fontWeight: 'bold',
+              margin: '40px',
+              borderRadius: '15px',
+              boxShadow: '0px 0px 7px rgba(20,20,20,1)',
+              padding: '20px',
+            }}
+          >
             {gotUpdates
               ? 'Hi, ' +
                 user.firstName +
                 '. Welcome to XDot Updates.\nMark history in the department by being the first to make a post on this feed.'
-              : ''}
-          </div>
+              : 'Loading...'}
+          </motion.div>
         )}
       </div>
     </>
