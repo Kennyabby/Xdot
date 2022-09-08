@@ -124,6 +124,7 @@ const QuizShareModal = ({
           <label>{('Share ' + editQuiz.title).toUpperCase()}</label>
         </div>
         <div
+          onChange={handleInputChange}
           style={{
             gap: '20px',
             margin: '10px',

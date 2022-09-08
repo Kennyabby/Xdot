@@ -68,7 +68,11 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
           ease: 'easeOut',
           when: 'beforeChildren',
         }}
-        exit={{ opacity: 0, transition: { duration: 0.7, ease: 'easeIn' } }}
+        exit={{
+          x: '-100vw',
+          opacity: 0,
+          transition: { duration: 0.7, ease: 'easeIn' },
+        }}
         style={{
           position: 'fixed',
           top: '0px',
@@ -109,30 +113,45 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
             style={{
               display: 'flex',
               justifyContent: 'center',
-              margin: '10px',
-              fontWeight: '1.2rem',
+              margin: 'auto',
+              marginTop: '15px',
+              width: 'fit-content',
+              padding: '5px 10px',
+              boxShadow: '0px 0px 7px',
+              borderRadius: '10px',
+              fontSize: '1rem',
+              fontFamily: 'Courier New',
               fontWeight: 'bold',
             }}
           >
-            <label
-              onClick={handlePost}
-              style={{
-                marginRight: 'auto',
-                fontSize: '1rem',
-                padding: '10px',
-                borderRadius: '10px',
-                backgroundColor: 'rgba(0,0,0,0.8)',
-                color: 'lightgreen',
-                border: 'solid white 2px',
-                cursor: 'pointer',
-              }}
-            >
-              Post
-            </label>
             <label style={{ margin: 'auto' }}>Create a Post</label>
           </div>
-          <div style={{ margin: '20px', fontWeight: '1rem' }}>
-            <label>Say Something...</label>
+
+          <div
+            onChange={handleInputChange}
+            style={{
+              textAlign: 'left',
+              margin: '10px',
+              marginTop: '20px',
+              marginLeft: '15px',
+              fontWeight: 'bold',
+              justifyContent: 'left',
+            }}
+          >
+            <select
+              className='updateinput'
+              style={{
+                border: 'solid lightgreen 2px',
+                cursor: 'pointer',
+                padding: '5px 10px',
+              }}
+              name='postTo'
+              value={fields.postTo}
+            >
+              {postLabel.map((labl) => {
+                return <option>{label[labl].value}</option>
+              })}
+            </select>
           </div>
           <div onChange={handleInputChange}>
             <div>
@@ -149,26 +168,25 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                 }}
               />
             </div>
-            <div
+          </div>
+          <div
+            style={{ width: 'fit-content', margin: '20px', marginLeft: 'auto' }}
+          >
+            <button
+              onClick={handlePost}
               style={{
-                display: 'inline-flex',
-                gap: '20px',
-                margin: '10px',
-                fontWeight: 'bold',
-                justifyContent: 'center',
+                marginRight: 'auto',
+                fontFamily: 'monospace',
+                fontSize: '1rem',
+                padding: '10px',
+                borderRadius: '10px',
+                color: 'green',
+                border: 'solid green 2px',
+                cursor: 'pointer',
               }}
             >
-              <select
-                className='updateinput'
-                style={{ border: 'solid lightgreen 2px', cursor: 'pointer' }}
-                name='postTo'
-                value={fields.postTo}
-              >
-                {postLabel.map((labl) => {
-                  return <option>{label[labl].value}</option>
-                })}
-              </select>
-            </div>
+              {'Post >>'}
+            </button>
           </div>
           <div style={{ margin: '50px' }}></div>
           {showUpdateStatus && (
