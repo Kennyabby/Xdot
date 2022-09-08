@@ -67,6 +67,7 @@ const QuestionView = ({ question, index, editQuestion, removeQuestion }) => {
               style={{
                 padding: '5px',
                 margin: '10px',
+                marginTop: 'auto',
                 color: 'red',
                 fontWeight: 'bold',
                 cursor: 'pointer',

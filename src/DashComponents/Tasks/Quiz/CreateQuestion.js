@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import '../Tasks.css'
 
 import UpdateQuestion from './UpdateQuestion'
@@ -78,7 +79,7 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
           ],
         }),
       }
-      const resp = await fetch(server+'/updateOneUser', opts)
+      const resp = await fetch(server + '/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -102,25 +103,25 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
             viewQuiz()
           }}
         >
-          Back
+          {'<< Back'}
         </label>
         {showNotification && (
-          <div 
+          <div
             style={{
               position: 'fixed',
               top: '5px',
               zIndex: '1',
-              justifyContent:'center',
-              width:'100vw',
+              justifyContent: 'center',
+              width: '100vw',
             }}
           >
             <div
               style={{
-                width:'60%',
-                flexWrap:'wrap',
-                margin:'auto',
-                padding:'10px',
-                fontSize: '1rem',
+                width: '60%',
+                flexWrap: 'wrap',
+                margin: 'auto',
+                padding: '10px',
+                fontSize: '.9rem',
                 fontWeight: 'bold',
                 fontFamily: 'monospace',
                 backgroundColor: 'rgba(0,0,0,0.9)',
@@ -135,7 +136,7 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
         <div
           style={{
             fontFamily: 'monospace',
-            fontSize: '1.3rem',
+            fontSize: '1.2rem',
             fontWeight: 'bold',
             margin: '50px',
           }}
@@ -147,10 +148,12 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
           style={{
             fontFamily: 'monospace',
             fontSize: '.78rem',
-            marginTop: '10px',
             marginBottom: '40px',
-            overflowX:'auto',
-            display:'flex'
+            textAlign: 'center',
+            justifyContent: 'center',
+            overflowX: 'auto',
+            display: 'flex',
+            fontWeight: 'bold',
           }}
         >
           <label
@@ -175,31 +178,36 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
             Others
           </label>
         </div>
-        {showUpdateQuestion ? (
-          <UpdateQuestion
-            server={server}
-            closeUpdate={() => {
-              setShowUpdateQuestion(false)
-            }}
-            request={request}
-            type={sectionValue}
-            user={user}
-            quiz={quiz}
-            updattingQuestion={updattingQuestion}
-            notifyUpdate={(message) => {
-              notify({ message: message })
-            }}
-          />
-        ) : undefined}
+        <AnimatePresence>
+          {showUpdateQuestion && (
+            <UpdateQuestion
+              server={server}
+              closeUpdate={() => {
+                setShowUpdateQuestion(false)
+              }}
+              request={request}
+              type={sectionValue}
+              user={user}
+              quiz={quiz}
+              updattingQuestion={updattingQuestion}
+              notifyUpdate={(message) => {
+                notify({ message: message })
+              }}
+            />
+          )}
+        </AnimatePresence>
         {sectionValue !== 'all' ? (
-          <img
+          <motion.img
+            initial={{ x: '100vw' }}
+            animate={{ x: 0 }}
+            transition={{ ease: 'easeOut', duration: 0.7, delay: 0.5 }}
             src={add}
             alt='add'
             className='addcourse'
             style={{
               backgroundColor: 'rgba(255,0,0,0.9)',
               border: 'solid red 1px',
-              boxShadow: 'rgba(0,0,0,0.9) 6px 6px 7px',
+              boxShadow: 'rgba(0,0,0,1) 0px 0px 8px',
             }}
             onClick={() => {
               setRequest('add')
@@ -209,7 +217,7 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
             height='25px'
           />
         ) : undefined}
-        <div style={{paddingBottom:'70px'}}> 
+        <div style={{ paddingBottom: '70px' }}>
           {filteredQuizQuestions().length ? (
             filteredQuizQuestions().map((question, i) => {
               return (
@@ -229,11 +237,18 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
               )
             })
           ) : (
-            <div
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
               style={{
-                fontFamily: 'monospace',
-                fontSize: '1.1rem',
-                margin: '70px',
+                fontFamily: 'Courier New',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                padding: '10px',
+                borderRadius: '10px',
+                boxShadow: '0px 0px 7px black',
+                margin: '50px',
               }}
             >
               <label>
@@ -245,7 +260,7 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
                   : 'Use The Add Button Below To Add Other Questions For Quiz: ' +
                     quiz.title.toUpperCase()}
               </label>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

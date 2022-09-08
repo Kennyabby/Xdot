@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import '../Tasks.css'
 
 import QuizShareModal from './QuizShareModal'
@@ -41,7 +42,7 @@ const CreateQuiz = ({ user, viewQuestions, server }) => {
           ],
         }),
       }
-      const resp = await fetch(server+'/updateOneUser', opts)
+      const resp = await fetch(server + '/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -57,21 +58,21 @@ const CreateQuiz = ({ user, viewQuestions, server }) => {
     <>
       <div style={{ margin: '5px' }}>
         {showNotification && (
-          <div 
+          <div
             style={{
               padding: '10px',
               position: 'fixed',
               top: '5px',
               zIndex: '1',
-              justifyContent:'center',
-              width:'100vw',
+              justifyContent: 'center',
+              width: '100vw',
             }}
           >
             <label
               style={{
-                margin:'auto',
-                padding:'10px',
-                fontSize: '1rem',
+                margin: 'auto',
+                padding: '10px',
+                fontSize: '.9rem',
                 fontWeight: 'bold',
                 fontFamily: 'monospace',
                 backgroundColor: 'rgba(0,0,0,0.9)',
@@ -96,28 +97,33 @@ const CreateQuiz = ({ user, viewQuestions, server }) => {
             user={user}
           />
         )}
-        {showUpdate && (
-          <UpdateQuiz
-            server={server}
-            closeUpdate={() => {
-              setShowUpdate(false)
-            }}
-            notifyUpdate={(message) => {
-              notify({ message: message })
-            }}
-            editQuiz={editQuiz}
-            request={updateRequest}
-            user={user}
-          />
-        )}
-        <img
+        <AnimatePresence>
+          {showUpdate && (
+            <UpdateQuiz
+              server={server}
+              closeUpdate={() => {
+                setShowUpdate(false)
+              }}
+              notifyUpdate={(message) => {
+                notify({ message: message })
+              }}
+              editQuiz={editQuiz}
+              request={updateRequest}
+              user={user}
+            />
+          )}
+        </AnimatePresence>
+        <motion.img
+          initial={{ x: '100vw' }}
+          animate={{ x: 0 }}
+          transition={{ ease: 'easeOut', duration: 0.7, delay: 0.5 }}
           src={add}
           alt='add'
           className='addcourse'
           style={{
             border: 'solid blue 1px',
-            backgroundColor: 'rgba(0,0,255,0.9)',
-            boxShadow: 'black 6px 6px 7px',
+            backgroundColor: 'rgba(0,0,255,1)',
+            boxShadow: 'black 0px 0px 7px',
           }}
           onClick={() => {
             setUpdateRequest('add')
@@ -126,8 +132,7 @@ const CreateQuiz = ({ user, viewQuestions, server }) => {
           }}
           height='25px'
         />
-
-        <div style={{ display: 'block', margin: '0px', paddingBottom:'70px'}}>
+        <div style={{ display: 'block', margin: '0px', paddingBottom: '70px' }}>
           {user.createQuiz.length ? (
             <div
               style={{
@@ -135,9 +140,26 @@ const CreateQuiz = ({ user, viewQuestions, server }) => {
                 fontSize: '1rem',
               }}
             >
-              <div style={{ margin: '70px', fontStyle: 'italic' }}>
+              <motion.div
+                initial={{ opacity: 0, y: '-100vh' }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  opacity: { delay: 0.6, duration: 0.7, ease: 'easeOut' },
+                  y: { duration: 0.7, ease: 'easeOut' },
+                }}
+                style={{
+                  fontStyle: 'italic',
+                  boxShadow: '0px 0px 7px black',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  margin: '60px',
+                  fontFamily: 'monospace',
+                  fontSize: '.9rem',
+                  fontWeight: 'bold',
+                }}
+              >
                 <label>Click on a Quiz's Questions to view Questions</label>
-              </div>
+              </motion.div>
               {user.createQuiz.map((quiz, i) => {
                 return (
                   <QuizView
@@ -163,16 +185,25 @@ const CreateQuiz = ({ user, viewQuestions, server }) => {
               })}
             </div>
           ) : (
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: '-100vh' }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                opacity: { delay: 0.6, duration: 0.7, ease: 'easeOut' },
+                y: { duration: 0.7, ease: 'easeOut' },
+              }}
               style={{
-                margin: '80px',
+                boxShadow: '0px 0px 7px black',
+                borderRadius: '10px',
+                padding: '10px',
+                margin: '60px',
                 fontFamily: 'monospace',
-                fontSize: '1rem',
+                fontSize: '.9rem',
                 fontWeight: 'bold',
               }}
             >
               Click The Add Button Below To Add A New Quiz
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

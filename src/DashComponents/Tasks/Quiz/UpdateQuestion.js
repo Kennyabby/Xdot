@@ -1,6 +1,8 @@
-import { React, useState, useEffect } from 'react'
-
+import { React, useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import cancel from '../assets/cancel.png'
+import close from '../assets/close.png'
+
 const UpdateQuestion = ({
   server,
   closeUpdate,
@@ -15,6 +17,7 @@ const UpdateQuestion = ({
   const labels = ['question', 'answer']
   const [fields, setFields] = useState({ question: '', answer: '' })
   const [number, setNumber] = useState('')
+  const updateRef = useRef(null)
   const optList = [
     'A',
     'B',
@@ -96,7 +99,9 @@ const UpdateQuestion = ({
   }
   const handleQuestionUpdate = async () => {
     setShowUpdateStatus(true)
-
+    setTimeout(() => {
+      updateRef.current.scrollIntoView()
+    }, 500)
     var index = quiz.questions.length
     const newQuestion = {
       ...fields,
@@ -139,7 +144,7 @@ const UpdateQuestion = ({
           ],
         }),
       }
-      const resp = await fetch(server+'/updateOneUser', opts)
+      const resp = await fetch(server + '/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -162,8 +167,9 @@ const UpdateQuestion = ({
           top: '0px',
           left: '0px',
           overflowY: 'auto',
-          zIndex: '1',
-          backgroundColor: 'rgba(0,0,0,0.8)',
+          zIndex: '2',
+          backgroundColor: 'rgba(0,0,0,1)',
+          paddingBottom: '50px',
           width: '100%',
           height: '100%',
         }}
@@ -182,9 +188,19 @@ const UpdateQuestion = ({
           }}
           src={cancel}
           alt='close add quiz'
-          height='40px'
+          height='25px'
         />
-        <div onChange={handleInputChange}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 0.7,
+            ease: 'easeOut',
+            when: 'beforeChildren',
+          }}
+          exit={{ opacity: 0, transition: { duration: 0.7, ease: 'easeIn' } }}
+          onChange={handleInputChange}
+        >
           {labels.map((label) => {
             if (label === 'question') {
               return (
@@ -214,26 +230,62 @@ const UpdateQuestion = ({
                   (request === 'edit' && updattingQuestion.type === 'obj') ? (
                     <div>
                       {options.length
-                        ? options.map((option) => {
+                        ? options.map((option, i) => {
                             return (
-                              <div>
+                              <div key={i}>
                                 <p>
                                   <label>{option}</label>
                                 </p>
-                                <input
-                                  name={option}
-                                  value={
-                                    fields[option] === undefined
-                                      ? ''
-                                      : fields[option]
-                                  }
-                                  className='updateinput'
-                                />
+                                <div
+                                  style={{
+                                    display: 'flex',
+                                    width: 'fit-content',
+                                    margin: 'auto',
+                                  }}
+                                >
+                                  <input
+                                    name={option}
+                                    value={
+                                      fields[option] === undefined
+                                        ? ''
+                                        : fields[option]
+                                    }
+                                    className='updateinput'
+                                  />
+                                  {i === options.length - 1 && (
+                                    <img
+                                      src={close}
+                                      onClick={() => {
+                                        var opts = options.slice(0, i)
+                                        setOptions(() => {
+                                          return [...opts]
+                                        })
+                                      }}
+                                      style={{
+                                        cursor: 'pointer',
+                                        margin: '7px',
+                                        padding: '3px',
+                                        backgroundColor: 'rgba(220,220,220,1)',
+                                        borderRadius: '5px',
+                                      }}
+                                      height='13px'
+                                    />
+                                  )}
+                                </div>
                               </div>
                             )
                           })
                         : undefined}
-                      <p style={{ margin: '30px' }}>
+                      <motion.p
+                        initial={{ x: '100vw' }}
+                        animate={{ x: 0, type: 'spring' }}
+                        transition={{ delay: 0.6, ease: 'easeOut' }}
+                        exit={{
+                          x: '-100vw',
+                          transition: { when: 'beforeParent', ease: 'easeIn' },
+                        }}
+                        style={{ margin: '30px' }}
+                      >
                         <label
                           onClick={handleAddOptions}
                           style={{
@@ -248,7 +300,7 @@ const UpdateQuestion = ({
                         >
                           Add Options
                         </label>
-                      </p>
+                      </motion.p>
                     </div>
                   ) : undefined}
                 </div>
@@ -319,8 +371,18 @@ const UpdateQuestion = ({
             </p>
           ) : undefined}
           {showUpdateStatus && (
-            <p>
-              <label style={{ color: 'lightblue' }}>
+            <p ref={updateRef}>
+              <label
+                style={{
+                  color: 'blue',
+                  backgroundColor: 'lightblue',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  marginBottom: '50px',
+                  fontSize: '.8rem',
+                  border: 'solid blue 2px',
+                }}
+              >
                 {'Proceeding to ' +
                   request.slice(0, 1).toUpperCase() +
                   request.slice(1) +
@@ -328,7 +390,7 @@ const UpdateQuestion = ({
               </label>
             </p>
           )}
-        </div>
+        </motion.div>
       </div>
     </>
   )

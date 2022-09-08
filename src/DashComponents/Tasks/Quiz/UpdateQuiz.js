@@ -1,6 +1,15 @@
 import { React, useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import cancel from '../assets/cancel.png'
-const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server }) => {
+
+const UpdateQuiz = ({
+  closeUpdate,
+  request,
+  user,
+  notifyUpdate,
+  editQuiz,
+  server,
+}) => {
   const [fields, setFields] = useState({
     title: '',
     days: 0,
@@ -9,20 +18,21 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server
     seconds: 0,
   })
   const [showUpdateStatus, setShowUpdateStatus] = useState(false)
+  const updateRef = useRef(null)
   var days = []
-  for (var i = 0; i < 365; i++) {
+  for (var i = 0; i < 30; i++) {
     days = days.concat(i + 1)
   }
   var hours = []
-  for (var n = 0; n < 24; n++) {
+  for (var n = 0; n < 23; n++) {
     hours = hours.concat(n + 1)
   }
   var minutes = []
-  for (var j = 0; j < 60; j++) {
+  for (var j = 0; j < 59; j++) {
     minutes = minutes.concat(j + 1)
   }
   var seconds = []
-  for (var k = 0; k < 60; k++) {
+  for (var k = 0; k < 59; k++) {
     seconds = seconds.concat(k + 1)
   }
 
@@ -57,6 +67,9 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server
   }
   const handleUpdate = async () => {
     setShowUpdateStatus(true)
+    setTimeout(() => {
+      updateRef.current.scrollIntoView()
+    }, 500)
     const newQuiz = {
       ...fields,
       questions: request === 'add' ? [] : editQuiz.questions,
@@ -84,7 +97,7 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server
           ],
         }),
       }
-      const resp = await fetch(server+'/updateOneUser', opts)
+      const resp = await fetch(server + '/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -99,16 +112,20 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server
   }
   return (
     <>
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.7, ease: 'easeOut', when: 'beforeChildren' }}
+        exit={{ opacity: 0, transition: { duration: 0.7, ease: 'easeIn' } }}
         style={{
           position: 'fixed',
           top: '0px',
           left: '0px',
-          overflowY:'auto',
+          overflowY: 'auto',
           width: '100%',
           height: '100%',
-          zIndex: '1',
-          backgroundColor: 'rgba(0,0,0,0.8)',
+          zIndex: '2',
+          backgroundColor: 'rgba(0,0,0,1)',
         }}
       >
         <img
@@ -125,9 +142,9 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server
           }}
           src={cancel}
           alt='close add quiz'
-          height='40px'
+          height='25px'
         />
-        <div
+        <motion.div
           style={{
             display: 'inline-block',
             color: 'white',
@@ -137,10 +154,16 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server
           }}
           onChange={handleInputChange}
         >
-          <div
+          <motion.div
+            initial={{ y: '-100vh' }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.7, delay: 0.7, ease: 'easeOut' }}
             style={{
               color: 'lightblue',
-              margin: '50px',
+              margin: '40px',
+              padding: '15px',
+              boxShadow: '0px 0px 8px white',
+              borderRadius: '10px',
               fontWeight: 'none',
               fontStyle: 'italic',
             }}
@@ -153,7 +176,7 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server
             ) : (
               <label>{'Editing Quiz: ' + fields.title.toUpperCase()}</label>
             )}
-          </div>
+          </motion.div>
           {labels.map((label, i) => {
             if (label.name === 'title') {
               return request === 'add' ? (
@@ -233,8 +256,17 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server
             </div>
           ) : undefined}
           {showUpdateStatus && (
-            <p>
-              <label style={{ color: 'lightblue' }}>
+            <p ref={updateRef}>
+              <label
+                style={{
+                  color: 'blue',
+                  backgroundColor: 'lightblue',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  fontSize: '.8rem',
+                  border: 'solid blue 2px',
+                }}
+              >
                 {'Proceeding to ' +
                   request.slice(0, 1).toUpperCase() +
                   request.slice(1) +
@@ -242,8 +274,8 @@ const UpdateQuiz = ({ closeUpdate, request, user, notifyUpdate, editQuiz, server
               </label>
             </p>
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </>
   )
 }

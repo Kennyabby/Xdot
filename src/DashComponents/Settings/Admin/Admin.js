@@ -3,11 +3,11 @@ import '../Settings.css'
 
 import edit from '../assets/edit.png'
 const Admin = ({ server }) => {
-  const [toggleSession, setToggleSession] = useState(false)
-  const [toggleEvoting, setToggleEvoting] = useState(false)
+  const [toggleSession, setToggleSession] = useState(true)
+  const [toggleEvoting, setToggleEvoting] = useState(true)
 
-  const [sessionLabel, setSessionLabel] = useState('<< >>')
-  const [eVotingLabel, setEvotingLabel] = useState('<< >>')
+  const [sessionLabel, setSessionLabel] = useState('>><<')
+  const [eVotingLabel, setEvotingLabel] = useState('>><<')
 
   const [currentSession, setCurrentSession] = useState('')
   const [gradingScale, setGradingScale] = useState('')
