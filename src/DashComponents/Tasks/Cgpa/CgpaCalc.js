@@ -512,6 +512,7 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
                 style={{
                   boxShadow: 'black 0px 0px 7px',
                   border: 'solid black 1px',
+                  backgroundColor: 'black',
                 }}
                 onClick={() => {
                   setUpdateRequest('add')

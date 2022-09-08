@@ -146,9 +146,9 @@ const UpdateCourse = ({
       if (updated) {
         closeUpdate()
         notifyUpdate(
-          request === 'add'
-            ? 'Added Course: '
-            : 'Edited Course:' + allFields.code.toUpperCase() + ' Successfully'
+          (request === 'add' ? 'Added Course: ' : 'Edited Course: ') +
+            allFields.code.toUpperCase() +
+            ' Successfully'
         )
       }
     } catch (TypeError) {}

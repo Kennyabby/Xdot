@@ -5,9 +5,11 @@ import remove from '../assets/remove.png'
 import right from '../assets/right.png'
 import left from '../assets/left.png'
 
-const CourseView = ({ editCourse, removeCourse, course, index}) => {
+const CourseView = ({ editCourse, removeCourse, course, index }) => {
   const [showFew, setShowFew] = useState(true)
   const [showLabel, setShowLabel] = useState(right)
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
+  const [deleteStatus, setDeleteStatus] = useState('Delete')
   const [winSize, setWinSize] = useState(window.innerWidth)
   const checkSize = () => {
     setWinSize(window.innerWidth)
@@ -33,7 +35,7 @@ const CourseView = ({ editCourse, removeCourse, course, index}) => {
       <div
         style={{
           overflowX: 'auto',
-          display: 'flex',
+          display: 'block',
           width: '95%',
           gap: '20px',
           padding: '7px',
@@ -70,18 +72,20 @@ const CourseView = ({ editCourse, removeCourse, course, index}) => {
                   height='18px'
                 />
               </p>
-              <p>
-                <img
-                  src={remove}
-                  alt='remove'
-                  onClick={() => {
-                    removeCourse(course)
-                  }}
-                  className='updatebtn'
-                  style={{ color: 'red' }}
-                  height='18px'
-                />
-              </p>
+              {showFew && !showDeleteConfirmation && (
+                <p>
+                  <img
+                    src={remove}
+                    alt='remove'
+                    onClick={() => {
+                      setShowDeleteConfirmation(true)
+                    }}
+                    className='updatebtn'
+                    style={{ color: 'red' }}
+                    height='18px'
+                  />
+                </p>
+              )}
             </div>
             <div
               onClick={() => {
@@ -126,19 +130,74 @@ const CourseView = ({ editCourse, removeCourse, course, index}) => {
                   height='20px'
                 />
               </p>
-              <p>
-                <img
-                  src={remove}
-                  alt='remove'
-                  onClick={() => {
-                    removeCourse(course)
-                  }}
-                  className='updatebtn'
-                  style={{ color: 'red' }}
-                  height='20px'
-                />
-              </p>
+              {!showDeleteConfirmation && (
+                <p>
+                  <img
+                    src={remove}
+                    alt='remove'
+                    onClick={() => {
+                      setShowDeleteConfirmation(true)
+                    }}
+                    className='updatebtn'
+                    style={{ color: 'red' }}
+                    height='20px'
+                  />
+                </p>
+              )}
             </div>
+          </div>
+        )}
+        {showDeleteConfirmation && (
+          <div
+            style={{
+              display: 'flex',
+              padding: '5px',
+              color: 'red',
+              borderRadius: '10px',
+              fontStyle: 'italic',
+              fontWeight: 'bold',
+              backgroundColor: 'rgba(255,0,0,0.2)',
+              border: 'solid red 1px',
+              textAlign: 'left',
+              margin: '0px',
+            }}
+          >
+            <label style={{ marginTop: '5px' }}>Delete this course</label>
+            <button
+              style={{
+                padding: '5px 10px',
+                marginLeft: 'auto',
+                border: 'solid red 1px',
+                fontFamily: 'monospace',
+                cursor: 'pointer',
+                backgroundColor: 'rgba(255,255,255,1)',
+                color: 'red',
+                borderRadius: '10px',
+              }}
+              onClick={() => {
+                setShowDeleteConfirmation(false)
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              style={{
+                padding: '5px 10px',
+                marginLeft: 'auto',
+                border: 'solid red 1px',
+                fontFamily: 'monospace',
+                cursor: 'pointer',
+                backgroundColor: 'rgba(255,255,255,1)',
+                color: 'red',
+                borderRadius: '10px',
+              }}
+              onClick={() => {
+                setDeleteStatus('Deleting...')
+                removeCourse(course)
+              }}
+            >
+              {deleteStatus}
+            </button>
           </div>
         )}
       </div>
