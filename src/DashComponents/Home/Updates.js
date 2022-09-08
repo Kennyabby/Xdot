@@ -6,6 +6,13 @@ import profimg from '../Events/assets/profile.png'
 import Post from './Post'
 import PostPageModal from './PostPageModal'
 
+import events from './assets/events.png'
+import tasks from './assets/tasks.png'
+import voting from './assets/events.png'
+import chat from './assets/chat.png'
+import notifications from './assets/notifications.png'
+import settings from './assets/settings.jpg'
+
 const Updates = ({ user, server, showHomeToggle }) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
@@ -285,13 +292,76 @@ const Updates = ({ user, server, showHomeToggle }) => {
                   width: '80%',
                   padding: '10px',
                   margin: '10px',
-                  backgroundColor: 'rgba(240,240,240,1)',
+                  backgroundColor: 'rgba(230,230,230,1)',
                   justifyContent: 'center',
                   textAlign: 'center',
                   cursor: 'pointer',
                 }}
               >
                 {'Something on your mind?'}
+              </div>
+            </div>
+            <div
+              style={{
+                margin: '10px',
+                padding: '10px',
+                borderRadius: '10px',
+                border: 'solid rgba(220,220,220,1) 2px',
+                textAlign: 'left',
+                fontFamily: 'monospace',
+              }}
+            >
+              <label style={{ fontWeight: 'bold' }}>Go To</label>
+              <div
+                style={{
+                  margin: '10px',
+                  overflowX: 'auto',
+                  flexWrap: 'wrap',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  height: '130px',
+                  flexDirection: 'column',
+                  gap: '20px',
+                }}
+              >
+                {[
+                  { it: 'Events', img: events, endpoint: 'events' },
+                  { it: 'Tasks', img: tasks, endpoint: 'tasks' },
+                  { it: 'Voting', img: voting, endpoint: 'e-voting' },
+                  { it: 'Chats', img: chat, endpoint: 'chats' },
+                ].map((item, i) => {
+                  return (
+                    <div
+                      style={{
+                        width: '120px',
+                        height: '120px',
+                        border: 'solid rgba(220,220,220,1) 1px',
+                        paddingTop: '20px',
+                        borderRadius: '10px',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <label>{item.it}</label>
+
+                      <Link
+                        key={i}
+                        style={{ textDecoration: 'none' }}
+                        to={'/dashboard/' + item.endpoint}
+                      >
+                        <div
+                          style={{
+                            width: '60px',
+                            height: '60px',
+                            margin: 'auto',
+                            marginTop: '10px',
+                            backgroundImage: `url(${item.img})`,
+                            backgroundSize: 'cover',
+                          }}
+                        ></div>
+                      </Link>
+                    </div>
+                  )
+                })}
               </div>
             </div>
             <div style={{ margin: '10px', justifyContent: 'center' }}>
