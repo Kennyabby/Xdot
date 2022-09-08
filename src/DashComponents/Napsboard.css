@@ -366,7 +366,7 @@
   .userbar {
     height: 80vh;
     background-color: rgba(7, 7, 40, 0.8);
-    z-index: 1;
+    z-index: 2;
   }
   .hometoggleCover {
     margin: 0px;
