@@ -274,7 +274,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
               <Link to='/dashboard/profile'>
                 <div
                   style={{
-                    border: 'solid lightgreen 1px',
+                    border: 'solid lightgreen 3px',
                     boxShadow: '0px 0px 6px lightgreen',
                     borderRadius: '50%',
                     height: '45px',
@@ -469,18 +469,16 @@ const Updates = ({ user, server, showHomeToggle }) => {
               {highlightedPost === null && showPostUpdatesStatus ? (
                 <label
                   style={{
-                    color: 'blue',
+                    color: 'back',
                     fontWeight: 'bold',
                     fontFamily: 'monospace',
-                    fontSize: '1rem',
+                    fontSize: '.8rem',
                     padding: '10px',
                   }}
                 >
                   {postUpdatesStatus}
                 </label>
-              ) : (
-                'Loading...'
-              )}
+              ) : undefined}
             </div>
           </div>
         ) : (

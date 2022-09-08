@@ -282,18 +282,16 @@ const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
               {highlightedPost === null && showPostUpdatesStatus ? (
                 <label
                   style={{
-                    color: 'blue',
+                    color: 'black',
                     fontWeight: 'bold',
                     fontFamily: 'monospace',
-                    fontSize: '1rem',
+                    fontSize: '.8rem',
                     padding: '10px',
                   }}
                 >
                   {postUpdatesStatus}
                 </label>
-              ) : (
-                'Loading...'
-              )}
+              ) : undefined}
             </div>
           </div>
         ) : (
