@@ -79,7 +79,7 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
             setMessage(
               'You are currently applying for the ' +
                 application.post +
-                ' position. Do you wish to cancel the application and apply newly for the post of ' +
+                "'s position. Do you wish to cancel the application and apply newly for the office of " +
                 exco.title +
                 '?'
             )
@@ -98,8 +98,8 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
   }
   return (
     <>
-      {showModal ? (
-        <div>
+      <AnimatePresence>
+        {showModal ? (
           <ConfirmationModal
             title={'Please Confirm'}
             message={message}
@@ -118,15 +118,15 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
               updateUserApplication({ nw: nw })
             }}
           />
-        </div>
-      ) : undefined}
+        ) : undefined}
+      </AnimatePresence>
       <div
         style={{
           fontFamily: 'monospace',
           fontSize: '1rem',
           backgroundColor: 'rgba(220,220,220)',
           boxShadow: '0px 0px 7px black',
-          borderRadius: '10px',
+          borderRadius: '5px',
           paddingBottom: '15px',
           margin: '7px',
           marginBottom: '20px',
@@ -135,27 +135,33 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
         <div style={{ padding: '10px' }}>
           <h2>{exco.title.toUpperCase()}</h2>
           <label style={{ fontStyle: 'italic' }}>{exco.brief}</label>
-          {showDetails ? (
-            <div
-              style={{
-                textAlign: 'left',
-                backgroundColor: 'white',
-                marginTop: '10px',
-                marginBottom: '10px',
-                padding: '10px',
-                borderRadius: '10px',
-              }}
-            >
-              <h3 style={{ fontWeight: 'bold' }}>Duties</h3>
-              {exco.details.map((detail, id) => {
-                return (
-                  <p style={{ fontSize: '0.8rem' }} key={id}>
-                    {detail}
-                  </p>
-                )
-              })}
-            </div>
-          ) : undefined}
+          <AnimatePresence>
+            {showDetails && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                exit={{ opacity: 0, transition: { duration: 0.8 } }}
+                style={{
+                  textAlign: 'left',
+                  backgroundColor: 'white',
+                  marginTop: '10px',
+                  marginBottom: '10px',
+                  padding: '10px',
+                  borderRadius: '10px',
+                }}
+              >
+                <h3 style={{ fontWeight: 'bold' }}>Duties</h3>
+                {exco.details.map((detail, id) => {
+                  return (
+                    <p style={{ fontSize: '0.8rem' }} key={id}>
+                      {detail}
+                    </p>
+                  )
+                })}
+              </motion.div>
+            )}
+          </AnimatePresence>
           <div style={{ margin: '10px' }}>
             <button
               style={{

@@ -1,4 +1,5 @@
 import { React } from 'react'
+import { motion } from 'framer-motion'
 
 const ConfirmationModal = ({
   message,
@@ -10,7 +11,11 @@ const ConfirmationModal = ({
 }) => {
   return (
     <>
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, when: 'beforeChildren' }}
+        exit={{ opacity: 0, transition: { duration: 0.8 } }}
         style={{
           position: 'fixed',
           top: '0px',
@@ -21,11 +26,23 @@ const ConfirmationModal = ({
           backgroundColor: 'rgba(0,0,0,0.8)',
           alignContent: 'center',
           textAlign: 'center',
-          paddingTop: '150px',
+          paddingTop: '50px',
           overflowY: 'auto',
         }}
       >
-        <div
+        <motion.div
+          initial={{ y: '-100vh' }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.5 }}
+          exit={{
+            y: '-100vh',
+            transition: {
+              delay: 0,
+              when: 'beforeParent',
+              ease: 'easeIn',
+              duration: 0.7,
+            },
+          }}
           style={{
             width: '70%',
             margin: 'auto',
@@ -75,8 +92,8 @@ const ConfirmationModal = ({
               {button2}
             </button>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </>
   )
 }

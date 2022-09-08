@@ -200,7 +200,7 @@ const Page = ({ server, viewForm, user }) => {
               opacity: { duration: 0.8, delay: 0.3 },
             }}
             style={{
-              boxShadow: '0px 0px 7px rgba(100,100,100,1)',
+              boxShadow: '0px 0px 7px black',
               borderRadius: '10px',
               fontFamily: 'monospace',
               border: 'solid blue 2px',
@@ -215,7 +215,13 @@ const Page = ({ server, viewForm, user }) => {
                 applicationDetails.post +
                 ' Is Currently Pending.'}
             </p>
-            <button
+            <motion.button
+              initial={{ background: 'red' }}
+              animate={{ scale: 1.1, background: 'blue' }}
+              transition={{
+                scale: { yoyo: 6 },
+                backgroundColor: { duration: 3.5 },
+              }}
               onClick={() => {
                 viewForm({ data: applicationDetails.post })
               }}
@@ -223,7 +229,7 @@ const Page = ({ server, viewForm, user }) => {
               style={{ backgroundColor: 'blue', color: 'white' }}
             >
               {'Continue >>'}
-            </button>
+            </motion.button>
           </motion.div>
         ) : undefined}
         <div
