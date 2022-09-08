@@ -1,7 +1,66 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import logo from './user.png'
 
+const containerVariants = {
+  hidden: {
+    x: '100vw',
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      when: 'beforeChildren',
+      // ease: 'easeInOut',
+    },
+  },
+}
+const submitVariants = {
+  hidden: {
+    // x: '100vw',
+    opacity: 0,
+  },
+  visible: {
+    // x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.7,
+      ease: 'easeInOut',
+    },
+  },
+}
+const buttonVariants = {
+  hidden: {
+    x: -1000,
+    // opacity: 0,
+  },
+  visible: {
+    x: 0,
+    // opacity: 1,
+    type: 'spring',
+    stiffness: 500,
+    transition: {
+      delay: 0.5,
+    },
+  },
+}
+const headerVariants = {
+  hidden: {
+    y: '-100vh',
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      duration: 0.7,
+      ease: 'easeOut',
+    },
+  },
+}
 const Finish = ({
   server,
   getCoverList,
@@ -383,10 +442,14 @@ const Finish = ({
 
       {prevNext}
     </div>,
-    <div className='container'>
-      <div className='infotag' ref={uploadLabelRef}>
+    <motion.div variants={submitVariants} className='container'>
+      <motion.div
+        variants={headerVariants}
+        className='infotag'
+        ref={uploadLabelRef}
+      >
         Upload Profile Picture
-      </div>
+      </motion.div>
       <img
         className='usr'
         src={imgUrl}
@@ -417,7 +480,8 @@ const Finish = ({
       </p>
       {prevNext}
       <p>
-        <button
+        <motion.button
+          variants={buttonVariants}
           className='nxt'
           style={{
             backgroundColor: 'green',
@@ -433,16 +497,22 @@ const Finish = ({
           onClick={handleSubmit}
         >
           {submitStatus}
-        </button>
+        </motion.button>
       </p>
-    </div>,
+    </motion.div>,
   ]
 
   return (
-    <div ref={finishCoverRef}>
+    <motion.div
+      variants={containerVariants}
+      initial='hidden'
+      animate='visible'
+      exit={{ x: -1000 }}
+      ref={finishCoverRef}
+    >
       {show && finishList[pos]}
       {isSuccess && (
-        <div>
+        <motion.div variants={submitVariants}>
           <p style={{ color: 'black', marginTop: '100px', margin: '50px' }}>
             Dear {setCamelCase(studentInfo.lastName)}{' '}
             {setCamelCase(studentInfo.firstName)}{' '}
@@ -450,7 +520,8 @@ const Finish = ({
             Your Details Have Been Submited Succesfully.
           </p>
           <Link to='/signin'>
-            <button
+            <motion.button
+              variants={buttonVariants}
               className='nxt'
               style={{ backgroundColor: 'green', color: 'white' }}
               title='Sign in'
@@ -459,11 +530,11 @@ const Finish = ({
               value='Sign in'
             >
               Proceed to Sign in
-            </button>
+            </motion.button>
           </Link>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   )
 }
 

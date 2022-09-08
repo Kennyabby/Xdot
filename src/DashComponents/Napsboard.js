@@ -1,5 +1,6 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { useParams, useHistory, Link } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import './Napsboard.css'
 
 import SideNavigator from './SideNavigator'
@@ -762,9 +763,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     removeSessions()
   }
 
-  if (isNewSession) {
-    return (
-      <>
+  return (
+    <>
+      {isNewSession ? (
         <div style={{ color: 'black' }}>
           <div
             className='body'
@@ -1013,15 +1014,94 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             ) : undefined}
           </div>
         </div>
-      </>
-    )
-  } else {
-    return (
-      <>
-        <div style={{ color: 'black' }}>Redirecting...</div>
-      </>
-    )
-  }
+      ) : (
+        <div
+          // variance={spinnerVariance}
+          // initial='hidden'
+          // animate='visible'
+          style={{
+            color: 'black',
+            // position: 'fixed',
+            // top: '0px',
+            // left: '0px',
+            // width: '100vw',
+            // height: '100vh',
+            // zIndex: '1',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '50%',
+              width: '100%',
+              textAlign: 'center',
+              justifyContent: 'center',
+              padding: 'auto auto',
+            }}
+          >
+            <div
+              style={{
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                width: 'fit-content',
+                padding: '40px',
+                fontSize: '1rem',
+                margin: 'auto',
+                borderRadius: '10px',
+                boxShadow: '0px 0px 7px black',
+              }}
+            >
+              XDot
+            </div>
+            <div style={{ display: 'inline-flex', gap: '0px' }}>
+              <motion.div
+                animate={{ x: [0, -20, 0, 20, 0], y: [-20, 0, 20, 0, -20] }}
+                transition={{
+                  x: { yoyo: Infinity, duration: 0.8, ease: 'easeIn' },
+                  y: { yoyo: Infinity, duration: 0.8, ease: 'easeOut' },
+                }}
+                style={{
+                  // padding: '5px',
+                  margin: '40px auto',
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  backgroundColor: 'red',
+                }}
+              ></motion.div>
+              <motion.div
+                animate={{ x: [0, 20, 0, -20, 0], y: [20, 0, -20, 0, 20] }}
+                transition={{
+                  x: { yoyo: Infinity, duration: 0.8, ease: 'easeOut' },
+                  y: { yoyo: Infinity, duration: 0.8, ease: 'easeIn' },
+                }}
+                style={{
+                  // padding: '5px',
+                  margin: '40px auto',
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  backgroundColor: 'blue',
+                }}
+              ></motion.div>
+            </div>
+          </div>
+          <div
+            style={{
+              fontFamily: 'monospace',
+              fontSize: '0.8rem',
+              position: 'fixed',
+              width: '100%',
+              textAlign: 'center',
+              bottom: '10%',
+            }}
+          >
+            Loading...
+          </div>
+        </div>
+      )}
+    </>
+  )
 }
 
 export default Napsboard

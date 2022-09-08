@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const Intro = () => {
   return (
@@ -73,7 +74,7 @@ const Intro = () => {
           </div>
         </div>
         <Link to='/signup/basicInfo'>
-          <button
+          <motion.button
             style={{
               margin: 'auto',
               fontSize: '1rem',
@@ -85,9 +86,11 @@ const Intro = () => {
               color: 'green',
               marginBottom: '70px',
             }}
+            initial={{ x: '-100vw', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
           >
             {'Continue >>'}
-          </button>
+          </motion.button>
         </Link>
       </div>
     </>

@@ -1,9 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import logo from './user.png'
 
 import ConnectionModal from './ConnectionModal'
 
+const containerVariants = {
+  hidden: {
+    x: '100vw',
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.7,
+      ease: 'easeInOut',
+    },
+  },
+}
+const headerVariants = {
+  hidden: {
+    y: '-100vh',
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      duration: 0.7,
+      ease: 'easeOut',
+    },
+  },
+}
 const SchoolInfo = ({
   getCoverList,
   getCoverPos,
@@ -1063,7 +1093,13 @@ const SchoolInfo = ({
     </div>,
   ]
   return (
-    <div ref={schoolCoverRef}>
+    <motion.div
+      variants={containerVariants}
+      initial='hidden'
+      animate='visible'
+      exit={{ x: -1000 }}
+      ref={schoolCoverRef}
+    >
       {showModal ? (
         <ConnectionModal
           title='Ooops... Connection Error'
@@ -1082,9 +1118,13 @@ const SchoolInfo = ({
           }}
         />
       ) : undefined}
-      <div className='infotag' ref={schoolLabelRef}>
+      <motion.div
+        variants={headerVariants}
+        className='infotag'
+        ref={schoolLabelRef}
+      >
         School Info
-      </div>
+      </motion.div>
       {showValidatingStatus ? (
         <div
           ref={validatorRef}
@@ -1093,7 +1133,7 @@ const SchoolInfo = ({
             margin: '20px',
             fontFamily: 'Courier New',
             fontWeight: 'bold',
-            fontSize: '0.9rem',
+            fontSize: '0.8rem',
             borderRadius: '10px',
             backgroundColor: 'lightblue',
             border: 'solid blue 1px',
@@ -1104,7 +1144,7 @@ const SchoolInfo = ({
         </div>
       ) : undefined}
       {schoolList[pos]}
-    </div>
+    </motion.div>
   )
 }
 

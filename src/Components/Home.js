@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import About from './About'
 import Current from './Current'
 import Events from './Events'
 import Signup from './Signup'
+
 const Home = ({ bars, showNavbar, winSize, showNavOpt }) => {
   const [eventDimension, setEventDimension] = useState(null)
   const [aboutDimension, setAboutDimension] = useState(null)
@@ -15,6 +17,32 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt }) => {
   const refAbout = (ref) => {
     const dimension = ref.current.getBoundingClientRect()
     setAboutDimension(dimension)
+  }
+  const infoVariants = {
+    hidden: {
+      x: '100vw',
+    },
+    visible: {
+      x: 0,
+      transition: {
+        delay: 0.5,
+        when: 'beforeChildren',
+        ease: 'easeIn',
+      },
+    },
+  }
+  const noticeVariants = {
+    hidden: {
+      x: 50,
+    },
+    visible: {
+      x: 0,
+      type: 'spring',
+      stiffness: 120,
+      transition: {
+        // ease: 'easeIn',
+      },
+    },
   }
   useEffect(() => {
     if (id === undefined) {
@@ -70,8 +98,13 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt }) => {
   return (
     <>
       <div className='home' ref={refHome}>
-        <div className='info'>
-          <h2>Notice</h2>
+        <motion.div
+          className='info'
+          variants={infoVariants}
+          initial='hidden'
+          animate='visible'
+        >
+          <motion.h2 variants={noticeVariants}>Notice</motion.h2>
           <p>
             This page is strictly for members of the National Association of
             Physics Students University of Ibadan Division <b>(NAPS UI)</b>, as
@@ -86,10 +119,16 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt }) => {
             }}
           >
             <Link style={{ margin: 'atuo' }} to='/signup'>
-              <button className='signup'>Sign Up</button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                transition={{ yoyo: 10 }}
+                className='signup'
+              >
+                Sign Up
+              </motion.button>
             </Link>
           </div>
-        </div>
+        </motion.div>
       </div>
       <Events
         setRef={(ref) => {

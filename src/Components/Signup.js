@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import BasicInfo from './BasicInfo'
 import SchoolInfo from './SchoolInfo'
 import ContactInfo from './ContactInfo'
@@ -377,16 +378,18 @@ const Signup = ({ showNavbar, server }) => {
                 getLabelRefs={getLabelRefs}
               />
             ) : undefined}
-            <div style={{ overflowY: 'auto', height: '100vh' }}>
-              {content}
-              {showView ? (
-                <div className='currv' ref={currRef}>
-                  {cover.map((v, i) => {
-                    return <div key={i} className='viewcurr'></div>
-                  })}
-                </div>
-              ) : undefined}
-            </div>
+            <AnimatePresence exitBeforeEnter>
+              <motion.div style={{ overflowY: 'auto', height: '100vh' }}>
+                {content}
+                {showView ? (
+                  <div className='currv' ref={currRef}>
+                    {cover.map((v, i) => {
+                      return <div key={i} className='viewcurr'></div>
+                    })}
+                  </div>
+                ) : undefined}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>

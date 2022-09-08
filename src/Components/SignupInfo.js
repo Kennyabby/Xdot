@@ -1,7 +1,37 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import logo from './user.png'
 
+const containerVariants = {
+  hidden: {
+    x: '100vw',
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.7,
+      ease: 'easeInOut',
+    },
+  },
+}
+const headerVariants = {
+  hidden: {
+    y: '-100vh',
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      duration: 0.7,
+      ease: 'easeOut',
+    },
+  },
+}
 const SignupInfo = ({
   setValidate,
   getCoverList,
@@ -319,12 +349,22 @@ const SignupInfo = ({
     </div>,
   ]
   return (
-    <div ref={signupCoverRef}>
-      <div className='infotag' ref={signupLabelRef}>
+    <motion.div
+      variants={containerVariants}
+      initial='hidden'
+      animate='visible'
+      exit={{ x: -1000 }}
+      ref={signupCoverRef}
+    >
+      <motion.div
+        variants={headerVariants}
+        className='infotag'
+        ref={signupLabelRef}
+      >
         Signup Info
-      </div>
+      </motion.div>
       {signupList[pos]}
-    </div>
+    </motion.div>
   )
 }
 

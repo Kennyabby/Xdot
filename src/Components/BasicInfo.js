@@ -1,7 +1,40 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 import logo from './user.png'
 
+const containerVariants = {
+  hidden: {
+    x: 1000,
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    // dampness: 1000,
+    // stiffness: 500,
+    // mass: 0.5,
+    transition: {
+      duration: 1,
+      // ease: 'easeInOut',
+    },
+  },
+}
+const headerVariants = {
+  hidden: {
+    y: '-100vh',
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      duration: 0.7,
+      ease: 'easeOut',
+    },
+  },
+}
 const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
   const history = useHistory()
   const basicCoverRef = useRef(null)
@@ -297,7 +330,15 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
       </div>
       {prevNext}
     </div>,
-    <div className='container' onChange={getInputEvent} onFocus={handleFocus}>
+    <div
+      className='container'
+      variants={containerVariants}
+      initial='hidden'
+      animate='visible'
+      exit={{ x: '-100vw' }}
+      onChange={getInputEvent}
+      onFocus={handleFocus}
+    >
       <img className='usr' src={logo} alt='user' height='100px' />
       <p className='over' style={{ padding: '13px' }}>
         <input
@@ -329,12 +370,23 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
     </div>,
   ]
   return (
-    <div style={{ display: 'block' }} ref={basicCoverRef}>
-      <div className='infotag' ref={basicLabelRef}>
+    <motion.div
+      variants={containerVariants}
+      initial='hidden'
+      animate='visible'
+      exit={{ x: -1000 }}
+      style={{ display: 'block' }}
+      ref={basicCoverRef}
+    >
+      <motion.div
+        variants={headerVariants}
+        className='infotag'
+        ref={basicLabelRef}
+      >
         Basic Info
-      </div>
+      </motion.div>
       {basicList[pos]}
-    </div>
+    </motion.div>
   )
 }
 

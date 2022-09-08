@@ -425,6 +425,7 @@ code {
     width: 70vw;
     overflow-y: auto;
     top: 0px;
+    z-index: 1;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.95);
   }
