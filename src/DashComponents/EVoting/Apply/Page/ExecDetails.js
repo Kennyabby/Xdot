@@ -1,4 +1,5 @@
 import { React, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import ConfirmationModal from '../../../ConfirmationModal'
 
 const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
@@ -124,6 +125,7 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
           fontFamily: 'monospace',
           fontSize: '1rem',
           backgroundColor: 'rgba(220,220,220)',
+          boxShadow: '0px 0px 7px black',
           borderRadius: '10px',
           paddingBottom: '15px',
           margin: '7px',

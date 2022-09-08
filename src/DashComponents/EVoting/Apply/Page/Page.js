@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import ExecDetails from './ExecDetails'
 
 import '../../EVoting.css'
@@ -191,12 +192,18 @@ const Page = ({ server, viewForm, user }) => {
         </p>
         {applicationDetails.isCompleted !== undefined &&
         !applicationDetails.isCompleted ? (
-          <div
+          <motion.div
+            initial={{ x: '-100vw', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              x: { ease: 'easeOut' },
+              opacity: { duration: 0.8, delay: 0.3 },
+            }}
             style={{
               boxShadow: '0px 0px 7px rgba(100,100,100,1)',
               borderRadius: '10px',
               fontFamily: 'monospace',
-              border: 'solid blue 1px',
+              border: 'solid blue 2px',
               fontSize: '1rem',
               margin: '30px',
               marginTop: '40px',
@@ -217,7 +224,7 @@ const Page = ({ server, viewForm, user }) => {
             >
               {'Continue >>'}
             </button>
-          </div>
+          </motion.div>
         ) : undefined}
         <div
           style={{
@@ -226,7 +233,6 @@ const Page = ({ server, viewForm, user }) => {
             marginTop: '20px',
             padding: '10px',
             boxShadow: '0px 0px 8px rgba(49,49,50,1)',
-            border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
           }}
@@ -247,7 +253,6 @@ const Page = ({ server, viewForm, user }) => {
             marginTop: '20px',
             padding: '10px',
             boxShadow: '0px 0px 8px rgba(49,49,50,1)',
-            border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
           }}
@@ -268,7 +273,6 @@ const Page = ({ server, viewForm, user }) => {
             marginTop: '20px',
             padding: '10px',
             boxShadow: '0px 0px 8px rgba(49,49,50,1)',
-            border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
           }}
@@ -289,7 +293,6 @@ const Page = ({ server, viewForm, user }) => {
             marginTop: '20px',
             padding: '10px',
             boxShadow: '0px 0px 8px rgba(49,49,50,1)',
-            border: 'solid rgba(210,210,210) 2px',
             borderRadius: '10px',
             fontFamily: 'monospace',
           }}
