@@ -274,8 +274,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
               <Link to='/dashboard/profile'>
                 <div
                   style={{
-                    border: 'solid green 3px',
-                    // boxShadow: '0px 0px 6px lightgreen',
+                    // border: 'solid lightgreen 3px',
+                    boxShadow: '0px 0px 9px lightgreen',
                     padding: '3px',
                     borderRadius: '50%',
                     height: '45px',
