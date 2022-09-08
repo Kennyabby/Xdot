@@ -5,14 +5,14 @@ import ConfirmationModal from '../../../ConfirmationModal'
 const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
   const [showDetails, setShowDetails] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [toggleStatus, setToggleStatus] = useState('<<-->>')
+  const [toggleStatus, setToggleStatus] = useState('<< >>')
   const [buttonStatus, setButtonStatus] = useState('Apply >>')
   const [message, setMessage] = useState('')
 
   const handleToggle = () => {
     if (showDetails) {
       setShowDetails(false)
-      setToggleStatus('<<-->>')
+      setToggleStatus('<< >>')
     } else {
       setShowDetails(true)
       setToggleStatus('>><<')
@@ -134,14 +134,25 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
       >
         <div style={{ padding: '10px' }}>
           <h2>{exco.title.toUpperCase()}</h2>
-          <label style={{ fontStyle: 'italic' }}>{exco.brief}</label>
+          <label
+            style={{
+              fontStyle: 'italic',
+              fontFamily: 'Courier New',
+              fontWeight: 'bold',
+            }}
+          >
+            {exco.brief}
+          </label>
           <AnimatePresence>
             {showDetails && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.8 }}
-                exit={{ opacity: 0, transition: { duration: 0.8 } }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                exit={{
+                  opacity: 0,
+                  transition: { duration: 0.8, ease: 'easeIn' },
+                }}
                 style={{
                   textAlign: 'left',
                   backgroundColor: 'white',
