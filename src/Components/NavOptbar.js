@@ -19,6 +19,7 @@ const NavOptbar = ({ getTopBar }) => {
       opacity: 0,
       transition: {
         duration: 0.5,
+        ease: 'easeIn',
       },
     },
     visible: {
@@ -26,7 +27,7 @@ const NavOptbar = ({ getTopBar }) => {
       opacity: 1,
       type: 'spring',
       transition: {
-        duration: 0.5,
+        duration: 0.7,
         ease: 'easeOut',
       },
     },
@@ -76,10 +77,27 @@ const NavOptbar = ({ getTopBar }) => {
       setShow(true)
     }
   }
-  if (show === true) {
-    return (
-      <>
-        <AnimatePresence exitBeforeEnter>
+  return (
+    <>
+      {!show && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '10px',
+            right: '25px',
+            cursor: 'pointer',
+            padding: '2px',
+            borderRadius: '10px',
+            backgroundColor: 'rgba(60,60,60)',
+            border: 'solid rgba(20,19,19,1) 3px',
+          }}
+          onClick={cancelClick}
+        >
+          <img src={cancel} height='20px' alt='cancel' />
+        </div>
+      )}
+      <AnimatePresence exitBeforeEnter>
+        {show && (
           <motion.div
             variants={optsVariants}
             initial='hidden'
@@ -130,29 +148,10 @@ const NavOptbar = ({ getTopBar }) => {
               </div>
             </div>
           </motion.div>
-        </AnimatePresence>
-      </>
-    )
-  } else {
-    return (
+        )}
+      </AnimatePresence>
       <AnimatePresence exitBeforeEnter>
-        <>
-          <div
-            style={{
-              position: 'fixed',
-              top: '10px',
-              right: '25px',
-              cursor: 'pointer',
-              padding: '2px',
-              borderRadius: '10px',
-              backgroundColor: 'rgba(60,60,60)',
-              border: 'solid rgba(20,19,19,1) 3px',
-            }}
-            onClick={cancelClick}
-          >
-            <img src={cancel} height='20px' alt='cancel' />
-          </div>
-
+        {!show && (
           <motion.div
             variants={optVariants}
             initial='hidden'
@@ -200,10 +199,10 @@ const NavOptbar = ({ getTopBar }) => {
               </li>
             </ul>
           </motion.div>
-        </>
+        )}
       </AnimatePresence>
-    )
-  }
+    </>
+  )
 }
 
 export default NavOptbar

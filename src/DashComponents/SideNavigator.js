@@ -98,232 +98,222 @@ const SideNavigator = ({
 
   return (
     <>
-      <AnimatePresence>
-        <motion.div
-          className='userbar'
-          initial={{ x: '-100vw' }}
-          animate={{ x: 0 }}
-          transition={{
-            duration: 0.7,
-            ease: 'easeOut',
-            opacity: { duration: 0.7 },
-          }}
-          exit={{ opacity: 0 }}
-        >
-          <ul className='usersidebar'>
-            <label className='userlefttop'>NAPSITE</label>
-            <li name='profile' className='userleft'>
-              <Link style={{ textDecoration: 'none' }} to='/dashboard/profile'>
-                <div className='userleftitem' name='profile' ref={profileLabel}>
-                  <img
-                    className='sideicons'
-                    name='profile'
-                    src={profile}
-                    height='20px'
-                  />{' '}
-                  <span style={{ marginLeft: '15px' }}>Profile</span>
-                </div>
-              </Link>
-            </li>
-            <li name='notifications' className='userleft'>
-              <Link
-                style={{ textDecoration: 'none' }}
-                to='/dashboard/notifications'
+      <motion.div
+        className='userbar'
+        initial={{ x: '-100vw' }}
+        animate={{ x: 0 }}
+        exit={{ x: '-100vw', transition: { duration: 0.7, ease: 'easeIn' } }}
+        transition={{
+          duration: 0.7,
+          ease: 'easeOut',
+          opacity: { duration: 0.7 },
+        }}
+      >
+        <ul className='usersidebar'>
+          <label className='userlefttop'>NAPSITE</label>
+          <li name='profile' className='userleft'>
+            <Link style={{ textDecoration: 'none' }} to='/dashboard/profile'>
+              <div className='userleftitem' name='profile' ref={profileLabel}>
+                <img
+                  className='sideicons'
+                  name='profile'
+                  src={profile}
+                  height='20px'
+                />{' '}
+                <span style={{ marginLeft: '15px' }}>Profile</span>
+              </div>
+            </Link>
+          </li>
+          <li name='notifications' className='userleft'>
+            <Link
+              style={{ textDecoration: 'none' }}
+              to='/dashboard/notifications'
+            >
+              <div
+                className='userleftitem'
+                name='notifications'
+                ref={notificationsLabel}
               >
-                <div
-                  className='userleftitem'
-                  name='notifications'
-                  ref={notificationsLabel}
+                <img
+                  className='sideicons'
+                  name='events'
+                  src={notifications}
+                  height='20px'
+                />{' '}
+                <span style={{ marginLeft: '15px' }}>Updates</span>
+              </div>
+            </Link>
+          </li>
+          <li name='events' className='userleft'>
+            <Link style={{ textDecoration: 'none' }} to='/dashboard/events'>
+              <div className='userleftitem' name='events' ref={eventsLabel}>
+                <img
+                  className='sideicons'
+                  name='events'
+                  src={events}
+                  height='20px'
+                />{' '}
+                <span style={{ marginLeft: '15px' }}>Events </span>
+                <img
+                  src={eventsToggleStatus}
+                  alt='events donwdrop toggle'
+                  onClick={handleDrop}
+                  name='eventdrop'
+                  className='taskdrop'
+                  height='7px'
+                />
+              </div>
+            </Link>
+            {showEventDrop && (
+              <ul className='drop'>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/events/grandquiz'
                 >
-                  <img
-                    className='sideicons'
-                    name='events'
-                    src={notifications}
-                    height='20px'
-                  />{' '}
-                  <span style={{ marginLeft: '15px' }}>Updates</span>
-                </div>
-              </Link>
-            </li>
-            <li name='events' className='userleft'>
-              <Link style={{ textDecoration: 'none' }} to='/dashboard/events'>
-                <div className='userleftitem' name='events' ref={eventsLabel}>
-                  <img
-                    className='sideicons'
-                    name='events'
-                    src={events}
-                    height='20px'
-                  />{' '}
-                  <span style={{ marginLeft: '15px' }}>Events </span>
-                  <img
-                    src={eventsToggleStatus}
-                    alt='events donwdrop toggle'
-                    onClick={handleDrop}
-                    name='eventdrop'
-                    className='taskdrop'
-                    height='7px'
-                  />
-                </div>
-              </Link>
-              {showEventDrop && (
-                <ul className='drop'>
-                  <Link
-                    style={{ color: 'white', textDecoration: 'none' }}
-                    to='/dashboard/events/grandquiz'
-                  >
-                    <li ref={grandquizRef} className='dropitem'>
-                      {' '}
-                      {'>'} Grand Quiz{' '}
-                    </li>
-                  </Link>
-                  <Link
-                    style={{ color: 'white', textDecoration: 'none' }}
-                    to='/dashboard/events/dailypuzzles'
-                  >
-                    <li ref={dailypuzzleRef} className='dropitem'>
-                      {' '}
-                      {'>'} Daily Puzzles{' '}
-                    </li>
-                  </Link>
-                  <Link
-                    style={{ color: 'white', textDecoration: 'none' }}
-                    to='/dashboard/events/studytable'
-                  >
-                    <li ref={studytableRef} className='dropitem'>
-                      {' '}
-                      {'>'} Study Table{' '}
-                    </li>
-                  </Link>
-                </ul>
-              )}
-            </li>
-            <li name='tasks' className='userleft'>
-              <Link style={{ textDecoration: 'none' }} to='/dashboard/tasks'>
-                <div className='userleftitem' name='tasks' ref={tasksLabel}>
-                  <img
-                    className='sideicons'
-                    name='tasks'
-                    src={tasks}
-                    height='20px'
-                  />{' '}
-                  <span style={{ marginLeft: '15px' }}>Tasks</span>
-                  <img
-                    src={tasksToggleStatus}
-                    alt='tasks downdrop toggle'
-                    onClick={handleDrop}
-                    name='taskdrop'
-                    className='taskdrop'
-                    height='7px'
-                  />
-                </div>
-              </Link>
-              {showTaskDrop && (
-                <ul className='drop'>
-                  <Link
-                    style={{ color: 'white', textDecoration: 'none' }}
-                    to='/dashboard/tasks/cgpa'
-                  >
-                    <li ref={cgpacalcRef} className='dropitem'>
-                      {' '}
-                      {'>'} CGPA CALC{' '}
-                    </li>
-                  </Link>
-                  <Link
-                    style={{ color: 'white', textDecoration: 'none' }}
-                    to='/dashboard/tasks/todolist'
-                  >
-                    <li ref={todolistRef} className='dropitem'>
-                      {' '}
-                      {'>'} To Do List{' '}
-                    </li>
-                  </Link>
-                  <Link
-                    style={{ color: 'white', textDecoration: 'none' }}
-                    to='/dashboard/tasks/quizapp'
-                  >
-                    <li ref={quizappRef} className='dropitem'>
-                      {' '}
-                      {'>'} Quiz App{' '}
-                    </li>
-                  </Link>
-                </ul>
-              )}
-            </li>
-            <li name='e-voting' className='userleft'>
-              <Link style={{ textDecoration: 'none' }} to='/dashboard/e-voting'>
-                <div
-                  className='userleftitem'
+                  <li ref={grandquizRef} className='dropitem'>
+                    {' '}
+                    {'>'} Grand Quiz{' '}
+                  </li>
+                </Link>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/events/dailypuzzles'
+                >
+                  <li ref={dailypuzzleRef} className='dropitem'>
+                    {' '}
+                    {'>'} Daily Puzzles{' '}
+                  </li>
+                </Link>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/events/studytable'
+                >
+                  <li ref={studytableRef} className='dropitem'>
+                    {' '}
+                    {'>'} Study Table{' '}
+                  </li>
+                </Link>
+              </ul>
+            )}
+          </li>
+          <li name='tasks' className='userleft'>
+            <Link style={{ textDecoration: 'none' }} to='/dashboard/tasks'>
+              <div className='userleftitem' name='tasks' ref={tasksLabel}>
+                <img
+                  className='sideicons'
+                  name='tasks'
+                  src={tasks}
+                  height='20px'
+                />{' '}
+                <span style={{ marginLeft: '15px' }}>Tasks</span>
+                <img
+                  src={tasksToggleStatus}
+                  alt='tasks downdrop toggle'
+                  onClick={handleDrop}
+                  name='taskdrop'
+                  className='taskdrop'
+                  height='7px'
+                />
+              </div>
+            </Link>
+            {showTaskDrop && (
+              <ul className='drop'>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/tasks/cgpa'
+                >
+                  <li ref={cgpacalcRef} className='dropitem'>
+                    {' '}
+                    {'>'} CGPA CALC{' '}
+                  </li>
+                </Link>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/tasks/todolist'
+                >
+                  <li ref={todolistRef} className='dropitem'>
+                    {' '}
+                    {'>'} To Do List{' '}
+                  </li>
+                </Link>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/tasks/quizapp'
+                >
+                  <li ref={quizappRef} className='dropitem'>
+                    {' '}
+                    {'>'} Quiz App{' '}
+                  </li>
+                </Link>
+              </ul>
+            )}
+          </li>
+          <li name='e-voting' className='userleft'>
+            <Link style={{ textDecoration: 'none' }} to='/dashboard/e-voting'>
+              <div className='userleftitem' name='e-voting' ref={eVotingLabel}>
+                <img
+                  className='sideicons'
                   name='e-voting'
-                  ref={eVotingLabel}
+                  src={events}
+                  height='20px'
+                />{' '}
+                <span style={{ marginLeft: '10px' }}>Evoting</span>
+                <img
+                  src={eVotingToggleStatus}
+                  alt='e-voting donwdrop toggle'
+                  onClick={handleDrop}
+                  name='e-votingdrop'
+                  className='taskdrop'
+                  height='7px'
+                />
+              </div>
+            </Link>
+            {showEvotingDrop && (
+              <ul className='drop'>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/e-voting/apply'
                 >
-                  <img
-                    className='sideicons'
-                    name='e-voting'
-                    src={events}
-                    height='20px'
-                  />{' '}
-                  <span style={{ marginLeft: '10px' }}>Evoting</span>
-                  <img
-                    src={eVotingToggleStatus}
-                    alt='e-voting donwdrop toggle'
-                    onClick={handleDrop}
-                    name='e-votingdrop'
-                    className='taskdrop'
-                    height='7px'
-                  />
-                </div>
-              </Link>
-              {showEvotingDrop && (
-                <ul className='drop'>
-                  <Link
-                    style={{ color: 'white', textDecoration: 'none' }}
-                    to='/dashboard/e-voting/apply'
-                  >
-                    <li ref={applyRef} className='dropitem'>
-                      {' '}
-                      {'>'} Apply{' '}
-                    </li>
-                  </Link>
-                  <Link
-                    style={{ color: 'white', textDecoration: 'none' }}
-                    to='/dashboard/e-voting/vote'
-                  >
-                    <li ref={voteRef} className='dropitem'>
-                      {' '}
-                      {'>'} Vote{' '}
-                    </li>
-                  </Link>
-                </ul>
-              )}
-            </li>
-            <li name='settings' className='userleft'>
-              <Link style={{ textDecoration: 'none' }} to='/dashboard/settings'>
-                <div
-                  className='userleftitem'
+                  <li ref={applyRef} className='dropitem'>
+                    {' '}
+                    {'>'} Apply{' '}
+                  </li>
+                </Link>
+                <Link
+                  style={{ color: 'white', textDecoration: 'none' }}
+                  to='/dashboard/e-voting/vote'
+                >
+                  <li ref={voteRef} className='dropitem'>
+                    {' '}
+                    {'>'} Vote{' '}
+                  </li>
+                </Link>
+              </ul>
+            )}
+          </li>
+          <li name='settings' className='userleft'>
+            <Link style={{ textDecoration: 'none' }} to='/dashboard/settings'>
+              <div className='userleftitem' name='settings' ref={settingsLabel}>
+                <img
+                  className='sideicons'
                   name='settings'
-                  ref={settingsLabel}
-                >
-                  <img
-                    className='sideicons'
-                    name='settings'
-                    src={settings}
-                    height='20px'
-                  />{' '}
-                  <span style={{ marginLeft: '15px' }}>Settings</span>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <label onClick={logout} className='userleftbottom'>
-                {'Log out'}
-                <label style={{ fontFamily: 'monospace', fontSize: '1.3rem' }}>
-                  {' ->]'}
-                </label>
+                  src={settings}
+                  height='20px'
+                />{' '}
+                <span style={{ marginLeft: '15px' }}>Settings</span>
+              </div>
+            </Link>
+          </li>
+          <li>
+            <label onClick={logout} className='userleftbottom'>
+              {'Log out'}
+              <label style={{ fontFamily: 'monospace', fontSize: '1.3rem' }}>
+                {' ->]'}
               </label>
-            </li>
-          </ul>
-        </motion.div>
-      </AnimatePresence>
+            </label>
+          </li>
+        </ul>
+      </motion.div>
     </>
   )
 }

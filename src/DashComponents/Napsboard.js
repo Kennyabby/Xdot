@@ -773,43 +773,45 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           >
             {user.userName ? (
               <div>
-                {winSize <= 700
-                  ? showNav && (
-                      <div>
-                        <SideNavigator
-                          user={user}
-                          getLabelRefs={getLabelRefs}
-                          getTasksLabelRefs={(tasksLabelRefs) => {
-                            setTasksLabelRefs(tasksLabelRefs)
-                          }}
-                          getEventsLabelRefs={(eventsLabelRefs) => {
-                            setEventsLabelRefs(eventsLabelRefs)
-                          }}
-                          getEvotingLabelRefs={(eVotingLabelRefs) => {
-                            setEvotingLabelRefs(eVotingLabelRefs)
-                          }}
-                          logOut={logout}
-                        />
-                      </div>
-                    )
-                  : showNavigator && (
-                      <div>
-                        <SideNavigator
-                          user={user}
-                          getLabelRefs={getLabelRefs}
-                          getTasksLabelRefs={(tasksLabelRefs) => {
-                            setTasksLabelRefs(tasksLabelRefs)
-                          }}
-                          getEventsLabelRefs={(eventsLabelRefs) => {
-                            setEventsLabelRefs(eventsLabelRefs)
-                          }}
-                          getEvotingLabelRefs={(eVotingLabelRefs) => {
-                            setEvotingLabelRefs(eVotingLabelRefs)
-                          }}
-                          logOut={logout}
-                        />
-                      </div>
+                {winSize <= 700 ? (
+                  <AnimatePresence>
+                    {showNav && (
+                      <SideNavigator
+                        user={user}
+                        getLabelRefs={getLabelRefs}
+                        getTasksLabelRefs={(tasksLabelRefs) => {
+                          setTasksLabelRefs(tasksLabelRefs)
+                        }}
+                        getEventsLabelRefs={(eventsLabelRefs) => {
+                          setEventsLabelRefs(eventsLabelRefs)
+                        }}
+                        getEvotingLabelRefs={(eVotingLabelRefs) => {
+                          setEvotingLabelRefs(eVotingLabelRefs)
+                        }}
+                        logOut={logout}
+                      />
                     )}
+                  </AnimatePresence>
+                ) : (
+                  <AnimatePresence>
+                    {showNavigator && (
+                    <SideNavigator
+                      user={user}
+                      getLabelRefs={getLabelRefs}
+                      getTasksLabelRefs={(tasksLabelRefs) => {
+                        setTasksLabelRefs(tasksLabelRefs)
+                      }}
+                      getEventsLabelRefs={(eventsLabelRefs) => {
+                        setEventsLabelRefs(eventsLabelRefs)
+                      }}
+                      getEvotingLabelRefs={(eVotingLabelRefs) => {
+                        setEvotingLabelRefs(eVotingLabelRefs)
+                      }}
+                      logOut={logout}
+                    />
+                    )}
+                  </AnimatePresence>
+                )}
                 {view}
               </div>
             ) : (

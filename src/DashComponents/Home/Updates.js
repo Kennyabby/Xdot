@@ -274,8 +274,9 @@ const Updates = ({ user, server, showHomeToggle }) => {
               <Link to='/dashboard/profile'>
                 <div
                   style={{
-                    border: 'solid lightgreen 3px',
-                    boxShadow: '0px 0px 6px lightgreen',
+                    border: 'solid green 3px',
+                    // boxShadow: '0px 0px 6px lightgreen',
+                    padding: '3px',
                     borderRadius: '50%',
                     height: '45px',
                     width: '45px',
@@ -308,12 +309,13 @@ const Updates = ({ user, server, showHomeToggle }) => {
               </motion.div>
             </div>
             <motion.div
-              initial={{ x: '-100vw' }}
+              initial={{ x: '100vw' }}
               animate={{ x: 0 }}
               transition={{
                 duration: 0.5,
                 ease: 'easeInOut',
                 when: 'beforeChildren',
+                staggerChildren: 1,
               }}
               style={{
                 margin: '10px',
