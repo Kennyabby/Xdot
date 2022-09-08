@@ -35,7 +35,7 @@
   font-size: 1rem;
   font-weight: bold;
   font-family: monospace;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.9);
   border-radius: 10px;
   color: white;
 }
@@ -68,9 +68,10 @@
   border-radius: 10px;
   color: white;
   background-color: rgba(0, 0, 0, 0.8);
-  box-shadow: rgba(50, 50, 50, 1) 6px 6px 7px;
+  box-shadow: rgba(0, 0, 0, 1) 0px 0px 7px;
   margin: auto;
   padding: 50px;
+  width: 'fit-content';
   height: 'fit-content';
 }
 .cgpaview {

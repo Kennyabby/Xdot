@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import '../Tasks.css'
 
 import CourseView from './CourseView'
@@ -17,8 +18,10 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
   const [showNotification, setShowNotification] = useState(false)
   const [edittingCourse, setEdittingCourse] = useState(null)
   const [notificationMessage, setNotificationMessage] = useState('')
-  const [sessionValue, setSessionValue] = useState('allSessions')
   const sessionSelectRef = useRef(null)
+  const [sessionValue, setSessionValue] = useState(
+    sessionSelectRef.current === null && 'allSessions'
+  )
   const [cgpaDimension, setCgpaDimension] = useState(null)
   const [sessionDimension, setSessionDimension] = useState({})
   const cgpaRef = useRef(null)
@@ -229,6 +232,7 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
             width: 'fit-content',
             margin: 'auto',
             marginTop: '10px',
+            fontWeight: 'bold',
           }}
         >
           <label
@@ -262,36 +266,54 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
         </div>
         {showStore ? (
           <div style={{ textAlign: 'center' }}>
-            {showNotification && (
-              <div
-                style={{
-                  padding: '10px',
-                  position: 'fixed',
-                  top: '5px',
-                  zIndex: '1',
-                  justifyContent: 'center',
-                  width: '100vw',
-                }}
-              >
-                <label
+            <AnimatePresence>
+              {showNotification && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.7, ease: 'easeOut' }}
+                  exit={{
+                    opacity: 0,
+                    transition: { duration: 0.7, ease: 'easeIn' },
+                  }}
                   style={{
-                    margin: 'auto',
                     padding: '10px',
-                    fontSize: '1rem',
-                    fontWeight: 'bold',
-                    fontFamily: 'monospace',
-                    backgroundColor: 'rgba(0,0,0,0.9)',
-                    borderRadius: '10px',
-                    color: 'white',
+                    position: 'fixed',
+                    top: '60px',
+                    zIndex: '2',
+                    justifyContent: 'center',
+                    width: '100vw',
                   }}
                 >
-                  {notificationMessage}
-                </label>
-              </div>
-            )}
-            {cgpaDimension !== null && cgpaDimension.y <= 0 && (
-              <div style={{ backgroundColor: 'blue', textAlign: 'center' }}>
-                <label className='cgpa'>
+                  <label
+                    style={{
+                      margin: 'auto',
+                      padding: '10px',
+                      fontSize: '.9rem',
+                      fontWeight: 'bold',
+                      fontFamily: 'monospace',
+                      backgroundColor: 'rgba(0,0,0,0.9)',
+                      borderRadius: '10px',
+                      color: 'white',
+                    }}
+                  >
+                    {notificationMessage}
+                  </label>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {cgpaDimension !== null && cgpaDimension.y <= 0 && (
+                <motion.label
+                  initial={{ x: '-100vw' }}
+                  animate={{ x: 0 }}
+                  transition={{ duration: 0.5, ease: 'easeOut' }}
+                  exit={{
+                    x: '-100vw',
+                    transition: { duration: 0.5, ease: 'easeIn' },
+                  }}
+                  className='cgpa'
+                >
                   {'CGPA: ' +
                     String(
                       sessionValue !== 'allSessions'
@@ -300,41 +322,52 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
                             userSessions[userSessions.length - 1]
                           )
                     )}
-                </label>
-              </div>
-            )}
-
-            {showUpdateForm ? (
-              <UpdateCourse
-                server={server}
-                user={user}
-                course={edittingCourse}
-                session={sessionValue}
-                gradingScale={gradingScale}
-                request={updateRequest}
-                closeUpdate={() => {
-                  setShowUpdateForm(false)
-                  setEdittingCourse(null)
-                }}
-                notifyUpdate={(message) => {
-                  notify({ message: message })
-                }}
-              />
-            ) : undefined}
+                </motion.label>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {showUpdateForm && (
+                <UpdateCourse
+                  server={server}
+                  user={user}
+                  course={edittingCourse}
+                  session={sessionValue}
+                  gradingScale={gradingScale}
+                  request={updateRequest}
+                  closeUpdate={() => {
+                    setShowUpdateForm(false)
+                    setEdittingCourse(null)
+                  }}
+                  notifyUpdate={(message) => {
+                    notify({ message: message })
+                  }}
+                />
+              )}
+            </AnimatePresence>
             <div
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: '50px',
+                gap: '40px',
                 marginTop: '20px',
               }}
             >
-              <div className='cgpamessage'>
-                {'Hi, ' +
-                  user.firstName +
-                  '. Welcome to Xdot CGPA Calculator and Organizer.'}
-              </div>
-              <div className='cgpaview'>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, ease: 'easeOut' }}
+                className='cgpamessage'
+              >
+                {'Hi, ' + user.firstName + '. Welcome to '}
+                <b>Xdot</b>
+                {' CGPA Calculator and Organizer.'}
+              </motion.div>
+              <motion.div
+                initial={{ x: '100vw' }}
+                animate={{ x: 0 }}
+                transition={{ duration: 0.7, delay: 0.5, ease: 'easeOut' }}
+                className='cgpaview'
+              >
                 {user.courseDetails.length ? (
                   sessionValue !== 'allSessions' ? (
                     <div style={{ textAlign: 'left' }}>
@@ -397,7 +430,7 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
                 ) : (
                   <div>Your CGPA Will Appear Here!</div>
                 )}
-              </div>
+              </motion.div>
             </div>
             <select
               className='selectsession'
@@ -407,6 +440,7 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
                 setSessionValue(value)
               }}
             >
+              <option value='allSessions'>All Sessions</option>
               {userSessions.map((session, i) => {
                 return (
                   <option key={i} value={session}>
@@ -414,7 +448,6 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
                   </option>
                 )
               })}
-              <option value='allSessions'>All Sessions</option>
             </select>
 
             {filteredCourseDetails().length ? (
@@ -469,12 +502,15 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
               </div>
             )}
             {sessionValue !== 'allSessions' && (
-              <img
+              <motion.img
+                initial={{ x: '100vw' }}
+                animate={{ x: 0 }}
+                transition={{ ease: 'easeOut', duration: 0.7, delay: 0.5 }}
                 src={add}
                 alt='add'
                 className='addcourse'
                 style={{
-                  boxShadow: 'black 6px 6px 7px',
+                  boxShadow: 'black 0px 0px 7px',
                   border: 'solid black 1px',
                 }}
                 onClick={() => {
@@ -485,7 +521,10 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
               />
             )}
             {filteredCourseDetails().length > 7 ? (
-              <img
+              <motion.img
+                initial={{ x: '-100vw' }}
+                animate={{ x: 0 }}
+                transition={{ ease: 'easeOut', duration: 0.7, delay: 0.5 }}
                 src={sessionDimension.y < 0 ? top : bottom}
                 className='scrollpos'
                 onClick={() => {
@@ -495,7 +534,7 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
                     window.scrollTo(0, Number.MAX_SAFE_INTEGER)
                   }
                 }}
-                height='25px'
+                height='20px'
               />
             ) : undefined}
           </div>

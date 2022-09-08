@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import cancel from '../assets/cancel.png'
 
 const UpdateCourse = ({
@@ -139,7 +140,7 @@ const UpdateCourse = ({
           ],
         }),
       }
-      const resp = await fetch(server+'/updateOneUser', opts)
+      const resp = await fetch(server + '/updateOneUser', opts)
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
@@ -154,20 +155,24 @@ const UpdateCourse = ({
   }
   return (
     <>
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.7, ease: 'easeOut', when: 'beforeChildren' }}
+        exit={{ opacity: 0, transition: { duration: 0.7, ease: 'easeIn' } }}
         style={{
           position: 'fixed',
           top: '0px',
           left: '0px',
-          zIndex: '1',
-          backgroundColor: 'rgba(0,0,0,0.8)',
+          zIndex: '2',
+          backgroundColor: 'rgba(0,0,0,1)',
           width: '100%',
           height: '100%',
           overflowY: 'auto',
         }}
       >
         <img
-          height='40px'
+          height='25px'
           style={{
             position: 'fixed',
             top: '5px',
@@ -284,10 +289,13 @@ const UpdateCourse = ({
             <p>
               <label
                 style={{
-                  fontFamily: 'monospace',
-                  fontSize: '1rem',
-                  fontWeight: 'bold',
-                  color: 'lightgreen',
+                  color: 'blue',
+                  backgroundColor: 'lightblue',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  marginBottom: '50px',
+                  fontSize: '.8rem',
+                  border: 'solid blue 2px',
                 }}
               >
                 {updateStatus}
@@ -295,7 +303,7 @@ const UpdateCourse = ({
             </p>
           )}
         </div>
-      </div>
+      </motion.div>
     </>
   )
 }
