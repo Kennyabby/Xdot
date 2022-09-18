@@ -12,8 +12,8 @@ import Napsboard from './DashComponents/Napsboard'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const App = () => {
-  // const SERVER = 'https://napsuiserver.herokuapp.com'
-  const SERVER = 'http://localhost:3001'
+  const SERVER = 'https://napsuiserver.herokuapp.com'
+  // const SERVER = 'http://localhost:3001'
   const [bars, setBars] = useState([])
   const [size, setSize] = useState(window.innerWidth)
   const getTopBar = (bars) => {
