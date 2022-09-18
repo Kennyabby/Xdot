@@ -1,5 +1,6 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import usrImg from './usrImg.png'
 import viewImg from './view.jpg'
 import noViewImg from './noview.png'
@@ -55,8 +56,8 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   }
   const handleFocus = (e) => {
     const name = e.target.getAttribute('name')
-    matricNoRef.current.style.borderBottom = 'solid white 1px'
-    passwordRef.current.style.borderBottom = 'solid white 1px'
+    matricNoRef.current.style.borderBottom = 'solid black 1px'
+    passwordRef.current.style.borderBottom = 'solid black 1px'
     matricNoRef.current.parentElement.childNodes[1].style.color = 'lightgreen'
     passwordRef.current.parentElement.childNodes[1].style.color = 'lightgreen'
     passwordRef.current.parentElement.childNodes[1].style.display = 'none'
@@ -118,8 +119,8 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
     setError('')
     matricNoRef.current.parentElement.childNodes[1].style.display = 'none'
     passwordRef.current.parentElement.childNodes[1].style.display = 'none'
-    matricNoRef.current.style.borderBottom = 'solid white 1px'
-    passwordRef.current.style.borderBottom = 'solid white 1px'
+    matricNoRef.current.style.borderBottom = 'solid black 1px'
+    passwordRef.current.style.borderBottom = 'solid black 1px'
     if (fields.password === '') {
       passwordRef.current.style.borderBottom = 'solid red 2px'
       passwordRef.current.parentElement.childNodes[1].style.color = 'red'
@@ -148,17 +149,22 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
           onChange={handleInput}
           onFocus={handleFocus}
         >
-          <p
+          <motion.p
+            initial={{ y: '-100vh' }}
+            animate={{ y: 0 }}
+            transition={{ ease: 'easeOut', duration: 0.7 }}
             style={{
               fontWeight: 'bold',
               fontSize: '1.6rem',
+              fontFamily: 'Courier New',
+              cursor: 'pointer',
             }}
             onClick={() => {
               history.push('/')
             }}
           >
-            NAPS-UI
-          </p>
+            NAPS UI
+          </motion.p>
           <img
             className='usr'
             src={usrImg}
@@ -170,7 +176,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
             <input
               ref={matricNoRef}
               className='signinfield'
-              type='text'
+              type='number'
               name='matricNo'
               placeholder='Enter Your Matric No'
               title='Enter Your Matric No'
@@ -212,7 +218,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
             )}
             {noView && (
               <img
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', marginLeft: '10px' }}
                 title='hide password'
                 src={noViewImg}
                 name='noView'
@@ -231,26 +237,42 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
             fontStyle: 'italic',
           }}
         >
-          <Link style={{ color: 'white' }} to='/help'>
+          <Link style={{ color: 'black', fontSize: '0.9rem' }} to='/help'>
             Forgot Password?
           </Link>
         </p>
-        <div style={{ display: 'inline-block' }}>
-          <p
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          style={{
+            display: 'inline-block',
+            padding: '10px',
+            borderRadius: '10px',
+            border: 'solid rgba(49,49,50) 1px',
+          }}
+        >
+          <label
             style={{
               fontWeight: 'bold',
-              color: 'blue',
+              color: 'black',
+              fontSize: '0.8rem',
+              fontFamily: 'verdana',
               fontStyle: 'italic',
               cursor: 'pointer',
             }}
           >
             Sign in with Google
-          </p>
-        </div>
+          </label>
+        </motion.div>
         <p>
           <button
             className='nxt'
-            style={{ paddingLeft: '120px', paddingRight: '120px' }}
+            style={{
+              paddingLeft: '120px',
+              paddingRight: '120px',
+              marginTop: '30px',
+            }}
             name='button'
             title='Sign in'
             onClick={handleSignin}

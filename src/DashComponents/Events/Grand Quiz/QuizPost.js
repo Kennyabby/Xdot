@@ -371,22 +371,34 @@ const QuizPost = ({
         {postShow === null ? (
           <div>
             <div style={{ display: 'flex' }}>
-              <div style={{ textAlign: 'left' }}>
-                <div>
-                  <img
-                    src={userImgUrl}
-                    height='40px'
-                    width='40px'
-                    style={{
-                      borderRadius: '50%',
-                      padding: '2px',
-                      backgroundColor: 'rgba(255,255,255,1)',
-                    }}
-                  />
-                </div>
+              <div
+                style={{
+                  textAlign: 'center',
+                  justifyContent: 'center',
+                  display: 'block',
+                }}
+              >
+                <div
+                  style={{
+                    backgroundImage: `url(${userImgUrl})`,
+                    border: 'solid rgba(220,220,220,1) 1px',
+                    backgroundColor: 'white',
+                    backgroundSize: 'cover',
+                    margin: 'auto',
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',
+                  }}
+                ></div>
                 {postUser.lastName !== undefined ? (
                   <div>
-                    <label style={{ fontWeight: 'bold' }}>
+                    <label
+                      style={{
+                        fontWeight: 'bold',
+                        fontFamily: 'verdana',
+                        fontSize: '.7rem',
+                      }}
+                    >
                       {postUser.userName.toUpperCase()}
                     </label>
                   </div>

@@ -47,21 +47,21 @@ const PostCommentReply = ({
   const userName = rep.userName
   const statement = rep.commentReply.statement
   const commentReactionList = rep.commentReply.reaction
-  useEffect(async()=>{
-    if(rep.matricNo!==undefined){
+  useEffect(async () => {
+    if (rep.matricNo !== undefined) {
       const opts1 = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({imgUrl: rep.img, matricNo:rep.matricNo}),
+        body: JSON.stringify({ imgUrl: rep.img, matricNo: rep.matricNo }),
       }
-      const resp1 = await fetch(server+'/getImgUrl', opts1)
+      const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
     }
-  },[rep])
+  }, [rep])
   useEffect(() => {
     rep.commentReply.reaction.forEach((rct) => {
       if (rct.matricNo === user.matricNo) {
@@ -158,41 +158,61 @@ const PostCommentReply = ({
         </div>
       ) : undefined}
       <div style={{ display: 'flex' }}>
-        <img src={userImgUrl} style={{ borderRadius: '50%' }} height='50px' width='50px' />
-        <label style={{ fontWeight: 'bold' }}>
-          {userName.slice(0, 1).toUpperCase() + userName.slice(1)}
-        </label>
-      </div>
-      <div
-        style={{
-          backgroundColor: 'rgba(240,240,240,1)',
-          fontSize: '.9rem',
-          textAlign: 'left',
-          width: 'fit-content',
-          margin: '20px',
-          padding: '10px',
-          borderRadius: '20px',
-        }}
-      >
-        <label>
-          {statement.split(' ').map((cmt) => {
-            if (cmt.includes('@')) {
-              return (
-                <label style={{ color: 'blue', fontWeight: 'bold' }}>
-                  {cmt + ' '}
-                </label>
-              )
-            }
-            return <label>{cmt + ' '}</label>
-          })}
-        </label>
+        <div
+          style={{
+            backgroundImage: `url(${userImgUrl})`,
+            border: 'solid rgba(220,220,220,1) 1px',
+            backgroundColor: 'white',
+            backgroundSize: 'cover',
+            width: '50px',
+            height: '50px',
+            borderRadius: '50%',
+          }}
+        ></div>
+
+        <div
+          style={{
+            backgroundColor: 'rgba(240,240,240,1)',
+            fontSize: '.9rem',
+            textAlign: 'left',
+            width: '70%',
+            margin: '20px',
+            marginTop: '3px',
+            padding: '10px',
+            borderRadius: '20px',
+          }}
+        >
+          <label
+            style={{
+              fontWeight: 'bold',
+              fontSize: '.75rem',
+              fontFamily: 'verdana',
+            }}
+          >
+            {userName.slice(0, 1).toUpperCase() + userName.slice(1)}
+          </label>
+          <p>
+            <label>
+              {statement.split(' ').map((cmt) => {
+                if (cmt.includes('@')) {
+                  return (
+                    <label style={{ color: 'blue', fontWeight: 'bold' }}>
+                      {cmt + ' '}
+                    </label>
+                  )
+                }
+                return <label>{cmt + ' '}</label>
+              })}
+            </label>
+          </p>
+        </div>
       </div>
       <div
         style={{
           display: 'flex',
           gap: isCommentReacted ? '20px' : '30px',
-          fontSize: '.9rem',
-          marginLeft: '15px',
+          fontSize: '.8rem',
+          marginLeft: '45px',
           marginBottom: '20px',
         }}
       >

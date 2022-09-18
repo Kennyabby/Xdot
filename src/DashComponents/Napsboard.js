@@ -972,22 +972,24 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                 id === 'profile' ? undefined : (
                   <div className='coverDetail'>
                     <Link to='/dashboard/profile'>
-                      <img
+                      <div
                         className='userimg'
-                        src={userImgUrl}
-                        height='35px'
-                        width='35px'
                         title='go to your profile'
                         style={{
+                          backgroundImage: `url(${userImgUrl})`,
+                          backgroundSize: 'cover',
+                          margin: 'auto',
+                          border: 'solid rgba(220,220,220,1) 1px',
                           ...shade({
                             shade: 'rgba(230,230,230,1)',
                             prevPadding: '0px',
                             newPadding: '0px',
                             radius: '50%',
-                            width: '50px',
                           }),
+                          width: '35px',
+                          height: '35px',
                         }}
-                      />
+                      ></div>
                     </Link>
                     <div
                       className='usernameshadow'
@@ -1057,11 +1059,10 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               <motion.div
                 animate={{ x: [0, -20, 0, 20, 0], y: [-20, 0, 20, 0, -20] }}
                 transition={{
-                  x: { yoyo: Infinity, duration: 0.8, ease: 'easeIn' },
-                  y: { yoyo: Infinity, duration: 0.8, ease: 'easeOut' },
+                  x: { yoyo: Infinity, duration: 0.7, ease: 'easeIn' },
+                  y: { yoyo: Infinity, duration: 0.7, ease: 'easeOut' },
                 }}
                 style={{
-                  // padding: '5px',
                   margin: '40px auto',
                   width: '10px',
                   height: '10px',
@@ -1072,8 +1073,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               <motion.div
                 animate={{ x: [0, 20, 0, -20, 0], y: [20, 0, -20, 0, 20] }}
                 transition={{
-                  x: { yoyo: Infinity, duration: 0.8, ease: 'easeOut' },
-                  y: { yoyo: Infinity, duration: 0.8, ease: 'easeIn' },
+                  x: { yoyo: Infinity, duration: 0.7, ease: 'easeOut' },
+                  y: { yoyo: Infinity, duration: 0.7, ease: 'easeIn' },
                 }}
                 style={{
                   // padding: '5px',
