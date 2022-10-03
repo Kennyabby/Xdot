@@ -275,7 +275,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 padding: '10px 0px',
                 justifyContent: 'center',
                 textAlign: 'left',
-                backgroundColor: 'rgba(235,235,255,1)',
+                backgroundColor: 'rgba(225,225,255,1)',
               }}
             >
               <div
@@ -387,7 +387,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                   overflowX: 'auto',
                   overflowY: 'hide',
                   flexWrap: 'wrap',
-                  backgroundColor: 'rgba(245,245,245,1)',
+                  backgroundColor: 'rgba(235,235,255,1)',
                   display: 'flex',
                   justifyContent: 'center',
                   height: '170px',
