@@ -1,0 +1,129 @@
+.bpd {
+  position: fixed;
+  top: 5px;
+  left: 205px;
+  z-index: 1;
+  padding: 10px;
+  border: solid lightgreen 2px;
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.ebtn {
+  padding: 10px;
+  font-family: monospace;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.forminput {
+  outline: none;
+  padding: 10px;
+  font-size: 1rem;
+  padding-top: 30px;
+  border: solid black 1px;
+  width: 350px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0);
+  color: black;
+}
+.formtextarea {
+  outline: none;
+  padding: 10px;
+  font-size: 1rem;
+  padding-top: 30px;
+  border: solid black 1px;
+  width: 350px;
+  height: 150px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0);
+  color: black;
+}
+.formlabel {
+  position: absolute;
+  background-color: white;
+  padding: 5px;
+  padding-top: 0px;
+  top: -10px;
+  left: 10px;
+}
+.forminputcover {
+  height: fit-content;
+  width: fit-content;
+  text-align: left;
+  position: relative;
+  margin: 10px;
+  margin-bottom: 25px;
+}
+.forminfo {
+  margin: 30px auto;
+  padding-bottom: 35px;
+  box-shadow: 0px 0px 8px black;
+  /* background-color: rgba(110, 110, 255, 1); */
+  width: 95%;
+  border-radius: 60px 60px 0px 0px;
+  color: black;
+  padding-top: 50px;
+  text-align: center;
+}
+.forminfochild {
+  width: 80%;
+  margin: auto;
+}
+.infoheader {
+  margin: auto;
+  margin-bottom: 40px;
+  padding: 10px;
+  border: solid rgba(150, 150, 160) 1px;
+  border-radius: 10px;
+  width: fit-content;
+  font-family: 'Courier New', Courier, monospace;
+}
+.reftype {
+  text-align: left;
+  padding-bottom: 20px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.formnav {
+  position: absolute;
+  top: -22px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  padding: 10px;
+  background-color: lightgreen;
+  color: white;
+  font-weight: bold;
+  font-family: monospace;
+  box-shadow: 0px 0px 12px black;
+  cursor: pointer;
+}
+@media screen and (max-width: 700px) {
+  .bpd {
+    left: 5px;
+  }
+  .forminfo {
+    padding-top: 20px;
+    width: 95%;
+  }
+  .forminput {
+    margin: auto;
+    width: 300px;
+  }
+  .formtextarea {
+    width: 300px;
+    margin: auto;
+  }
+  .forminfochild {
+    width: fit-content;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 70px;
+  }
+  .reftype {
+    margin-left: 10px;
+  }
+}

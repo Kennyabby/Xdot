@@ -1,0 +1,461 @@
+.body {
+  text-align: left;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  margin: auto;
+  justify-items: center;
+}
+.usernameshadow {
+  color: black;
+  text-shadow: white 0px 0px 10px;
+  font-style: italic;
+  margin-top: 3px;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.15rem;
+}
+.userimg {
+  border-radius: 50%;
+  z-index: 1;
+  cursor: pointer;
+  margin: 0px;
+}
+.imgCover {
+  position: fixed;
+  overflow-x: auto;
+  margin: 0px;
+  padding: 0px;
+  right: 5px;
+  z-index: 1;
+  top: 2px;
+  display: inline-flex;
+}
+.hometoggle {
+  text-shadow: white 0px 0px 7px;
+  display: inline-flex;
+  gap: 50px;
+  margin: 20px;
+}
+.hometoggleitem {
+  cursor: pointer;
+  border-radius: 5px;
+  height: fit-content;
+  justify-content: center;
+  text-align: center;
+  width: 50px;
+}
+.coverDetail {
+  margin: 5px;
+  font-family: monospace;
+  font-size: 0.6rem;
+}
+.userbar {
+  width: 230px;
+  z-index: 2;
+  color: white;
+  display: block;
+}
+.usersidebar {
+  border-top-right-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  margin: 0px;
+  z-index: 2;
+  padding-left: 2px;
+  width: 200px;
+  background-color: rgba(7, 7, 40);
+  height: 100vh;
+  overflow-y: auto;
+  list-style: none;
+  font-size: 1rem;
+  font-family: monospace;
+}
+.userleft {
+  position: relative;
+  display: block;
+  margin: auto;
+  padding: 0px;
+  border-radius: 10px;
+  color: white;
+  float: left;
+  text-align: left;
+  width: 195px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.userleftitem {
+  flex-wrap: wrap;
+  display: flex;
+  padding: 10px;
+  color: white;
+  padding-top: 20px;
+  float: left;
+  text-decoration: none;
+  padding-bottom: 20px;
+  cursor: pointer;
+}
+.userlefttop {
+  display: block;
+  margin: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 70px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 7px;
+  border-radius: 20px;
+  box-shadow: orange 0px 0px 7px;
+}
+.userleftbottom {
+  display: block;
+  padding-top: 100px;
+  font-family: 'Courier New';
+  cursor: pointer;
+  width: fit-content;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.sideicons {
+  margin-right: auto;
+  padding: 5px;
+  background-color: white;
+  border-radius: 50%;
+  border: solid orange 1px;
+  /* box-shadow: orange 0px 0px 7px; */
+}
+.taskdrop {
+  position: absolute;
+  z-index: 3;
+  top: 25px;
+  right: 8px;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 50%;
+  /* box-shadow: 0px 0px 9px white; */
+  border: solid rgba(0, 0, 0, 0) 2px;
+  color: white;
+  outline: none;
+}
+.srch {
+  padding: 15px;
+  border-width: 0px;
+  width: 70%;
+  outline: none;
+  text-align: left;
+}
+.srchcover {
+  /* background-color: blue; */
+  border-radius: 50px;
+  border: solid black 1px;
+  width: 50%;
+  float: left;
+  margin-left: 20px;
+}
+.profimg {
+  position: relative;
+  width: 150px;
+  background-size: contain;
+  background-color: rgba(230, 230, 230, 1);
+  height: 150px;
+  margin-top: -70px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.imgcover {
+  padding: 0px;
+  margin: 0px;
+  background-size: cover;
+  background-color: rgba(230, 230, 230, 1);
+  height: 300px;
+}
+.profmenu {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: contain;
+  cursor: pointer;
+}
+.profcover {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+}
+.drop {
+  width: auto;
+  float: left;
+  padding: 0px;
+  padding-left: 50px;
+  margin: 0px;
+  list-style: none;
+  font-size: 0.8rem;
+  font-weight: lighter;
+  font-style: italic;
+}
+.dropitem {
+  width: max-content;
+  z-index: 2;
+  padding: 10px;
+  height: fit-content;
+  box-shadow: 0px 0px 7px rgba(130, 130, 140, 1);
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.profmenudrop {
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+  bottom: 15px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  list-style: none;
+  width: max-content;
+  text-align: left;
+}
+.menuitem {
+  font-size: 0.8rem;
+  font-family: monospace;
+  color: white;
+  margin: 3px;
+  padding: 7px;
+  border: solid black 2px;
+  cursor: pointer;
+}
+.adminboard {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+}
+.admintopbar {
+  list-style: none;
+  display: inline-flex;
+  padding: 5px;
+}
+.adminbaritem {
+  text-align: center;
+  font-family: monospace;
+  width: initial;
+  padding: 7px;
+  margin: 3px;
+  cursor: pointer;
+}
+.searchfilter {
+  position: absolute;
+  right: 0px;
+  list-style: none;
+  font-size: 1rem;
+  background-color: rgba(7, 7, 40, 0.8);
+  padding: 10px;
+  z-index: 1;
+  cursor: auto;
+  text-align: left;
+}
+.searchfilteritem {
+  font-size: 0.8rem;
+  padding: 3px;
+  margin: 2px;
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+.napsitesearchcover {
+  display: flex;
+  margin: auto;
+  gap: 10px;
+  margin-top: 30px;
+  width: 50%;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: rgba(7, 7, 40, 0.6);
+  border: solid rgba(7, 7, 40, 0.6) 3px;
+}
+.napsitesearchinput {
+  width: 80%;
+  margin: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border: none;
+  color: white;
+  outline: none;
+}
+.searchby {
+  border-radius: 5px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+}
+.searchbyitem {
+  background-color: black;
+}
+.ftr {
+  position: relative;
+  padding: 5px;
+  margin: 5px;
+  margin-left: 20px;
+  border-radius: 5px;
+  background-color: rgba(230, 230, 230, 1);
+  color: black;
+}
+.removeftr {
+  position: absolute;
+  top: 13px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.napsiteviewarea {
+  overflow-y: auto;
+  flex-wrap: wrap;
+  margin: auto;
+  padding-bottom: 70px;
+  margin-top: 30px;
+  height: 450px;
+  width: 450px;
+  justify-content: center;
+}
+.napsiteview {
+  position: relative;
+  background-color: rgba(240, 240, 240, 0.8);
+  color: black;
+  font-family: monospace;
+  font-size: 0.9rem;
+  border-radius: 30px;
+  width: 300px;
+  height: 150px;
+  margin: 40px;
+  /* margin-bottom: 10px; */
+  cursor: pointer;
+}
+.usercontrolopts {
+  position: absolute;
+  right: 0px;
+  top: 10px;
+  z-index: 1;
+  padding: 0px;
+  display: inline-block;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.usercontrolitem {
+  text-align: left;
+  color: lightgreen;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 0.9rem;
+  padding: 5px;
+  margin: 5px;
+  width: max-content;
+  background-color: black;
+  cursor: pointer;
+}
+.profiledetails {
+  width: 97%;
+  padding: 15px;
+}
+.profiledetailsitem {
+  padding: 30px;
+}
+@media screen and (max-width: 700px) {
+  .closenav {
+    width: 100vw;
+    height: 100vh;
+  }
+  .body {
+    padding: 2px;
+  }
+  .userbar {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+  }
+  .usersidebar {
+    position: absolute;
+    height: 90vh;
+    z-index: 0;
+  }
+  .hometoggleCover {
+    margin: 0px;
+    position: fixed;
+    justify-content: center;
+    text-align: center;
+    width: 100vw;
+    left: 0px;
+    bottom: 0px;
+    z-index: 1;
+  }
+  .hometoggle {
+    margin: auto;
+    text-shadow: white 0px 0px 7px;
+    justify-content: center;
+    /* background-color: white; */
+    /* box-shadow: black 0px 0px 5px; */
+    /* border-radius: 25px; */
+    text-shadow: none;
+    font-weight: bold;
+    width: 100%;
+    z-index: 1;
+    display: inline-flex;
+    overflow-x: auto;
+    padding: 2px 5px;
+    padding-top: 5px;
+  }
+  .hometoggleitem {
+    margin: auto;
+  }
+  .profiledetails {
+    width: 97%;
+    padding: 7px;
+    padding-bottom: 70px;
+  }
+  .profiledetailsitem {
+    display: flex;
+    width: 95%;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .napsitesearchcover {
+    width: 90%;
+  }
+  .napsitesearchinput {
+    width: 80%;
+  }
+  .napsiteviewarea {
+    overflow-y: auto;
+    flex-wrap: wrap;
+    margin: auto;
+    padding-bottom: 70px;
+    margin-top: 30px;
+    height: 45vh;
+    width: 350px;
+    justify-content: center;
+  }
+  .napsiteview {
+    position: relative;
+    background-color: rgba(240, 240, 240, 0.8);
+    color: black;
+    font-family: monospace;
+    font-size: 0.9rem;
+    border-radius: 30px;
+    width: 300px;
+    height: 150px;
+    margin: 20px;
+    /* margin-bottom: 10px; */
+    cursor: pointer;
+  }
+}

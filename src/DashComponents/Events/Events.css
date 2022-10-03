@@ -1,0 +1,92 @@
+.commentinput {
+  display: flex;
+  position: fixed;
+  left: auto;
+  right: auto;
+  background-color: rgba(235, 235, 235, 1);
+  border: solid rgba(180, 180, 180, 1) 3px;
+  border-radius: 25px;
+  padding: 2px 0px;
+  color: black;
+  width: 50%;
+  bottom: 5px;
+}
+.toppostlabel {
+  position: fixed;
+  top: 0px;
+  z-index: 1;
+  width: 50%;
+  font-family: fantasy;
+  letter-spacing: 0.2rem;
+  background-color: rgba(235, 235, 235, 1);
+  color: black;
+  padding: 15px;
+  /* font-weight: bold; */
+  font-size: 16px;
+}
+.qback {
+  position: fixed;
+  left: 205px;
+  top: 10px;
+  z-index: 1;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.saysm {
+  border-radius: 20px;
+  width: 60%;
+  padding: 10px;
+  margin: 10px;
+  background-color: rgba(235, 235, 235, 1);
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+[contentEditable='true']:empty:before {
+  content: attr(placeholder);
+  color: '###8';
+  opacity: 0.7;
+  font-style: italic;
+}
+@media screen and (max-width: 700px) {
+  .saysm {
+    border-radius: 20px;
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+    font-size: 0.9rem;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+  }
+  .qback {
+    left: 5px;
+  }
+  .cmCover {
+    position: fixed;
+    left: 0px;
+    bottom: 5px;
+    display: flex;
+    padding: 0px;
+    color: black;
+    text-align: center;
+    justify-content: center;
+    width: 100vw;
+  }
+  .commentinput {
+    text-align: left;
+    position: unset;
+    width: 95%;
+    bottom: auto;
+  }
+  .toppostlabel {
+    left: 0px;
+    top: 0px;
+    width: 100vw;
+  }
+  [data-placeholder]:empty:before {
+    content: attr(data-placehoder);
+    color: #888;
+    font-style: italic;
+  }
+}
