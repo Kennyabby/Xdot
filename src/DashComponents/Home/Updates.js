@@ -306,8 +306,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
               style={{
                 margin: '10px 0px',
                 padding: '10px 0px',
-                borderTop: 'solid rgba(210,210,210,1) 2px',
-                borderBottom: 'solid rgba(210,210,210,1) 2px',
+                borderTop: 'solid rgba(210,210,210,1) 4px',
+                borderBottom: 'solid rgba(210,210,210,1) 4px',
                 textAlign: 'left',
                 fontFamily: 'monospace',
               }}
@@ -318,13 +318,14 @@ const Updates = ({ user, server, showHomeToggle }) => {
               <motion.div
                 transition={{ when: 'beforeChildren', staggerChildren: 1 }}
                 style={{
-                  margin: '0px',
+                  margin: '10px 0px',
                   overflowX: 'auto',
                   overflowY: 'hide',
                   flexWrap: 'wrap',
+                  backgroundColor: 'rgba(245,245,255,1)',
                   display: 'flex',
                   justifyContent: 'center',
-                  height: '180px',
+                  height: '170px',
                   flexDirection: 'column',
                 }}
               >
@@ -344,14 +345,14 @@ const Updates = ({ user, server, showHomeToggle }) => {
                       }}
                       whileHover={{ scale: 1.1 }}
                       style={{
-                        margin: '20px',
-                        width: '120px',
+                        margin: '10px 20px',
+                        width: '150px',
                         height: '180px',
-                        boxShadow: '0px 0px 7px rgba(0,0,0,1)',
-                        paddingTop: '7px',
+                        backgroundColor: 'white',
+                        boxShadow: '0px 0px 5px rgba(0,0,0,1)',
                         borderRadius: '10px',
                         textAlign: 'center',
-                        color: 'blue',
+                        color: 'black',
                         fontWeight: 'bold',
                       }}
                     >
@@ -364,7 +365,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                       >
                         <div
                           style={{
-                            width: '100%',
+                            width: '120px',
                             height: '120px',
                             margin: 'auto',
                             marginTop: '10px',
