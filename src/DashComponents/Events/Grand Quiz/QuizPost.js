@@ -5,6 +5,7 @@ import '../Events.css'
 import profimg from '../assets/profile.png'
 import close from '../assets/close.png'
 import back from '../assets/left.png'
+import opt from '../assets/opt.png'
 import comment from '../assets/comment.png'
 import share from '../assets/share.png'
 import like from '../assets/like.png'
@@ -373,7 +374,19 @@ const QuizPost = ({
           </div>
         ) : undefined}
         {postShow === null ? (
-          <div>
+          <div style={{ position: 'relative' }}>
+            <div
+              style={{
+                width: 'fit-content',
+                position: 'absolute',
+                right: '10px',
+                top: '20px',
+                cursor: 'pointer',
+              }}
+              onClick={() => {}}
+            >
+              <img src={opt} height='15px' />
+            </div>
             <div
               style={{
                 display: 'flex',
@@ -444,14 +457,16 @@ const QuizPost = ({
                 style={{
                   textAlign: 'left',
                   justifyContent: 'left',
-                  width: '80%',
+                  maxWidth: '80%',
                   overflowX: 'auto',
                   margin: 'auto',
+                  fontSize: '13px',
                   marginLeft: '0px',
                   marginBottom: '10px',
                   padding: '20px',
-                  backgroundColor: 'rgba(0,0,50,1)',
-                  boxShadow: 'black 0px 0px 9px',
+                  position: 'relative',
+                  backgroundColor: 'rgba(19,19,100,1)',
+                  boxShadow: 'rgba(19,19,150) 0px 0px 9px',
                   color: 'white',
                   borderRadius: '20px',
                 }}
@@ -481,7 +496,15 @@ const QuizPost = ({
                     >
                       {'Questions (' + String(quiz.questions.length) + ')'}
                     </label>
-                    <div style={{ display: 'block', marginLeft: '20px' }}>
+                    <div
+                      style={{
+                        position: 'absolute',
+                        bottom: '15px',
+                        right: '15px',
+                        display: 'block',
+                        marginLeft: '20px',
+                      }}
+                    >
                       <label>
                         {Number(quiz.days) > 0
                           ? quiz.days + (quiz.days > 1 ? ' dys ' : ' dy ')
@@ -526,7 +549,7 @@ const QuizPost = ({
                   </button>
                 </div>
               </div>
-              <div>
+              <div style={{ textAlign: 'left' }}>
                 <label>{update.quizComment}</label>
               </div>
             </div>

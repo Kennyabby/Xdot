@@ -84,7 +84,7 @@ const QuizPostComment = ({
   }, [])
 
   return (
-    <div style={{ marginBottom: '30px' }}>
+    <div style={{ paddingBottom: '10px' }}>
       {showCommentReactions ? (
         <div
           style={{
@@ -240,7 +240,7 @@ const QuizPostComment = ({
                 style={{
                   cursor: 'pointer',
                   borderRadius: '50%',
-                  border: 'solid rgba(0,0,0,0.6) 2px'
+                  border: 'solid rgba(0,0,0,0.6) 2px',
                 }}
                 src={commentReaction.src}
                 alt='reaction'
@@ -332,7 +332,7 @@ const QuizPostComment = ({
             }}
             style={{ fontWeight: 'bold', cursor: 'pointer' }}
           >
-            React
+            {isCommentReacted ? 'Ignore' : 'React'}
           </label>
         </div>
         <label
@@ -371,7 +371,7 @@ const QuizPostComment = ({
           }}
         >
           {elem.comment.reply.length
-            ? 'Show ' + elem.comment.reply.length + ' Previous Reply(s) '
+            ? 'View All ' + elem.comment.reply.length + ' Reply(s) '
             : ''}
         </div>
       ) : (

@@ -332,7 +332,7 @@ const PostCommentReply = ({
             }}
             style={{ fontWeight: 'bold', cursor: 'pointer' }}
           >
-            React
+            {isCommentReacted ? 'Ignore' : 'React'}
           </label>
         </div>
         <label

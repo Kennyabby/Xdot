@@ -217,7 +217,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
   }
   return (
     <>
-      <div style={{ paddingTop: highlightedPost !== null ? '50px' : '2px' }}>
+      <div style={{ paddingTop: highlightedPost !== null ? '50px' : '0px' }}>
         {showNotification && (
           <div
             style={{
@@ -275,7 +275,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 padding: '10px 0px',
                 justifyContent: 'center',
                 textAlign: 'left',
-                backgroundColor: 'rgba(245,245,255,1)',
+                backgroundColor: 'rgba(235,235,255,1)',
               }}
             >
               <div
@@ -350,6 +350,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 staggerChildren: 1,
               }}
               style={{
+                position: 'relative',
                 margin: '10px 0px',
                 padding: '10px 0px',
                 borderTop: 'solid rgba(210,210,210,1) 4px',
@@ -358,6 +359,18 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 fontFamily: 'monospace',
               }}
             >
+              <Link to='/dashboard/settings'>
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '8px',
+                    right: '10px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <img src={settings} height='18px' />
+                </div>
+              </Link>
               <label
                 style={{
                   fontWeight: 'bold',

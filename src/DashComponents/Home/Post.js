@@ -5,6 +5,7 @@ import '../Events/Events.css'
 import profimg from '../Events/assets/profile.png'
 import close from '../Events/assets/close.png'
 import back from '../Events/assets/left.png'
+import opt from './assets/opt.png'
 import comment from '../Events/assets/comment.png'
 import share from '../Events/assets/share.png'
 import like from '../Events/assets/like.png'
@@ -373,7 +374,19 @@ const Post = ({
           </div>
         ) : undefined}
         {postShow === null ? (
-          <div>
+          <div style={{ position: 'relative' }}>
+            <div
+              style={{
+                width: 'fit-content',
+                position: 'absolute',
+                right: '10px',
+                top: '20px',
+                cursor: 'pointer',
+              }}
+              onClick={() => {}}
+            >
+              <img src={opt} height='15px' />
+            </div>
             <div
               style={{
                 display: 'flex',
