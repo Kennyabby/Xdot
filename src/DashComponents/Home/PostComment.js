@@ -180,7 +180,7 @@ const PostComment = ({
         <div
           style={{
             position: 'relative',
-            backgroundColor: 'rgba(245,245,255,1)',
+            backgroundColor: 'rgba(235,235,235,.9)',
             fontSize: '.9rem',
             textAlign: 'left',
             width: '70%',
@@ -240,7 +240,7 @@ const PostComment = ({
                 style={{
                   cursor: 'pointer',
                   borderRadius: '50%',
-                  boxShadow: '0px 0px 8px black',
+                  border: 'solid rgba(0,0,0,0.6) 2px'
                 }}
                 src={commentReaction.src}
                 alt='reaction'
@@ -310,7 +310,7 @@ const PostComment = ({
           display: 'flex',
           flexWrap: 'wrap',
           fontSize: '.8rem',
-          marginLeft: '70px',
+          marginLeft: '75px',
           marginBottom: '20px',
         }}
       >
@@ -362,18 +362,18 @@ const PostComment = ({
       {postShow === null ? (
         <div
           style={{
-            fontSize: '0.8rem',
+            fontSize: '0.75rem',
             fontWeight: 'bolder',
             cursor: 'pointer',
             width: 'fit-content',
-            marginLeft: '70px',
+            marginLeft: '75px',
           }}
           onClick={() => {
             setShowPost({ show: false, post: elem })
           }}
         >
           {elem.comment.reply.length
-            ? 'Show ' + elem.comment.reply.length + ' Previous Replie(s) '
+            ? 'Show ' + elem.comment.reply.length + ' Previous Reply(s) '
             : ''}
         </div>
       ) : (

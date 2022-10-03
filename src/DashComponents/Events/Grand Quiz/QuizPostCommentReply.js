@@ -176,7 +176,7 @@ const QuizPostCommentReply = ({
         <div
           style={{
             position: 'relative',
-            backgroundColor: 'rgba(245,245,255,1)',
+            backgroundColor: 'rgba(235,235,235,.9)',
             fontSize: '.9rem',
             textAlign: 'left',
             width: '70%',
@@ -184,7 +184,7 @@ const QuizPostCommentReply = ({
             marginTop: '10px',
             padding: '10px',
             borderRadius: '20px',
-            borderTopLeftRadius:'0px'
+            borderTopLeftRadius: '0px',
           }}
         >
           <label
@@ -236,7 +236,7 @@ const QuizPostCommentReply = ({
                 style={{
                   cursor: 'pointer',
                   borderRadius: '50%',
-                  boxShadow: '0px 0px 8px black',
+                  border: 'solid rgba(0,0,0,0.6) 2px',
                 }}
                 src={commentReaction.src}
                 alt='reaction'

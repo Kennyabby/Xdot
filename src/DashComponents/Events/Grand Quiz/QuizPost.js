@@ -402,19 +402,6 @@ const QuizPost = ({
                     borderRadius: '50%',
                   }}
                 ></div>
-                {postUser.lastName !== undefined ? (
-                  <div>
-                    <label
-                      style={{
-                        fontWeight: 'bold',
-                        fontFamily: 'verdana',
-                        fontSize: '.7rem',
-                      }}
-                    >
-                      {postUser.userName}
-                    </label>
-                  </div>
-                ) : undefined}
               </div>
               {
                 <div
@@ -422,8 +409,24 @@ const QuizPost = ({
                     marginTop: '25px',
                     fontStyle: 'italic',
                     fontSize: '.7rem',
+                    display: 'block',
+                    textAlign: 'left',
                   }}
                 >
+                  {postUser.lastName !== undefined ? (
+                    <div>
+                      <label
+                        style={{
+                          fontWeight: 'bold',
+                          fontFamily: 'verdana',
+                          fontStyle: 'none',
+                          fontSize: '.7rem',
+                        }}
+                      >
+                        {postUser.userName}
+                      </label>
+                    </div>
+                  ) : undefined}
                   <PeriodLabel createdAt={update.createdAt} />
                 </div>
               }

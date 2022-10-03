@@ -176,7 +176,7 @@ const PostCommentReply = ({
         <div
           style={{
             position: 'relative',
-            backgroundColor: 'rgba(245,245,255,1)',
+            backgroundColor: 'rgba(235,235,235,.9)',
             fontSize: '.9rem',
             textAlign: 'left',
             width: '70%',
@@ -236,7 +236,7 @@ const PostCommentReply = ({
                 style={{
                   cursor: 'pointer',
                   borderRadius: '50%',
-                  boxShadow: '0px 0px 8px black',
+                  border: 'solid rgba(0,0,0,0.6) 2px',
                 }}
                 src={commentReaction.src}
                 alt='reaction'

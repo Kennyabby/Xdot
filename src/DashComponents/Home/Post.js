@@ -402,6 +402,15 @@ const Post = ({
                     borderRadius: '50%',
                   }}
                 ></div>
+              </div>
+              <div
+                style={{
+                  marginTop: '25px',
+                  fontStyle: 'italic',
+                  fontSize: '.7rem',
+                  textAlign: 'left',
+                }}
+              >
                 {postUser.lastName !== undefined ? (
                   <div>
                     <label
@@ -415,14 +424,6 @@ const Post = ({
                     </label>
                   </div>
                 ) : undefined}
-              </div>
-              <div
-                style={{
-                  marginTop: '25px',
-                  fontStyle: 'italic',
-                  fontSize: '.7rem',
-                }}
-              >
                 <PeriodLabel createdAt={update.createdAt} />
               </div>
             </div>

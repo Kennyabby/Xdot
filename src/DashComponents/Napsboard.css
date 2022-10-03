@@ -400,17 +400,16 @@
     margin: auto;
     text-shadow: white 0px 0px 7px;
     justify-content: center;
-    /* background-color: white; */
-    /* box-shadow: black 0px 0px 5px; */
-    /* border-radius: 25px; */
+    background-color: rgba(210, 210, 210, 0.9);
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
     text-shadow: none;
     font-weight: bold;
-    width: 100%;
+    width: 98%;
     z-index: 1;
     display: inline-flex;
     overflow-x: auto;
-    padding: 2px 5px;
-    padding-top: 5px;
+    padding: 10px 5px;
   }
   .hometoggleitem {
     margin: auto;

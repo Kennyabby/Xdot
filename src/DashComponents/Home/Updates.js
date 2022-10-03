@@ -266,11 +266,57 @@ const Updates = ({ user, server, showHomeToggle }) => {
               justifyContent: 'center',
             }}
           >
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                margin: '0px',
+                marginBottom: '10px',
+                padding: '10px 0px',
+                justifyContent: 'center',
+                textAlign: 'left',
+                backgroundColor: 'rgba(245,245,255,1)',
+              }}
+            >
+              <div
+                style={{
+                  width: '15%',
+                  textAlign: 'left',
+                  marginTop: '5px',
+                  textShadow: '0px 0px 3px black',
+                  color: 'blue',
+                  fontFamily: 'monospace',
+                  fontSize: '1.3rem',
+                  fontWeight: 'bolder',
+                }}
+              >
+                <label>XDot</label>
+              </div>
+              <div
+                style={{
+                  width: '80%',
+                  boxShadow: '0px 0px 8px black',
+                  borderRadius: '20px',
+                }}
+              >
+                <input
+                  type='text'
+                  placeholder='Search Pages, Posts, Clusters...'
+                  style={{
+                    padding: '10px',
+                    outline: 'none',
+                    border: 'solid black 0px',
+                    borderRadius: '20px',
+                    width: '80%',
+                  }}
+                />
+              </div>
+            </div>
             <div style={{ display: 'flex', margin: '10px' }}>
               <Link to='/dashboard/profile'>
                 <div
                   style={{
-                    boxShadow: '0px 0px 7px darkblue',
+                    boxShadow: '0px 0px 7px black',
                     padding: '3px',
                     borderRadius: '50%',
                     height: '38px',
@@ -312,8 +358,14 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 fontFamily: 'monospace',
               }}
             >
-              <label style={{ fontWeight: 'bold', padding: '0px 10px' }}>
-                Go To
+              <label
+                style={{
+                  fontWeight: 'bold',
+                  padding: '0px 10px',
+                  fontStyle: 'italic',
+                }}
+              >
+                {'Go To >>'}
               </label>
               <motion.div
                 transition={{ when: 'beforeChildren', staggerChildren: 1 }}
@@ -322,7 +374,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                   overflowX: 'auto',
                   overflowY: 'hide',
                   flexWrap: 'wrap',
-                  backgroundColor: 'rgba(245,245,255,1)',
+                  backgroundColor: 'rgba(245,245,245,1)',
                   display: 'flex',
                   justifyContent: 'center',
                   height: '170px',
@@ -353,6 +405,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                         borderRadius: '10px',
                         textAlign: 'center',
                         color: 'black',
+                        paddingTop: '5px',
                         fontWeight: 'bold',
                       }}
                     >
