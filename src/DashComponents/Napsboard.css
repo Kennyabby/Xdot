@@ -175,10 +175,9 @@
   position: absolute;
   bottom: 3px;
   right: 3px;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-size: contain;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
   cursor: pointer;
 }
 .profcover {
@@ -440,11 +439,11 @@
     z-index: 1;
     display: inline-flex;
     overflow-x: auto;
-    padding: 10px 5px;
+    padding: 0px 5px;
   }
   .hometoggleitem {
     margin: auto;
-    padding: 5px 20px;
+    padding: 3px 20px;
     border-radius: 15px;
   }
   .profiledetails {

@@ -1,20 +1,23 @@
 import { React, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+
+import home from './assets/home.png'
+import notifications from './assets/notifications.png'
+import blhome from './assets/blhome.png'
+import blbell from './assets/blbell.png'
+
 const Notifications = ({ homerf, chatrf, notificationsrf }) => {
   const { id } = useParams()
   useEffect(() => {
     if (notificationsrf.current !== null) {
-      notificationsrf.current.style.backgroundColor =
-        id === 'notifications' ? 'rgba(150,150,255,.8)' : 'rgba(0,0,0,0)'
-      notificationsrf.current.style.boxShadow =
-        id === 'notifications' ? '0px 0px 8px black' : 'none'
+      notificationsrf.current.childNodes[0].childNodes[0].src =
+        id === 'notifications' ? blbell : notifications
+      notificationsrf.current.childNodes[0].childNodes[1].style.color =
+        id === 'notifications' ? 'blue' : 'black'
     }
-    homerf.current.style.backgroundColor =
-      id === 'notifications' ? 'rgba(0,0,0,0)' : 'rgba(250,250,255,.8)'
-    homerf.current.style.boxShadow =
-      id === 'notifications' ? 'none' : '0px 0px 8px black'
-    chatrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
-    chatrf.current.style.boxShadow = 'none'
+    homerf.current.childNodes[0].childNodes[0].src = home
+    homerf.current.childNodes[0].childNodes[1].style.color =
+      id === 'notifications' ? 'black' : 'blue'
   }, [notificationsrf, id])
   return (
     <>

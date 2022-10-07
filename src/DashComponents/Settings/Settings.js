@@ -1,23 +1,26 @@
 import { React, useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
+
 import right from './assets/right.png'
+import home from './assets/home.png'
+import notifications from './assets/notifications.png'
+import blhome from './assets/blhome.png'
+import blbell from './assets/blbell.png'
+
 const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
   const { id } = useParams()
   useEffect(() => {
     showHomeToggle(true)
     if (homerf !== undefined && chatrf !== undefined) {
       if (homerf.current !== null && chatrf.current !== null) {
-        homerf.current.style.backgroundColor =
-          id === 'settings' ? 'rgba(0,0,0,0)' : 'rgba(250,250,255,.8)'
-        homerf.current.style.boxShadow =
-          id === 'settings' ? 'none' : '0px 0px 8px black'
-        chatrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
-        chatrf.current.style.boxShadow = 'none'
+        homerf.current.childNodes[0].childNodes[0].src = home
+        homerf.current.childNodes[0].childNodes[1].style.color =
+          id === 'settings' ? 'black' : 'blue'
       }
     }
     if (notificationsrf.current !== null) {
-      notificationsrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
-      notificationsrf.current.style.boxShadow = 'none'
+      notificationsrf.current.childNodes[0].childNodes[0].src = notifications
+      notificationsrf.current.childNodes[0].childNodes[1].style.color = 'black'
     }
   }, [homerf, id])
   return (

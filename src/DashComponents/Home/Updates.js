@@ -14,6 +14,7 @@ import chat from './assets/chat.png'
 import notifications from './assets/notifications.png'
 import settings from './assets/settings.jpg'
 import search from './assets/search.png'
+import xdotlogo from './assets/xdotlogo.png'
 
 const Updates = ({ user, server, showHomeToggle }) => {
   const [updates, setUpdates] = useState([])
@@ -395,12 +396,12 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 <div
                   style={{
                     position: 'absolute',
-                    top: '8px',
+                    top: '7px',
                     right: '10px',
                     cursor: 'pointer',
                   }}
                 >
-                  <img src={settings} height='18px' />
+                  <img src={settings} height='20px' />
                 </div>
               </Link>
               <label
@@ -419,18 +420,18 @@ const Updates = ({ user, server, showHomeToggle }) => {
                   overflowX: 'auto',
                   overflowY: 'hide',
                   flexWrap: 'wrap',
-                  backgroundColor: 'rgba(235,235,255,1)',
+                  backgroundColor: 'rgba(240,240,240,1)',
                   display: 'flex',
                   justifyContent: 'center',
-                  height: '180px',
+                  height: '160px',
                   flexDirection: 'column',
                 }}
               >
                 {[
-                  { it: 'Chats', img: chat, endpoint: 'chats' },
                   { it: 'Voting', img: voting, endpoint: 'e-voting' },
                   { it: 'Tasks', img: tasks, endpoint: 'tasks' },
                   { it: 'Events', img: events, endpoint: 'events' },
+                  { it: 'Chats', img: chat, endpoint: 'chats' },
                 ].map((item, i) => {
                   return (
                     <motion.div
@@ -442,13 +443,14 @@ const Updates = ({ user, server, showHomeToggle }) => {
                       }}
                       whileHover={{ scale: 1.1 }}
                       style={{
-                        margin: '10px 20px',
-                        width: '150px',
-                        height: '180px',
+                        margin: '5px 20px',
+                        width: '100px',
+                        height: '130px',
                         backgroundColor: 'white',
                         boxShadow: '0px 0px 5px rgba(0,0,0,1)',
                         borderRadius: '10px',
                         textAlign: 'center',
+                        justifyContent: 'center',
                         color: 'black',
                         paddingTop: '5px',
                         fontWeight: 'bold',
@@ -463,10 +465,11 @@ const Updates = ({ user, server, showHomeToggle }) => {
                       >
                         <div
                           style={{
-                            width: '120px',
-                            height: '120px',
-                            margin: 'auto',
-                            marginTop: '10px',
+                            width: '85px',
+                            height: '90px',
+                            padding: '0px',
+                            margin: '10px auto',
+                            // marginTop: '20px',
                             backgroundImage: `url(${item.img})`,
                             backgroundSize: 'cover',
                           }}

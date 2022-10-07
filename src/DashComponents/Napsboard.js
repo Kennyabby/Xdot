@@ -1147,6 +1147,15 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             src={showNav ? close : navigatormenu}
                             height='18px'
                           />{' '}
+                          <label
+                            style={{
+                              fontSize: '.8rem',
+                              fontFamily: 'monospace',
+                              color: 'black',
+                            }}
+                          >
+                            Menu
+                          </label>
                         </div>
                       )}
                       <Link
@@ -1167,8 +1176,17 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             name='home'
                             src={home}
                             alt='home'
-                            height='20px'
+                            height='25px'
                           />
+                          <label
+                            style={{
+                              fontSize: '.8rem',
+                              fontFamily: 'monospace',
+                              color: 'black',
+                            }}
+                          >
+                            Home
+                          </label>
                         </div>
                       </Link>
                       <Link
@@ -1184,7 +1202,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                         <div name='chats' title='Clck to go to Chats'>
                           <img
                             style={{
-                              borderRadius: '50%',
                               cursor: 'pointer',
                             }}
                             name='chats'
@@ -1192,6 +1209,15 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             alt='chats'
                             height='25px'
                           />
+                          <label
+                            style={{
+                              fontSize: '.8rem',
+                              fontFamily: 'monospace',
+                              color: 'black',
+                            }}
+                          >
+                            Chats
+                          </label>
                         </div>
                       </Link>
                       {winSize <= 700 && showNavigator ? (
@@ -1218,6 +1244,15 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                               alt='notifcations'
                               height='25px'
                             />
+                            <label
+                              style={{
+                                fontSize: '.8rem',
+                                fontFamily: 'monospace',
+                                color: 'black',
+                              }}
+                            >
+                              Updates
+                            </label>
                           </div>
                         </Link>
                       ) : undefined}

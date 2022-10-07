@@ -7,6 +7,10 @@ import userimgmenu from './assets/userimgmenu.png'
 import usercontrolopt from './assets/usercontrolopt.png'
 import edit from './assets/edit1.png'
 import settings from './assets/settings.jpg'
+import home from './assets/home.png'
+import notifications from './assets/notifications.png'
+import blhome from './assets/blhome.png'
+import blbell from './assets/blbell.png'
 
 import AdminBoard from './AdminBoard'
 
@@ -98,10 +102,8 @@ const Profile = ({
     }
     if (homerf !== undefined && chatrf !== undefined) {
       if (homerf.current !== null && chatrf.current !== null) {
-        homerf.current.style.backgroundColor = 'rgba(250,250,255,.8)'
-        homerf.current.style.boxShadow = '0px 0px 8px black'
-        chatrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
-        chatrf.current.style.boxShadow = 'none'
+        homerf.current.childNodes[0].childNodes[0].src = home
+        homerf.current.childNodes[0].childNodes[1].style.color = 'blue'
       }
     }
     if (notificationsrf !== undefined) {
@@ -109,8 +111,9 @@ const Profile = ({
         notificationsrf.current !== null &&
         notificationsrf.current !== undefined
       ) {
-        notificationsrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
-        notificationsrf.current.style.boxShadow = 'none'
+        notificationsrf.current.childNodes[0].childNodes[0].src = notifications
+        notificationsrf.current.childNodes[0].childNodes[1].style.color =
+          'black'
       }
     }
   }, [homerf])
@@ -335,7 +338,7 @@ const Profile = ({
                 style={{
                   fontWeight: 'bold',
                   fontFamily: 'monospace',
-                  fontSize: '1rem',
+                  fontSize: '.9rem',
                   marginLeft: '10px',
                 }}
               >
@@ -348,9 +351,10 @@ const Profile = ({
                     onClick={clickAdmin ? handleAdminBoard : undefined}
                     style={{
                       marginLeft: '10px',
+                      marginRight: '15px',
                       borderRadius: '5px',
                       fontWeight: 'bold',
-                      fontSize: '1rem',
+                      fontSize: '.9rem',
                       fontFamily: 'monospace',
                       cursor: clickAdmin ? 'pointer' : 'auto',
                     }}
@@ -377,6 +381,7 @@ const Profile = ({
                 width: 'fit-content',
                 fontFamily: 'monospace',
                 margin: '10px 0px',
+                marginRight: '15px',
                 borderRadius: '10px',
               }}
             >
