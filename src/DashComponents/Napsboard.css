@@ -26,23 +26,25 @@
   margin: 0px;
   padding: 0px;
   right: 5px;
-  z-index: 1;
+  z-index: 2;
   top: 2px;
   display: inline-flex;
 }
 .hometoggle {
   text-shadow: white 0px 0px 7px;
   display: inline-flex;
-  gap: 50px;
   margin: 20px;
+  margin-top: 15px;
 }
 .hometoggleitem {
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 15px;
+  padding: 2px 15px;
   height: fit-content;
   justify-content: center;
   text-align: center;
   width: 50px;
+  margin: auto;
 }
 .coverDetail {
   margin: 5px;
@@ -50,20 +52,19 @@
   font-size: 0.6rem;
 }
 .userbar {
-  width: 230px;
+  width: 200px;
   z-index: 2;
   color: white;
   display: block;
 }
 .usersidebar {
-  border-top-right-radius: 20px;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
   margin: 0px;
   z-index: 2;
   padding-left: 2px;
   width: 200px;
-  background-color: rgba(7, 7, 40);
+  background-color: rgba(15, 15, 70);
   height: 100vh;
   overflow-y: auto;
   list-style: none;
@@ -96,6 +97,7 @@
 }
 .userlefttop {
   display: block;
+  content-visibility: visible;
   margin: 20px;
   font-weight: bold;
   font-size: 1.2rem;
@@ -153,13 +155,13 @@
 }
 .profimg {
   position: relative;
-  width: 150px;
+  width: 160px;
   background-size: contain;
   background-color: rgba(230, 230, 230, 1);
-  height: 150px;
-  margin-top: -70px;
+  height: 160px;
+  margin-top: -90px;
   border-radius: 50%;
-  margin-left: auto;
+  margin-left: 30px;
   margin-right: auto;
 }
 .imgcover {
@@ -167,14 +169,14 @@
   margin: 0px;
   background-size: cover;
   background-color: rgba(230, 230, 230, 1);
-  height: 300px;
+  height: 200px;
 }
 .profmenu {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
-  width: 40px;
-  height: 40px;
+  bottom: 3px;
+  right: 3px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   background-size: contain;
   cursor: pointer;
@@ -182,7 +184,9 @@
 .profcover {
   padding: 0px;
   margin: 0px;
-  text-align: center;
+  padding-bottom: 50px;
+  border-bottom: solid rgba(210, 210, 210, 1) 4px;
+  text-align: left;
 }
 .drop {
   width: auto;
@@ -207,11 +211,11 @@
 .profmenudrop {
   position: absolute;
   z-index: 1;
-  right: 20px;
-  bottom: 15px;
+  left: 145px;
+  bottom: -155px;
   padding: 5px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.9);
   list-style: none;
   width: max-content;
   text-align: left;
@@ -222,8 +226,16 @@
   color: white;
   margin: 3px;
   padding: 7px;
-  border: solid black 2px;
+  border: solid rgba(59, 59, 60, 1) 2px;
   cursor: pointer;
+}
+.userabout {
+  padding: 20px 15px;
+  border-bottom: solid rgba(210, 210, 210, 1) 4px;
+}
+.userdetails {
+  padding: 20px 15px;
+  border-bottom: solid rgba(210, 210, 210, 1) 4px;
 }
 .adminboard {
   position: fixed;
@@ -235,6 +247,7 @@
   width: 100%;
   height: 100%;
 }
+
 .admintopbar {
   list-style: none;
   display: inline-flex;
@@ -358,11 +371,14 @@
   cursor: pointer;
 }
 .profiledetails {
-  width: 97%;
-  padding: 15px;
+  padding: 0px;
 }
 .profiledetailsitem {
-  padding: 30px;
+  display: flex;
+  font-family: monospace;
+  border-bottom: solid rgba(210, 210, 210, 1) 2px;
+  padding: 10px;
+  padding-top: 20px;
 }
 @media screen and (max-width: 700px) {
   .closenav {
@@ -372,6 +388,19 @@
   .body {
     padding: 2px;
   }
+  .userlefttop {
+    display: block;
+    content-visibility: visible;
+    margin: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 70px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 7px;
+    border-radius: 20px;
+    box-shadow: orange 0px 0px 7px;
+  }
   .userbar {
     position: fixed;
     left: 0px;
@@ -379,7 +408,7 @@
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 2;
+    z-index: 3;
   }
   .usersidebar {
     position: absolute;
@@ -400,7 +429,9 @@
     margin: auto;
     text-shadow: white 0px 0px 7px;
     justify-content: center;
-    background-color: rgba(220, 220, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-top: solid white 2px;
+    box-shadow: 0px 0px 4px black;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     text-shadow: none;
@@ -413,20 +444,18 @@
   }
   .hometoggleitem {
     margin: auto;
+    padding: 5px 20px;
+    border-radius: 15px;
   }
   .profiledetails {
-    width: 97%;
-    padding: 7px;
-    padding-bottom: 70px;
+    padding: 0px;
   }
   .profiledetailsitem {
     display: flex;
-    width: 95%;
-    gap: 20px;
-    overflow-x: auto;
+    font-family: monospace;
+    border-bottom: solid rgba(210, 210, 210, 1) 2px;
     padding: 10px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 20px;
   }
   .napsitesearchcover {
     width: 90%;

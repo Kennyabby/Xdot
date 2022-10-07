@@ -13,18 +13,23 @@ const Home = ({
 }) => {
   const [view, setView] = useState('')
   const [showUpdates, setShowUpdates] = useState(true)
+  const { id } = useParams()
   useEffect(() => {
     showHomeToggle(true)
     if (notificationsrf.current !== null) {
-      notificationsrf.current.style.borderBottom = 'solid blue 0px'
+      notificationsrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
+      notificationsrf.current.style.boxShadow = 'none'
     }
     if (homerf.current !== null) {
-      homerf.current.style.borderBottom = 'solid blue 2px'
-      chatrf.current.style.borderBottom = 'solid blue 0px'
+      homerf.current.style.backgroundColor =
+        id === undefined ? 'rgba(150,150,255,.8)' : 'rgba(250,250,255,.8)'
+      homerf.current.style.boxShadow = '0px 0px 8px black'
+      chatrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
+      chatrf.current.style.boxShadow = 'none'
     }
     setBodyLeft()
     setShowNavigator()
-  }, [homerf])
+  }, [homerf, id])
   useEffect(() => {
     if (showUpdates) {
       setView(

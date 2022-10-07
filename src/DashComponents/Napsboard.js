@@ -43,6 +43,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   const [showNavigator, setShowNavigator] = useState(true)
   const [showNav, setShowNav] = useState(false)
   const [bodyLeft, setBodyLeft] = useState('0px')
+  const [logoutStatus, setLogoutStatus] = useState('Log out')
   const [labelRefs, setLabelRefs] = useState([])
   const [tasksLabelRefs, setTasksLabelRefs] = useState([])
   const [eventsLabelRefs, setEventsLabelRefs] = useState([])
@@ -111,14 +112,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     eventsLabelRefs.map((dropitem) => {
       if (dropitem.current !== null) {
         if (dropitem.current.getAttribute('name') === id) {
-          dropitem.current.style.borderLeft = 'solid blue 1px'
-          dropitem.current.style.boxShadow = '0px 0px 9px blue'
+          dropitem.current.style.borderLeft = 'solid darkorange 2px'
+          dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
           dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
             'solid white 3px'
           dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
             'black'
         } else {
-          dropitem.current.style.borderLeft = 'solid blue 0px'
+          dropitem.current.style.borderLeft = 'solid darkorange 0px'
           dropitem.current.style.boxShadow = '0px 0px 9px white'
         }
       }
@@ -126,14 +127,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     tasksLabelRefs.map((dropitem) => {
       if (dropitem.current !== null) {
         if (dropitem.current.getAttribute('name') === id) {
-          dropitem.current.style.borderLeft = 'solid blue 1px'
-          dropitem.current.style.boxShadow = '0px 0px 9px blue'
+          dropitem.current.style.borderLeft = 'solid darkorange 2px'
+          dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
           dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
             'solid white 3px'
           dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
             'black'
         } else {
-          dropitem.current.style.borderLeft = 'solid blue 0px'
+          dropitem.current.style.borderLeft = 'solid darkorange 0px'
           dropitem.current.style.boxShadow = '0px 0px 9px white'
         }
       }
@@ -141,14 +142,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     eVotingLabelRefs.map((dropitem) => {
       if (dropitem.current !== null) {
         if (dropitem.current.getAttribute('name') === id) {
-          dropitem.current.style.borderLeft = 'solid blue 1px'
-          dropitem.current.style.boxShadow = '0px 0px 9px blue'
+          dropitem.current.style.borderLeft = 'solid darkorange 2px'
+          dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
           dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
             'solid white 3px'
           dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
             'black'
         } else {
-          dropitem.current.style.borderLeft = 'solid blue 0px'
+          dropitem.current.style.borderLeft = 'solid darkorange 0px'
           dropitem.current.style.boxShadow = '0px 0px 9px white'
         }
       }
@@ -185,7 +186,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             setBodyLeft={setBodyLeft('150px')}
             setShowNavigator={setShowNavigator(true)}
             setShowNav={setShowNav(false)}
-            padding={winSize <= 700 ? '3px' : '10px'}
+            padding={'0px'}
+            margin={'0px'}
             clickAdmin={true}
             isSearched={false}
             showHomeToggle={(show) => {
@@ -534,7 +536,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           user={user}
           setBodyLeft={setBodyLeft('150px')}
           setShowNavigator={setShowNavigator(true)}
-          margin={'10px'}
+          padding={'0px'}
+          margin={'0px'}
           clickAdmin={true}
           isSearched={false}
           showHomeToggle={(show) => {
@@ -819,14 +822,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       eventsLabelRefs.map((dropitem) => {
         if (dropitem.current !== null) {
           if (dropitem.current.getAttribute('name') === id) {
-            dropitem.current.style.borderLeft = 'solid blue 1px'
-            dropitem.current.style.boxShadow = '0px 0px 9px blue'
+            dropitem.current.style.borderLeft = 'solid darkorange 2px'
+            dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
             dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
               'solid white 3px'
             dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
               'black'
           } else {
-            dropitem.current.style.borderLeft = 'solid blue 0px'
+            dropitem.current.style.borderLeft = 'solid darkorange 0px'
             dropitem.current.style.boxShadow = '0px 0px 9px white'
           }
         }
@@ -838,14 +841,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       tasksLabelRefs.map((dropitem) => {
         if (dropitem.current !== null) {
           if (dropitem.current.getAttribute('name') === id) {
-            dropitem.current.style.borderLeft = 'solid blue 1px'
-            dropitem.current.style.boxShadow = '0px 0px 9px blue'
+            dropitem.current.style.borderLeft = 'solid darkorange 2px'
+            dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
             dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
               'solid white 3px'
             dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
               'black'
           } else {
-            dropitem.current.style.borderLeft = 'solid blue 0px'
+            dropitem.current.style.borderLeft = 'solid darkorange 0px'
             dropitem.current.style.boxShadow = '0px 0px 9px white'
           }
         }
@@ -857,14 +860,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       eVotingLabelRefs.map((dropitem) => {
         if (dropitem.current !== null) {
           if (dropitem.current.getAttribute('name') === id) {
-            dropitem.current.style.borderLeft = 'solid blue 1px'
-            dropitem.current.style.boxShadow = '0px 0px 9px blue'
+            dropitem.current.style.borderLeft = 'solid darkorange 2px'
+            dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
             dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
               'solid white 3px'
             dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
               'black'
           } else {
-            dropitem.current.style.borderLeft = 'solid blue 0px'
+            dropitem.current.style.borderLeft = 'solid darkorange 0px'
             dropitem.current.style.boxShadow = '0px 0px 9px white'
           }
         }
@@ -934,6 +937,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     window.sessionStorage.removeItem('user-id')
   }
   const logout = async () => {
+    setLogoutStatus('Ending Session...')
     try {
       const opts = {
         method: 'POST',
@@ -951,8 +955,12 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         history.push('/signin')
         history.push('/signin')
         removeSessions()
+      } else {
+        setLogoutStatus('Log out')
       }
-    } catch (TypeError) {}
+    } catch (TypeError) {
+      setLogoutStatus('Log out')
+    }
   }
   const onTouchStart = (e) => {
     setTouchEnd(null)
@@ -1006,6 +1014,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           setShowNav(show)
                         }}
                         logOut={logout}
+                        logoutStatus={logoutStatus}
                       />
                     )}
                   </AnimatePresence>
@@ -1025,6 +1034,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           setEvotingLabelRefs(eVotingLabelRefs)
                         }}
                         logOut={logout}
+                        logoutStatus={logoutStatus}
                       />
                     )}
                   </AnimatePresence>
@@ -1180,7 +1190,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             name='chats'
                             src={chats}
                             alt='chats'
-                            height='28px'
+                            height='25px'
                           />
                         </div>
                       </Link>
@@ -1246,18 +1256,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           fontSize: '.5rem',
 
                           ...shade({
-                            width: '100px',
+                            // width: '100px',
                             prevPadding: '0px',
                             newPadding: '0px',
                             radius: '5px',
                             shade: 'rgba(230,230,230,1)',
                           }),
                         }}
-                      >
-                        {user.firstName
-                          ? user.firstName.toUpperCase()
-                          : user.firstName}
-                      </div>
+                      ></div>
                     </div>
                   )}
                 </motion.div>

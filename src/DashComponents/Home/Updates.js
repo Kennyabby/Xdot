@@ -13,6 +13,7 @@ import voting from './assets/events.png'
 import chat from './assets/chat.png'
 import notifications from './assets/notifications.png'
 import settings from './assets/settings.jpg'
+import search from './assets/search.png'
 
 const Updates = ({ user, server, showHomeToggle }) => {
   const [updates, setUpdates] = useState([])
@@ -52,6 +53,9 @@ const Updates = ({ user, server, showHomeToggle }) => {
       array[randomIndex] = temporaryValue
     }
   }
+  useEffect(() => {
+    showHomeToggle(true)
+  }, [])
   useEffect(async () => {
     if (user.matricNo !== undefined) {
       try {
@@ -262,14 +266,20 @@ const Updates = ({ user, server, showHomeToggle }) => {
         {highlightedPost === null ? (
           <div
             style={{
+              paddingTop: '65px',
+              position: 'relative',
               textAlign: 'center',
               justifyContent: 'center',
             }}
           >
             <div
               style={{
+                position: 'fixed',
                 display: 'flex',
                 width: '100%',
+                zIndex: '2',
+                top: '0px',
+                left: '0px',
                 margin: '0px',
                 marginBottom: '10px',
                 padding: '10px 0px',
@@ -282,11 +292,13 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 style={{
                   width: '15%',
                   textAlign: 'left',
-                  marginTop: '5px',
+                  marginTop: '8px',
+                  width: 'fit-content',
+                  margin: 'auto',
                   textShadow: '0px 0px 3px black',
                   color: 'blue',
                   fontFamily: 'monospace',
-                  fontSize: '1.3rem',
+                  fontSize: '24px',
                   fontWeight: 'bolder',
                 }}
               >
@@ -295,21 +307,41 @@ const Updates = ({ user, server, showHomeToggle }) => {
               <div
                 style={{
                   width: '80%',
+                  margin: 'auto',
                   boxShadow: '0px 0px 8px black',
                   borderRadius: '20px',
                 }}
               >
-                <input
-                  type='text'
-                  placeholder='Search Pages, Posts, Clusters...'
+                <div
                   style={{
-                    padding: '10px',
-                    outline: 'none',
-                    border: 'solid black 0px',
+                    backgroundColor: 'white',
                     borderRadius: '20px',
                     width: '80%',
+                    display: 'flex',
                   }}
-                />
+                >
+                  <img
+                    src={search}
+                    height='20px'
+                    style={{
+                      marginTop: '15px',
+                      marginLeft: '15px',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {}}
+                  />
+                  <input
+                    type='text'
+                    placeholder='Search Pages, Posts, Clusters...'
+                    style={{
+                      padding: '15px 10px',
+                      outline: 'none',
+                      border: 'solid black 0px',
+                      borderRadius: '20px',
+                      width: '80%',
+                    }}
+                  />
+                </div>
               </div>
             </div>
             <div style={{ display: 'flex', margin: '10px' }}>
@@ -390,7 +422,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                   backgroundColor: 'rgba(235,235,255,1)',
                   display: 'flex',
                   justifyContent: 'center',
-                  height: '170px',
+                  height: '180px',
                   flexDirection: 'column',
                 }}
               >
@@ -530,7 +562,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 />
               )}
             </div>
-            <div ref={lastPostRef} style={{ paddingBottom: '70px' }}>
+            <div ref={lastPostRef} style={{ paddingBottom: '90px' }}>
               {highlightedPost === null && showPostUpdatesStatus ? (
                 <label
                   style={{

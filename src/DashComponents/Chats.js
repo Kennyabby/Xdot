@@ -11,10 +11,13 @@ const Chats = ({
   useEffect(() => {
     showHomeToggle(true)
     if (notificationsrf.current !== null) {
-      notificationsrf.current.style.borderBottom = 'solid blue 0px'
+      notificationsrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
+      notificationsrf.current.style.boxShadow = 'none'
     }
-    homerf.current.style.borderBottom = 'solid blue 0px'
-    chatrf.current.style.borderBottom = 'solid blue 2px'
+    chatrf.current.style.backgroundColor = 'rgba(250,250,255,.8)'
+    chatrf.current.style.boxShadow = '0px 0px 8px black'
+    homerf.current.style.backgroundColor = 'rgba(0,0,0,0)'
+    homerf.current.style.boxShadow = 'none'
 
     setBodyLeft()
     setShowNavigator()

@@ -1,10 +1,12 @@
 import { React, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import imgcover from './assets/userimgcover.jpg'
 import profimg from './assets/user.png'
 import userimgmenu from './assets/userimgmenu.png'
 import usercontrolopt from './assets/usercontrolopt.png'
 import edit from './assets/edit1.png'
+import settings from './assets/settings.jpg'
 
 import AdminBoard from './AdminBoard'
 
@@ -32,42 +34,49 @@ const Profile = ({
     user.isEditable === 'false' ? 'Enable Edit Access' : 'Disable Edit Access'
   )
   const [showAdminOpt, setShowAdminOpt] = useState(true)
-  const userDetailName = [
-    'Level',
-    'Matric No',
-    'Hall Of Residence',
-    'School Email',
-    'Other Email',
-    'Gender',
-    'Date Of Birth',
-    'Year Of Admission',
-    'Mode Of Entry',
+  const contactDetailsName = [
     'Current Address',
     'Contact No',
     'Other Contact No',
     'Guardian Name',
+    'Guardian Current Address',
     'Guardian Contact No',
     'Other Guardian Contact No',
-    'Guardian Current Address',
   ]
-  const userDetailValue = [
-    'level',
-    'matricNo',
-    'hallOfResidence',
-    'schoolEmail',
-    'otherEmail',
-    'gender',
-    'dateOfBirth',
-    'yearOfAdmission',
-    'modeOfEntry',
+  const contactDetailsValue = [
     'currentAddress',
     'contactNo',
     'otherContactNo',
     'guardianName',
+    'guardianCurrentAddress',
     'guardianContactNo',
     'otherGuardianContactNo',
-    'guardianCurrentAddress',
   ]
+  const allUserDetailName = [
+    'Matric No',
+    'Gender',
+    'Date Of Birth',
+    'School Email',
+    'Other Email',
+    'Year Of Admission',
+    'Mode Of Entry',
+  ]
+  const allUserDetailValue = [
+    'matricNo',
+    'gender',
+    'dateOfBirth',
+    'schoolEmail',
+    'otherEmail',
+    'yearOfAdmission',
+    'modeOfEntry',
+  ]
+  const fewUserDetailName = [
+    'Matric No',
+    'Gender',
+    'Other Email',
+    'Mode Of Entry',
+  ]
+  const fewUserDetailValue = ['matricNo', 'gender', 'otherEmail', 'modeOfEntry']
   useEffect(async () => {
     if (user !== null) {
       const opts1 = {
@@ -89,13 +98,19 @@ const Profile = ({
     }
     if (homerf !== undefined && chatrf !== undefined) {
       if (homerf.current !== null && chatrf.current !== null) {
-        homerf.current.style.borderBottom = 'solid blue 0px'
-        chatrf.current.style.borderBottom = 'solid blue 0px'
+        homerf.current.style.backgroundColor = 'rgba(250,250,255,.8)'
+        homerf.current.style.boxShadow = '0px 0px 8px black'
+        chatrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
+        chatrf.current.style.boxShadow = 'none'
       }
     }
     if (notificationsrf !== undefined) {
-      if (notificationsrf.current !== null) {
-        notificationsrf.current.style.borderBottom = 'solid blue 0px'
+      if (
+        notificationsrf.current !== null &&
+        notificationsrf.current !== undefined
+      ) {
+        notificationsrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
+        notificationsrf.current.style.boxShadow = 'none'
       }
     }
   }, [homerf])
@@ -196,7 +211,7 @@ const Profile = ({
           backgroundColor: backgroundColor,
           overflowY: overflow,
           flexWrap: 'wrap',
-          height: '75vh',
+          paddingBottom: '70px',
         }}
       >
         {showAdminBoard && (
@@ -243,38 +258,130 @@ const Profile = ({
               </ul>
             )}
           </div>
-          <div>
-            <p style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-              {(
-                user.lastName +
-                ' ' +
-                user.firstName +
-                ' ' +
-                user.middleName
-              ).toUpperCase()}
-            </p>
-            <p style={{ fontSize: '1rem', fontStyle: 'italic' }}>
-              {user.userName}
-            </p>
-            {user.access === 'Admin' ? (
-              <div>
-                <label
-                  onClick={clickAdmin ? handleAdminBoard : undefined}
+          <div
+            style={{
+              marginLeft: '15px',
+              marginTop: '10px',
+              display: 'block',
+              position: 'relative',
+            }}
+          >
+            {!isSearched && (
+              <Link to='/dashboard/settings'>
+                <div
                   style={{
-                    border: 'solid black 1px',
-                    padding: '5px',
-                    borderRadius: '5px',
-                    fontWeight: 'bold',
-                    color: 'green',
-                    cursor: clickAdmin ? 'pointer' : 'auto',
+                    position: 'absolute',
+                    bottom: '-55px',
+                    right: '15px',
+                    width: 'fit-content',
+                    marginLeft: 'auto',
+                    cursor: 'pointer',
                   }}
                 >
-                  Admin
-                </label>
-              </div>
-            ) : (
-              ''
+                  <img
+                    src={settings}
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                    height='20px'
+                  />
+                </div>
+              </Link>
             )}
+            {!isSearched && user.isEditable === 'true' && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '-30px',
+                  right: '15px',
+                  width: 'fit-content',
+                  marginLeft: 'auto',
+                  cursor: 'pointer',
+                }}
+              >
+                <img
+                  src={edit}
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                  height='15px'
+                />
+              </div>
+            )}
+            <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
+              <label>
+                {(
+                  user.lastName +
+                  ' ' +
+                  user.firstName +
+                  ' ' +
+                  user.middleName
+                ).toUpperCase()}
+              </label>
+            </div>
+            <div style={{ display: 'flex', margin: '5px auto' }}>
+              <div
+                style={{
+                  fontFamily: 'monospace',
+                  fontSize: '1rem',
+                  fontStyle: 'italic',
+                  marginRight: '10px',
+                }}
+              >
+                <label>{user.userName}</label>
+              </div>
+              <label>{' . '}</label>
+              <label
+                style={{
+                  fontWeight: 'bold',
+                  fontFamily: 'monospace',
+                  fontSize: '1rem',
+                  marginLeft: '10px',
+                }}
+              >
+                {user.hallOfResidence + ' Hall'}
+              </label>
+              {user.access === 'Admin' ? (
+                <div style={{ display: 'flex', marginLeft: '10px' }}>
+                  <label>{' . '}</label>
+                  <div
+                    onClick={clickAdmin ? handleAdminBoard : undefined}
+                    style={{
+                      marginLeft: '10px',
+                      borderRadius: '5px',
+                      fontWeight: 'bold',
+                      fontSize: '1rem',
+                      fontFamily: 'monospace',
+                      cursor: clickAdmin ? 'pointer' : 'auto',
+                    }}
+                  >
+                    <label
+                      style={{
+                        color: 'green',
+                        cursor: clickAdmin ? 'pointer' : 'auto',
+                      }}
+                    >
+                      Admin
+                    </label>
+                  </div>
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
+            <div
+              style={{
+                padding: '10px',
+                fontSize: '.8rem',
+                border: 'solid rgba(210,210,210,1) 2px',
+                width: 'fit-content',
+                fontFamily: 'monospace',
+                margin: '10px 0px',
+                borderRadius: '10px',
+              }}
+            >
+              {user.level + ' level student of the department of Physics'}
+            </div>
           </div>
         </div>
         <div style={{ textAlign: 'left' }}>
@@ -340,138 +447,201 @@ const Profile = ({
               </div>
             </div>
           )}
-          <div className='userabout'>
-            <p
+          {isSearched && user.about === undefined ? undefined : (
+            <div className='userabout'>
+              <div
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '1.1rem',
+                  fontFamily: 'Courier New',
+                  display: 'flex',
+                  borderBottom: 'solid rgba(210, 210, 210, 1) 2px',
+                }}
+              >
+                <label>About </label>
+                {!isSearched && user.isEditable === 'true' && (
+                  <div
+                    style={{
+                      width: 'fit-content',
+                      marginLeft: 'auto',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <img
+                      src={edit}
+                      style={{
+                        cursor: 'pointer',
+                      }}
+                      height='15px'
+                    />
+                  </div>
+                )}
+              </div>
+              <div
+                style={{
+                  margin: '15px auto',
+                  padding: '10px',
+                  fontSize: '.8rem',
+                  border: 'solid rgba(210, 210, 210, 1) 2px',
+                  borderRadius: '10px',
+                }}
+              >
+                {user.about !== null && user.about !== undefined ? (
+                  <label>{user.about}</label>
+                ) : (
+                  <label
+                    style={{
+                      color: 'blue',
+                      cursor: 'pointer',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {'Add a Summary about you'}
+                  </label>
+                )}
+              </div>
+            </div>
+          )}
+          <div className='userdetails'>
+            <label
               style={{
                 fontWeight: 'bold',
-                fontSize: '1.3rem',
-                fontFamily: 'monospace',
+                fontSize: '1.1rem',
+                fontFamily: 'Courier New',
+                display: 'flex',
+                borderBottom: 'solid rgba(210, 210, 210, 1) 2px',
               }}
             >
-              About{' '}
+              Other Info{' '}
               {!isSearched && user.isEditable === 'true' && (
-                <img
-                  src={edit}
-                  style={{ color: 'red', fontSize: '1rem', cursor: 'pointer' }}
-                  height='15px'
-                />
+                <div
+                  style={{
+                    width: 'fit-content',
+                    marginLeft: 'auto',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <img
+                    src={edit}
+                    style={{
+                      color: 'red',
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                    }}
+                    height='15px'
+                  />
+                </div>
               )}
-            </p>
-            <div style={{ padding: '10px' }}>About me...</div>
-          </div>
-          <div className='userDetails'>
-            <p
-              style={{
-                fontWeight: 'bold',
-                fontSize: '1.3rem',
-                fontFamily: 'monospace',
-              }}
-            >
-              Information{' '}
-              {!isSearched && user.isEditable === 'true' && (
-                <img
-                  src={edit}
-                  style={{ color: 'red', fontSize: '1rem', cursor: 'pointer' }}
-                  height='15px'
-                />
-              )}
-            </p>
+            </label>
             <div className='profiledetails'>
-              {userDetailValue
-                .filter((prop) => {
-                  if (!isSearched) {
-                    return user[prop] !== undefined && user[prop].length
-                  } else {
-                    console.log('yes')
-                    return (
-                      user[prop] !== undefined &&
-                      user[prop].length &&
-                      prop !== 'dateOfBirth'
-                    )
-                  }
-                })
-                .map((prop, i) => {
-                  console.log(prop)
-                  if (showAllDetails) {
-                    return (
-                      <div
-                        className='profiledetailsitem'
-                        style={{
-                          color: 'black',
-                          backgroundColor:
-                            i % 2 ? 'white' : 'rgba(230,230,230,1)',
-                          fontFamily: 'monospace',
-                        }}
-                        key={i}
-                      >
-                        <label
-                          style={{
-                            fontWeight: 'bold',
-                            fontSize: '1rem',
-                          }}
-                        >
-                          {userDetailName[i]}
-                        </label>
-                        <label
-                          style={{
-                            fontWeight: 'lighter',
-                            fontSize: '.9rem',
-                            fontStyle: 'italic',
-                          }}
-                        >
-                          {user[prop]}
-                        </label>
-                      </div>
-                    )
-                  } else {
-                    if (i < 6) {
+              <div
+                style={{
+                  margin: '15px auto',
+                  padding: '10px 0px',
+                  fontSize: '.8rem',
+                  border: 'solid rgba(210, 210, 210, 1) 2px',
+                  borderRadius: '10px',
+                }}
+              >
+                {showAllDetails ? (
+                  <div>
+                    {allUserDetailName.map((detail, i) => {
                       return (
-                        <div
-                          className='profiledetailsitem'
-                          style={{
-                            color: 'black',
-                            backgroundColor:
-                              i % 2 ? 'white' : 'rgba(230,230,230,1)',
-                            fontFamily: 'monospace',
-                          }}
-                          key={i}
-                        >
-                          <label
-                            style={{
-                              fontWeight: 'bold',
-                              fontSize: '1rem',
-                            }}
-                          >
-                            {userDetailName[i]}
-                          </label>
-                          <label
-                            style={{
-                              fontWeight: 'lighter',
-                              fontSize: '.9rem',
-                              fontStyle: 'italic',
-                            }}
-                          >
-                            {user[prop]}
+                        <div className='profiledetailsitem' key={i}>
+                          <label style={{ fontWeight: 'bold' }}>{detail}</label>
+                          <label style={{ marginLeft: 'auto' }}>
+                            {user[allUserDetailValue[i]]}
                           </label>
                         </div>
                       )
-                    }
-                  }
-                  return undefined
-                })}
-              <label
+                    })}
+                  </div>
+                ) : (
+                  <div>
+                    {fewUserDetailName.map((detail, i) => {
+                      return (
+                        <div className='profiledetailsitem' key={i}>
+                          <label style={{ fontWeight: 'bold' }}>{detail}</label>
+                          <label style={{ marginLeft: 'auto' }}>
+                            {user[fewUserDetailValue[i]]}
+                          </label>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+                <div
+                  style={{
+                    cursor: 'pointer',
+                    width: 'fit-content',
+                    margin: 'auto',
+                    marginTop: '10px',
+                    fontFamily: 'monospace',
+                    fontWeight: 'bold',
+                    fontSize: '.8rem',
+                    color: 'green',
+                  }}
+                  onClick={handleShowDetails}
+                >
+                  <label style={{ cursor: 'pointer' }}>{showStatus}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='userdetails'>
+            <label
+              style={{
+                fontWeight: 'bold',
+                fontSize: '1.1rem',
+                fontFamily: 'Courier New',
+                display: 'flex',
+                borderBottom: 'solid rgba(210, 210, 210, 1) 2px',
+              }}
+            >
+              Contacts{' '}
+              {!isSearched && user.isEditable === 'true' && (
+                <div
+                  style={{
+                    width: 'fit-content',
+                    marginLeft: 'auto',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <img
+                    src={edit}
+                    style={{
+                      color: 'red',
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                    }}
+                    height='15px'
+                  />
+                </div>
+              )}
+            </label>
+            <div className='profiledetails'>
+              <div
                 style={{
-                  cursor: 'pointer',
-                  marginTop: '10px',
-                  fontFamily: 'monospace',
-                  fontWeight: 'bold',
-                  fontSize: '1rem',
-                  color: 'green',
+                  margin: '15px auto',
+                  padding: '10px 0px',
+                  fontSize: '.8rem',
+                  border: 'solid rgba(210, 210, 210, 1) 2px',
+                  borderRadius: '10px',
                 }}
-                onClick={handleShowDetails}
               >
-                {showStatus}
-              </label>
+                <div>
+                  {contactDetailsName.map((detail, i) => {
+                    return (
+                      <div className='profiledetailsitem' key={i}>
+                        <label style={{ fontWeight: 'bold' }}>{detail}</label>
+                        <label style={{ marginLeft: 'auto' }}>
+                          {user[contactDetailsValue[i]]}
+                        </label>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -17,6 +17,7 @@ const SideNavigator = ({
   getEvotingLabelRefs,
   getLabelRefs,
   logOut,
+  logoutStatus,
   setShow,
   setView,
 }) => {
@@ -374,13 +375,35 @@ const SideNavigator = ({
           </li>
           <div
             className='userleftitem'
-            style={{ marginTop: '50px', marginLeft: '10px' }}
+            style={{
+              display: 'block',
+              fontSize: '.8rem',
+              width: 'fit-content',
+              marginLeft: '10px',
+              marginTop: '50px',
+              marginBottom: '20px',
+              padding: '10px',
+              backgroundColor: 'black',
+              border: 'solid rgba(49,49,50,1) 2px',
+              boxShadow: '0px 0px 7px black',
+              borderRadius: '15px',
+              cursor: 'pointer',
+            }}
+            onClick={logout}
           >
-            <label onClick={logout}>
-              {'Log out'}
-              <label style={{ fontFamily: 'monospace', fontSize: '1.3rem' }}>
-                {' ->]'}
+            <label style={{ cursor: 'pointer' }}>
+              <label
+                style={{
+                  fontFamily: 'monospace',
+                  fontSize: '1rem',
+                  marginRight: '20px',
+                  cursor: 'pointer',
+                  color: 'orange',
+                }}
+              >
+                {' [->'}
               </label>
+              {logoutStatus}
             </label>
           </div>
         </motion.ul>

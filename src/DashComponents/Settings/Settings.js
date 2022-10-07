@@ -1,19 +1,25 @@
 import { React, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import right from './assets/right.png'
 const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
+  const { id } = useParams()
   useEffect(() => {
     showHomeToggle(true)
     if (homerf !== undefined && chatrf !== undefined) {
       if (homerf.current !== null && chatrf.current !== null) {
-        homerf.current.style.borderBottom = 'solid blue 0px'
-        chatrf.current.style.borderBottom = 'solid blue 0px'
+        homerf.current.style.backgroundColor =
+          id === 'settings' ? 'rgba(0,0,0,0)' : 'rgba(250,250,255,.8)'
+        homerf.current.style.boxShadow =
+          id === 'settings' ? 'none' : '0px 0px 8px black'
+        chatrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
+        chatrf.current.style.boxShadow = 'none'
       }
     }
     if (notificationsrf.current !== null) {
-      notificationsrf.current.style.borderBottom = 'solid blue 0px'
+      notificationsrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
+      notificationsrf.current.style.boxShadow = 'none'
     }
-  }, [homerf])
+  }, [homerf, id])
   return (
     <>
       <div style={{ paddingBottom: '70px' }}>

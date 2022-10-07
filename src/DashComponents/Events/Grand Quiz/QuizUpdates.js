@@ -273,7 +273,7 @@ const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
                 />
               )}
             </div>
-            <div ref={lastPostRef} style={{ paddingBottom: '70px' }}>
+            <div ref={lastPostRef} style={{ paddingBottom: '90px' }}>
               {highlightedPost === null && showPostUpdatesStatus ? (
                 <label
                   style={{
