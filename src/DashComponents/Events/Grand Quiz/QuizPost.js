@@ -7,6 +7,8 @@ import close from '../assets/close.png'
 import back from '../assets/left.png'
 import opt from '../assets/opt.png'
 import comment from '../assets/comment.png'
+import blcomment from '../assets/blcomment.png'
+import sbllike from '../assets/sbllike.png'
 import share from '../assets/share.png'
 import like from '../assets/like.png'
 import love from '../assets/love.png'
@@ -720,10 +722,14 @@ const QuizPost = ({
                     style={{
                       cursor: 'pointer',
                       marginRight: '10px',
-                      borderRadius: isReacted ? '50%' : '0px',
-                      boxShadow: isReacted ? 'black 0px 0px 7px' : 'none',
                     }}
-                    src={isReacted ? postReaction.src : react}
+                    src={
+                      isReacted
+                        ? postReaction.name === 'like'
+                          ? sbllike
+                          : postReaction.src
+                        : react
+                    }
                     alt='reaction'
                     height={isReacted ? '20px' : '20px'}
                   />
@@ -762,14 +768,12 @@ const QuizPost = ({
                 >
                   <div style={{ display: 'flex' }}>
                     <img
-                      src={comment}
+                      src={isCommented ? blcomment : comment}
                       alt='comment'
                       name='comment'
                       style={{
                         cursor: 'pointer',
                         marginRight: '10px',
-                        borderRadius: '50%',
-                        boxShadow: isCommented ? 'blue 0px 0px 8px' : 'none',
                       }}
                       height='20px'
                     />

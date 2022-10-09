@@ -7,6 +7,8 @@ import close from '../Events/assets/close.png'
 import back from '../Events/assets/left.png'
 import opt from './assets/opt.png'
 import comment from '../Events/assets/comment.png'
+import blcomment from '../Events/assets/blcomment.png'
+import sbllike from '../Events/assets/sbllike.png'
 import share from '../Events/assets/share.png'
 import like from '../Events/assets/like.png'
 import love from '../Events/assets/love.png'
@@ -620,10 +622,14 @@ const Post = ({
                     style={{
                       cursor: 'pointer',
                       marginRight: '10px',
-                      borderRadius: isReacted ? '50%' : '0px',
-                      boxShadow: isReacted ? 'black 0px 0px 7px' : 'none',
                     }}
-                    src={isReacted ? postReaction.src : react}
+                    src={
+                      isReacted
+                        ? postReaction.name === 'like'
+                          ? sbllike
+                          : postReaction.src
+                        : react
+                    }
                     alt='reaction'
                     height={isReacted ? '20px' : '20px'}
                   />
@@ -662,14 +668,12 @@ const Post = ({
                 >
                   <div style={{ display: 'flex' }}>
                     <img
-                      src={comment}
+                      src={isCommented ? blcomment : comment}
                       alt='comment'
                       name='comment'
                       style={{
                         cursor: 'pointer',
                         marginRight: '10px',
-                        borderRadius: '50%',
-                        boxShadow: isCommented ? 'blue 0px 0px 8px' : 'none',
                       }}
                       height='20px'
                     />

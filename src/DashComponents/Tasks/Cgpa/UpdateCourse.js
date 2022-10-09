@@ -164,7 +164,7 @@ const UpdateCourse = ({
           position: 'fixed',
           top: '0px',
           left: '0px',
-          zIndex: '2',
+          zIndex: '3',
           backgroundColor: 'rgba(0,0,25,1)',
           width: '100%',
           height: '100%',

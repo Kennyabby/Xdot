@@ -5,7 +5,7 @@ import './Napsboard.css'
 
 import SideNavigator from './SideNavigator'
 import Home from './Home/Home'
-import Chats from './Chats'
+import Chats from './Chats/Chats'
 import Profile from './Profile'
 import Settings from './Settings/Settings'
 import Events from './Events/Events'

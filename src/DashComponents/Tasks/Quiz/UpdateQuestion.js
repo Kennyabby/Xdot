@@ -167,7 +167,7 @@ const UpdateQuestion = ({
           top: '0px',
           left: '0px',
           overflowY: 'auto',
-          zIndex: '2',
+          zIndex: '3',
           backgroundColor: 'rgba(0,0,25,1)',
           paddingBottom: '50px',
           width: '100%',

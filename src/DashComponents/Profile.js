@@ -227,7 +227,7 @@ const Profile = ({
               left: '0px',
               backgroundColor: 'rgba(0,0,0,0)',
             }}
-            onClick={() => {
+            onTouchEnd={() => {
               setShowProfMenuDrop(false)
             }}
           ></div>

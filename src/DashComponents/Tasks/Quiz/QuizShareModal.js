@@ -87,7 +87,7 @@ const QuizShareModal = ({
           top: '0px',
           left: '0px',
           overflowY: 'auto',
-          zIndex: '2',
+          zIndex: '3',
           backgroundColor: 'rgba(255,255,255,1)',
           width: '100%',
           height: '100%',
