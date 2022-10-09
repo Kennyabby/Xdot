@@ -430,7 +430,7 @@ const Post = ({
                       style={{
                         fontWeight: 'bold',
                         fontFamily: 'verdana',
-                        fontSize: '.7rem',
+                        fontSize: '.73rem',
                       }}
                     >
                       {postUser.userName}

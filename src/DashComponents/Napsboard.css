@@ -209,7 +209,7 @@
 }
 .profmenudrop {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   left: 125px;
   top: 135px;
   padding: 5px;
@@ -431,15 +431,15 @@
     background-color: rgba(255, 255, 255, 0.9);
     border-top: solid white 2px;
     box-shadow: 0px 0px 4px black;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     text-shadow: none;
     font-weight: bold;
     width: 98%;
     z-index: 1;
     display: inline-flex;
     overflow-x: auto;
-    padding: 2px 5px;
+    padding: 5px 5px;
   }
   .hometoggleitem {
     margin: auto;

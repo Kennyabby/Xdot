@@ -236,11 +236,11 @@ const Updates = ({ user, server, showHomeToggle }) => {
       if (distance > minSwipeDistance) {
         setShowSearch(false)
       }
-      if (distance < -minSwipeDistance) {
-        setShowSearch(true)
-      }
-      setTouchEnd(currentTouch)
     }
+    if (distance < -minSwipeDistance) {
+      setShowSearch(true)
+    }
+    setTouchEnd(currentTouch)
   }
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) {
@@ -362,7 +362,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                       style={{
                         backgroundColor: 'white',
                         borderRadius: '20px',
-                        width: '90%',
+                        width: '98%',
                         display: 'flex',
                       }}
                     >

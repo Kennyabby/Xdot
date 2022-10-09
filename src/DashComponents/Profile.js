@@ -217,6 +217,21 @@ const Profile = ({
           paddingBottom: '70px',
         }}
       >
+        {showProfMenuDrop && (
+          <div
+            style={{
+              position: 'fixed',
+              width: '100vw',
+              height: '100vh',
+              top: '0px',
+              left: '0px',
+              backgroundColor: 'rgba(0,0,0,0)',
+            }}
+            onClick={() => {
+              setShowProfMenuDrop(false)
+            }}
+          ></div>
+        )}
         {showAdminBoard && (
           <AdminBoard
             server={server}

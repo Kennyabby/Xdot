@@ -433,7 +433,7 @@ const QuizPost = ({
                           fontWeight: 'bold',
                           fontFamily: 'verdana',
                           fontStyle: 'none',
-                          fontSize: '.7rem',
+                          fontSize: '.73rem',
                         }}
                       >
                         {postUser.userName}
