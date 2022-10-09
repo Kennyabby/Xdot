@@ -20,11 +20,14 @@ const Updates = ({ user, server, showHomeToggle }) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
   const lastPostRef = useRef(null)
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
   const [lastPostDimension, setLastPostDimension] = useState('')
   const [lastUpdatedPost, setLastUpdatedPost] = useState('')
   const [showPostUpdatesStatus, setShowPostUpdatesStatus] = useState(false)
   const [showPostPage, setShowPostPage] = useState(false)
   const [gotUpdates, setGotUpdates] = useState(false)
+  const [showSearch, setShowSearch] = useState(true)
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
   const [postUpdatesStatus, setPostUpdatesStatus] = useState('')
@@ -32,6 +35,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
   const [highlightedPost, setHighlightedPost] = useState(null)
   const [currentPostShow, setCurrentPostShow] = useState(null)
   const [newPostShow, setNewPostShow] = useState(null)
+  const minSwipeDistance = 20
   const maxNumberOfRequest = 4
 
   const notify = ({ message }) => {
@@ -220,9 +224,40 @@ const Updates = ({ user, server, showHomeToggle }) => {
       return done
     } catch (TypeError) {}
   }
+  const onTouchStart = (e) => {
+    setTouchEnd(null)
+    const firstTouch = e.targetTouches[0].clientY
+    setTouchStart(firstTouch)
+  }
+  const onTouchMove = (e) => {
+    var currentTouch = e.targetTouches[0].clientY
+    var distance = touchStart - currentTouch
+    if (highlightedPost == null && window.pageYOffset > 112) {
+      if (distance > minSwipeDistance) {
+        setShowSearch(false)
+      }
+      if (distance < -minSwipeDistance) {
+        setShowSearch(true)
+      }
+      setTouchEnd(currentTouch)
+    }
+  }
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) {
+      return
+    } else {
+      const distance = touchStart - touchEnd
+      const isUpSwipe = distance > minSwipeDistance
+    }
+  }
   return (
     <>
-      <div style={{ paddingTop: highlightedPost !== null ? '50px' : '0px' }}>
+      <div
+        style={{ paddingTop: highlightedPost !== null ? '50px' : '10px' }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         {showNotification && (
           <div
             style={{
@@ -273,78 +308,90 @@ const Updates = ({ user, server, showHomeToggle }) => {
               justifyContent: 'center',
             }}
           >
-            <div
-              style={{
-                position: 'fixed',
-                display: 'flex',
-                width: '100%',
-                zIndex: '2',
-                top: '0px',
-                left: '0px',
-                margin: '0px',
-                marginBottom: '10px',
-                padding: '10px 0px',
-                justifyContent: 'center',
-                textAlign: 'left',
-                backgroundColor: 'rgba(225,225,255,1)',
-              }}
-            >
-              <div
-                style={{
-                  width: '15%',
-                  textAlign: 'left',
-                  marginTop: '8px',
-                  width: 'fit-content',
-                  margin: 'auto',
-                  textShadow: '0px 0px 3px black',
-                  color: 'blue',
-                  fontFamily: 'monospace',
-                  fontSize: '24px',
-                  fontWeight: 'bolder',
-                }}
-              >
-                <label>XDot</label>
-              </div>
-              <div
-                style={{
-                  width: '80%',
-                  margin: 'auto',
-                  boxShadow: '0px 0px 8px black',
-                  borderRadius: '20px',
-                }}
-              >
-                <div
+            <AnimatePresence>
+              {showSearch && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  exit={{ opacity: 0, transition: { duration: 0.5 } }}
                   style={{
-                    backgroundColor: 'white',
-                    borderRadius: '20px',
-                    width: '80%',
+                    position: 'fixed',
                     display: 'flex',
+                    width: '100%',
+                    zIndex: '2',
+                    top: '0px',
+                    left: '0px',
+                    margin: '0px',
+                    marginBottom: '10px',
+                    padding: '10px 0px',
+                    justifyContent: 'center',
+                    textAlign: 'left',
+                    backgroundColor: 'rgba(255,255,255,1)',
                   }}
                 >
-                  <img
-                    src={search}
-                    height='20px'
+                  <div
                     style={{
-                      marginTop: '15px',
-                      marginLeft: '15px',
-                      cursor: 'pointer',
+                      width: '15%',
+                      textAlign: 'center',
+                      marginTop: '8px',
+                      width: 'fit-content',
+                      flexWrap: 'wrap',
+                      margin: 'auto',
+                      textShadow: '0px 0px 3px black',
+                      color: 'blue',
+                      display: 'block',
+                      fontFamily: 'monospace',
+                      fontSize: '21px',
+                      fontWeight: 'bolder',
                     }}
-                    onClick={() => {}}
-                  />
-                  <input
-                    type='text'
-                    placeholder='Search Pages, Posts, Clusters...'
+                  >
+                    <img src={xdotlogo} height='30px' />
+
+                    <label style={{ margin: '5px' }}>XDot</label>
+                  </div>
+                  <div
                     style={{
-                      padding: '15px 10px',
-                      outline: 'none',
-                      border: 'solid black 0px',
+                      width: '70%',
+                      margin: 'auto',
+                      boxShadow: '0px 0px 8px black',
                       borderRadius: '20px',
-                      width: '80%',
                     }}
-                  />
-                </div>
-              </div>
-            </div>
+                  >
+                    <div
+                      style={{
+                        backgroundColor: 'white',
+                        borderRadius: '20px',
+                        width: '90%',
+                        display: 'flex',
+                      }}
+                    >
+                      <img
+                        src={search}
+                        height='20px'
+                        style={{
+                          marginTop: '15px',
+                          marginLeft: '15px',
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => {}}
+                      />
+                      <input
+                        type='text'
+                        placeholder='Search Pages, Posts, Clusters...'
+                        style={{
+                          padding: '15px 10px',
+                          outline: 'none',
+                          border: 'solid black 0px',
+                          borderRadius: '20px',
+                          width: '80%',
+                        }}
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <div style={{ display: 'flex', margin: '10px' }}>
               <Link to='/dashboard/profile'>
                 <div

@@ -78,7 +78,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
           top: '0px',
           left: '0px',
           backgroundColor: 'rgba(255,255,255,1)',
-          zIndex: '2',
+          zIndex: '3',
           width: '100vw',
           overflowY: 'auto',
           height: '100vh',

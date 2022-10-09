@@ -174,7 +174,7 @@
 .profmenu {
   position: absolute;
   bottom: 3px;
-  right: 3px;
+  right: 10px;
   width: 30px;
   height: 30px;
   background-size: cover;
@@ -210,8 +210,8 @@
 .profmenudrop {
   position: absolute;
   z-index: 1;
-  left: 145px;
-  bottom: -155px;
+  left: 125px;
+  top: 135px;
   padding: 5px;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.9);
@@ -439,7 +439,7 @@
     z-index: 1;
     display: inline-flex;
     overflow-x: auto;
-    padding: 0px 5px;
+    padding: 2px 5px;
   }
   .hometoggleitem {
     margin: auto;

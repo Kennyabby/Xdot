@@ -1130,6 +1130,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           name='menu'
                           title='toggle to show or hide navigator'
                           className='hometoggleitem'
+                          style={{ display: 'block' }}
                           onClick={() => {
                             if (showNav) {
                               setShowNav(false)
@@ -1147,15 +1148,15 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             src={showNav ? close : navigatormenu}
                             height='18px'
                           />{' '}
-                          <label
+                          <div
                             style={{
-                              fontSize: '.8rem',
+                              fontSize: '.7rem',
                               fontFamily: 'monospace',
                               color: 'black',
                             }}
                           >
-                            Menu
-                          </label>
+                            <label>Menu</label>
+                          </div>
                         </div>
                       )}
                       <Link
@@ -1167,7 +1168,11 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           height: 'fit-content',
                         }}
                       >
-                        <div name='home' title='Clck to go to Home Page'>
+                        <div
+                          style={{ display: 'block' }}
+                          name='home'
+                          title='Clck to go to Home Page'
+                        >
                           <img
                             style={{
                               borderRadius: '50%',
@@ -1176,17 +1181,17 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             name='home'
                             src={home}
                             alt='home'
-                            height='25px'
+                            height='20px'
                           />
-                          <label
+                          <div
                             style={{
-                              fontSize: '.8rem',
+                              fontSize: '.7rem',
                               fontFamily: 'monospace',
                               color: 'black',
                             }}
                           >
-                            Home
-                          </label>
+                            <label>Home</label>
+                          </div>
                         </div>
                       </Link>
                       <Link
@@ -1199,7 +1204,11 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                         }}
                         to='/dashboard/chats'
                       >
-                        <div name='chats' title='Clck to go to Chats'>
+                        <div
+                          style={{ display: 'block' }}
+                          name='chats'
+                          title='Clck to go to Chats'
+                        >
                           <img
                             style={{
                               cursor: 'pointer',
@@ -1207,17 +1216,17 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             name='chats'
                             src={chats}
                             alt='chats'
-                            height='25px'
+                            height='20px'
                           />
-                          <label
+                          <div
                             style={{
-                              fontSize: '.8rem',
+                              fontSize: '.7rem',
                               fontFamily: 'monospace',
                               color: 'black',
                             }}
                           >
-                            Chats
-                          </label>
+                            <label>Chats</label>
+                          </div>
                         </div>
                       </Link>
                       {winSize <= 700 && showNavigator ? (
@@ -1231,6 +1240,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           }}
                         >
                           <div
+                            style={{ display: 'block' }}
                             name='notifications'
                             title='Clck to go to Notifications'
                           >
@@ -1242,17 +1252,17 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                               name='notifications'
                               src={notifications}
                               alt='notifcations'
-                              height='25px'
+                              height='20px'
                             />
-                            <label
+                            <div
                               style={{
-                                fontSize: '.8rem',
+                                fontSize: '.7rem',
                                 fontFamily: 'monospace',
                                 color: 'black',
                               }}
                             >
-                              Updates
-                            </label>
+                              <label>Updates</label>
+                            </div>
                           </div>
                         </Link>
                       ) : undefined}
