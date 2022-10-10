@@ -63,7 +63,7 @@ const NapsiteSearch = ({
           },
           body: JSON.stringify(newFilter),
         }
-        const resp = await fetch(server+'/getUsersDetails', opts)
+        const resp = await fetch(server + '/getUsersDetails', opts)
         const response = await resp.json()
         const users = response.users
         setUsers(users)
@@ -122,7 +122,7 @@ const NapsiteSearch = ({
           },
           body: JSON.stringify({}),
         }
-        const resp = await fetch(server+'/getUsersDetails', opts)
+        const resp = await fetch(server + '/getUsersDetails', opts)
         const response = await resp.json()
         const users = response.users
         const usrs = users.filter((user) => {
@@ -158,6 +158,24 @@ const NapsiteSearch = ({
   return (
     <>
       <div style={{ display: 'block' }}>
+        {showSearchFilter && (
+          <div
+            style={{
+              position: 'fixed',
+              width: '100vw',
+              height: '100vh',
+              top: '0px',
+              left: '0px',
+              backgroundColor: 'rgba(0,0,0,0)',
+            }}
+            onTouchEnd={() => {
+              setShowSearchFilter(false)
+            }}
+            onClick={() => {
+              setShowSearchFilter(false)
+            }}
+          ></div>
+        )}
         <div style={{ display: 'inline-flex', fontFamily: 'monospace' }}>
           <label
             onClick={handleSearchFilter}
@@ -165,44 +183,67 @@ const NapsiteSearch = ({
               position: 'relative',
               border: 'solid white 2px',
               height: 'fit-content',
-              padding: '5px',
+              padding: '5px 10px',
+              borderRadius: '10px',
               cursor: 'pointer',
             }}
           >
             Add Search Filter{' >'}
             {showSearchFilter && (
-              <ul className='searchfilter' onClick={updateFilter}>
+              <div className='searchfilter' onClick={updateFilter}>
                 {filter.gender != 'gender' &&
                 filter.gender.length ? undefined : (
-                  <div>
-                    <label>Gender</label>
-                    <li className='searchfilteritem' name='gender' value='Male'>
+                  <div
+                    style={{
+                      margin: '0px 20px',
+                      padding: '10px',
+                      border: 'solid rgba(200,200,200,1) 2px',
+                      borderRadius: '10px',
+                    }}
+                  >
+                    <div className='filtertitle'>
+                      <label>Gender</label>
+                    </div>
+                    <div
+                      className='searchfilteritem'
+                      name='gender'
+                      value='Male'
+                    >
                       Male
-                    </li>
-                    <li
+                    </div>
+                    <div
                       className='searchfilteritem'
                       name='gender'
                       value='Female'
                     >
                       Female
-                    </li>
+                    </div>
                   </div>
                 )}
                 {filter.level != 'level' && filter.level.length ? undefined : (
-                  <div>
-                    <label>Level</label>
-                    <li className='searchfilteritem' name='level' value='100'>
+                  <div
+                    style={{
+                      margin: '0px 20px',
+                      padding: '10px',
+                      border: 'solid rgba(200,200,200,1) 2px',
+                      borderRadius: '10px',
+                    }}
+                  >
+                    <div className='filtertitle'>
+                      <label>Level</label>
+                    </div>
+                    <div className='searchfilteritem' name='level' value='100'>
                       100
-                    </li>
-                    <li className='searchfilteritem' name='level' value='200'>
+                    </div>
+                    <div className='searchfilteritem' name='level' value='200'>
                       200
-                    </li>
-                    <li className='searchfilteritem' name='level' value='300'>
+                    </div>
+                    <div className='searchfilteritem' name='level' value='300'>
                       300
-                    </li>
-                    <li className='searchfilteritem' name='level' value='400'>
+                    </div>
+                    <div className='searchfilteritem' name='level' value='400'>
                       400
-                    </li>
+                    </div>
                   </div>
                 )}
                 {filter.gender != 'gender' &&
@@ -213,7 +254,7 @@ const NapsiteSearch = ({
                     No filters left!
                   </li>
                 ) : undefined}
-              </ul>
+              </div>
             )}
           </label>
           {(filter.gender != 'gender' && filter.gender.length) ||
@@ -296,7 +337,13 @@ const NapsiteSearch = ({
           </label>
         </div>
         {users.length || search.length || filterList.length ? (
-          <div style={{ margin: '10px' }}>
+          <div
+            style={{
+              margin: '10px',
+              paddingBottom: '10px',
+              borderBottom: 'solid rgba(200,200,200,1) 2px',
+            }}
+          >
             <label style={{ color: 'lightgreen', fontFamily: 'monospace' }}>
               {isLoading
                 ? 'Loading...'
@@ -358,21 +405,21 @@ const NapsiteView = ({
   viewCurrentUserProfile,
 }) => {
   const [userImgUrl, setUserImgUrl] = useState(napsimg)
-  useEffect(async()=>{
-    if(user!==null){
+  useEffect(async () => {
+    if (user !== null) {
       const opts1 = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({imgUrl: user.img, matricNo:user.matricNo}),
+        body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
       }
-      const resp1 = await fetch(server+'/getImgUrl', opts1)
+      const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
     }
-  },[user])
+  }, [user])
   return (
     <div
       key={id}
@@ -385,17 +432,19 @@ const NapsiteView = ({
       }}
       className='napsiteview'
     >
-      <img
+      <div
         style={{
           position: 'absolute',
-          left: '5px',
-          bottom: '20px',
+          left: '10px',
+          bottom: '25px',
           borderRadius: '50%',
+          backgroundImage: `url(${userImgUrl})`,
+          backgroundSize: 'cover',
+          boxShadow: '0px 0px 5px black',
+          height: '80px',
+          width: '80px',
         }}
-        src={userImgUrl}
-        alt='napsite profile image'
-        height='80px'
-      />
+      ></div>
       <label
         style={{
           position: 'absolute',

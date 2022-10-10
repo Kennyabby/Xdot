@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import imgcover from './assets/userimgcover.jpg'
@@ -9,6 +9,7 @@ import edit from './assets/edit1.png'
 import settings from './assets/settings.jpg'
 import home from './assets/home.png'
 import notifications from './assets/notifications.png'
+import close from './assets/close.png'
 import blhome from './assets/blhome.png'
 import blbell from './assets/blbell.png'
 
@@ -34,9 +35,13 @@ const Profile = ({
   const [showAdminBoard, setShowAdminBoard] = useState(false)
   const [showControlOpt, setShowControlOpt] = useState(false)
   const [userImgUrl, setUserImgUrl] = useState(profimg)
+  const [showImage, setShowImage] = useState({ show: false })
+  const aboutEditRef = useRef(null)
+  const [addSummary, setAddSummary] = useState(false)
   const [editStatus, setEditStatus] = useState(
     user.isEditable === 'false' ? 'Enable Edit Access' : 'Disable Edit Access'
   )
+  const [aboutField, setAboutField] = useState('')
   const [showAdminOpt, setShowAdminOpt] = useState(true)
   const contactDetailsName = [
     'Current Address',
@@ -124,7 +129,21 @@ const Profile = ({
       setShowProfMenuDrop(true)
     }
   }
-  const handleMenuItem = () => {}
+  const handleMenuItem = (e) => {
+    setShowProfMenuDrop(false)
+    const name = e.target.getAttribute('name')
+    if (name === 'viewprof') {
+      setShowImage((showImage) => {
+        return { ...showImage, show: true, src: profimg }
+      })
+    } else if (name === 'viewcover') {
+      setShowImage((showImage) => {
+        return { ...showImage, show: true, src: imgcover }
+      })
+    } else if (name === 'changeprof') {
+    } else if (name === 'changecover') {
+    }
+  }
   const handleShowDetails = () => {
     if (showAllDetails) {
       setShowAllDetails(false)
@@ -204,6 +223,27 @@ const Profile = ({
       }
     } catch (TypeError) {}
   }
+  const updateOneUser = async ({ findBy, update }) => {
+    try {
+      const opts = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prop: [findBy, update],
+        }),
+      }
+      const resp = await fetch(server + '/updateOneUser', opts)
+      const response = await resp.json()
+      const updated = response.updated
+      if (updated) {
+        return true
+      } else {
+        return false
+      }
+    } catch (TypeError) {}
+  }
   const suspendUser = () => {}
   return (
     <>
@@ -213,7 +253,11 @@ const Profile = ({
           padding: padding,
           backgroundColor: backgroundColor,
           overflowY: overflow,
+          boxShadow: isSearched ? '0px 0px 5px white' : 'none',
+          borderTopLeftRadius: isSearched ? '50px' : '0px',
+          borderTopRightRadius: isSearched ? '50px' : '0px',
           flexWrap: 'wrap',
+          height: isSearched ? '70vh' : 'auto',
           paddingBottom: '70px',
         }}
       >
@@ -230,6 +274,27 @@ const Profile = ({
             onTouchEnd={() => {
               setShowProfMenuDrop(false)
             }}
+            onClick={() => {
+              setShowProfMenuDrop(false)
+            }}
+          ></div>
+        )}
+        {showControlOpt && (
+          <div
+            style={{
+              position: 'fixed',
+              width: '100vw',
+              height: '100vh',
+              top: '0px',
+              left: '0px',
+              backgroundColor: 'rgba(0,0,0,0)',
+            }}
+            onTouchEnd={() => {
+              setShowControlOpt(false)
+            }}
+            onClick={() => {
+              setShowControlOpt(false)
+            }}
           ></div>
         )}
         {showAdminBoard && (
@@ -240,6 +305,43 @@ const Profile = ({
             }}
             currentUser={user}
           />
+        )}
+        {showImage.show && (
+          <div
+            style={{
+              position: 'fixed',
+              width: '100vw',
+              height: '100vh',
+              top: '0px',
+              zIndex: '3',
+              left: '0px',
+              backgroundColor: 'rgba(19,19,20,1)',
+            }}
+          >
+            <img
+              src={close}
+              style={{
+                position: 'fixed',
+                top: '5px',
+                right: '5px',
+                zIndex: '3',
+                cursor: 'pointer',
+              }}
+              height='20px'
+              onClick={() => {
+                setShowImage((showImage) => {
+                  return { ...showImage, show: false }
+                })
+              }}
+            />
+            <div className='profimgview'>
+              <img
+                src={showImage.src}
+                width='100%'
+                // style={{ marginTop: '120px' }}
+              />
+            </div>
+          </div>
         )}
         <div className='profcover'>
           <div
@@ -479,12 +581,26 @@ const Profile = ({
                 }}
               >
                 <label>About </label>
-                {!isSearched && user.isEditable === 'true' && (
+                {!isSearched && !addSummary && (
                   <div
                     style={{
                       width: 'fit-content',
                       marginLeft: 'auto',
                       cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      setAddSummary(true)
+                      if (
+                        user.about !== undefined &&
+                        user.about !== null &&
+                        user.about !== ''
+                      ) {
+                        setTimeout(() => {
+                          aboutEditRef.current.focus()
+                          aboutEditRef.current.textContent = user.about
+                          setAboutField(user.about)
+                        }, 300)
+                      }
                     }}
                   >
                     <img
@@ -501,23 +617,93 @@ const Profile = ({
                 style={{
                   margin: '15px auto',
                   padding: '10px',
+                  fontFamily: 'monospace',
+                  maxHeight: '300px',
                   fontSize: '.8rem',
                   border: 'solid rgba(210, 210, 210, 1) 2px',
                   borderRadius: '10px',
                 }}
               >
-                {user.about !== null && user.about !== undefined ? (
-                  <label>{user.about}</label>
-                ) : (
-                  <label
-                    style={{
-                      color: 'blue',
-                      cursor: 'pointer',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {'Add a Summary about you'}
-                  </label>
+                {!addSummary &&
+                  (user.about !== null &&
+                  user.about !== undefined &&
+                  user.about !== '' ? (
+                    <label>{user.about}</label>
+                  ) : (
+                    <label
+                      style={{
+                        color: 'blue',
+                        cursor: 'pointer',
+                        fontWeight: 'bold',
+                      }}
+                      onClick={() => {
+                        setAddSummary(true)
+                        setTimeout(() => {
+                          aboutEditRef.current.focus()
+                        }, 300)
+                      }}
+                    >
+                      {'Add a Summary about you'}
+                    </label>
+                  ))}
+                {addSummary && (
+                  <div>
+                    <div
+                      style={{
+                        maxHeight: '300px',
+                        padding: '10px',
+                        margin: 'auto',
+                        outline: 'none',
+                        overflowY: 'auto',
+                        fontSize: '.8rem',
+                      }}
+                      ref={aboutEditRef}
+                      contentEditable='true'
+                      placeholder='Add a summary about you'
+                      onInput={(e) => {
+                        const value = e.currentTarget.textContent
+                        setAboutField(value)
+                      }}
+                    ></div>
+                    <div style={{ display: 'flex' }}>
+                      <div
+                        style={{
+                          width: 'fit-content',
+                          marginRight: 'auto',
+                          color: 'red',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => {
+                          setAddSummary(false)
+                        }}
+                      >
+                        <label style={{ cursor: 'pointer' }}>Cancel</label>
+                      </div>
+                      <div
+                        style={{
+                          width: 'fit-content',
+                          marginLeft: 'auto',
+                          color: 'green',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                        }}
+                        onClick={async () => {
+                          const updated = await updateOneUser({
+                            findBy: { matricNo: user.matricNo },
+                            update: { about: aboutField },
+                          })
+                          if (updated) {
+                            user.about = aboutField
+                            setAboutField('')
+                            setAddSummary(false)
+                          }
+                        }}
+                      >
+                        <label style={{ cursor: 'pointer' }}>Done</label>
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>

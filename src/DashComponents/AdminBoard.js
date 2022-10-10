@@ -15,7 +15,7 @@ const AdminBoard = ({ closeAdminBoard, currentUser, server }) => {
       <Profile
         server={server}
         user={user}
-        padding={'10px'}
+        padding={'0px'}
         backgroundColor={'rgba(0,0,0,0.8)'}
         clickAdmin={false}
         overflow={'auto'}
@@ -80,7 +80,7 @@ const AdminBoard = ({ closeAdminBoard, currentUser, server }) => {
           }}
           src={close}
           alt='close'
-          height='30px'
+          height='20px'
         />
         <div style={{ position: 'absolute', top: '10px', width: '100%' }}>
           <ul className='admintopbar' onClick={handleAdminBarItem}>
@@ -101,7 +101,7 @@ const AdminBoard = ({ closeAdminBoard, currentUser, server }) => {
           style={{ marginTop: '100px', flexWrap: 'wrap', overflowY: 'auto' }}
         >
           {viewBack && (
-            <label
+            <div
               style={{
                 fontFamily: 'monospace',
                 fontSize: '.9rem',
@@ -109,13 +109,18 @@ const AdminBoard = ({ closeAdminBoard, currentUser, server }) => {
                 padding: '5px',
                 borderRadius: '5px',
                 color: 'lightgreen',
-                margin: '20px',
-                cursor: 'pointer',
+                margin: '10px',
               }}
-              onClick={goBack}
             >
-              Back
-            </label>
+              <label
+                style={{
+                  cursor: 'pointer',
+                }}
+                onClick={goBack}
+              >
+                {'<< Back'}
+              </label>
+            </div>
           )}
           {view}
         </div>
