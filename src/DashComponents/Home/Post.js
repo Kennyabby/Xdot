@@ -361,7 +361,6 @@ const Post = ({
                   left: '10px',
                   padding: '5px',
                   borderRadius: '5px',
-                  backgroundColor: 'rgba(230,230,230,0.7)',
                   cursor: 'pointer',
                 }}
                 src={back}

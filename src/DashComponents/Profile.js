@@ -134,7 +134,7 @@ const Profile = ({
     const name = e.target.getAttribute('name')
     if (name === 'viewprof') {
       setShowImage((showImage) => {
-        return { ...showImage, show: true, src: profimg }
+        return { ...showImage, show: true, src: userImgUrl }
       })
     } else if (name === 'viewcover') {
       setShowImage((showImage) => {
