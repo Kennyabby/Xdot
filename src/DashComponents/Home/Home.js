@@ -16,6 +16,7 @@ const Home = ({
   setBodyLeft,
   setShowNavigator,
   showHomeToggle,
+  viewRef,
 }) => {
   const [view, setView] = useState('')
   const [showUpdates, setShowUpdates] = useState(true)
@@ -45,6 +46,7 @@ const Home = ({
           showHomeToggle={(show) => {
             showHomeToggle(show)
           }}
+          viewRef={viewRef}
         />
       )
     }

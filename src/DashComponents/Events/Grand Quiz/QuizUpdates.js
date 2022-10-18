@@ -5,7 +5,13 @@ import { motion } from 'framer-motion'
 
 import QuizPost from './QuizPost'
 
-const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
+const QuizUpdates = ({
+  user,
+  showQuizPage,
+  server,
+  showHomeToggle,
+  viewRef,
+}) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
   const lastPostRef = useRef(null)
@@ -13,6 +19,7 @@ const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
   const [lastUpdatedPost, setLastUpdatedPost] = useState('')
   const [showPostUpdatesStatus, setShowPostUpdatesStatus] = useState(true)
   const [gotUpdates, setGotUpdates] = useState(false)
+  const [scrollCompleted, setScrollCompleted] = useState(true)
   const [postUpdatesStatus, setPostUpdatesStatus] = useState('')
   const [highlightedPost, setHighlightedPost] = useState(null)
   const [currentPostShow, setCurrentPostShow] = useState(null)
@@ -64,7 +71,12 @@ const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
       setGotUpdates(true)
     } catch (TypeError) {}
   }
-  useEffect(() => {}, [lastUpdatedPost])
+  useEffect(() => {
+    viewRef.current.addEventListener('scroll', checkLastPostDimension)
+    return () => {
+      viewRef.current.removeEventListener('scroll', checkLastPostDimension)
+    }
+  }, [lastPostDimension])
   useEffect(() => {
     window.addEventListener('scroll', checkLastPostDimension)
     return () => {
@@ -74,9 +86,14 @@ const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
   useEffect(() => {
     getNewUpdates(user.lastQuizUpdate)
   }, [user])
+
   useEffect(async () => {
-    if (highlightedPost === null) {
-      window.sessionStorage.setItem('pageOffset', window.pageYOffset)
+    if (highlightedPost === null && scrollCompleted) {
+      if (window.innerWidth <= 700) {
+        window.sessionStorage.setItem('pageOffset', window.pageYOffset)
+      } else {
+        window.sessionStorage.setItem('pageOffset', viewRef.current.scrollTop)
+      }
     }
     if (
       lastPostDimension < window.innerHeight &&
@@ -104,7 +121,9 @@ const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
           const resp = await fetch(server + '/getUpdates', opts)
           const response = await resp.json()
           const updt = response.updates
-          setLastUpdatedPost(updt[updt.length - 1])
+          if (updt.length) {
+            setLastUpdatedPost(updt[updt.length - 1])
+          }
           if (updt.length < maxNumberOfRequest) {
             setShowPostUpdatesStatus(true)
             setPostUpdatesStatus('No More Updates Available!')
@@ -240,6 +259,7 @@ const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
                       showHomeToggle={(show) => {
                         showHomeToggle(show)
                       }}
+                      viewRef={viewRef}
                     />
                   )
                 })
@@ -270,6 +290,10 @@ const QuizUpdates = ({ user, showQuizPage, server, showHomeToggle }) => {
                   showHomeToggle={(show) => {
                     showHomeToggle(show)
                   }}
+                  setScrollCompleted={(scrollStatus) => {
+                    setScrollCompleted(scrollStatus)
+                  }}
+                  viewRef={viewRef}
                 />
               )}
             </div>

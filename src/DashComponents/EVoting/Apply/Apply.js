@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import Page from './Page/Page'
 import Form from './Form/Form'
 
-const Apply = ({ server, user }) => {
+const Apply = ({ server, user, viewRef, winSize }) => {
   const [isViewPage, setIsViewPage] = useState(false)
   const [isViewForm, setIsViewForm] = useState(false)
   const [view, setView] = useState('')
@@ -25,6 +25,8 @@ const Apply = ({ server, user }) => {
             window.sessionStorage.setItem('fm-z-cr-pg', 'true')
             setIsViewForm(true)
           }}
+          viewRef={viewRef}
+          winSize={winSize}
         />
       )
     }
@@ -42,6 +44,8 @@ const Apply = ({ server, user }) => {
             window.sessionStorage.removeItem('fm-z-cr-pg')
             setIsViewPage(true)
           }}
+          viewRef={viewRef}
+          winSize={winSize}
         />
       )
     }

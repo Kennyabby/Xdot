@@ -3,10 +3,10 @@
   position: fixed;
   left: auto;
   right: auto;
-  background-color: rgba(235, 235, 235, 1);
+  background-color: rgba(245, 245, 245, 1);
   border: solid rgba(180, 180, 180, 1) 3px;
   border-radius: 25px;
-  padding: 2px 0px;
+  padding: 0px 0px;
   color: black;
   width: 50%;
   bottom: 5px;
@@ -43,6 +43,15 @@
   text-align: center;
   cursor: pointer;
 }
+.postcover {
+  position: fixed;
+  top: 0px;
+  left: 202px;
+  background-color: white;
+  padding-top: 70px;
+  width: 'max-content';
+  height: 100vh;
+}
 [contentEditable='true']:empty:before {
   content: attr(placeholder);
   color: '###8';
@@ -50,6 +59,9 @@
   font-style: italic;
 }
 @media screen and (max-width: 700px) {
+  .postcover {
+    left: 0px;
+  }
   .saysm {
     border-radius: 20px;
     width: 80%;
@@ -76,6 +88,8 @@
   }
   .commentinput {
     text-align: left;
+    left: auto;
+    right: auto;
     position: unset;
     width: 95%;
     bottom: auto;

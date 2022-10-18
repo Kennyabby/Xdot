@@ -52,19 +52,20 @@
   font-size: 0.6rem;
 }
 .userbar {
-  width: 200px;
+  width: 205px;
   z-index: 2;
   color: white;
   display: block;
 }
 .usersidebar {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
   margin: 0px;
   z-index: 2;
   padding-left: 2px;
   width: 200px;
-  background-color: rgba(15, 15, 70);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-right: solid rgba(230, 230, 230, 1) 3px;
   height: 100vh;
   overflow-y: auto;
   list-style: none;
@@ -77,7 +78,7 @@
   margin: auto;
   padding: 0px;
   border-radius: 10px;
-  color: white;
+  color: darkorange;
   float: left;
   text-align: left;
   width: 195px;
@@ -88,7 +89,7 @@
   flex-wrap: wrap;
   display: flex;
   padding: 10px;
-  color: white;
+  color: darkorange;
   padding-top: 20px;
   float: left;
   text-decoration: none;
@@ -103,10 +104,13 @@
   font-size: 1.2rem;
   margin-bottom: 70px;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.9);
   padding: 7px;
   border-radius: 20px;
-  box-shadow: orange 0px 0px 7px;
+  box-shadow: darkorange 0px 0px 4px;
 }
 .userleftbottom {
   display: block;
@@ -133,9 +137,10 @@
   cursor: pointer;
   padding: 2px;
   border-radius: 50%;
+  background-color: rgba(29, 29, 30, 0.8);
   /* box-shadow: 0px 0px 9px white; */
   border: solid rgba(0, 0, 0, 0) 2px;
-  color: white;
+  color: darkorange;
   outline: none;
 }
 .srch {
@@ -203,6 +208,7 @@
   z-index: 2;
   padding: 10px;
   height: fit-content;
+  color: darkorange;
   box-shadow: 0px 0px 7px rgba(130, 130, 140, 1);
   margin-bottom: 15px;
   cursor: pointer;
@@ -433,6 +439,8 @@
   }
   .usersidebar {
     position: absolute;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
     height: 90vh;
     z-index: 0;
   }

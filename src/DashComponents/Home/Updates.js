@@ -16,7 +16,7 @@ import settings from './assets/settings.jpg'
 import search from './assets/search.png'
 import xdotlogo from './assets/xdotlogo.png'
 
-const Updates = ({ user, server, showHomeToggle }) => {
+const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
   const lastPostRef = useRef(null)
@@ -24,6 +24,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
   const [touchEnd, setTouchEnd] = useState(null)
   const [lastPostDimension, setLastPostDimension] = useState('')
   const [lastUpdatedPost, setLastUpdatedPost] = useState('')
+  const [scrollCompleted, setScrollCompleted] = useState(true)
   const [showPostUpdatesStatus, setShowPostUpdatesStatus] = useState(false)
   const [showPostPage, setShowPostPage] = useState(false)
   const [gotUpdates, setGotUpdates] = useState(false)
@@ -114,6 +115,12 @@ const Updates = ({ user, server, showHomeToggle }) => {
     } catch (TypeError) {}
   }
   useEffect(() => {
+    viewRef.current.addEventListener('scroll', checkLastPostDimension)
+    return () => {
+      viewRef.current.removeEventListener('scroll', checkLastPostDimension)
+    }
+  }, [lastPostDimension])
+  useEffect(() => {
     window.addEventListener('scroll', checkLastPostDimension)
     return () => {
       window.removeEventListener('scroll', checkLastPostDimension)
@@ -122,9 +129,14 @@ const Updates = ({ user, server, showHomeToggle }) => {
   useEffect(() => {
     getNewUpdates(user.lastPostUpdate)
   }, [user])
+
   useEffect(async () => {
-    if (highlightedPost === null) {
-      window.sessionStorage.setItem('pageOffset', window.pageYOffset)
+    if (highlightedPost === null && scrollCompleted) {
+      if (window.innerWidth <= 700) {
+        window.sessionStorage.setItem('pageOffset', window.pageYOffset)
+      } else {
+        window.sessionStorage.setItem('pageOffset', viewRef.current.scrollTop)
+      }
     }
     if (
       lastPostDimension < window.innerHeight &&
@@ -151,7 +163,9 @@ const Updates = ({ user, server, showHomeToggle }) => {
           const resp = await fetch(server + '/getUpdates', opts)
           const response = await resp.json()
           const updt = response.updates
-          setLastUpdatedPost(updt[updt.length - 1])
+          if (updt.length) {
+            setLastUpdatedPost(updt[updt.length - 1])
+          }
           if (updt.length < maxNumberOfRequest) {
             setShowPostUpdatesStatus(true)
             setPostUpdatesStatus('No More Updates Available!')
@@ -263,8 +277,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
             style={{
               padding: '10px',
               position: 'fixed',
-              top: '5px',
-              zIndex: '1',
+              bottom: '80px',
+              zIndex: '3',
               justifyContent: 'center',
               width: '100vw',
             }}
@@ -313,8 +327,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                  exit={{ opacity: 0, transition: { duration: 0.5 } }}
+                  transition={{ duration: 0.1 }}
+                  exit={{ opacity: 0, transition: { duration: 0.2 } }}
                   style={{
                     position: 'fixed',
                     display: 'flex',
@@ -354,7 +368,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
                     style={{
                       width: '70%',
                       margin: 'auto',
-                      boxShadow: '0px 0px 8px black',
+                      boxShadow:
+                        '-5px -5px 15px rgba(0,0,0,0.1),5px 5px 15px rgba(0,0,0,0.1)',
                       borderRadius: '20px',
                     }}
                   >
@@ -396,7 +411,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
               <Link to='/dashboard/profile'>
                 <div
                   style={{
-                    boxShadow: '0px 0px 7px black',
+                    boxShadow:
+                      '-5px -5px 8px rgba(0,0,0,0.1),5px 5px 8px rgba(0,0,0,0.1)',
                     padding: '3px',
                     borderRadius: '50%',
                     height: '38px',
@@ -411,7 +427,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.7, ease: 'easeOut' }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
                 onClick={() => {
                   setShowPostPage(true)
                 }}
@@ -421,14 +437,6 @@ const Updates = ({ user, server, showHomeToggle }) => {
               </motion.div>
             </div>
             <motion.div
-              initial={{ x: '100vw' }}
-              animate={{ x: 0 }}
-              transition={{
-                duration: 0.5,
-                ease: 'easeInOut',
-                when: 'beforeChildren',
-                staggerChildren: 1,
-              }}
               style={{
                 position: 'relative',
                 margin: '10px 0px',
@@ -485,7 +493,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{
-                        opacity: { duration: 0.6, delay: 0.7 },
+                        opacity: { duration: 0.5 },
                         scale: { duration: 0.3, ease: 'easeOut' },
                       }}
                       whileHover={{ scale: 1.1 }}
@@ -494,7 +502,8 @@ const Updates = ({ user, server, showHomeToggle }) => {
                         width: '100px',
                         height: '130px',
                         backgroundColor: 'white',
-                        boxShadow: '0px 0px 5px rgba(0,0,0,1)',
+                        boxShadow:
+                          '-4px -4px 20px rgba(0,0,0,0.1),4px 4px 20px rgba(0,0,0,0.1)',
                         borderRadius: '10px',
                         textAlign: 'center',
                         justifyContent: 'center',
@@ -504,7 +513,6 @@ const Updates = ({ user, server, showHomeToggle }) => {
                       }}
                     >
                       <label>{item.it}</label>
-
                       <Link
                         key={i}
                         style={{ textDecoration: 'none' }}
@@ -516,7 +524,6 @@ const Updates = ({ user, server, showHomeToggle }) => {
                             height: '90px',
                             padding: '0px',
                             margin: '10px auto',
-                            // marginTop: '20px',
                             backgroundImage: `url(${item.img})`,
                             backgroundSize: 'cover',
                           }}
@@ -582,6 +589,7 @@ const Updates = ({ user, server, showHomeToggle }) => {
                       showHomeToggle={(show) => {
                         showHomeToggle(show)
                       }}
+                      viewRef={viewRef}
                     />
                   )
                 })
@@ -609,6 +617,10 @@ const Updates = ({ user, server, showHomeToggle }) => {
                   showHomeToggle={(show) => {
                     showHomeToggle(show)
                   }}
+                  setScrollCompleted={(scrollStatus) => {
+                    setScrollCompleted(scrollStatus)
+                  }}
+                  viewRef={viewRef}
                 />
               )}
             </div>

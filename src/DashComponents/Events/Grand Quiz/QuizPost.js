@@ -33,9 +33,15 @@ const QuizPost = ({
   newPostShow,
   showQuizPage,
   showHomeToggle,
+  setScrollCompleted,
+  viewRef,
 }) => {
   const commentInputRef = useRef(null)
+  const reactActionRef = useRef(null)
+  const reactionsRef = useRef(null)
   const [postUser, setPostUser] = useState({ userName: 'Napsite' })
+  const [leftOffset, setLeftOffset] = useState('')
+  const [topOffset, setTopOffset] = useState('')
   const [quiz, setQuiz] = useState({})
   const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [isReacted, setIsReacted] = useState(false)
@@ -61,6 +67,34 @@ const QuizPost = ({
     { name: 'sad', src: sad },
     { name: 'angry', src: angry },
   ]
+  useEffect(() => {
+    if (window.innerWidth <= 700) {
+      setLeftOffset(String(-((window.innerWidth - 300) / 2 + 100)) + 'px')
+    } else {
+      setLeftOffset(String(-((window.innerWidth - 300) / 2 - 100)) + 'px')
+    }
+    setTopOffset(
+      String(reactActionRef.current.getBoundingClientRect().top - 140) + 'px'
+    )
+  }, [])
+
+  const watchScroll = () => {
+    setTopOffset(
+      String(reactActionRef.current.getBoundingClientRect().top - 140) + 'px'
+    )
+  }
+  useEffect(() => {
+    window.addEventListener('scroll', watchScroll)
+    return () => {
+      window.removeEventListener('scroll', watchScroll)
+    }
+  }, [topOffset])
+  useEffect(() => {
+    viewRef.current.addEventListener('scroll', watchScroll)
+    return () => {
+      viewRef.current.removeEventListener('scroll', watchScroll)
+    }
+  }, [topOffset])
   useEffect(async () => {
     if (postUser.matricNo !== undefined && !imgLoaded) {
       const opts1 = {
@@ -337,7 +371,10 @@ const QuizPost = ({
           marginBottom: '10px',
           padding: '0px',
           backgroundColor: 'rgba(255,255,255,1)',
-          borderBottom: 'solid rgba(200,200,200,1) 4px',
+          borderBottom:
+            status === undefined
+              ? 'solid rgba(200,200,200,1) 5px'
+              : 'solid rgba(200,200,200,1) 0px',
         }}
       >
         {status !== undefined ? (
@@ -349,8 +386,14 @@ const QuizPost = ({
                   var pageOffset = Number(
                     window.sessionStorage.getItem('pageOffset')
                   )
+                  setScrollCompleted(false)
                   setTimeout(() => {
-                    window.scrollTo(0, pageOffset)
+                    if (window.innerWidth <= 700) {
+                      window.scrollTo(0, pageOffset)
+                    } else {
+                      viewRef.current.scrollTop = pageOffset
+                    }
+                    setScrollCompleted(true)
                   }, 300)
                 } else {
                   setPostShow(null)
@@ -447,27 +490,25 @@ const QuizPost = ({
             </div>
             <div
               style={{
-                textAlign: 'left',
-                justifyContent: 'left',
-                padding: '20px',
-                margin: '0px',
                 backgroundColor: 'rgba(245,245,255,1)',
+                paddingBottom: '20px',
+                paddingTop: '10px',
+                justifyContent: 'center',
+                textAlign: 'center',
               }}
             >
               <div
                 style={{
                   textAlign: 'left',
                   justifyContent: 'left',
-                  maxWidth: '80%',
+                  width: '80%',
                   overflowX: 'auto',
                   margin: 'auto',
                   fontSize: '13px',
-                  marginLeft: '0px',
-                  marginBottom: '10px',
                   padding: '20px',
                   position: 'relative',
                   backgroundColor: 'rgba(19,19,100,1)',
-                  boxShadow: 'rgba(19,19,150) 0px 0px 9px',
+                  // boxShadow: 'rgba(19,19,150) 0px 0px 9px',
                   color: 'white',
                   borderRadius: '20px',
                 }}
@@ -550,7 +591,17 @@ const QuizPost = ({
                   </button>
                 </div>
               </div>
-              <div style={{ textAlign: 'left' }}>
+              <div
+                style={{
+                  textAlign: 'left',
+                  padding: '10px',
+                  margin: '15px',
+                  marginTop: '20px',
+                  borderRadius: '10px',
+                  backgroundColor: 'white',
+                  textAlign: 'left',
+                }}
+              >
                 <label>{update.quizComment}</label>
               </div>
             </div>
@@ -636,6 +687,7 @@ const QuizPost = ({
                 }}
               >
                 <div
+                  ref={reactActionRef}
                   style={{
                     position: 'absolute',
                     left: '0px',
@@ -651,70 +703,108 @@ const QuizPost = ({
                   }}
                   name='react'
                 >
-                  {showReactions ? (
-                    <div
-                      onClick={(e) => {
-                        const name = e.target.getAttribute('name')
-                        if (name !== undefined && name !== null) {
+                  <AnimatePresence>
+                    {showReactions && (
+                      <div
+                        style={{
+                          position: 'fixed',
+                          left: '0px',
+                          top: '0px',
+                          zIndex: '3',
+                          width: '100vw',
+                          height: '100%',
+                        }}
+                        onClick={() => {
                           setShowReactions(false)
-                          emojis.forEach((emoji, i) => {
-                            if (emoji.name === name) {
-                              setPostReaction(emoji)
-                            }
-                          })
-                          updateReactions({
-                            rct: 'react',
-                            reaction: name,
-                            reacted: false,
-                          })
-                        }
-                      }}
-                      style={{
-                        flexWrap: 'wrap',
-                        position: 'absolute',
-                        top: '0px',
-                        zIndex: '1',
-                        justifyContent: 'center',
-                        width: '300px',
-                        gap: '10px',
-                        display: 'flex',
-                        padding: '10px',
-                        borderRadius: '10px',
-                        backgroundColor: 'rgba(0,0,0,0.6)',
-                      }}
-                    >
-                      <div>
-                        <img
-                          onClick={() => {
+                        }}
+                        onTouchStart={() => {
+                          setTimeout(() => {
                             setShowReactions(false)
+                          }, 500)
+                        }}
+                      >
+                        <motion.div
+                          ref={reactionsRef}
+                          initial={{
+                            scale: 0,
+                            opacity: 0,
+                            y: topOffset,
+                            x: leftOffset,
                           }}
-                          src={close}
-                          alt='close reactions'
+                          animate={{ scale: 1, y: 0, x: 0, opacity: 1 }}
+                          transition={{ duration: 0.7, ease: 'easeOut' }}
+                          exit={{
+                            scale: 0,
+                            opacity: 0,
+                            y: topOffset,
+                            x: leftOffset,
+                            transition: { duration: 0.3 },
+                          }}
+                          onClick={(e) => {
+                            const name = e.target.getAttribute('name')
+                            if (name !== undefined && name !== null) {
+                              setShowReactions(false)
+                              emojis.forEach((emoji, i) => {
+                                if (emoji.name === name) {
+                                  setPostReaction(emoji)
+                                }
+                              })
+                              updateReactions({
+                                rct: 'react',
+                                reaction: name,
+                                reacted: false,
+                              })
+                            }
+                          }}
                           style={{
-                            position: 'absolute',
-                            top: '7px',
-                            left: '7px',
+                            position: 'relative',
+                            flexWrap: 'wrap',
+                            zIndex: '3',
+                            justifyContent: 'center',
+                            gap: '10px',
+                            width: '300px',
+                            margin: '100px auto',
+                            display: 'flex',
+                            padding: '10px',
+                            borderRadius: '10px',
+                            backgroundColor: 'rgba(0,0,0,0.7)',
                           }}
-                          height='15px'
-                        />
+                        >
+                          <div>
+                            <img
+                              onClick={() => {
+                                setShowReactions(false)
+                              }}
+                              src={close}
+                              alt='close reactions'
+                              style={{
+                                position: 'absolute',
+                                top: '7px',
+                                left: '7px',
+                                zIndex: '3',
+                              }}
+                              height='15px'
+                            />
+                          </div>
+                          {emojis.map((rct, i) => {
+                            return (
+                              <img
+                                key={i}
+                                name={rct.name}
+                                src={rct.src}
+                                alt='reaction'
+                                style={{
+                                  padding: '10px',
+                                  cursor: 'pointer',
+                                }}
+                                height='40px'
+                              />
+                            )
+                          })}
+                        </motion.div>
                       </div>
-                      {emojis.map((rct, i) => {
-                        return (
-                          <img
-                            key={i}
-                            name={rct.name}
-                            src={rct.src}
-                            alt='reaction'
-                            style={{
-                              padding: '10px',
-                              cursor: 'pointer',
-                            }}
-                            height='40px'
-                          />
-                        )
-                      })}
-                    </div>
-                  ) : undefined}
+                    )}
+                  </AnimatePresence>
                   <div style={{ display: 'flex' }}></div>
                   <img
                     name='react'

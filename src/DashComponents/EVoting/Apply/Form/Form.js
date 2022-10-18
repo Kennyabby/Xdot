@@ -5,7 +5,7 @@ import FirstChild from './FirstChild'
 import SecondChild from './SecondChild'
 import ThirdChild from './ThirdChild'
 
-const Form = ({ server, viewPage, user, data }) => {
+const Form = ({ server, viewPage, user, data, viewRef }) => {
   const firstNav = useRef(null)
   const secondNav = useRef(null)
   const thirdNav = useRef(null)
@@ -28,6 +28,7 @@ const Form = ({ server, viewPage, user, data }) => {
   const [firstOffset, setFirstOffset] = useState(0)
   const [secondOffset, setSecondOffset] = useState(size)
   const [thirdOffset, setThirdOffset] = useState(2 * size)
+  const [pageYOffset, setPageYOffset] = useState(window.pageYOffset)
   const [firstTop, setFirstTop] = useState(0)
   const [secondTop, setSecondTop] = useState(0)
   const [thirdTop, setThirdTop] = useState(0)
@@ -52,7 +53,9 @@ const Form = ({ server, viewPage, user, data }) => {
     // console.log(fields)
   }, [fields])
   const checkPageYOffset = () => {
-    const pageYOffset = window.pageYOffset
+    setPageYOffset(window.pageYOffset)
+  }
+  useEffect(() => {
     if (pageYOffset > 310) {
       backRef.current.style.display = 'none'
       navRef.current.style.position = 'fixed'
@@ -63,19 +66,7 @@ const Form = ({ server, viewPage, user, data }) => {
       navRef.current.style.position = 'relative'
       navRef.current.style.zIndex = '0'
     }
-    // const firstRef = firstChildRef.current.getBoundingClientRect()
-    // const secondRef = secondChildRef.current.getBoundingClientRect()
-    // const thirdRef = thirdChildRef.current.getBoundingClientRect()
-    // if (isShowFirst) {
-    //   setFTop(firstRef.top)
-    // }
-    // if (isShowSecond) {
-    //   setSTop(secondRef.top)
-    // }
-    // if (isShowThird) {
-    //   setTTop(thirdRef.top)
-    // }
-  }
+  }, [pageYOffset])
   const checkSize = () => {
     setSize(window.innerWidth)
   }
@@ -84,7 +75,8 @@ const Form = ({ server, viewPage, user, data }) => {
     return () => {
       window.removeEventListener('scroll', checkPageYOffset)
     }
-  }, [])
+  }, [pageYOffset])
+
   useEffect(() => {
     window.addEventListener('resize', checkSize)
     return () => {
@@ -291,30 +283,31 @@ const Form = ({ server, viewPage, user, data }) => {
           <div
             style={{
               paddingTop: '70px',
-
+              textAlign: 'center',
               backgroundColor: 'white',
             }}
           >
-            <div
-              style={{
-                padding: '10px 15px',
-                margin: 'auto',
-                marginTop: '20px',
-                fontFamily: 'fantasy',
-                width: 'fit-content',
-                fontSize: '1.3rem',
-                borderRadius: '10px',
-                boxShadow: '0px 0px 9px',
-                letterSpacing: '.2rem',
-              }}
-            >
-              <label>{data}</label>
+            <div style={{ margin: '20px', marginBottom: '50px' }}>
+              <label
+                style={{
+                  padding: '10px 15px',
+                  margin: '20px 10px',
+                  fontFamily: 'fantasy',
+                  width: 'fit-content',
+                  fontSize: '1.3rem',
+                  borderRadius: '10px',
+                  boxShadow: '0px 0px 9px',
+                  letterSpacing: '.2rem',
+                }}
+              >
+                {data}
+              </label>
             </div>
             <div
               style={{
                 borderRadius: '50%',
-                height: '100px',
-                width: '100px',
+                height: '120px',
+                width: '120px',
                 margin: 'auto',
                 marginTop: '30px',
                 boxShadow: '0px 0px 7px black',
@@ -325,6 +318,8 @@ const Form = ({ server, viewPage, user, data }) => {
                 width: 'fit-content',
                 margin: '10px auto',
                 padding: '5px 10px',
+                color: 'green',
+                backgroundColor: 'white',
                 border: 'solid green 1px',
                 borderRadius: '10px',
                 fontSize: '.8rem',

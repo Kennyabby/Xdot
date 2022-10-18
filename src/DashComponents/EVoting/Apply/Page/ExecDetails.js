@@ -32,11 +32,13 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
 
       if (!isCurrentSession) {
         nw.currentSession = currentSession
+        nw.createdAt = Date.now()
         body = body.concat([nw])
       }
     } else {
       body = []
       nw.currentSession = currentSession
+      nw.createdAt = Date.now()
       body = body.concat([nw])
     }
     const votingApplication = body
@@ -124,8 +126,10 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
         style={{
           fontFamily: 'monospace',
           fontSize: '1rem',
-          backgroundColor: 'rgba(220,220,220)',
-          boxShadow: '0px 0px 7px black',
+          backgroundColor: 'rgba(235,235,235)',
+          border: 'solid rgba(200,200,200,1) 1px',
+          boxShadow:
+            '-7px -7px 9px rgba(0,0,0,0.05),7px 7px 9px rgba(0,0,0,0.05)',
           borderRadius: '5px',
           paddingBottom: '15px',
           margin: '7px',

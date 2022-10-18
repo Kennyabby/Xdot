@@ -236,11 +236,12 @@ const PostCommentReply = ({
                 style={{
                   cursor: 'pointer',
                   borderRadius: '50%',
-                  border: 'solid rgba(0,0,0,0.6) 2px',
+                  backgroundColor: 'rgba(235,235,235,0.9)',
+                  border: 'solid rgba(235,235,235,0.9) 3px',
                 }}
                 src={commentReaction.src}
                 alt='reaction'
-                height={'15px'}
+                height={'18px'}
               />
             ) : undefined}
           </div>

@@ -52,6 +52,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   const homeRef = useRef(null)
   const chatsRef = useRef(null)
   const notificationsRef = useRef(null)
+  const viewRef = useRef(null)
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
   const minSwipeDistance = 50
@@ -239,6 +240,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           showHomeToggle={(show) => {
             setShowHomeToggle(show)
           }}
+          user={user}
+          viewRef={viewRef}
         />
       )
     } else if (id === 'notifications') {
@@ -289,6 +292,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           showHomeToggle={(show) => {
             setShowHomeToggle(show)
           }}
+          viewRef={viewRef}
         />
       )
     } else {
@@ -309,6 +313,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
+              viewRef={viewRef}
             />
           )
         } else if (id === 'todolist') {
@@ -319,6 +324,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
+              viewRef={viewRef}
             />
           )
         } else if (id === 'quizapp') {
@@ -329,6 +335,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
+              viewRef={viewRef}
             />
           )
         } else {
@@ -359,6 +366,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               showHomeToggle={(show) => {
                 setShowHomeToggle(show)
               }}
+              viewRef={viewRef}
             />
           )
         } else if (id === 'dailypuzzles') {
@@ -368,6 +376,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
+              viewRef={viewRef}
             />
           )
         } else if (id === 'studytable') {
@@ -377,6 +386,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
+              viewRef={viewRef}
             />
           )
         } else {
@@ -404,6 +414,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
+              viewRef={viewRef}
+              winSize={winSize}
             />
           )
         } else if (id === 'vote') {
@@ -414,6 +426,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
+              viewRef={viewRef}
+              winSize={winSize}
             />
           )
         } else {
@@ -428,6 +442,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               showHomeToggle={(show) => {
                 setShowHomeToggle(show)
               }}
+              user={user}
+              viewRef={viewRef}
             />
           )
         }
@@ -518,285 +534,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               showHomeToggle={(show) => {
                 setShowHomeToggle(show)
               }}
+              viewRef={viewRef}
             />
           )
         }
       }
     }
-  }, [id])
+  }, [id, user])
 
-  useEffect(() => {
-    if (id === 'profile') {
-      setView(
-        <Profile
-          server={server}
-          chatrf={chatsRef}
-          homerf={homeRef}
-          notificationsrf={notificationsRef}
-          user={user}
-          setBodyLeft={setBodyLeft('150px')}
-          setShowNavigator={setShowNavigator(true)}
-          padding={'0px'}
-          margin={'0px'}
-          clickAdmin={true}
-          isSearched={false}
-          showHomeToggle={(show) => {
-            setShowHomeToggle(show)
-          }}
-        />
-      )
-    } else if (id === undefined) {
-      setView(
-        <Home
-          server={server}
-          user={user}
-          chatrf={chatsRef}
-          homerf={homeRef}
-          notificationsrf={notificationsRef}
-          setBodyLeft={() => {
-            setBodyLeft('150px')
-          }}
-          setShowNavigator={() => {
-            setShowNavigator(true)
-          }}
-          setShowNav={setShowNav(false)}
-          showHomeToggle={(show) => {
-            setShowHomeToggle(show)
-          }}
-        />
-      )
-    }
-    if (rootView === 'tasks') {
-      setShowHomeToggle(true)
-      if (id === 'cgpa') {
-        setView(
-          <CgpaCalc
-            server={server}
-            user={user}
-            updateUser={() => {
-              fetchUserAPI({
-                data: { matricNo: user.matricNo },
-                req: 'getUserDetails',
-              })
-            }}
-            winSize={winSize}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else if (id === 'todolist') {
-        setView(
-          <TodoList
-            server={server}
-            user={user}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else if (id === 'quizapp') {
-        setView(
-          <QuizApp
-            server={server}
-            user={user}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else {
-        setView(
-          <Tasks
-            server={server}
-            setBodyLeft={setBodyLeft('150px')}
-            chatrf={chatsRef}
-            homerf={homeRef}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-            showHomeToggle={(show) => {
-              setShowHomeToggle(show)
-            }}
-          />
-        )
-      }
-    } else if (rootView === 'events') {
-      setShowHomeToggle(true)
-      if (id === 'grandquiz') {
-        setView(
-          <GrandQuiz
-            server={server}
-            user={user}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-            showHomeToggle={(show) => {
-              setShowHomeToggle(show)
-            }}
-          />
-        )
-      } else if (id === 'dailypuzzles') {
-        setView(
-          <DailyPuzzles
-            server={server}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else if (id === 'studytable') {
-        setView(
-          <StudyTable
-            server={server}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else {
-        setView(
-          <Events
-            server={server}
-            setBodyLeft={setBodyLeft('150px')}
-            chatrf={chatsRef}
-            homerf={homeRef}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-            showHomeToggle={(show) => {
-              setShowHomeToggle(show)
-            }}
-          />
-        )
-      }
-    } else if (rootView === 'e-voting') {
-      setShowHomeToggle(true)
-      if (id === 'apply') {
-        setView(
-          <Apply
-            server={server}
-            user={user}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else if (id === 'vote') {
-        setView(
-          <Vote
-            user={user}
-            server={server}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else {
-        setView(
-          <EVoting
-            server={server}
-            chatrf={chatsRef}
-            homerf={homeRef}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-            showHomeToggle={(show) => {
-              setShowHomeToggle(show)
-            }}
-          />
-        )
-      }
-    } else if (rootView === 'settings') {
-      setShowHomeToggle(true)
-      if (id === 'admin') {
-        setView(
-          <Admin
-            server={server}
-            user={user}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else if (id === 'messaging') {
-        setView(
-          <Messaging
-            server={server}
-            user={user}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else if (id === 'notifier') {
-        setView(
-          <Notifier
-            server={server}
-            user={user}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else if (id === 'preferences') {
-        setView(
-          <Preferences
-            server={server}
-            user={user}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else if (id === 'privacy') {
-        setView(
-          <Privacy
-            server={server}
-            user={user}
-            setBodyLeft={setBodyLeft('150px')}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-          />
-        )
-      } else {
-        setView(
-          <Settings
-            server={server}
-            setBodyLeft={setBodyLeft('150px')}
-            chatrf={chatsRef}
-            homerf={homeRef}
-            notificationsrf={notificationsRef}
-            setShowNavigator={setShowNavigator(true)}
-            setShowNav={setShowNav(false)}
-            showHomeToggle={(show) => {
-              setShowHomeToggle(show)
-            }}
-          />
-        )
-      }
-    } else {
-      if (rootView !== undefined) {
-        setView(
-          <Home
-            server={server}
-            user={user}
-            chatrf={chatsRef}
-            homerf={homeRef}
-            notificationsrf={notificationsRef}
-            setBodyLeft={() => {
-              setBodyLeft('150px')
-            }}
-            setShowNavigator={() => {
-              setShowNavigator(true)
-            }}
-            setShowNav={setShowNav(false)}
-            showHomeToggle={(show) => {
-              setShowHomeToggle(show)
-            }}
-          />
-        )
-      }
-    }
-  }, [user])
   useEffect(() => {
     labelRefs.map((elem) => {
       if (elem !== null && elem.current !== null) {
@@ -878,17 +623,16 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   useEffect(async () => {
     var uid = window.sessionStorage.getItem('user-id')
     var sess = 0
-    if (uid !== null) {
-      uid.split('').forEach((elem) => {
+    if (userId !== null) {
+      userId.split('').forEach((elem) => {
         sess += elem.codePointAt(0)
       })
       const sesn = window.sessionStorage.getItem('sess-recg-id')
       const session = window.sessionStorage.getItem('idt-curr-usr')
       if (sesn !== null && session !== null) {
         if (sesn / session === sess) {
-          fetchUserAPI({ data: { sessionId: uid }, req: 'getUserDetails' })
+          fetchUserAPI({ data: { sessionId: userId }, req: 'getUserDetails' })
         } else {
-          console.log('no')
           setIsNewSession(false)
           history.push('/signin')
           removeSessions()
@@ -904,7 +648,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         uid.split('').forEach((elem) => {
           sess += elem.codePointAt(0)
         })
-        console.log(uid)
         const sesn = window.sessionStorage.getItem('sess-recg-id')
         const session = window.sessionStorage.getItem('idt-curr-usr')
         if (sesn !== null && session !== null) {
@@ -1040,10 +783,12 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                   </AnimatePresence>
                 )}
                 <div
+                  ref={viewRef}
                   onTouchStart={onTouchStart}
                   onTouchMove={onTouchMove}
                   onTouchEnd={onTouchEnd}
                   style={{
+                    backgroundColor: 'rgba(250,250,250,1)',
                     height: winSize > 700 ? '100vh' : 'auto',
                     overflowY: winSize > 700 ? 'auto' : 'none',
                     // margin: '0px auto',

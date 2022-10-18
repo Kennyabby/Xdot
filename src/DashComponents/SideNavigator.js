@@ -162,7 +162,9 @@ const SideNavigator = ({
           className='usersidebar'
           style={{ left: String(xOffset) + 'px' }}
         >
-          <label className='userlefttop'>NAPSITE</label>
+          <Link to='/dashboard' className='userlefttop'>
+            <label style={{ cursor: 'pointer' }}>{'< NAPSITE />'}</label>
+          </Link>
           <li name='profile' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/profile'>
               <div className='userleftitem' name='profile' ref={profileLabel}>

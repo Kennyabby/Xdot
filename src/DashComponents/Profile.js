@@ -32,6 +32,7 @@ const Profile = ({
   const [showProfMenuDrop, setShowProfMenuDrop] = useState(false)
   const [showAllDetails, setShowAllDetails] = useState(false)
   const [showStatus, setShowStatus] = useState('Show All Details')
+  const [aboutSaveStatus, setAboutSaveStatus] = useState('Done')
   const [showAdminBoard, setShowAdminBoard] = useState(false)
   const [showControlOpt, setShowControlOpt] = useState(false)
   const [userImgUrl, setUserImgUrl] = useState(profimg)
@@ -271,7 +272,7 @@ const Profile = ({
               left: '0px',
               backgroundColor: 'rgba(0,0,0,0)',
             }}
-            onTouchEnd={() => {
+            onTouchStart={() => {
               setShowProfMenuDrop(false)
             }}
             onClick={() => {
@@ -289,7 +290,7 @@ const Profile = ({
               left: '0px',
               backgroundColor: 'rgba(0,0,0,0)',
             }}
-            onTouchEnd={() => {
+            onTouchStart={() => {
               setShowControlOpt(false)
             }}
             onClick={() => {
@@ -676,6 +677,7 @@ const Profile = ({
                         }}
                         onClick={() => {
                           setAddSummary(false)
+                          setAboutSaveStatus('Done')
                         }}
                       >
                         <label style={{ cursor: 'pointer' }}>Cancel</label>
@@ -689,18 +691,27 @@ const Profile = ({
                           cursor: 'pointer',
                         }}
                         onClick={async () => {
-                          const updated = await updateOneUser({
-                            findBy: { matricNo: user.matricNo },
-                            update: { about: aboutField },
-                          })
-                          if (updated) {
-                            user.about = aboutField
-                            setAboutField('')
-                            setAddSummary(false)
-                          }
+                          try {
+                            setAboutSaveStatus('Saving...')
+                            const updated = await updateOneUser({
+                              findBy: { matricNo: user.matricNo },
+                              update: { about: aboutField },
+                            })
+                            if (updated) {
+                              setAboutSaveStatus('Saved')
+                              user.about = aboutField
+                              setAboutField('')
+                              setAddSummary(false)
+                              setAboutSaveStatus('Done')
+                            } else {
+                              setAboutSaveStatus('An Error Occured')
+                            }
+                          } catch (TypeError) {}
                         }}
                       >
-                        <label style={{ cursor: 'pointer' }}>Done</label>
+                        <label style={{ cursor: 'pointer' }}>
+                          {aboutSaveStatus}
+                        </label>
                       </div>
                     </div>
                   </div>

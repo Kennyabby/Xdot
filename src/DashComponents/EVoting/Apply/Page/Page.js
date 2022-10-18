@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import ExecDetails from './ExecDetails'
 
 import '../../EVoting.css'
-const Page = ({ server, viewForm, user }) => {
+const Page = ({ server, viewForm, user, winSize }) => {
   const [currentSession, setCurrentSession] = useState('Current Session...')
   const [applicationDetails, setApplicationDetails] = useState({})
   const sessionLabelRef = useRef(null)
@@ -177,9 +177,11 @@ const Page = ({ server, viewForm, user }) => {
     'In the case of withdrawal of any member of the council during his/her tenure due to unforeseen circumstances, a by-election will be conducted by an ad-hoc committee set up by the council within two(2) weeks.',
   ]
 
+  const boxShadow =
+    '-7px -7px 20px rgba(0,0,0,0.1), 7px 7px 20px rgba(0,0,0,0.1)'
   return (
     <>
-      <div>
+      <div style={{ justifyContent: 'center' }}>
         <p
           ref={sessionLabelRef}
           style={{
@@ -191,7 +193,8 @@ const Page = ({ server, viewForm, user }) => {
           {'Session: ' + currentSession}
         </p>
         {applicationDetails.isCompleted !== undefined &&
-        !applicationDetails.isCompleted ? (
+        !applicationDetails.isCompleted &&
+        applicationDetails.currentSession === currentSession ? (
           <motion.div
             initial={{ x: '-100vw', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -200,10 +203,12 @@ const Page = ({ server, viewForm, user }) => {
               opacity: { duration: 0.8, delay: 0.3 },
             }}
             style={{
-              boxShadow: '0px 0px 7px black',
+              boxShadow:
+                '-7px -7px 10px rgba(0,0,90,0.1), 7px 7px 10px rgba(0,0,90,0.1)',
+              width: 'fit-content',
               borderRadius: '10px',
               fontFamily: 'monospace',
-              border: 'solid blue 2px',
+              backgroundColor: 'white',
               fontSize: '1rem',
               margin: '30px',
               marginTop: '40px',
@@ -234,83 +239,95 @@ const Page = ({ server, viewForm, user }) => {
         ) : undefined}
         <div
           style={{
-            textAlign: 'left',
-            margin: '10px',
-            marginTop: '20px',
-            padding: '10px',
-            boxShadow: '0px 0px 8px rgba(49,49,50,1)',
-            borderRadius: '10px',
-            fontFamily: 'monospace',
+            display: 'grid',
+            flexWrap: 'wrap',
+            gridTemplateColumns: winSize > 700 ? 'repeat(2,1fr)' : 'none',
           }}
         >
-          <h2>GUIDELINES</h2>
-          {guidelines.map((guide, id) => {
-            return (
-              <p style={{ fontSize: '.9rem' }} key={id}>
-                {guide}
-              </p>
-            )
-          })}
-        </div>
-        <div
-          style={{
-            textAlign: 'left',
-            margin: '10px',
-            marginTop: '20px',
-            padding: '10px',
-            boxShadow: '0px 0px 8px rgba(49,49,50,1)',
-            borderRadius: '10px',
-            fontFamily: 'monospace',
-          }}
-        >
-          <h2>ELIGIBILITY TO BE VOTED FOR</h2>
-          {eligibilites.map((statement, id) => {
-            return (
-              <p style={{ fontSize: '.9rem' }} key={id}>
-                {statement}
-              </p>
-            )
-          })}
-        </div>
-        <div
-          style={{
-            textAlign: 'left',
-            margin: '10px',
-            marginTop: '20px',
-            padding: '10px',
-            boxShadow: '0px 0px 8px rgba(49,49,50,1)',
-            borderRadius: '10px',
-            fontFamily: 'monospace',
-          }}
-        >
-          <h2>WITHDRAWAL FROM ELECTIONS</h2>
-          {electWithdraws.map((statement, id) => {
-            return (
-              <p style={{ fontSize: '.9rem' }} key={id}>
-                {statement}
-              </p>
-            )
-          })}
-        </div>
-        <div
-          style={{
-            textAlign: 'left',
-            margin: '10px',
-            marginTop: '20px',
-            padding: '10px',
-            boxShadow: '0px 0px 8px rgba(49,49,50,1)',
-            borderRadius: '10px',
-            fontFamily: 'monospace',
-          }}
-        >
-          <h2>ELECTION PETITIONS/BY-ELECTIONS</h2>
-          {byElections.map((statement, id) => {
-            return (
-              <p style={{ fontSize: '.9rem' }} key={id}>
-                {statement}
-              </p>
-            )
-          })}
+          <div
+            style={{
+              textAlign: 'left',
+              margin: '10px',
+              marginTop: '20px',
+              padding: '10px',
+              boxShadow: boxShadow,
+              backgroundColor: 'white',
+              borderRadius: '10px',
+              fontFamily: 'monospace',
+            }}
+          >
+            <h2>GUIDELINES</h2>
+            {guidelines.map((guide, id) => {
+              return (
+                <p style={{ fontSize: '.9rem' }} key={id}>
+                  {guide}
+                </p>
+              )
+            })}
+          </div>
+          <div
+            style={{
+              textAlign: 'left',
+              margin: '10px',
+              marginTop: '20px',
+              padding: '10px',
+              backgroundColor: 'white',
+              boxShadow: boxShadow,
+              borderRadius: '10px',
+              fontFamily: 'monospace',
+            }}
+          >
+            <h2>ELIGIBILITY TO BE VOTED FOR</h2>
+            {eligibilites.map((statement, id) => {
+              return (
+                <p style={{ fontSize: '.9rem' }} key={id}>
+                  {statement}
+                </p>
+              )
+            })}
+          </div>
+          <div
+            style={{
+              textAlign: 'left',
+              margin: '10px',
+              marginTop: '20px',
+              padding: '10px',
+              backgroundColor: 'white',
+              boxShadow: boxShadow,
+              borderRadius: '10px',
+              fontFamily: 'monospace',
+            }}
+          >
+            <h2>WITHDRAWAL FROM ELECTIONS</h2>
+            {electWithdraws.map((statement, id) => {
+              return (
+                <p style={{ fontSize: '.9rem' }} key={id}>
+                  {statement}
+                </p>
+              )
+            })}
+          </div>
+          <div
+            style={{
+              textAlign: 'left',
+              margin: '10px',
+              marginTop: '20px',
+              padding: '10px',
+              backgroundColor: 'white',
+              boxShadow: boxShadow,
+              borderRadius: '10px',
+              fontFamily: 'monospace',
+            }}
+          >
+            <h2>ELECTION PETITIONS/BY-ELECTIONS</h2>
+            {byElections.map((statement, id) => {
+              return (
+                <p style={{ fontSize: '.9rem' }} key={id}>
+                  {statement}
+                </p>
+              )
+            })}
+          </div>
         </div>
         <div
           style={{
@@ -326,7 +343,14 @@ const Page = ({ server, viewForm, user }) => {
             one academic session.
           </label>
         </div>
-        <div style={{ paddingBottom: '70px' }}>
+        <div
+          style={{
+            paddingBottom: '70px',
+            display: 'grid',
+            flexWrap: 'wrap',
+            gridTemplateColumns: winSize > 700 ? 'repeat(2,1fr)' : 'none',
+          }}
+        >
           {excos.map((exco, id) => {
             return (
               <ExecDetails
