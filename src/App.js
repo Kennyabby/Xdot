@@ -32,7 +32,6 @@ const App = () => {
       window.removeEventListener('resize', checkSize)
     }
   }, [size])
-
   return (
     <Router>
       {showNavbar && <Navbar getTopBar={getTopBar} />}

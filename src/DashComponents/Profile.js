@@ -1,5 +1,6 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { PaystackButton } from 'react-paystack'
 
 import imgcover from './assets/userimgcover.jpg'
 import profimg from './assets/user.png'
@@ -10,6 +11,7 @@ import settings from './assets/settings.jpg'
 import home from './assets/home.png'
 import notifications from './assets/notifications.png'
 import close from './assets/close.png'
+import sblike from './assets/sblike.png'
 import blhome from './assets/blhome.png'
 import blbell from './assets/blbell.png'
 
@@ -31,19 +33,237 @@ const Profile = ({
 }) => {
   const [showProfMenuDrop, setShowProfMenuDrop] = useState(false)
   const [showAllDetails, setShowAllDetails] = useState(false)
-  const [showStatus, setShowStatus] = useState('Show All Details')
+  const [showStatus, setShowStatus] = useState('View All Details')
   const [aboutSaveStatus, setAboutSaveStatus] = useState('Done')
   const [showAdminBoard, setShowAdminBoard] = useState(false)
   const [showControlOpt, setShowControlOpt] = useState(false)
   const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [showImage, setShowImage] = useState({ show: false })
+  const [payedDues, setPayedDues] = useState([])
   const aboutEditRef = useRef(null)
   const [addSummary, setAddSummary] = useState(false)
   const [editStatus, setEditStatus] = useState(
     user.isEditable === 'false' ? 'Enable Edit Access' : 'Disable Edit Access'
   )
   const [aboutField, setAboutField] = useState('')
+  const [selectedDues, setSelectedDues] = useState([])
+  const [dueFields, setDueFields] = useState({
+    basic: {
+      name: 'Basic',
+      selected: true,
+      amount: '3000',
+      compulsory: ['100', '200', '300', '400'],
+      available: ['100', '200', '300', '400'],
+    },
+    shirt: {
+      name: 'Shirt',
+      selected: false,
+      amount: '3500',
+      compulsory: ['100'],
+      available: ['100', '200', '300', '400'],
+    },
+    excursion: {
+      name: 'Excursion',
+      selected: false,
+      amount: '3000',
+      compulsory: ['100'],
+      available: ['100', '200', '300', '400'],
+    },
+    dinner: {
+      name: 'Dinner',
+      selected: false,
+      amount: '3000',
+      compulsory: ['100', '400'],
+      available: ['100', '200', '300', '400'],
+    },
+    finalYearBook: {
+      name: 'Final Year Book',
+      selected: false,
+      amount: '1500',
+      compulsory: ['400'],
+      available: ['400'],
+    },
+    freshersOrientation: {
+      name: 'Freshers Orientation',
+      selected: false,
+      amount: '1000',
+      compulsory: ['100'],
+      available: ['100'],
+    },
+  })
+  const [showPayments, setShowPayments] = useState(false)
+  const [paystackButtonLabel, setPaystackButtonLabel] =
+    useState('Continue Payment')
+  // const publicKey = 'pk_test_d549d69753f15dc9b34d94061e053e7c058a989e'
+  const publicKey = 'pk_live_b086de2ee46109d65c3b6b42a202c71ba8921059'
+  const [dueInfo, setDueInfo] = useState({
+    email: user.otherEmail,
+    name: user.firstName + ' ' + user.middleName + ' ' + user.lastName,
+    phone: user.contactNo,
+  })
+  const [amount, setAmount] = useState(0)
+  const [availableDues, setAvailableDues] = useState(0)
+  const [showPayStack, setShowPayStack] = useState(false)
+  const [payments, setPayments] = useState(user.payments)
+  const [currentSession, setCurrentSession] = useState('2021/2022')
+  const [paymentLabelStatus, setPaymentLabelStatus] = useState('View')
   const [showAdminOpt, setShowAdminOpt] = useState(true)
+  useEffect(() => {
+    var amt = 0
+    setSelectedDues([])
+    setPayedDues([])
+    const dues = Object.keys(dueFields)
+    Object.values(dueFields).forEach((due, i) => {
+      const value = Number(due.amount) * 100
+      if (
+        due.selected ||
+        due.compulsory.includes(user.level) ||
+        (payments !== undefined &&
+          payments[currentSession]['basicDue'][dues[i]] !== undefined &&
+          payments[currentSession]['basicDue'][dues[i]]['payed'] === true)
+      ) {
+        amt += value
+        if (
+          payments !== undefined &&
+          payments[currentSession]['basicDue'][dues[i]] !== undefined &&
+          payments[currentSession]['basicDue'][dues[i]]['payed'] === true
+        ) {
+          amt -= value
+          setPayedDues((payedDues) => {
+            return [...payedDues, dues[i]]
+          })
+        } else {
+          setSelectedDues((selectedDues) => {
+            return [...selectedDues, dues[i]]
+          })
+        }
+      }
+    })
+
+    setAmount(amt)
+  }, [dueFields, currentSession, payments])
+  useEffect(() => {
+    var ct = 0
+    Object.values(dueFields).forEach((due, i) => {
+      if (due.available.includes(user.level)) {
+        ct++
+      }
+    })
+    setAvailableDues(ct)
+  }, [availableDues])
+  const updateOneUser = async ({ findBy, update }) => {
+    try {
+      const opts = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prop: [findBy, update],
+        }),
+      }
+      const resp = await fetch(server + '/updateOneUser', opts)
+      const response = await resp.json()
+      const updated = response.updated
+      if (updated) {
+        return true
+      } else {
+        return false
+      }
+    } catch (TypeError) {}
+  }
+  const handlePaymentSuccess = async (reference) => {
+    setShowPayStack(false)
+    var paym = payments
+    if (paym === undefined) {
+      paym = {}
+      if (paym[currentSession] === undefined) {
+        paym[currentSession] = {}
+        if (paym[currentSession]['basicDue'] === undefined) {
+          paym[currentSession]['basicDue'] = {}
+        }
+      }
+    }
+    selectedDues.forEach((due) => {
+      if (paym[currentSession]['basicDue'][due] === undefined) {
+        paym[currentSession]['basicDue'][due] = {}
+      }
+      paym[currentSession]['basicDue'][due]['payed'] = true
+      paym[currentSession]['basicDue'][due]['amount'] = dueFields[due]['amount']
+      paym[currentSession]['basicDue'][due]['createdAt'] = reference
+    })
+    try {
+      const updated = await updateOneUser({
+        findBy: { matricNo: user.matricNo },
+        update: { payments: paym },
+      })
+      if (updated) {
+        setDueFields({
+          basic: {
+            name: 'Basic',
+            selected: true,
+            amount: '3000',
+            compulsory: ['100', '200', '300', '400'],
+            available: ['100', '200', '300', '400'],
+          },
+          shirt: {
+            name: 'Shirt',
+            selected: false,
+            amount: '3500',
+            compulsory: ['100'],
+            available: ['100', '200', '300', '400'],
+          },
+          excursion: {
+            name: 'Excursion',
+            selected: false,
+            amount: '3000',
+            compulsory: ['100'],
+            available: ['100', '200', '300', '400'],
+          },
+          dinner: {
+            name: 'Dinner',
+            selected: false,
+            amount: '3000',
+            compulsory: ['100', '400'],
+            available: ['100', '200', '300', '400'],
+          },
+          finalYearBook: {
+            name: 'Final Year Book',
+            selected: false,
+            amount: '1500',
+            compulsory: ['400'],
+            available: ['400'],
+          },
+          freshersOrientation: {
+            name: 'Freshers Orientation',
+            selected: false,
+            amount: '1000',
+            compulsory: ['100'],
+            available: ['100'],
+          },
+        })
+        setPayments(paym)
+      } else {
+      }
+    } catch (error) {}
+  }
+  const handlePaymentClosed = () => {
+    setShowPayStack(false)
+  }
+  const componentProps = {
+    reference: new Date().getTime().toString(),
+    email: dueInfo.email,
+    amount,
+    metadata: {
+      name: dueInfo.name,
+      phone: dueInfo.phone,
+    },
+    publicKey,
+    text: paystackButtonLabel,
+    onSuccess: (reference) => handlePaymentSuccess(reference),
+    onClose: handlePaymentClosed,
+  }
+
   const contactDetailsName = [
     'Current Address',
     'Contact No',
@@ -102,6 +322,22 @@ const Profile = ({
       setUserImgUrl(url)
     }
   }, [user])
+  useEffect(async () => {
+    try {
+      const opts = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sessionSettings: 1 }),
+      }
+      const resp = await fetch(server + '/getNapsSettings', opts)
+      const response = await resp.json()
+      const settings = response.settings
+      const currentSession = settings[0].sessionSettings.currentSession
+      setCurrentSession(currentSession)
+    } catch (error) {}
+  }, [])
   useEffect(() => {
     if (!isSearched) {
       showHomeToggle(true)
@@ -148,10 +384,10 @@ const Profile = ({
   const handleShowDetails = () => {
     if (showAllDetails) {
       setShowAllDetails(false)
-      setShowStatus('Show All Details')
+      setShowStatus('View More Details')
     } else {
       setShowAllDetails(true)
-      setShowStatus('Show Fewer Details')
+      setShowStatus('View Few Details')
     }
   }
   const handleAdminBoard = () => {
@@ -224,28 +460,28 @@ const Profile = ({
       }
     } catch (TypeError) {}
   }
-  const updateOneUser = async ({ findBy, update }) => {
-    try {
-      const opts = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          prop: [findBy, update],
-        }),
-      }
-      const resp = await fetch(server + '/updateOneUser', opts)
-      const response = await resp.json()
-      const updated = response.updated
-      if (updated) {
-        return true
-      } else {
-        return false
-      }
-    } catch (TypeError) {}
-  }
+
   const suspendUser = () => {}
+  const handleDuesInput = (e) => {
+    const name = e.target.getAttribute('name')
+    if (name !== 'basic' && dueFields[name] !== undefined) {
+      if (dueFields[name]['selected']) {
+        setDueFields((dueFields) => {
+          return {
+            ...dueFields,
+            [name]: { ...dueFields[name], selected: false },
+          }
+        })
+      } else {
+        setDueFields((dueFields) => {
+          return {
+            ...dueFields,
+            [name]: { ...dueFields[name], selected: true },
+          }
+        })
+      }
+    }
+  }
   return (
     <>
       <div
@@ -804,6 +1040,374 @@ const Profile = ({
                 </div>
               </div>
             </div>
+          </div>
+          <div
+            className='userdetails'
+            style={{ backgroundColor: 'white', color: 'black' }}
+          >
+            <label
+              style={{
+                fontWeight: 'bold',
+                fontSize: '1.1rem',
+                fontFamily: 'monospace',
+                display: 'flex',
+              }}
+            >
+              Activities
+              <div
+                style={{
+                  backgroundColor: 'rgba(230,230,230)',
+                  borderRadius: '15px',
+                  fontSize: '.8rem',
+                  padding: '5px 10px',
+                  marginLeft: 'auto',
+                  cursor: 'pointer',
+                }}
+              >
+                See All
+              </div>
+            </label>
+          </div>
+          {showPayStack ? (
+            <div
+              style={{
+                position: 'fixed',
+                top: '0px',
+                left: '0px',
+                width: '100vw',
+                height: '100vh',
+                zIndex: '3',
+                backgroundColor: 'rgba(0,0,0,0.9)',
+                justifyContent: 'center',
+                overflowY: 'auto',
+                textAlign: 'center',
+              }}
+            >
+              <div
+                style={{
+                  padding: '10px',
+                  margin: 'auto',
+                  marginTop: '100px',
+                  width: '80%',
+                  backgroundColor: 'rgba(245,245,245,1)',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  fontFamily: 'Courier New',
+                }}
+              >
+                <label style={{ fontWeight: 'bold' }}>Confirm Info</label>
+                <div
+                  style={{
+                    display: 'flex',
+                    margin: '20px auto',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  {selectedDues.map((due, i) => {
+                    return (
+                      <div
+                        key={i}
+                        style={{
+                          margin: '5px auto',
+                          padding: '5px 10px',
+                          borderRadius: '10px',
+                          fontFamily: 'monospace',
+                          fontWeight: 'bold',
+                          boxShadow:
+                            ' -5px -5px 10px rgba(0,0,0,0.1), 5px 5px 10px rgba(0,0,0,0.1)',
+                        }}
+                      >
+                        {dueFields[due]['name']}
+                      </div>
+                    )
+                  })}
+                </div>
+                <div style={{ textAlign: 'left' }}>
+                  <label>{'Amount: #' + amount / 100}</label>
+                </div>
+                <div
+                  style={{ margin: '20px auto' }}
+                  onChange={(e) => {
+                    const name = e.target.getAttribute('name')
+                    const value = e.target.value
+                    if (name !== undefined) {
+                      setDueInfo((dueInfo) => {
+                        return { ...dueInfo, [name]: value }
+                      })
+                    }
+                  }}
+                >
+                  {Object.keys(dueInfo).map((label, i) => {
+                    return (
+                      <div
+                        key={i}
+                        style={{
+                          backgroundColor: 'white',
+                          margin: '10px auto',
+                          fontFamily: 'monospace',
+                          textAlign: 'left',
+                          justifyContent: 'left',
+                          fontSize: '.9rem',
+                          padding: '10px',
+                          borderRadius: '10px',
+                          boxShadow:
+                            ' -5px -5px 10px rgba(0,0,0,0.1), 5px 5px 10px rgba(0,0,0,0.1)',
+                        }}
+                      >
+                        <label>{label.toUpperCase()}</label>
+                        <div>
+                          <input
+                            name={label}
+                            type='text'
+                            style={{
+                              padding: '10px',
+                              margin: '10px auto',
+                              width: '250px',
+                              borderRadius: '10px',
+                            }}
+                            value={dueInfo[label]}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                <div style={{ display: 'flex' }}>
+                  <button
+                    style={{
+                      fontFamily: 'monospace',
+                      padding: '5px 10px',
+                      backgroundColor: 'red',
+                      color: 'white',
+                      border: 'solid red 2px',
+                      borderRadius: '10px',
+                      cursor: 'pointer',
+                      boxShadow:
+                        '-5px -5px 10px rgba(0,0,0,0.1), 5px 5px 10px rgba(0,0,0,0.1)',
+                    }}
+                    onClick={() => {
+                      setShowPayStack(false)
+                      setPaystackButtonLabel('Continue Payment')
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <PaystackButton
+                    className='paystackButton'
+                    onClick={() => {
+                      setPaystackButtonLabel('Please Wait...')
+                    }}
+                    {...componentProps}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : undefined}
+          <div className='userdetails'>
+            <div
+              style={{
+                fontWeight: 'bold',
+                fontSize: '1.1rem',
+                fontFamily: 'monospace',
+                margin: '15px auto',
+                paddingBottom: '10px',
+                display: 'flex',
+                borderBottom: 'solid rgba(210, 210, 210, 1) 2px',
+              }}
+            >
+              Payments
+              <div
+                style={{
+                  backgroundColor: 'rgba(230,230,230)',
+                  borderRadius: '15px',
+                  fontSize: '.8rem',
+                  padding: '5px 10px',
+                  marginLeft: 'auto',
+                  cursor: 'pointer',
+                  color: 'black',
+                }}
+                onClick={() => {
+                  if (showPayments) {
+                    setShowPayments(false)
+                    setPaymentLabelStatus('View')
+                  } else {
+                    setShowPayments(true)
+                    setPaymentLabelStatus('Hide')
+                  }
+                }}
+              >
+                {paymentLabelStatus}
+              </div>
+            </div>
+            {showPayments && (
+              <div
+                style={{
+                  backgroundColor: 'white',
+                  color: 'black',
+                  padding: '10px',
+                  fontWeight: 'bold',
+                  fontFamily: 'Courier New',
+                  borderRadius: '15px',
+                }}
+                onClick={handleDuesInput}
+              >
+                <label>Departmental Dues</label>
+                {payments !== undefined ? undefined : (
+                  <div
+                    style={{
+                      textAlign: 'center',
+                      padding: '10px',
+                      margin: '10px',
+                      fontSize: '.9rem',
+                      border: 'solid rgba(200,200,200,1) 1px',
+                      borderRadius: '10px',
+                    }}
+                  >
+                    No payments made
+                  </div>
+                )}
+                {Object.values(dueFields).map((due, i) => {
+                  return (
+                    due.available.includes(user.level) &&
+                    (isSearched &&
+                    payments === undefined ? undefined : payments !==
+                        undefined &&
+                      payments[currentSession]['basicDue'][
+                        Object.keys(dueFields)[i]
+                      ] !== undefined &&
+                      payments[currentSession]['basicDue'][
+                        Object.keys(dueFields)[i]
+                      ]['payed'] === true ? (
+                      <div
+                        key={i}
+                        name={Object.keys(dueFields)[i]}
+                        style={{
+                          display: 'flex',
+                          margin: '10px',
+                          display: 'flex',
+                          fontSize: '.9rem',
+                          cursor: 'pointer',
+                        }}
+                        disabled={amount > 0 ? false : true}
+                      >
+                        <img src={sblike} height='15px' />
+                        <label
+                          style={{ margin: '5px', cursor: 'pointer' }}
+                          name={Object.keys(dueFields)[i]}
+                        >
+                          {due.name +
+                            (due.compulsory.includes(user.level)
+                              ? ' (Compulsory)'
+                              : '')}
+                        </label>
+                        <label
+                          style={{
+                            marginLeft: 'auto',
+                            fontStyle: 'italic',
+                            cursor: 'pointer',
+                          }}
+                          name={Object.keys(dueFields)[i]}
+                        >
+                          {'#' + due['amount']}
+                        </label>
+                      </div>
+                    ) : (
+                      !isSearched && (
+                        <div
+                          key={i}
+                          name={Object.keys(dueFields)[i]}
+                          style={{
+                            display: 'flex',
+                            margin: '10px',
+                            display: 'flex',
+                            fontSize: '.9rem',
+                            cursor: 'pointer',
+                          }}
+                          disabled={true}
+                        >
+                          <input
+                            type='radio'
+                            checked={
+                              due.selected ||
+                              due.compulsory.includes(user.level)
+                            }
+                          />
+                          <label
+                            style={{ margin: '5px', cursor: 'pointer' }}
+                            name={Object.keys(dueFields)[i]}
+                          >
+                            {due.name +
+                              (due.compulsory.includes(user.level)
+                                ? ' (Compulsory)'
+                                : '')}
+                          </label>
+                          <label
+                            style={{
+                              marginLeft: 'auto',
+                              fontStyle: 'italic',
+                              cursor: 'pointer',
+                            }}
+                            name={Object.keys(dueFields)[i]}
+                          >
+                            {'#' + due['amount']}
+                          </label>
+                        </div>
+                      )
+                    ))
+                  )
+                })}
+
+                {!isSearched && (
+                  <div>
+                    {payedDues.length ===
+                    availableDues ? undefined : selectedDues.length +
+                        payedDues.length ===
+                      availableDues ? undefined : (
+                      <div style={{ fontSize: '.9rem', margin: '20px 10px' }}>
+                        <label>Add payments by selecting from the above.</label>
+                      </div>
+                    )}
+                    <div
+                      style={{
+                        textAlign: 'left',
+                        margin: '20px 10px',
+                        display: 'flex',
+                      }}
+                    >
+                      {payedDues.length !== availableDues && (
+                        <button
+                          style={{
+                            fontFamily: 'monospace',
+                            padding: '5px 10px',
+                            backgroundColor: 'blue',
+                            color: 'white',
+                            border: 'solid blue 2px',
+                            borderRadius: '10px',
+                            cursor: 'pointer',
+                            boxShadow:
+                              '-5px -5px 10px rgba(0,0,0,0.1), 5px 5px 10px rgba(0,0,0,0.1)',
+                          }}
+                          disabled={amount > 0 ? false : true}
+                          onClick={() => {
+                            setShowPayStack(true)
+                          }}
+                        >
+                          Pay Dues
+                        </button>
+                      )}
+
+                      {amount > 0 && (
+                        <label
+                          style={{ marginLeft: 'auto', marginTop: '10px' }}
+                        >
+                          {'#' + amount / 100}
+                        </label>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className='userdetails'>
             <label

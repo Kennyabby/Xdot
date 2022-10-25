@@ -404,6 +404,15 @@
   margin: auto;
   padding-top: 100px;
 }
+.paystackButton {
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: white;
+  border: solid green 1px;
+  color: green;
+  font-family: monospace;
+  margin-left: auto;
+}
 @media screen and (max-width: 700px) {
   .profimgview {
     width: 100%;
