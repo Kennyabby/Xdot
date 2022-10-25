@@ -1087,7 +1087,7 @@ const Profile = ({
                 style={{
                   padding: '10px',
                   margin: 'auto',
-                  marginTop: '100px',
+                  marginTop: '30px',
                   width: '80%',
                   backgroundColor: 'rgba(245,245,245,1)',
                   justifyContent: 'center',
