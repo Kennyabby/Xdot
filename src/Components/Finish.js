@@ -217,8 +217,8 @@ const Finish = ({
     return new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
-        300,
-        400,
+        500,
+        600,
         'JPEG',
         80,
         0,
@@ -298,8 +298,7 @@ const Finish = ({
       setWarnImage(true)
     } else {
       setSubmitStatus('Please wait...')
-      const imgSrc =
-        studentInfo.matricNo + '_' + studentInfo.firstName + '.JPEG'
+      const imgSrc = studentInfo.matricNo + '_' + studentInfo.firstName
 
       setUserImg(imgSrc)
       studentInfo.img = imgSrc
