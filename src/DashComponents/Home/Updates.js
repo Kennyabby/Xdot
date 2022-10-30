@@ -423,6 +423,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                       boxShadow:
                         '-5px -5px 8px rgba(0,0,0,0.1),5px 5px 8px rgba(0,0,0,0.1)',
                       backgroundColor: 'rgba(240,240,240,1)',
+                      backgroundSize: 'cover',
                       borderRadius: '50%',
                       border: 'solid rgba(220,220,220,1) 1px',
                       margin: '5px auto',

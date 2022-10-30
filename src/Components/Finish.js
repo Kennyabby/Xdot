@@ -299,7 +299,7 @@ const Finish = ({
     } else {
       setSubmitStatus('Please wait...')
       const imgSrc =
-        studentInfo.matricNo + '_' + studentInfo.firstName + '.jpeg'
+        studentInfo.matricNo + '_' + studentInfo.firstName + '.JPEG'
 
       setUserImg(imgSrc)
       studentInfo.img = imgSrc

@@ -461,6 +461,7 @@ const QuizPost = ({
                     style={{
                       borderRadius: '50%',
                       border: 'solid rgba(220,220,220,1) 1px',
+                      backgroundSize: 'cover',
                       backgroundColor: 'white',
                       margin: '5px auto',
                     }}
