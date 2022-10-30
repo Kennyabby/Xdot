@@ -217,8 +217,8 @@ const Finish = ({
     return new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
+        300,
         400,
-        500,
         'JPEG',
         80,
         0,
