@@ -557,6 +557,7 @@ const Finish = ({
           button2='Retry'
           func1={() => {
             setShowModal(false)
+            setSubmitStatus('Submit')
           }}
           func2={() => {
             setShowModal(false)

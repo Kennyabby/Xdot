@@ -1,6 +1,8 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import ConnectionModal from '../Components/ConnectionModal'
+
 import usrImg from './usrImg.png'
 import viewImg from './view.jpg'
 import noViewImg from './noview.png'
@@ -11,6 +13,8 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
     password: '',
     id: '',
   })
+  const [showModal, setShowModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   const history = useHistory()
   const [view, setView] = useState(true)
   const [noView, setNoView] = useState(false)
@@ -92,7 +96,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       setPassType('password')
     }
   }
-  const validateInput = () => {
+  const validateInput = async () => {
     const opts1 = {
       method: 'POST',
       headers: {
@@ -104,7 +108,8 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       }),
     }
 
-    fetch(server + '/getpassList', opts1).then(async (resp) => {
+    try {
+      const resp = await fetch(server + '/getpassList', opts1)
       const response = await resp.json()
       const idVal = await response.id
       setFields((fields) => {
@@ -119,8 +124,13 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
         setError('Unrecognized Matric No or Invalid Password!')
         setSignView('Sign in')
       }
-    })
-    setSignView('hold on...')
+      setSignView('hold on...')
+    } catch (error) {
+      setErrorMessage(
+        'A problem was encountered while trying to validate your log in details. Kindly check if you are still connected to the internet.'
+      )
+      setShowModal(true)
+    }
   }
   const handleSignin = () => {
     setSignView('hold on...')
@@ -153,6 +163,23 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   return (
     <>
       <div className='signin'>
+        {showModal && (
+          <ConnectionModal
+            title='Ooops... Connection Error'
+            message={errorMessage}
+            multiple={true}
+            button1='Ok'
+            button2='Retry'
+            func1={() => {
+              setShowModal(false)
+              setSignView('Sign in')
+            }}
+            func2={() => {
+              setShowModal(false)
+              handleSignin()
+            }}
+          />
+        )}
         <div
           className='signinCover'
           onChange={handleInput}
