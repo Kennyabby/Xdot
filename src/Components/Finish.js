@@ -225,7 +225,7 @@ const Finish = ({
         (uri) => {
           resolve(uri)
         },
-        'base64'
+        'byte'
       )
     })
   }
@@ -283,7 +283,7 @@ const Finish = ({
     var file = e.target.files[0]
     const image = await resizeFile(file)
     setConvertedFile(image)
-    // console.log(image)
+    console.log(image)
     setFile(file)
     const url = URL.createObjectURL(file)
     setImgUrl(url)
@@ -299,7 +299,6 @@ const Finish = ({
     } else {
       setSubmitStatus('Please wait...')
       const imgSrc = studentInfo.matricNo + '_' + studentInfo.firstName
-
       setUserImg(imgSrc)
       studentInfo.img = imgSrc
       const imageInfo = {
