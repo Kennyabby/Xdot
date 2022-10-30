@@ -1,5 +1,7 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { PaystackButton } from 'react-paystack'
 
 import imgcover from './assets/userimgcover.jpg'
@@ -543,52 +545,82 @@ const Profile = ({
             currentUser={user}
           />
         )}
-        {showImage.show && (
-          <div
-            style={{
-              position: 'fixed',
-              width: '100vw',
-              height: '100vh',
-              top: '0px',
-              zIndex: '3',
-              left: '0px',
-              backgroundColor: 'rgba(19,19,20,1)',
-            }}
-          >
-            <img
-              src={close}
+        <AnimatePresence>
+          {showImage.show && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ ease: 'easeOut' }}
+              exit={{ opacity: 0, transition: { ease: 'easeIn' } }}
               style={{
                 position: 'fixed',
-                top: '5px',
-                right: '5px',
+                width: '100vw',
+                height: '100vh',
+                top: '0px',
                 zIndex: '3',
-                cursor: 'pointer',
+                left: '0px',
+                backgroundColor: 'rgba(19,19,20,1)',
               }}
-              height='20px'
-              onClick={() => {
-                setShowImage((showImage) => {
-                  return { ...showImage, show: false }
-                })
-              }}
-            />
-            <div className='profimgview'>
+            >
               <img
-                src={showImage.src}
-                width='100%'
-                // style={{ marginTop: '120px' }}
+                src={close}
+                style={{
+                  position: 'fixed',
+                  top: '5px',
+                  right: '5px',
+                  zIndex: '3',
+                  cursor: 'pointer',
+                }}
+                height='20px'
+                onClick={() => {
+                  setShowImage((showImage) => {
+                    return { ...showImage, show: false }
+                  })
+                }}
               />
-            </div>
-          </div>
-        )}
+              <motion.div
+                initial={{ scale: 0.2 }}
+                animate={{ scale: 1 }}
+                transition={{ ease: 'easeOut' }}
+                exit={{ scale: 0.2, transition: { ease: 'easeIn' } }}
+                className='profimgview'
+              >
+                <img
+                  src={showImage.src}
+                  width='100%'
+                  // style={{ marginTop: '120px' }}
+                />
+                <LazyLoadImage
+                  src={userImgUrl}
+                  width='100%'
+                  // height={50}
+                  effect='blur'
+                  alt='user photo'
+                />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         <div className='profcover'>
           <div
             className='imgcover'
             style={{ backgroundImage: `url(${imgcover})` }}
+            onClick={() => {
+              setShowImage((showImage) => {
+                return { ...showImage, show: true, src: imgcover }
+              })
+            }}
           ></div>
-          <div
-            className='profimg'
-            style={{ backgroundImage: `url(${userImgUrl})` }}
-          >
+          <div style={{ position: 'relative', width: 'fit-content' }}>
+            <div
+              className='profimg'
+              style={{ backgroundImage: `url(${userImgUrl})` }}
+              onClick={() => {
+                setShowImage((showImage) => {
+                  return { ...showImage, show: true, src: userImgUrl }
+                })
+              }}
+            ></div>
             <div
               onClick={handleProfMenuDrop}
               className='profmenu'

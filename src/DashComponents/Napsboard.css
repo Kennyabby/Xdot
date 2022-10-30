@@ -179,7 +179,7 @@
 .profmenu {
   position: absolute;
   bottom: 3px;
-  right: 10px;
+  left: 155px;
   width: 30px;
   height: 30px;
   background-size: cover;
@@ -216,7 +216,7 @@
 .profmenudrop {
   position: absolute;
   z-index: 2;
-  left: 125px;
+  left: 165px;
   top: 135px;
   padding: 5px;
   border-radius: 10px;
@@ -269,7 +269,7 @@
 .searchfilter {
   position: absolute;
   display: flex;
-  left: 15px;
+  left: 0px;
   top: 40px;
   list-style: none;
   font-size: 1rem;

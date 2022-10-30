@@ -17,6 +17,8 @@
     "nodemon": "^2.0.15",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-image-file-resizer": "^0.4.8",
+    "react-lazy-load-image-component": "^1.5.5",
     "react-paystack": "^4.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.0",

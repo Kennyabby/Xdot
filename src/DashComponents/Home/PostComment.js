@@ -1,4 +1,5 @@
 import { React, useEffect, useState, useRef } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import '../Events/Events.css'
 
 import profimg from '../Events/assets/profile.png'
@@ -167,16 +168,24 @@ const PostComment = ({
       <div style={{ display: 'flex', marginLeft: '5px' }}>
         <div
           style={{
-            backgroundImage: `url(${userImgUrl})`,
-            border: 'solid rgba(220,220,220,1) 1px',
-            backgroundColor: 'white',
-            backgroundSize: 'cover',
-            width: '50px',
-            height: '50px',
-            borderRadius: '50%',
+            cursor: 'pointer',
           }}
-        ></div>
-
+        >
+          <LazyLoadImage
+            src={userImgUrl}
+            width={50}
+            height={50}
+            style={{
+              borderRadius: '50%',
+              border: 'solid rgba(220,220,220,1) 1px',
+              backgroundColor: 'white',
+              margin: '5px auto',
+            }}
+            PlaceholderSrc={profimg}
+            effect='blur'
+            alt='user photo'
+          />
+        </div>
         <div
           style={{
             position: 'relative',

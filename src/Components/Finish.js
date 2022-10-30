@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
+import Resizer from 'react-image-file-resizer'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import ConnectionModal from './ConnectionModal'
+
 import logo from './user.png'
 
 const containerVariants = {
@@ -70,6 +73,8 @@ const Finish = ({
   setViewSessionLabel,
 }) => {
   const history = useHistory()
+  const [showModal, setShowModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   const [viewNext, setViewNext] = useState(true)
   const finishCoverRef = useRef(null)
   const summaryLabelRef = useRef(null)
@@ -208,6 +213,22 @@ const Finish = ({
       }
     }
   }
+  const resizeFile = (file) => {
+    return new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        400,
+        500,
+        'JPEG',
+        80,
+        0,
+        (uri) => {
+          resolve(uri)
+        },
+        'base64'
+      )
+    })
+  }
   const convertToBase64 = (file) => {
     return new Promise((resolve) => {
       const reader = new FileReader()
@@ -224,12 +245,12 @@ const Finish = ({
       summaryLabelRef.current.scrollIntoView()
     }
   }, [pos])
-  useEffect(async () => {
-    if (file !== null) {
-      const newFile = await convertToBase64(file)
-      setConvertedFile(newFile)
-    }
-  }, [file])
+  // useEffect(async () => {
+  //   if (file !== null) {
+  //     const newFile = await convertToBase64(file)
+  //     setConvertedFile(newFile)
+  //   }
+  // }, [file])
   useEffect(() => {
     if (userImg === '') {
     } else {
@@ -258,8 +279,11 @@ const Finish = ({
     const resp = await fetch(server + '/mailUser', opts)
   }
 
-  const fileHandler = (e) => {
+  const fileHandler = async (e) => {
     var file = e.target.files[0]
+    const image = await resizeFile(file)
+    setConvertedFile(image)
+    // console.log(image)
     setFile(file)
     const url = URL.createObjectURL(file)
     setImgUrl(url)
@@ -275,11 +299,8 @@ const Finish = ({
     } else {
       setSubmitStatus('Please wait...')
       const imgSrc =
-        studentInfo.matricNo +
-        '_' +
-        studentInfo.firstName +
-        '.' +
-        file.name.slice(file.name.length - 3)
+        studentInfo.matricNo + '_' + studentInfo.firstName + '.jpeg'
+
       setUserImg(imgSrc)
       studentInfo.img = imgSrc
       const imageInfo = {
@@ -301,14 +322,25 @@ const Finish = ({
         }
         const resp = await fetch(server + '/postUserDetails', opts)
         const feedBack = await resp.json()
+        setSubmitStatus('Submit')
         if (feedBack.isDelivered === true) {
           setShow(false)
           setIsSuccess(true)
           setViewSessionLabel(false)
           setShowView(false)
           notifyUserMail([studentInfo.otherEmail, studentInfo.schoolEmail])
+        } else {
+          setErrorMessage(
+            'An Error Occured, Could not submit your details. Kindly check that your device is connected to a stable internet.'
+          )
+          setShowModal(true)
         }
-      } catch (TypeError) {}
+      } catch (TypeError) {
+        setErrorMessage(
+          'An Error Occured, Could not submit your details. Kindly check that your device is connected to a stable internet.'
+        )
+        setShowModal(true)
+      }
     }
   }
   const prevNext = (
@@ -516,6 +548,22 @@ const Finish = ({
       exit={{ x: -1000 }}
       ref={finishCoverRef}
     >
+      {showModal && (
+        <ConnectionModal
+          title='Ooops... Connection Error'
+          message={errorMessage}
+          multiple={true}
+          button1='Ok'
+          button2='Retry'
+          func1={() => {
+            setShowModal(false)
+          }}
+          func2={() => {
+            setShowModal(false)
+            handleSubmit()
+          }}
+        />
+      )}
       {show && finishList[pos]}
       {isSuccess && (
         <motion.div variants={submitVariants}>

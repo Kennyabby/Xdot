@@ -2,6 +2,7 @@ import { React, useState, useEffect, useRef } from 'react'
 import '../Events/Events.css'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import profimg from '../Events/assets/profile.png'
 import Post from './Post'
@@ -411,18 +412,26 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
               <Link to='/dashboard/profile'>
                 <div
                   style={{
-                    boxShadow:
-                      '-5px -5px 8px rgba(0,0,0,0.1),5px 5px 8px rgba(0,0,0,0.1)',
-                    padding: '3px',
-                    borderRadius: '50%',
-                    height: '38px',
-                    width: '38px',
-                    backgroundColor: 'rgba(240,240,240,1)',
-                    backgroundSize: 'cover',
-                    backgroundImage: `url(${userImgUrl})`,
                     cursor: 'pointer',
                   }}
-                ></div>
+                >
+                  <LazyLoadImage
+                    src={userImgUrl}
+                    width={40}
+                    height={40}
+                    style={{
+                      boxShadow:
+                        '-5px -5px 8px rgba(0,0,0,0.1),5px 5px 8px rgba(0,0,0,0.1)',
+                      backgroundColor: 'rgba(240,240,240,1)',
+                      borderRadius: '50%',
+                      border: 'solid rgba(220,220,220,1) 1px',
+                      margin: '5px auto',
+                    }}
+                    PlaceholderSrc={profimg}
+                    effect='blur'
+                    alt='user photo'
+                  />
+                </div>
               </Link>
               <motion.div
                 initial={{ opacity: 0 }}
