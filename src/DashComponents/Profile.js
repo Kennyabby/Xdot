@@ -585,15 +585,9 @@ const Profile = ({
                 exit={{ scale: 0.2, transition: { ease: 'easeIn' } }}
                 className='profimgview'
               >
-                <img
+                <LazyLoadImage
                   src={showImage.src}
                   width='100%'
-                  // style={{ marginTop: '120px' }}
-                />
-                <LazyLoadImage
-                  src={userImgUrl}
-                  width='100%'
-                  // height={50}
                   effect='blur'
                   alt='user photo'
                 />
