@@ -120,7 +120,9 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
             animate='visible'
             exit='hidden'
             style={{
-              backgroundColor: showBorder ? 'rgba(50, 49, 49, 0.95)' : '',
+              backgroundColor: showBorder
+                ? 'rgba(50, 49, 49, 0.95)'
+                : 'rgba(100,100,100,1)',
               borderBottom: showBorder ? 'solid black 2px' : '',
               width: '100vw',
               position: 'fixed',

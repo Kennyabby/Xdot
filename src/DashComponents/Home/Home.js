@@ -17,6 +17,7 @@ const Home = ({
   setShowNavigator,
   showHomeToggle,
   viewRef,
+  winSize,
 }) => {
   const [view, setView] = useState('')
   const [showUpdates, setShowUpdates] = useState(true)
@@ -47,6 +48,7 @@ const Home = ({
             showHomeToggle(show)
           }}
           viewRef={viewRef}
+          winSize={winSize}
         />
       )
     }

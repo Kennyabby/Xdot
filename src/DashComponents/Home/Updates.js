@@ -17,7 +17,7 @@ import settings from './assets/settings.jpg'
 import search from './assets/search.png'
 import xdotlogo from './assets/xdotlogo.png'
 
-const Updates = ({ user, server, showHomeToggle, viewRef }) => {
+const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
   const lastPostRef = useRef(null)
@@ -340,7 +340,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                     margin: '0px',
                     marginBottom: '10px',
                     padding: '10px 0px',
-                    justifyContent: 'center',
+                    justifyContent: winSize<=700?'center':'left',
                     textAlign: 'left',
                     backgroundColor: 'rgba(255,255,255,1)',
                   }}
@@ -352,7 +352,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                       marginTop: '8px',
                       width: 'fit-content',
                       flexWrap: 'wrap',
-                      margin: 'auto',
+                      margin: winSize <= 700 ? 'auto' : 'auto 50px',
                       textShadow: '0px 0px 3px black',
                       color: 'blue',
                       display: 'block',
@@ -367,8 +367,8 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                   </div>
                   <div
                     style={{
-                      width: '70%',
-                      margin: 'auto',
+                      width: winSize <= 700 ? '70%' : '40%',
+                      margin: winSize <= 700 ? 'auto' : 'auto 50px',
                       boxShadow:
                         '-5px -5px 15px rgba(0,0,0,0.1),5px 5px 15px rgba(0,0,0,0.1)',
                       borderRadius: '20px',
@@ -408,8 +408,14 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                 </motion.div>
               )}
             </AnimatePresence>
-            <div style={{ display: 'flex', margin: '10px' }}>
-              <Link to='/dashboard/profile'>
+            <div
+              style={{
+                display: 'flex',
+                // margin: '10px',
+                width: winSize <= 700 ? '100%' : '60%',
+              }}
+            >
+              <Link to='/dashboard/profile' style={{ margin: 'auto' }}>
                 <div
                   style={{
                     cursor: 'pointer',
@@ -446,142 +452,87 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                 {'Something on your mind?'}
               </motion.div>
             </div>
-            <motion.div
-              style={{
-                position: 'relative',
-                margin: '10px 0px',
-                padding: '10px 0px',
-                borderTop: 'solid rgba(210,210,210,1) 4px',
-                borderBottom: 'solid rgba(210,210,210,1) 4px',
-                textAlign: 'left',
-                fontFamily: 'monospace',
-              }}
-            >
-              <Link to='/dashboard/settings'>
-                <div
+          </div>
+        ) : undefined}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexWrap: winSize <= 700 ? 'wrap-reverse' : 'wrap',
+          }}
+        >
+          <div
+            style={{
+              width: winSize <= 700 ? '100%' : '40%',
+              margin: winSize <= 700 ? '0px' : 'auto',
+            }}
+          >
+            {highlightedPost === null ? (
+              <div
+                style={{
+                  padding: '10px',
+                  marginBottom: '20px',
+                  justifyContent: 'center',
+                  // borderBottom: 'solid rgba(210,210,210,1) 2px',
+                }}
+              >
+                <button
+                  onClick={() => {
+                    getNewUpdates(user.lastPostUpdate)
+                  }}
                   style={{
-                    position: 'absolute',
-                    top: '7px',
-                    right: '10px',
+                    padding: '7px 20px',
+                    borderRadius: '15px',
+                    backgroundColor: 'white',
+                    color: 'blue',
+                    fontFamily: 'monospace',
+                    border: 'solid rgba(0,0,255,1) 2px',
                     cursor: 'pointer',
                   }}
                 >
-                  <img src={settings} height='20px' />
-                </div>
-              </Link>
-              <label
-                style={{
-                  fontWeight: 'bold',
-                  padding: '0px 10px',
-                  fontStyle: 'italic',
-                }}
-              >
-                {'Go To >>'}
-              </label>
-              <motion.div
-                transition={{ when: 'beforeChildren', staggerChildren: 1 }}
-                style={{
-                  margin: '10px 0px',
-                  overflowX: 'auto',
-                  overflowY: 'hide',
-                  flexWrap: 'wrap',
-                  backgroundColor: 'rgba(240,240,240,1)',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  height: '160px',
-                  flexDirection: 'column',
-                }}
-              >
-                {[
-                  { it: 'Voting', img: voting, endpoint: 'e-voting' },
-                  { it: 'Tasks', img: tasks, endpoint: 'tasks' },
-                  { it: 'Events', img: events, endpoint: 'events' },
-                  { it: 'Chats', img: chat, endpoint: 'chats' },
-                ].map((item, i) => {
-                  return (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{
-                        opacity: { duration: 0.5 },
-                        scale: { duration: 0.3, ease: 'easeOut' },
-                      }}
-                      whileHover={{ scale: 1.1 }}
-                      style={{
-                        margin: '5px 20px',
-                        width: '100px',
-                        height: '130px',
-                        backgroundColor: 'white',
-                        boxShadow:
-                          '-4px -4px 20px rgba(0,0,0,0.1),4px 4px 20px rgba(0,0,0,0.1)',
-                        borderRadius: '10px',
-                        textAlign: 'center',
-                        justifyContent: 'center',
-                        color: 'black',
-                        paddingTop: '5px',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      <label>{item.it}</label>
-                      <Link
-                        key={i}
-                        style={{ textDecoration: 'none' }}
-                        to={'/dashboard/' + item.endpoint}
-                      >
-                        <div
-                          style={{
-                            width: '85px',
-                            height: '90px',
-                            padding: '0px',
-                            margin: '10px auto',
-                            backgroundImage: `url(${item.img})`,
-                            backgroundSize: 'cover',
+                  New Posts
+                </button>
+              </div>
+            ) : undefined}
+            {updates.length ? (
+              <div>
+                <div>
+                  {highlightedPost === null ? (
+                    updates.map((update, i) => {
+                      return (
+                        <Post
+                          server={server}
+                          key={i}
+                          user={user}
+                          updt={update}
+                          updatePostAt={async ({ createdAt, refresh, rct }) => {
+                            var done = await updatePostAt({
+                              createdAt: createdAt,
+                              refresh: refresh,
+                              rct: rct,
+                            })
+                            return done
                           }}
-                        ></div>
-                      </Link>
-                    </motion.div>
-                  )
-                })}
-              </motion.div>
-            </motion.div>
-            <div
-              style={{
-                padding: '10px',
-                marginBottom: '20px',
-                justifyContent: 'center',
-                // borderBottom: 'solid rgba(210,210,210,1) 2px',
-              }}
-            >
-              <button
-                onClick={() => {
-                  getNewUpdates(user.lastPostUpdate)
-                }}
-                style={{
-                  padding: '7px 20px',
-                  borderRadius: '15px',
-                  backgroundColor: 'white',
-                  color: 'blue',
-                  fontFamily: 'monospace',
-                  border: 'solid rgba(0,0,255,1) 2px',
-                  cursor: 'pointer',
-                }}
-              >
-                New Posts
-              </button>
-            </div>
-          </div>
-        ) : undefined}
-        {updates.length ? (
-          <div>
-            <div>
-              {highlightedPost === null ? (
-                updates.map((update, i) => {
-                  return (
+                          currentPostShow={(post) => {
+                            setCurrentPostShow(post)
+                          }}
+                          setHighlightedPost={(post) => {
+                            setHighlightedPost(post)
+                          }}
+                          showHomeToggle={(show) => {
+                            showHomeToggle(show)
+                          }}
+                          viewRef={viewRef}
+                        />
+                      )
+                    })
+                  ) : (
                     <Post
                       server={server}
-                      key={i}
+                      status={'highlighted'}
                       user={user}
-                      updt={update}
+                      updt={highlightedPost}
+                      newPostShow={newPostShow}
                       updatePostAt={async ({ createdAt, refresh, rct }) => {
                         var done = await updatePostAt({
                           createdAt: createdAt,
@@ -599,78 +550,265 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                       showHomeToggle={(show) => {
                         showHomeToggle(show)
                       }}
+                      setScrollCompleted={(scrollStatus) => {
+                        setScrollCompleted(scrollStatus)
+                      }}
                       viewRef={viewRef}
                     />
-                  )
-                })
-              ) : (
-                <Post
-                  server={server}
-                  status={'highlighted'}
-                  user={user}
-                  updt={highlightedPost}
-                  newPostShow={newPostShow}
-                  updatePostAt={async ({ createdAt, refresh, rct }) => {
-                    var done = await updatePostAt({
-                      createdAt: createdAt,
-                      refresh: refresh,
-                      rct: rct,
-                    })
-                    return done
-                  }}
-                  currentPostShow={(post) => {
-                    setCurrentPostShow(post)
-                  }}
-                  setHighlightedPost={(post) => {
-                    setHighlightedPost(post)
-                  }}
-                  showHomeToggle={(show) => {
-                    showHomeToggle(show)
-                  }}
-                  setScrollCompleted={(scrollStatus) => {
-                    setScrollCompleted(scrollStatus)
-                  }}
-                  viewRef={viewRef}
-                />
-              )}
-            </div>
-            <div ref={lastPostRef} style={{ paddingBottom: '90px' }}>
-              {highlightedPost === null && showPostUpdatesStatus ? (
+                  )}
+                </div>
+                <div ref={lastPostRef} style={{ paddingBottom: '90px' }}>
+                  {highlightedPost === null && showPostUpdatesStatus ? (
+                    <label
+                      style={{
+                        color: 'back',
+                        fontWeight: 'bold',
+                        fontFamily: 'monospace',
+                        fontSize: '.8rem',
+                        padding: '10px',
+                      }}
+                    >
+                      {postUpdatesStatus}
+                    </label>
+                  ) : undefined}
+                </div>
+              </div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7 }}
+                style={{
+                  fontFamily: 'Courier New',
+                  fontWeight: 'bold',
+                  margin: '40px',
+                  borderRadius: '15px',
+                  boxShadow: '0px 0px 7px rgba(20,20,20,1)',
+                  padding: '20px',
+                }}
+              >
+                {gotUpdates
+                  ? 'Hi, ' +
+                    user.firstName +
+                    '. Welcome to XDot Updates.\nMark history in the department by being the first to make a post on this feed.'
+                  : 'Loading...'}
+              </motion.div>
+            )}
+          </div>
+          {winSize > 700 ? (
+            <div
+              style={{
+                width: winSize <= 700 ? '100%' : '40%',
+                margin: '10px auto',
+              }}
+            >
+              <motion.div
+                style={{
+                  position: 'relative',
+                  margin: '10px auto',
+                  padding: '10px 0px',
+                  borderTop: 'solid rgba(210,210,210,1) 4px',
+                  borderBottom: 'solid rgba(210,210,210,1) 4px',
+                  textAlign: 'left',
+                  fontFamily: 'monospace',
+                }}
+              >
+                <Link to='/dashboard/settings'>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '7px',
+                      right: '10px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <img src={settings} height='20px' />
+                  </div>
+                </Link>
                 <label
                   style={{
-                    color: 'back',
                     fontWeight: 'bold',
-                    fontFamily: 'monospace',
-                    fontSize: '.8rem',
-                    padding: '10px',
+                    padding: '0px 10px',
+                    fontStyle: 'italic',
                   }}
                 >
-                  {postUpdatesStatus}
+                  {'Go To >>'}
                 </label>
-              ) : undefined}
+                <motion.div
+                  transition={{ when: 'beforeChildren', staggerChildren: 1 }}
+                  style={{
+                    margin: '10px 0px',
+                    overflowX: 'auto',
+                    overflowY: 'hide',
+                    flexWrap: 'wrap',
+                    backgroundColor: 'rgba(240,240,240,1)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    height: '160px',
+                    flexDirection: 'column',
+                  }}
+                >
+                  {[
+                    { it: 'Voting', img: voting, endpoint: 'e-voting' },
+                    { it: 'Tasks', img: tasks, endpoint: 'tasks' },
+                    { it: 'Events', img: events, endpoint: 'events' },
+                    { it: 'Chats', img: chat, endpoint: 'chats' },
+                  ].map((item, i) => {
+                    return (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                          opacity: { duration: 0.5 },
+                          scale: { duration: 0.3, ease: 'easeOut' },
+                        }}
+                        whileHover={{ scale: 1.1 }}
+                        style={{
+                          margin: '5px 20px',
+                          width: '100px',
+                          height: '130px',
+                          backgroundColor: 'white',
+                          boxShadow:
+                            '-4px -4px 20px rgba(0,0,0,0.1),4px 4px 20px rgba(0,0,0,0.1)',
+                          borderRadius: '10px',
+                          textAlign: 'center',
+                          justifyContent: 'center',
+                          color: 'black',
+                          paddingTop: '5px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        <label>{item.it}</label>
+                        <Link
+                          key={i}
+                          style={{ textDecoration: 'none' }}
+                          to={'/dashboard/' + item.endpoint}
+                        >
+                          <div
+                            style={{
+                              width: '85px',
+                              height: '90px',
+                              padding: '0px',
+                              margin: '10px auto',
+                              backgroundImage: `url(${item.img})`,
+                              backgroundSize: 'cover',
+                            }}
+                          ></div>
+                        </Link>
+                      </motion.div>
+                    )
+                  })}
+                </motion.div>
+              </motion.div>
             </div>
-          </div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7 }}
-            style={{
-              fontFamily: 'Courier New',
-              fontWeight: 'bold',
-              margin: '40px',
-              borderRadius: '15px',
-              boxShadow: '0px 0px 7px rgba(20,20,20,1)',
-              padding: '20px',
-            }}
-          >
-            {gotUpdates
-              ? 'Hi, ' +
-                user.firstName +
-                '. Welcome to XDot Updates.\nMark history in the department by being the first to make a post on this feed.'
-              : 'Loading...'}
-          </motion.div>
-        )}
+          ) : highlightedPost === null ? (
+            <div
+              style={{
+                width: winSize <= 700 ? '100%' : '40%',
+                margin: '10px auto',
+              }}
+            >
+              <motion.div
+                style={{
+                  position: 'relative',
+                  margin: '10px auto',
+                  padding: '10px 0px',
+                  borderTop: 'solid rgba(210,210,210,1) 4px',
+                  borderBottom: 'solid rgba(210,210,210,1) 4px',
+                  textAlign: 'left',
+                  fontFamily: 'monospace',
+                }}
+              >
+                <Link to='/dashboard/settings'>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '7px',
+                      right: '10px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <img src={settings} height='20px' />
+                  </div>
+                </Link>
+                <label
+                  style={{
+                    fontWeight: 'bold',
+                    padding: '0px 10px',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  {'Go To >>'}
+                </label>
+                <motion.div
+                  transition={{ when: 'beforeChildren', staggerChildren: 1 }}
+                  style={{
+                    margin: '10px 0px',
+                    overflowX: 'auto',
+                    overflowY: 'hide',
+                    flexWrap: 'wrap',
+                    backgroundColor: 'rgba(240,240,240,1)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    height: '160px',
+                    flexDirection: 'column',
+                  }}
+                >
+                  {[
+                    { it: 'Voting', img: voting, endpoint: 'e-voting' },
+                    { it: 'Tasks', img: tasks, endpoint: 'tasks' },
+                    { it: 'Events', img: events, endpoint: 'events' },
+                    { it: 'Chats', img: chat, endpoint: 'chats' },
+                  ].map((item, i) => {
+                    return (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                          opacity: { duration: 0.5 },
+                          scale: { duration: 0.3, ease: 'easeOut' },
+                        }}
+                        whileHover={{ scale: 1.1 }}
+                        style={{
+                          margin: '5px 20px',
+                          width: '100px',
+                          height: '130px',
+                          backgroundColor: 'white',
+                          boxShadow:
+                            '-4px -4px 20px rgba(0,0,0,0.1),4px 4px 20px rgba(0,0,0,0.1)',
+                          borderRadius: '10px',
+                          textAlign: 'center',
+                          justifyContent: 'center',
+                          color: 'black',
+                          paddingTop: '5px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        <label>{item.it}</label>
+                        <Link
+                          key={i}
+                          style={{ textDecoration: 'none' }}
+                          to={'/dashboard/' + item.endpoint}
+                        >
+                          <div
+                            style={{
+                              width: '85px',
+                              height: '90px',
+                              padding: '0px',
+                              margin: '10px auto',
+                              backgroundImage: `url(${item.img})`,
+                              backgroundSize: 'cover',
+                            }}
+                          ></div>
+                        </Link>
+                      </motion.div>
+                    )
+                  })}
+                </motion.div>
+              </motion.div>
+            </div>
+          ) : undefined}
+        </div>
       </div>
     </>
   )

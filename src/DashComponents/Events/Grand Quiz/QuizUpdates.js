@@ -200,140 +200,142 @@ const QuizUpdates = ({
   return (
     <>
       <div style={{ paddingTop: highlightedPost !== null ? '50px' : '2px' }}>
-        {highlightedPost === null ? (
-          <div
-            style={{
-              textAlign: 'center',
-              marginTop: '20px',
-              marginBottom: '20px',
-            }}
-          >
-            <Link to='/dashboard/tasks/quizapp'>
-              <button
-                style={{
-                  fontSize: '1rem',
-                  fontFamily: 'monospace',
-                  backgroundColor: 'white',
-                  border: 'solid blue 2px',
-                  boxShadow: '0px 0px 8px black',
-                  padding: '5px 20px',
-                  fontWeight: 'bolder',
-                  borderRadius: '10px',
-                  color: 'blue',
-                  cursor: 'pointer',
-                }}
-              >
-                Post a Quiz
-              </button>
-            </Link>
-          </div>
-        ) : undefined}
-        {updates.length ? (
-          <div>
-            <div>
-              {highlightedPost === null ? (
-                updates.map((update, i) => {
-                  return (
-                    <QuizPost
-                      server={server}
-                      key={i}
-                      user={user}
-                      updt={update}
-                      updatePostAt={async ({ createdAt, refresh, rct }) => {
-                        var done = await updatePostAt({
-                          createdAt: createdAt,
-                          refresh: refresh,
-                          rct: rct,
-                        })
-                        return done
-                      }}
-                      currentPostShow={(post) => {
-                        setCurrentPostShow(post)
-                      }}
-                      setHighlightedPost={(post) => {
-                        setHighlightedPost(post)
-                      }}
-                      showQuizPage={(quiz) => {
-                        showQuizPage(quiz)
-                      }}
-                      showHomeToggle={(show) => {
-                        showHomeToggle(show)
-                      }}
-                      viewRef={viewRef}
-                    />
-                  )
-                })
-              ) : (
-                <QuizPost
-                  server={server}
-                  status={'highlighted'}
-                  user={user}
-                  updt={highlightedPost}
-                  newPostShow={newPostShow}
-                  updatePostAt={async ({ createdAt, refresh, rct }) => {
-                    var done = await updatePostAt({
-                      createdAt: createdAt,
-                      refresh: refresh,
-                      rct: rct,
-                    })
-                    return done
-                  }}
-                  currentPostShow={(post) => {
-                    setCurrentPostShow(post)
-                  }}
-                  setHighlightedPost={(post) => {
-                    setHighlightedPost(post)
-                  }}
-                  showQuizPage={(quiz) => {
-                    showQuizPage(quiz)
-                  }}
-                  showHomeToggle={(show) => {
-                    showHomeToggle(show)
-                  }}
-                  setScrollCompleted={(scrollStatus) => {
-                    setScrollCompleted(scrollStatus)
-                  }}
-                  viewRef={viewRef}
-                />
-              )}
-            </div>
-            <div ref={lastPostRef} style={{ paddingBottom: '90px' }}>
-              {highlightedPost === null && showPostUpdatesStatus ? (
-                <label
+        <div className='quizcover'>
+          {highlightedPost === null ? (
+            <div
+              style={{
+                textAlign: 'center',
+                marginTop: '20px',
+                marginBottom: '20px',
+              }}
+            >
+              <Link to='/dashboard/tasks/quizapp'>
+                <button
                   style={{
-                    color: 'black',
-                    fontWeight: 'bold',
+                    fontSize: '1rem',
                     fontFamily: 'monospace',
-                    fontSize: '.8rem',
-                    padding: '10px',
+                    backgroundColor: 'white',
+                    border: 'solid blue 2px',
+                    boxShadow: '0px 0px 8px black',
+                    padding: '5px 20px',
+                    fontWeight: 'bolder',
+                    borderRadius: '10px',
+                    color: 'blue',
+                    cursor: 'pointer',
                   }}
                 >
-                  {postUpdatesStatus}
-                </label>
-              ) : undefined}
+                  Post a Quiz
+                </button>
+              </Link>
             </div>
-          </div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7 }}
-            style={{
-              fontFamily: 'Courier New',
-              fontWeight: 'bold',
-              margin: '40px',
-              borderRadius: '15px',
-              boxShadow: '0px 0px 7px rgba(20,20,20,1)',
-              padding: '20px',
-            }}
-          >
-            {gotUpdates
-              ? 'Hi, ' +
-                user.firstName +
-                '. Welcome to XDot Quiz Updates.\nMark history in the department by being the first to post a quiz on this page.'
-              : 'Loading...'}
-          </motion.div>
-        )}
+          ) : undefined}
+          {updates.length ? (
+            <div>
+              <div>
+                {highlightedPost === null ? (
+                  updates.map((update, i) => {
+                    return (
+                      <QuizPost
+                        server={server}
+                        key={i}
+                        user={user}
+                        updt={update}
+                        updatePostAt={async ({ createdAt, refresh, rct }) => {
+                          var done = await updatePostAt({
+                            createdAt: createdAt,
+                            refresh: refresh,
+                            rct: rct,
+                          })
+                          return done
+                        }}
+                        currentPostShow={(post) => {
+                          setCurrentPostShow(post)
+                        }}
+                        setHighlightedPost={(post) => {
+                          setHighlightedPost(post)
+                        }}
+                        showQuizPage={(quiz) => {
+                          showQuizPage(quiz)
+                        }}
+                        showHomeToggle={(show) => {
+                          showHomeToggle(show)
+                        }}
+                        viewRef={viewRef}
+                      />
+                    )
+                  })
+                ) : (
+                  <QuizPost
+                    server={server}
+                    status={'highlighted'}
+                    user={user}
+                    updt={highlightedPost}
+                    newPostShow={newPostShow}
+                    updatePostAt={async ({ createdAt, refresh, rct }) => {
+                      var done = await updatePostAt({
+                        createdAt: createdAt,
+                        refresh: refresh,
+                        rct: rct,
+                      })
+                      return done
+                    }}
+                    currentPostShow={(post) => {
+                      setCurrentPostShow(post)
+                    }}
+                    setHighlightedPost={(post) => {
+                      setHighlightedPost(post)
+                    }}
+                    showQuizPage={(quiz) => {
+                      showQuizPage(quiz)
+                    }}
+                    showHomeToggle={(show) => {
+                      showHomeToggle(show)
+                    }}
+                    setScrollCompleted={(scrollStatus) => {
+                      setScrollCompleted(scrollStatus)
+                    }}
+                    viewRef={viewRef}
+                  />
+                )}
+              </div>
+              <div ref={lastPostRef} style={{ paddingBottom: '90px' }}>
+                {highlightedPost === null && showPostUpdatesStatus ? (
+                  <label
+                    style={{
+                      color: 'black',
+                      fontWeight: 'bold',
+                      fontFamily: 'monospace',
+                      fontSize: '.8rem',
+                      padding: '10px',
+                    }}
+                  >
+                    {postUpdatesStatus}
+                  </label>
+                ) : undefined}
+              </div>
+            </div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7 }}
+              style={{
+                fontFamily: 'Courier New',
+                fontWeight: 'bold',
+                margin: '40px',
+                borderRadius: '15px',
+                boxShadow: '0px 0px 7px rgba(20,20,20,1)',
+                padding: '20px',
+              }}
+            >
+              {gotUpdates
+                ? 'Hi, ' +
+                  user.firstName +
+                  '. Welcome to XDot Quiz Updates.\nMark history in the department by being the first to post a quiz on this page.'
+                : 'Loading...'}
+            </motion.div>
+          )}
+        </div>
       </div>
     </>
   )

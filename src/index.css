@@ -27,7 +27,7 @@ code {
   top: 0px;
   z-index: 1;
   text-align: center;
-  background-color: rgba(31, 29, 29, 1);
+  background-color: rgba(10, 10, 10, 0.8);
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
 }
@@ -61,33 +61,42 @@ code {
   cursor: pointer;
 }
 .top-right {
-  padding: 5px;
+  padding: 5px 10px;
   top: 4px;
   width: fit-content;
   height: fit-content;
   margin-left: auto;
   color: white;
   text-decoration: none;
-  border: solid white 1px;
-  border-radius: 5px;
+  background-color: rgba(25, 25, 250);
+  border: solid rgba(25, 25, 250) 1px;
+  box-shadow: -3px -3px 10px rgba(0, 0, 0, 0.1), 3px 3px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   cursor: pointer;
 }
 .home {
+  display: flex;
+  flex-wrap: wrap;
   padding: 30px;
   margin: 0 auto;
   margin-top: 0px;
   padding-top: 85px;
-  background-color: rgba(31, 29, 29, 1);
+  /* background-color: rgba(31, 29, 29, 1); */
+  background-color: black;
+}
+.sitewall {
+  width: 50vw;
+  margin: auto;
 }
 .info {
   color: white;
   text-align: left;
-  margin: 20px;
+  width: 40vw;
+  margin: 20px auto;
   padding: 20px;
   font-family: 'Courier New', Courier, monospace;
   box-shadow: 0px 0px 9px black;
   border-radius: 50px;
-  border: solid rgba(50, 49, 49, 1) 2px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
   word-spacing: 5px;
   font-style: italic;
@@ -370,13 +379,29 @@ code {
   text-align: center;
   justify-content: center;
 }
+.signinregion {
+  display: flex;
+  width: auto;
+  margin: auto;
+}
+.signincov {
+  margin: auto;
+}
 .signinCover {
   margin: 0px auto;
-  width: fit-content;
+  display: block;
   padding: 0px;
+  margin: auto 10px;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+.signinside {
+  display: block;
+  height: 100vh;
+  width: 65%;
+  margin: auto 0px;
+  background-color: black;
 }
 .signinfield {
   color: black;
@@ -392,13 +417,18 @@ code {
   /* padding-bottom: 5px; */
   width: 250px;
 }
+
 @media screen and (max-width: 700px) {
+  .sitewall {
+    width: 100vw;
+    margin-top: 20px;
+  }
   .home {
     padding: 15px;
     margin: 0 auto;
     margin-top: 0px;
     padding-top: 60px;
-    background-color: rgba(31, 29, 29, 1);
+    background-color: black;
   }
   .ui-logo {
     float: right;
@@ -453,12 +483,13 @@ code {
     cursor: pointer;
   }
   .info {
+    width: auto;
     color: white;
     text-align: left;
     margin: 0px;
+    margin-top: -70px;
     font-family: 'Courier New', Courier, monospace;
     font-style: italic;
-    margin-top: 20px;
     font-size: 1.1rem;
   }
   .infos {
@@ -716,10 +747,21 @@ code {
     text-align: center;
     justify-content: center;
   }
+  .signinregion {
+    display: flex;
+    width: auto;
+    margin: auto;
+  }
+  .signincov {
+    margin: auto;
+  }
+  .signinside {
+    display: none;
+  }
   .signinCover {
     margin: 0px auto;
     width: fit-content;
-    padding: auto 50px;
+    padding: auto;
     justify-content: center;
     align-items: center;
     text-align: center;

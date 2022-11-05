@@ -60,7 +60,7 @@ const Profile = ({
     shirt: {
       name: 'Shirt',
       selected: false,
-      amount: '3500',
+      amount: '2500',
       compulsory: ['100'],
       available: ['100', '200', '300', '400'],
     },
@@ -74,14 +74,14 @@ const Profile = ({
     dinner: {
       name: 'Dinner',
       selected: false,
-      amount: '3000',
+      amount: '2000',
       compulsory: ['100', '400'],
       available: ['100', '200', '300', '400'],
     },
     finalYearBook: {
       name: 'Final Year Book',
       selected: false,
-      amount: '1500',
+      amount: '1000',
       compulsory: ['400'],
       available: ['400'],
     },

@@ -281,7 +281,7 @@ const Finish = ({
 
   const fileHandler = async (e) => {
     var file = e.target.files[0]
-    var resize_width = 500
+    var resize_width = 400
     var reader = new FileReader()
 
     reader.readAsDataURL(file)
@@ -302,8 +302,8 @@ const Finish = ({
         var ctx = elem.getContext('2d')
         ctx.drawImage(el.target, 0, 0, elem.width, elem.height)
 
-        var srcEncoded = ctx.canvas.toDataURL('image/jpeg', 1)
-        setFile(file)
+        var srcEncoded = ctx.canvas.toDataURL('image/jpeg')
+        setFile(file)        
         setImgUrl(srcEncoded)
         setUserImg(srcEncoded)
         setConvertedFile(srcEncoded)

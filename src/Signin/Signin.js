@@ -1,11 +1,13 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import ConnectionModal from '../Components/ConnectionModal'
 
 import usrImg from './usrImg.png'
 import viewImg from './view.jpg'
 import noViewImg from './noview.png'
+import signinwall from './signin-wall.jpg'
 
 const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   const [fields, setFields] = useState({
@@ -180,143 +182,154 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
             }}
           />
         )}
-        <div
-          className='signinCover'
-          onChange={handleInput}
-          onFocus={handleFocus}
-        >
-          <motion.p
-            initial={{ y: '-100vh' }}
-            animate={{ y: 0 }}
-            transition={{ ease: 'easeOut', duration: 0.7 }}
-            style={{
-              fontWeight: 'bold',
-              fontSize: '1.6rem',
-              fontFamily: 'Courier New',
-              cursor: 'pointer',
-            }}
-            onClick={() => {
-              history.push('/')
-            }}
-          >
-            NAPS UI
-          </motion.p>
-          <img
-            className='usr'
-            src={usrImg}
-            alt='profImg'
-            height='120px'
-            width='120px'
-          />
-          <div className='signover' style={{ padding: '13px' }}>
-            <input
-              ref={matricNoRef}
-              className='signinfield'
-              type='number'
-              name='matricNo'
-              placeholder='Enter Your Matric No'
-              title='Enter Your Matric No'
-              defaultValue={fields.matricNo}
-              required
-            />
-            <p className='inputStyle'></p>
-            <img
-              style={{ marginLeft: '10px' }}
-              src={usrImg}
-              name='userMatric'
-              alt='user matric'
-              height='25px'
+        <div className='signinregion'>
+          <div className='signincov'>
+            <div
+              className='signinCover'
+              onChange={handleInput}
+              onFocus={handleFocus}
+            >
+              <motion.p
+                initial={{ y: '-100vh' }}
+                animate={{ y: 0 }}
+                transition={{ ease: 'easeOut', duration: 0.7 }}
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '1.6rem',
+                  fontFamily: 'Courier New',
+                  cursor: 'pointer',
+                }}
+                onClick={() => {
+                  history.push('/')
+                }}
+              >
+                NAPS UI
+              </motion.p>
+              <img
+                className='usr'
+                src={usrImg}
+                alt='profImg'
+                height='120px'
+                width='120px'
+              />
+              <div className='signover' style={{ padding: '13px' }}>
+                <input
+                  ref={matricNoRef}
+                  className='signinfield'
+                  type='number'
+                  name='matricNo'
+                  placeholder='Enter Your Matric No'
+                  title='Enter Your Matric No'
+                  defaultValue={fields.matricNo}
+                  required
+                />
+                <p className='inputStyle'></p>
+                <img
+                  style={{ marginLeft: '10px' }}
+                  src={usrImg}
+                  name='userMatric'
+                  alt='user matric'
+                  height='25px'
+                />
+              </div>
+              <div className='signover' style={{ padding: '13px' }}>
+                <input
+                  ref={passwordRef}
+                  className='signinfield'
+                  type={passType}
+                  name='password'
+                  placeholder='Enter Password'
+                  title='Enter Password'
+                  defaultValue={fields.password}
+                  onKeyUp={handleKeyPress}
+                  required
+                />
+                <p className='inputStyle'></p>
+                {view && (
+                  <img
+                    style={{ cursor: 'pointer', marginLeft: '10px' }}
+                    title='show password'
+                    src={viewImg}
+                    name='view'
+                    alt='view'
+                    height='25px'
+                    onClick={handleView}
+                  />
+                )}
+                {noView && (
+                  <img
+                    style={{ cursor: 'pointer', marginLeft: '10px' }}
+                    title='hide password'
+                    src={noViewImg}
+                    name='noView'
+                    alt='no view'
+                    height='25px'
+                    onClick={handleView}
+                  />
+                )}
+              </div>
+            </div>
+            <p style={{ color: 'red', fontStyle: 'italic' }}>{error}</p>
+            <p
+              style={{
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                fontStyle: 'italic',
+              }}
+            >
+              <Link style={{ color: 'black', fontSize: '0.9rem' }} to='/help'>
+                Forgot Password?
+              </Link>
+            </p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              style={{
+                display: 'inline-block',
+                padding: '10px',
+                borderRadius: '10px',
+                border: 'solid rgba(49,49,50) 1px',
+              }}
+            >
+              <label
+                style={{
+                  fontWeight: 'bold',
+                  color: 'black',
+                  fontSize: '0.8rem',
+                  fontFamily: 'verdana',
+                  fontStyle: 'italic',
+                  cursor: 'pointer',
+                }}
+              >
+                Sign in with Google
+              </label>
+            </motion.div>
+            <p>
+              <button
+                ref={submitRef}
+                className='nxt'
+                style={{
+                  paddingLeft: '120px',
+                  paddingRight: '120px',
+                  marginTop: '30px',
+                }}
+                name='button'
+                title='Sign in'
+                onClick={handleSignin}
+              >
+                {signView}
+              </button>
+            </p>
+          </div>
+          <div className='signinside'>
+            <LazyLoadImage
+              src={signinwall}
+              effect='blur'
+              style={{ width: '100%', height: '100vh' }}
             />
           </div>
-          <div className='signover' style={{ padding: '13px' }}>
-            <input
-              ref={passwordRef}
-              className='signinfield'
-              type={passType}
-              name='password'
-              placeholder='Enter Password'
-              title='Enter Password'
-              defaultValue={fields.password}
-              onKeyUp={handleKeyPress}
-              required
-            />
-            <p className='inputStyle'></p>
-            {view && (
-              <img
-                style={{ cursor: 'pointer', marginLeft: '10px' }}
-                title='show password'
-                src={viewImg}
-                name='view'
-                alt='view'
-                height='25px'
-                onClick={handleView}
-              />
-            )}
-            {noView && (
-              <img
-                style={{ cursor: 'pointer', marginLeft: '10px' }}
-                title='hide password'
-                src={noViewImg}
-                name='noView'
-                alt='no view'
-                height='25px'
-                onClick={handleView}
-              />
-            )}
-          </div>
-          <p style={{ color: 'red', fontStyle: 'italic' }}>{error}</p>
         </div>
-        <p
-          style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            fontStyle: 'italic',
-          }}
-        >
-          <Link style={{ color: 'black', fontSize: '0.9rem' }} to='/help'>
-            Forgot Password?
-          </Link>
-        </p>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          style={{
-            display: 'inline-block',
-            padding: '10px',
-            borderRadius: '10px',
-            border: 'solid rgba(49,49,50) 1px',
-          }}
-        >
-          <label
-            style={{
-              fontWeight: 'bold',
-              color: 'black',
-              fontSize: '0.8rem',
-              fontFamily: 'verdana',
-              fontStyle: 'italic',
-              cursor: 'pointer',
-            }}
-          >
-            Sign in with Google
-          </label>
-        </motion.div>
-        <p>
-          <button
-            ref={submitRef}
-            className='nxt'
-            style={{
-              paddingLeft: '120px',
-              paddingRight: '120px',
-              marginTop: '30px',
-            }}
-            name='button'
-            title='Sign in'
-            onClick={handleSignin}
-          >
-            {signView}
-          </button>
-        </p>
       </div>
     </>
   )

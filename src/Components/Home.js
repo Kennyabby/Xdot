@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { motion } from 'framer-motion'
+
 import About from './About'
 import Current from './Current'
 import Events from './Events'
 import Signup from './Signup'
+
+import sitewall from './site-wall.png'
 
 const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
   const [eventDimension, setEventDimension] = useState(null)
@@ -126,6 +130,13 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
         onTouchMove={onTouchMove}
       >
         <div className='home' ref={refHome}>
+          <div className='sitewall'>
+            <LazyLoadImage
+              src={sitewall}
+              effect='blur'
+              style={{ width: '100%' }}
+            />
+          </div>
           <motion.div
             className='info'
             variants={infoVariants}

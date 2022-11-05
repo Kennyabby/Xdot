@@ -18,7 +18,7 @@ const Navbar = ({ getTopBar }) => {
     }
   }
   useEffect(() => {
-    getTopBar([homeRef, currentRef, eventRef, aboutRef, signupRef])
+    getTopBar([homeRef, currentRef, eventRef, aboutRef])
   }, [])
   useEffect(() => {
     window.addEventListener('scroll', checkPageYOffset)
@@ -66,7 +66,12 @@ const Navbar = ({ getTopBar }) => {
             </Link>
           </li>
           <Link className='top-right' to='/signin'>
-            <label className='top' ref={signupRef} name='signup'>
+            <label
+              className='top'
+              ref={signupRef}
+              name='signup'
+              style={{ color: 'white' }}
+            >
               sign in
             </label>
           </Link>

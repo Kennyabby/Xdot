@@ -293,6 +293,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             setShowHomeToggle(show)
           }}
           viewRef={viewRef}
+          winSize={winSize}
         />
       )
     } else {
@@ -535,6 +536,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                 setShowHomeToggle(show)
               }}
               viewRef={viewRef}
+              winSize={winSize}
             />
           )
         }
