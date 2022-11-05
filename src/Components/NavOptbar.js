@@ -120,9 +120,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
             animate='visible'
             exit='hidden'
             style={{
-              backgroundColor: showBorder
-                ? 'rgba(50, 49, 49, 0.95)'
-                : 'rgba(100,100,100,1)',
+              backgroundColor: showBorder ? 'rgba(50, 49, 49, 0.95)' : '',
               borderBottom: showBorder ? 'solid black 2px' : '',
               width: '100vw',
               position: 'fixed',
@@ -158,11 +156,20 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
               <div
                 style={{
                   width: 'fit-content',
+                  height: 'fit-content',
                   marginLeft: 'auto',
+                  padding: '3px',
+                  borderRadius: '10px',
+                  backgroundColor: showBorder ? '' : 'rgba(69,69,70,1)',
                 }}
                 onClick={showBar}
               >
-                <img src={menu} alt='menu' height='20px' />
+                <img
+                  src={menu}
+                  alt='menu'
+                  height='20px'
+                  style={{ margin: '0px', padding: '0px' }}
+                />
               </div>
             </div>
           </motion.div>
