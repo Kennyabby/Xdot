@@ -71,7 +71,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
         }
       }
     }
-  }, [id])
+  }, [id, winSize])
   useEffect(() => {
     setIsShowSignup(false)
     if (eventDimension != null) {
@@ -87,7 +87,6 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
         }
       })
     }
-
     window.scrollTo(0, 0)
     if (id === 'events' && eventDimension != null) {
       window.scrollTo(eventDimension.x, eventDimension.y - 30)
@@ -100,7 +99,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
       showNavbar(false)
       setIsShowSignup(true)
     }
-  }, [id])
+  }, [id, bars])
   const onTouchStart = (e) => {
     setTouchEnd(null)
     const firstTouch = e.targetTouches[0].clientX
@@ -169,6 +168,21 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
               </Link>
             </div>
           </motion.div>
+          <div
+            style={{
+              fontSize: '1.4rem',
+              fontFamily: 'monospace',
+              fontWeight: 'bold',
+              borderRadius: '10px',
+              padding: '10px',
+              background: 'rgba(19,19,20,0.8)',
+              margin: 'auto',
+              marginTop: winSize <= 700 ? '0px' : '-120px',
+            }}
+          >
+            The Most Effective Way To Understand The Universe is to Think of
+            Everything in it as Vibrations and Frequencies
+          </div>
         </div>
         <Events
           setRef={(ref) => {

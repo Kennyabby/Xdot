@@ -27,7 +27,6 @@ code {
   top: 0px;
   z-index: 1;
   text-align: center;
-  background-color: rgba(10, 10, 10, 0.8);
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
 }
@@ -95,9 +94,7 @@ code {
   margin: 20px auto;
   padding: 20px;
   font-family: 'Courier New', Courier, monospace;
-  box-shadow: 0px 0px 9px black;
   border-radius: 50px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
   word-spacing: 5px;
   font-style: italic;
   font-size: 1.2rem;
@@ -151,7 +148,7 @@ code {
 }
 .events {
   overflow-x: auto;
-  background-color: rgba(0, 0, 0, 1);
+  background-color: rgba(31, 29, 29, 1);
   height: 300px;
   flex-wrap: wrap;
   display: flex;
@@ -159,14 +156,16 @@ code {
   justify-content: center;
 }
 .acts {
-  color: black;
-  box-shadow: 0px 0px 10px rgba(150, 150, 150);
-  margin: 20px;
+  position: relative;
+  color: white;
+  box-shadow: -7px -7px 20px rgba(0, 0, 0, 0.1), 7px 7px 20px rgba(0, 0, 0, 0.1);
+  margin: auto 20px;
+  padding: 10px;
   border-radius: 40px;
   flex-wrap: wrap;
   width: 250px;
   height: 250px;
-  background-color: rgba(31, 29, 29, 1);
+  background-color: rgba(0, 0, 0, 1);
 }
 .current {
   justify-content: center;
@@ -518,21 +517,6 @@ code {
   :hover.signup {
     background-color: white;
     color: red;
-  }
-  .events {
-    overflow-x: auto;
-    height: 300px;
-    flex-wrap: wrap;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .acts {
-    color: black;
-    border-radius: 40px;
-    width: 250px;
-    height: 250px;
-    background-color: rgba(27, 26, 26, 0.3);
   }
   .current {
     justify-content: center;

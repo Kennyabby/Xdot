@@ -158,7 +158,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                   width: 'fit-content',
                   height: 'fit-content',
                   marginLeft: 'auto',
-                  padding: '3px',
+                  padding: '5px',
                   borderRadius: '10px',
                   backgroundColor: showBorder ? '' : 'rgba(69,69,70,1)',
                 }}

@@ -30,7 +30,10 @@ const Navbar = ({ getTopBar }) => {
     <>
       <div
         className='navbar'
-        style={{ borderBottom: showBorder ? 'solid rgba(50,49,49,1) 4px' : '' }}
+        style={{
+          borderBottom: showBorder ? 'solid rgba(50,49,49,1) 4px' : '',
+          background: showBorder ? 'rgba(10, 10, 10, 0.8)' : '',
+        }}
       >
         <div className='bar'>
           <li className='top-left'>

@@ -283,7 +283,6 @@ const Finish = ({
     var file = e.target.files[0]
     var resize_width = 400
     var reader = new FileReader()
-
     reader.readAsDataURL(file)
     reader.name = file.name //get the image's name
     reader.size = file.size //get the image's size
@@ -296,14 +295,15 @@ const Finish = ({
         var elem = document.createElement('canvas')
 
         var scaleFactor = resize_width / el.target.width
+        var ctx = elem.getContext('2d')
         elem.width = resize_width
         elem.height = el.target.height * scaleFactor
 
-        var ctx = elem.getContext('2d')
         ctx.drawImage(el.target, 0, 0, elem.width, elem.height)
 
-        var srcEncoded = ctx.canvas.toDataURL('image/jpeg')
-        setFile(file)        
+        var srcEncoded = elem.toDataURL('image/jpeg')
+        setFile(file)
+        console.log(srcEncoded)
         setImgUrl(srcEncoded)
         setUserImg(srcEncoded)
         setConvertedFile(srcEncoded)
