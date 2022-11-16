@@ -598,7 +598,10 @@ const Profile = ({
         <div className='profcover'>
           <div
             className='imgcover'
-            style={{ backgroundImage: `url(${imgcover})` }}
+            style={{
+              backgroundImage: `url(${imgcover})`,
+              backgroundSize: 'cover',
+            }}
             onClick={() => {
               setShowImage((showImage) => {
                 return { ...showImage, show: true, src: imgcover }
@@ -608,7 +611,10 @@ const Profile = ({
           <div style={{ position: 'relative', width: 'fit-content' }}>
             <div
               className='profimg'
-              style={{ backgroundImage: `url(${userImgUrl})` }}
+              style={{
+                backgroundImage: `url(${userImgUrl})`,
+                backgroundSize: 'cover',
+              }}
               onClick={() => {
                 setShowImage((showImage) => {
                   return { ...showImage, show: true, src: userImgUrl }

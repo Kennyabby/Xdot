@@ -4,22 +4,50 @@ const Acts = ({ title, content, clickVar, id }) => {
   return (
     <div key={id} className='acts'>
       <div>
-        <label>{title}</label>
+        <label
+          style={{
+            margin: '10px',
+            fontWeight: 'bold',
+            borderBottom: 'solid rgba(49,49,50,1) 2px',
+          }}
+        >
+          {title}
+        </label>
       </div>
-      <div>{content}</div>
+      <div
+        style={{
+          margin: '10px',
+          marginTop: '30px',
+          fontFamily: 'Courier New',
+          border: 'solid rgba(49,49,50,1) 2px',
+          padding: '10px',
+          borderRadius: '10px',
+        }}
+      >
+        {content}
+      </div>
       <div
         style={{
           position: 'absolute',
           bottom: '10px',
           left: '0px',
           width: '100%',
+          textAlign: 'center',
         }}
       >
         <button
           style={{
-            padding: '10px auto',
-            borderRadius: '20px',
+            padding: '10px',
+            paddingTop: '5px',
+            border: 'solid blue 2px',
+            fontFamily: 'monospace',
+            paddingBottom: '5px',
+            borderRadius: '10px',
+            backgroundColor: 'blue',
+            color: 'white',
+            outline: 'none',
             margin: 'auto',
+            cursor: 'pointer',
           }}
         >
           {clickVar}

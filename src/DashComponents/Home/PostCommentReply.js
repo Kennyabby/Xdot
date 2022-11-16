@@ -186,7 +186,8 @@ const PostCommentReply = ({
         <div
           style={{
             position: 'relative',
-            backgroundColor: 'rgba(235,235,235,.9)',
+            // backgroundColor: 'rgba(235,235,235,.9)',
+            backgroundColor: 'whitesmoke',
             fontSize: '.9rem',
             textAlign: 'left',
             width: '70%',

@@ -272,7 +272,7 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
           placeholder='Enter Your Current Address'
           value={contactInfo.currentAddress}
           required
-          title='Enter YOur Current Address'
+          title='Enter Your Current Address'
         />
         <p className='inputStyle'></p>
       </p>

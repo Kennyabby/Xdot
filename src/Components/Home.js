@@ -170,14 +170,14 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
           </motion.div>
           <div
             style={{
-              fontSize: '1.4rem',
+              fontSize: '1rem',
               fontFamily: 'monospace',
               fontWeight: 'bold',
               borderRadius: '10px',
               padding: '10px',
               background: 'rgba(19,19,20,0.8)',
               margin: 'auto',
-              marginTop: winSize <= 700 ? '0px' : '-120px',
+              marginTop: winSize <= 700 ? '0px' : '-20px',
             }}
           >
             The Most Effective Way To Understand The Universe is to Think of

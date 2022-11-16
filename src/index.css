@@ -142,9 +142,16 @@ code {
   font-size: 1.5rem;
 }
 .introLabel {
+  list-style: none;
   margin: 20px;
   font-family: monospace;
   font-size: 0.9rem;
+  line-height: 1rem;
+  margin: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-shadow: -7px -7px 10px rgba(0, 0, 0, 0.1), 7px 7px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 .events {
   overflow-x: auto;
@@ -160,8 +167,8 @@ code {
   color: white;
   box-shadow: -7px -7px 20px rgba(0, 0, 0, 0.1), 7px 7px 20px rgba(0, 0, 0, 0.1);
   margin: auto 20px;
-  padding: 10px;
-  border-radius: 40px;
+  padding: 13px;
+  border-radius: 20px;
   flex-wrap: wrap;
   width: 250px;
   height: 250px;

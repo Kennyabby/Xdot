@@ -162,6 +162,22 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       validateInput()
     }
   }
+  const handleGoogleSignin = async () => {
+    console.log('google signed in')
+    try {
+      const opt = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+      const resp = await fetch(server + '/auth/google', opt)
+      const response = await resp.json()
+      console.log(response)
+      const userProfile = response.userProfile
+      console.log(userProfile)
+    } catch (TypeError) {}
+  }
   return (
     <>
       <div className='signin'>
@@ -281,38 +297,44 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 Forgot Password?
               </Link>
             </p>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              style={{
-                display: 'inline-block',
-                padding: '10px',
-                borderRadius: '10px',
-                border: 'solid rgba(49,49,50) 1px',
-              }}
-            >
-              <label
+            <a href={server + '/auth/google'}>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
                 style={{
-                  fontWeight: 'bold',
-                  color: 'black',
-                  fontSize: '0.8rem',
-                  fontFamily: 'verdana',
-                  fontStyle: 'italic',
+                  display: 'inline-block',
+                  padding: '10px',
+                  borderRadius: '10px',
+                  border: 'solid rgba(49,49,50) 1px',
                   cursor: 'pointer',
                 }}
+                // onClick={handleGoogleSignin}
               >
-                Sign in with Google
-              </label>
-            </motion.div>
+                <label
+                  style={{
+                    fontWeight: 'bold',
+                    color: 'red',
+                    fontSize: '1rem',
+                    fontFamily: 'monospace',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Sign in with Google
+                </label>
+              </motion.div>
+            </a>
             <p>
               <button
                 ref={submitRef}
                 className='nxt'
                 style={{
-                  paddingLeft: '120px',
-                  paddingRight: '120px',
+                  padding: '15px 100px',
+                  backgroundColor: 'white',
+                  color: 'blue',
+                  border: 'solid blue 1px',
                   marginTop: '30px',
+                  fontSize: '1rem',
                 }}
                 name='button'
                 title='Sign in'

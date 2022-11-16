@@ -7,52 +7,9 @@ const Intro = () => {
     <>
       <div style={{ overflowY: 'auto', marginBottom: '70px' }}>
         <div className='infos'>
-          <div
-            style={{
-              width: 'fit-content',
-              padding: '15px',
-              margin: '3px',
-              fontFamily: 'monospace',
-              fontSize: '1rem',
-              borderRadius: '50px',
-              boxShadow: '0px 0px 6px black',
-            }}
-          >
-            <h2>Notice</h2>
-            <p>
-              This page is strictly for members of the National Association of
-              Physics Students University of Ibadan Division <b>(NAPS UI)</b>,
-              as only members can access its priviledges. The Registration
-              process requires that all members provide their University of
-              Ibadan student <b>MATRIC NUMBER</b>. Click the button below to
-              proceed.
-            </p>
-            <p>
-              If You Come Across Any Challenge As You Fill The Form, Kindly
-              Click The Help Button Below To Get It Resolved.
-            </p>
-            <div style={{ width: '100%', textAlign: 'center' }}>
-              <Link to='/help'>
-                <button
-                  style={{
-                    margin: 'auto',
-                    fontSize: '1rem',
-                    fontWeight: 'bold',
-                    fontFamily: 'monospace',
-                    cursor: 'pointer',
-                    padding: '10px',
-                    borderRadius: '10px',
-                    color: 'red',
-                  }}
-                >
-                  {'Help >>'}
-                </button>
-              </Link>
-            </div>
-          </div>
-
-          <div style={{ marginTop: '50px' }}>
-            <h4 style={{ textAlign: 'center' }}>
+          <h2>Instructions</h2>
+          <div style={{ marginTop: '20px' }}>
+            <h4 style={{ textAlign: 'center', fontFamily: 'Courier New' }}>
               Listed below are instructions that are to be followed as you fill
               the form:
             </h4>
@@ -92,6 +49,12 @@ const Intro = () => {
             {'Continue >>'}
           </motion.button>
         </Link>
+        <div style={{ color: 'black' }}>
+          <label>Already have an account?</label>
+          <Link to='/signin'>
+            <label style={{ cursor: 'pointer' }}>{' Sign in'}</label>
+          </Link>
+        </div>
       </div>
     </>
   )

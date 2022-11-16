@@ -340,7 +340,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                     margin: '0px',
                     marginBottom: '10px',
                     padding: '10px 0px',
-                    justifyContent: winSize<=700?'center':'left',
+                    justifyContent: winSize <= 700 ? 'center' : 'left',
                     textAlign: 'left',
                     backgroundColor: 'rgba(255,255,255,1)',
                   }}
@@ -465,6 +465,12 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
             style={{
               width: winSize <= 700 ? '100%' : '40%',
               margin: winSize <= 700 ? '0px' : 'auto',
+              marginTop: winSize <= 700 ? '0px' : '30px',
+              borderRadius: winSize <= 700 ? '0px' : '10px',
+              boxShadow:
+                winSize <= 700
+                  ? ''
+                  : '-4px -4px 10px rgba(0,0,0,0.1), 4px 4px 10px rgba(0,0,0,0.1)',
             }}
           >
             {highlightedPost === null ? (
@@ -747,7 +753,8 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                     overflowX: 'auto',
                     overflowY: 'hide',
                     flexWrap: 'wrap',
-                    backgroundColor: 'rgba(240,240,240,1)',
+                    // backgroundColor: 'rgba(240,240,240,1)',
+                    backgroundColor: 'whitesmoke',
                     display: 'flex',
                     justifyContent: 'center',
                     height: '160px',
