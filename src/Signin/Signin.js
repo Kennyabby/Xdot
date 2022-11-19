@@ -2,6 +2,7 @@ import { React, useState, useEffect, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { GoogleLogin } from 'react-google-login'
 import ConnectionModal from '../Components/ConnectionModal'
 
 import usrImg from './usrImg.png'
@@ -15,6 +16,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
     password: '',
     id: '',
   })
+  // const [GOOGLE_CLIENT_ID, setGoogleId] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const history = useHistory()
@@ -31,10 +33,27 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
     showNavbar(false)
     showNavOpt(false)
   })
-  useEffect(() => {
+  useEffect(async () => {
     if (window.sessionStorage.getItem('user-id') !== null) {
       history.push('./dashboard')
     }
+    // const opts1 = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // }
+
+    // try {
+    //   const resp = await fetch(server + '/get_google_id', opts1)
+    //   const response = await resp.json()
+    //   setGoogleId(response.google_id)
+    // } catch (error) {
+    //   setErrorMessage(
+    //     'A problem was encountered while trying to load page content. Kindly check if you are still connected to the internet.'
+    //   )
+    //   setShowModal(true)
+    // }
   }, [])
   useEffect(() => {
     if (passValidated) {
@@ -162,21 +181,53 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       validateInput()
     }
   }
-  const handleGoogleSignin = async () => {
-    console.log('google signed in')
-    try {
-      const opt = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-      const resp = await fetch(server + '/auth/google', opt)
-      const response = await resp.json()
-      console.log(response)
-      const userProfile = response.userProfile
-      console.log(userProfile)
-    } catch (TypeError) {}
+  const handleGoogleSuccess = async (googleData) => {
+    setSignView('hold on...')
+    const res = await fetch('/api/v1/auth/google', {
+      method: 'POST',
+      body: JSON.stringify({
+        token: googleData.tokenId,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await res.json()
+    const user = data.user
+    const res1 = await fetch('/isEmailPresent', {
+      method: 'POST',
+      body: JSON.stringify({
+        schoolEmail: user.email,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const resp = await res1.json()
+    const isPresent = resp.isPresent
+    if (isPresent) {
+      const user_id = resp.id
+      setSignView('Signin in...')
+      setFields((fields) => {
+        return { ...fields, id: user_id }
+      })
+      setPassValidated(true)
+    } else {
+      setPassValidated(false)
+      setError('This Email is not Authorized, Use Registered School Email!')
+      setTimeout(() => {
+        setError('')
+      }, 5000)
+      setSignView('Sign in')
+    }
+  }
+  const handleGoogleFailure = async () => {
+    setPassValidated(false)
+    setError('No Email To Validate!')
+    setTimeout(() => {
+      setError('')
+    }, 5000)
+    setSignView('Sign in')
   }
   return (
     <>
@@ -297,33 +348,14 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 Forgot Password?
               </Link>
             </p>
-            <a href={server + '/auth/google'}>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-                style={{
-                  display: 'inline-block',
-                  padding: '10px',
-                  borderRadius: '10px',
-                  border: 'solid rgba(49,49,50) 1px',
-                  cursor: 'pointer',
-                }}
-                // onClick={handleGoogleSignin}
-              >
-                <label
-                  style={{
-                    fontWeight: 'bold',
-                    color: 'red',
-                    fontSize: '1rem',
-                    fontFamily: 'monospace',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Sign in with Google
-                </label>
-              </motion.div>
-            </a>
+            <GoogleLogin
+              clientId='30205901409-culi5qq2f0mfq7jbhcro85279idkh3ns.apps.googleusercontent.com'
+              buttonText='Sign in with Google'
+              onSuccess={handleGoogleSuccess}
+              onFailure={handleGoogleFailure}
+              cookiePolicy={'single_host_origin'}
+            />
+
             <p>
               <button
                 ref={submitRef}
