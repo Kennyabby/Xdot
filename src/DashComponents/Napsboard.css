@@ -216,8 +216,8 @@
 .profmenudrop {
   position: absolute;
   z-index: 2;
-  left: 165px;
-  top: 135px;
+  left: 135px;
+  top: 145px;
   padding: 5px;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.9);
@@ -469,7 +469,7 @@
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.9);
     border-top: solid white 2px;
-    box-shadow: 0px 0px 4px black;
+    box-shadow: 0px 0px 2px black;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     text-shadow: none;

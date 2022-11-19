@@ -461,7 +461,7 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
                 style={{
                   textAlign: 'center',
                   marginTop: '20px',
-                  marginBottom: '80px',
+                  marginBottom: '100px',
                   fontFamily: 'monospace',
                 }}
               >

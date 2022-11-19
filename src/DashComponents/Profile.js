@@ -637,11 +637,11 @@ const Profile = ({
                   </li>
                 )}
                 <li className='menuitem' name='viewcover'>
-                  View Cover Picture
+                  View Cover Photo
                 </li>
-                {!isSearched && user.isEditable === 'true' && (
+                {!isSearched && (
                   <li className='menuitem' name='changecover'>
-                    Change Cover Picture
+                    Change Cover Photo
                   </li>
                 )}
               </ul>

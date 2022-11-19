@@ -588,6 +588,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                   fontFamily: 'Courier New',
                   fontWeight: 'bold',
                   margin: '40px',
+                  marginBottom:'60px',
                   borderRadius: '15px',
                   boxShadow: '0px 0px 7px rgba(20,20,20,1)',
                   padding: '20px',
