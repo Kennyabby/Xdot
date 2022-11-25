@@ -2,6 +2,7 @@ import { React, useState, useEffect, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { useGoogleLogin } from 'react-google-login'
 import { GoogleLogin } from 'react-google-login'
 import ConnectionModal from '../Components/ConnectionModal'
 
@@ -9,6 +10,7 @@ import usrImg from './usrImg.png'
 import viewImg from './view.jpg'
 import noViewImg from './noview.png'
 import signinwall from './signin-wall.jpg'
+import google from './google.png'
 
 const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   const [fields, setFields] = useState({
@@ -183,7 +185,9 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   }
   const handleGoogleSuccess = async (googleData) => {
     setSignView('hold on...')
-    const res = await fetch('/api/v1/auth/google', {
+    console.log('successful')
+    console.log(googleData.tokenId)
+    const res = await fetch(server + '/api/v1/auth/google', {
       method: 'POST',
       body: JSON.stringify({
         token: googleData.tokenId,
@@ -193,7 +197,9 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       },
     })
     const data = await res.json()
+    console.log(data)
     const user = data.user
+    console.log(user)
     const res1 = await fetch('/isEmailPresent', {
       method: 'POST',
       body: JSON.stringify({
@@ -221,7 +227,8 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       setSignView('Sign in')
     }
   }
-  const handleGoogleFailure = async () => {
+  const handleGoogleFailure = async (err) => {
+    console.log(err)
     setPassValidated(false)
     setError('No Email To Validate!')
     setTimeout(() => {
@@ -229,6 +236,15 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
     }, 5000)
     setSignView('Sign in')
   }
+  const { signIn } = useGoogleLogin({
+    clientId:
+      '30205901409-culi5qq2f0mfq7jbhcro85279idkh3ns.apps.googleusercontent.com',
+    buttonText: 'Sign in with Google',
+    onSuccess: handleGoogleSuccess,
+    onFailure: handleGoogleFailure,
+    cookiePolicy: 'single_host_origin',
+    // isSignedIn: true,
+  })
   return (
     <>
       <div className='signin'>
@@ -279,6 +295,28 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 height='120px'
                 width='120px'
               />
+              <div>
+                <button
+                  onClick={signIn}
+                  style={{
+                    margin: '20px',
+                    background: 'white',
+                    outline: 'none',
+                    display: 'inline-flex',
+                    padding: '10px 20px',
+                    color: 'blue',
+                    border: 'solid rgba(200,200,200,1) 2px',
+                    borderRadius: '5px',
+                    fontWeight: 'bold',
+                    fontFamily: 'monospace',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {' '}
+                  <img src={google} height='20px' />
+                  <label style={{ margin: '5px' }}>Sign in with Google</label>
+                </button>
+              </div>
               <div className='signover' style={{ padding: '13px' }}>
                 <input
                   ref={matricNoRef}
@@ -348,13 +386,6 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 Forgot Password?
               </Link>
             </p>
-            <GoogleLogin
-              clientId='30205901409-culi5qq2f0mfq7jbhcro85279idkh3ns.apps.googleusercontent.com'
-              buttonText='Sign in with Google'
-              onSuccess={handleGoogleSuccess}
-              onFailure={handleGoogleFailure}
-              cookiePolicy={'single_host_origin'}
-            />
 
             <p>
               <button

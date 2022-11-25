@@ -13,6 +13,7 @@ import settings from './assets/settings.jpg'
 import home from './assets/home.png'
 import notifications from './assets/notifications.png'
 import close from './assets/close.png'
+import cancel from './assets/cancel.png'
 import sblike from './assets/sblike.png'
 import blhome from './assets/blhome.png'
 import blbell from './assets/blbell.png'
@@ -37,12 +38,20 @@ const Profile = ({
   const [showAllDetails, setShowAllDetails] = useState(false)
   const [showStatus, setShowStatus] = useState('View All Details')
   const [aboutSaveStatus, setAboutSaveStatus] = useState('Done')
+  const [imgUpdateName, setImgUpdateName] = useState('')
+  const [file, setFile] = useState(null)
+  const [convertedFile, setConvertedFile] = useState(null)
+  const [imgUpdateStatus, setImgUpdateStatus] = useState('')
   const [showAdminBoard, setShowAdminBoard] = useState(false)
   const [showControlOpt, setShowControlOpt] = useState(false)
+  const [showUpdateCover, setShowUpdateCover] = useState(false)
   const [userImgUrl, setUserImgUrl] = useState(profimg)
+  const [userImgCoverUrl, setUserImgCoverUrl] = useState(imgcover)
+  const [displayImg, setDisplayImg] = useState(profimg)
   const [showImage, setShowImage] = useState({ show: false })
   const [payedDues, setPayedDues] = useState([])
   const aboutEditRef = useRef(null)
+  const imgRef = useRef(null)
   const [addSummary, setAddSummary] = useState(false)
   const [editStatus, setEditStatus] = useState(
     user.isEditable === 'false' ? 'Enable Edit Access' : 'Disable Edit Access'
@@ -322,6 +331,22 @@ const Profile = ({
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
+      if (user.imgcover !== undefined && user.imgcover !== null) {
+        const opts2 = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            imgUrl: user.imgcover,
+            matricNo: user.matricNo,
+          }),
+        }
+        const resp2 = await fetch(server + '/getImgUrl', opts2)
+        const response2 = await resp2.json()
+        const url1 = response2.url
+        setUserImgCoverUrl(url1)
+      }
     }
   }, [user])
   useEffect(async () => {
@@ -377,12 +402,110 @@ const Profile = ({
       })
     } else if (name === 'viewcover') {
       setShowImage((showImage) => {
-        return { ...showImage, show: true, src: imgcover }
+        return { ...showImage, show: true, src: userImgCoverUrl }
       })
     } else if (name === 'changeprof') {
+      setDisplayImg(userImgUrl)
+      setImgUpdateName('Profile Image')
+      setShowUpdateCover(true)
     } else if (name === 'changecover') {
+      setDisplayImg(userImgCoverUrl)
+      setImgUpdateName('Cover Photo')
+      setShowUpdateCover(true)
     }
   }
+  const updateUserImage = () => {
+    imgRef.current.click()
+  }
+  const uploadImage = async ({ convertedFile, file }) => {
+    setImgUpdateStatus('Uploading Image Please Wait...')
+    var imgSrc =
+      imgUpdateName === 'Cover Photo'
+        ? user.imgcover === undefined
+          ? user.userName + '_cover-' + user.matricNo
+          : user.imgcover
+        : user.img
+    const imageInfo = {
+      image: convertedFile,
+      imageName: imgSrc,
+      imageType: file.type,
+    }
+    var studentInfo = {
+      img: imgSrc,
+      tag: imgSrc === user.img ? 'img' : 'imgcover',
+    }
+
+    const studentBody = {
+      studentInfo: studentInfo,
+      imageInfo: imageInfo,
+    }
+    try {
+      const opts = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prop: [
+            { matricNo: user.matricNo },
+            { [studentInfo.tag]: studentInfo.img },
+          ],
+          ...studentBody,
+        }),
+      }
+      const resp = await fetch(server + '/updateUserImg', opts)
+      const feedBack = await resp.json()
+      // setSubmitStatus('Submit')
+      if (feedBack.isDelivered === true) {
+        if (studentInfo.tag === 'img') {
+          setUserImgUrl(convertedFile)
+        } else {
+          setUserImgCoverUrl(convertedFile)
+        }
+        setShowUpdateCover(false)
+      } else {
+        // setErrorMessage(
+        //   'An Error Occured, Could not submit your details. Kindly check that your device is connected to a stable internet.'
+        // )
+        // setShowModal(true)
+      }
+    } catch (TypeError) {
+      // setErrorMessage(
+      //   'An Error Occured, Could not submit your details. Kindly check that your device is connected to a stable internet.'
+      // )
+      // setShowModal(true)
+    }
+  }
+  const fileHandler = async (e) => {
+    var file = e.target.files[0]
+    setFile(file)
+    var resize_width = 400
+    var reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.name = file.name //get the image's name
+    reader.size = file.size //get the image's size
+    reader.onload = function (event) {
+      var img = new Image() //create a image
+      img.src = event.target.result //result is base64-encoded Data URI
+      img.name = event.target.name //set name (optional)
+      img.size = event.target.size //set size (optional)
+      img.onload = function (el) {
+        var elem = document.createElement('canvas')
+        var scaleFactor = resize_width / el.target.width
+        var ctx = elem.getContext('2d')
+        elem.width = resize_width
+        elem.height = el.target.height * scaleFactor
+
+        ctx.drawImage(el.target, 0, 0, elem.width, elem.height)
+
+        var srcEncoded = elem.toDataURL('image/jpeg')
+        setDisplayImg(srcEncoded)
+        setConvertedFile(srcEncoded)
+        uploadImage({ convertedFile: srcEncoded, file: file })
+      }
+    }
+  }
+
   const handleShowDetails = () => {
     if (showAllDetails) {
       setShowAllDetails(false)
@@ -545,6 +668,67 @@ const Profile = ({
             currentUser={user}
           />
         )}
+        {showUpdateCover && (
+          <div
+            className='updatecov'
+            style={{ backgroundColor: ' rgba(250,250,250,0.9)' }}
+          >
+            <div
+              className='updatecovchild'
+              style={{ backgroundColor: 'white' }}
+            >
+              <img
+                src={cancel}
+                style={{
+                  position: 'absolute',
+                  top: '5px',
+                  left: '5px',
+                  zIndex: '3',
+                  cursor: 'pointer',
+                }}
+                height='20px'
+                onClick={() => {
+                  setShowUpdateCover(false)
+                }}
+              />
+              <LazyLoadImage
+                src={displayImg}
+                effect='blur'
+                style={{
+                  borderRadius: imgUpdateName === 'Cover Photo' ? '0px' : '50%',
+                  width: imgUpdateName === 'Cover Photo' ? '90%' : '150px',
+                  height: imgUpdateName === 'Cover Photo' ? 'auto' : '150px',
+                  margin: 'auto',
+                }}
+              />
+              <input
+                ref={imgRef}
+                type='file'
+                accept='image/*'
+                style={{ display: 'none' }}
+                onChange={fileHandler}
+              />
+              <div>{imgUpdateStatus}</div>
+              <div>
+                <button
+                  onClick={updateUserImage}
+                  style={{
+                    margin: '15px',
+                    padding: '10px 15px',
+                    borderRadius: '15px',
+                    backgroundColor: 'blue',
+                    border: 'solid blue 1px',
+                    color: 'white',
+                    fontFamily: 'monospace',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {'Change ' + imgUpdateName}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <AnimatePresence>
           {showImage.show && (
             <motion.div
@@ -599,12 +783,12 @@ const Profile = ({
           <div
             className='imgcover'
             style={{
-              backgroundImage: `url(${imgcover})`,
+              backgroundImage: `url(${userImgCoverUrl})`,
               backgroundSize: 'cover',
             }}
             onClick={() => {
               setShowImage((showImage) => {
-                return { ...showImage, show: true, src: imgcover }
+                return { ...showImage, show: true, src: userImgCoverUrl }
               })
             }}
           ></div>
@@ -614,6 +798,7 @@ const Profile = ({
               style={{
                 backgroundImage: `url(${userImgUrl})`,
                 backgroundSize: 'cover',
+                border: 'solid white 2px',
               }}
               onClick={() => {
                 setShowImage((showImage) => {

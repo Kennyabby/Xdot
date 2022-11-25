@@ -413,7 +413,27 @@
   font-family: monospace;
   margin-left: auto;
 }
+.updatecov {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 4;
+}
+.updatecovchild {
+  position: relative;
+  margin: auto;
+  padding-top: 100px;
+  height: 84vh;
+  width: 400px;
+  border-radius: 20px;
+}
 @media screen and (max-width: 700px) {
+  .updatecovchild {
+    width: 100vw;
+    height: 100vh;
+  }
   .profimgview {
     width: 100%;
   }

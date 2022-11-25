@@ -303,7 +303,6 @@ const Finish = ({
 
         var srcEncoded = elem.toDataURL('image/jpeg')
         setFile(file)
-        console.log(srcEncoded)
         setImgUrl(srcEncoded)
         setUserImg(srcEncoded)
         setConvertedFile(srcEncoded)
