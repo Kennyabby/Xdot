@@ -151,6 +151,8 @@ const Post = ({
   }, [postUser])
   useEffect(async () => {
     setUpdate(updt)
+    setUserImgUrl(profimg)
+    setPostPictures([])
     setImgLoaded(false)
     try {
       const opts = {
