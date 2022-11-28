@@ -42,6 +42,7 @@ const Profile = ({
   const [file, setFile] = useState(null)
   const [convertedFile, setConvertedFile] = useState(null)
   const [imgUpdateStatus, setImgUpdateStatus] = useState('')
+  const [viewImgStatus, setViewImgStatus] = useState(false)
   const [showAdminBoard, setShowAdminBoard] = useState(false)
   const [showControlOpt, setShowControlOpt] = useState(false)
   const [showUpdateCover, setShowUpdateCover] = useState(false)
@@ -418,6 +419,7 @@ const Profile = ({
     imgRef.current.click()
   }
   const uploadImage = async ({ convertedFile, file }) => {
+    setViewImgStatus(true)
     setImgUpdateStatus('Uploading Image Please Wait...')
     var imgSrc =
       imgUpdateName === 'Cover Photo'
@@ -469,7 +471,11 @@ const Profile = ({
         // )
         // setShowModal(true)
       }
+      setViewImgStatus(false)
+      setImgUpdateStatus('')
     } catch (TypeError) {
+      setViewImgStatus(false)
+      setImgUpdateStatus('')
       // setErrorMessage(
       //   'An Error Occured, Could not submit your details. Kindly check that your device is connected to a stable internet.'
       // )
@@ -708,24 +714,26 @@ const Profile = ({
                 style={{ display: 'none' }}
                 onChange={fileHandler}
               />
-              <div>{imgUpdateStatus}</div>
-              <div>
-                <button
-                  onClick={updateUserImage}
-                  style={{
-                    margin: '15px',
-                    padding: '10px 15px',
-                    borderRadius: '15px',
-                    backgroundColor: 'blue',
-                    border: 'solid blue 1px',
-                    color: 'white',
-                    fontFamily: 'monospace',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {'Change ' + imgUpdateName}
-                </button>
-              </div>
+              {viewImgStatus && <div>{imgUpdateStatus}</div>}
+              {!viewImgStatus && (
+                <div>
+                  <button
+                    onClick={updateUserImage}
+                    style={{
+                      margin: '15px',
+                      padding: '10px 15px',
+                      borderRadius: '15px',
+                      backgroundColor: 'blue',
+                      border: 'solid blue 1px',
+                      color: 'white',
+                      fontFamily: 'monospace',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {'Change ' + imgUpdateName}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}

@@ -130,7 +130,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
         pass: fields.password,
       }),
     }
-
+    setSignView('hold on...')
     try {
       const resp = await fetch(server + '/getpassList', opts1)
       const response = await resp.json()
@@ -147,7 +147,6 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
         setError('Unrecognized Matric No or Invalid Password!')
         setSignView('Sign in')
       }
-      setSignView('hold on...')
     } catch (error) {
       setErrorMessage(
         'A problem was encountered while trying to validate your log in details. Kindly check if you are still connected to the internet.'

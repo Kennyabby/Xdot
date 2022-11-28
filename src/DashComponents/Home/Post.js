@@ -46,6 +46,7 @@ const Post = ({
   const [leftOffset, setLeftOffset] = useState('')
   const [topOffset, setTopOffset] = useState('')
   const [userImgUrl, setUserImgUrl] = useState(profimg)
+  const [postPictures, setPostPictures] = useState([])
   const [imgLoaded, setImgLoaded] = useState(false)
   const [isReacted, setIsReacted] = useState(false)
   const [isCommented, setIsCommented] = useState(false)
@@ -121,6 +122,30 @@ const Post = ({
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
+      if (updt.postPicture.length) {
+        if (!postPictures.length) {
+          setPostPictures([])
+          updt.postPicture.forEach(async (picture) => {
+            const opts2 = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                imgUrl: picture,
+                matricNo: postUser.matricNo,
+                imagePath: 'postImages',
+              }),
+            }
+            const resp2 = await fetch(server + '/getImgUrl', opts2)
+            const response2 = await resp2.json()
+            const url1 = response2.url
+            setPostPictures((postPictures) => {
+              return [...postPictures, url1]
+            })
+          })
+        }
+      }
       setImgLoaded(true)
     }
   }, [postUser])
@@ -507,16 +532,74 @@ const Post = ({
             <div
               style={{
                 backgroundColor: 'rgba(245,245,255,1)',
-                paddingTop: '15px',
+                padding: '0px',
                 paddingBottom: '15px',
               }}
             >
-              <div></div>
+              {postPictures.length ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    margin: '0px',
+                    padding: '0px',
+                  }}
+                >
+                  {postPictures.map((postPicture, i) => {
+                    return (
+                      i <= 4 && (
+                        <div
+                          key={i}
+                          style={{
+                            position: 'relative',
+                            cursor: 'pointer',
+                            margin: '0px',
+                            width: '100%',
+                          }}
+                        >
+                          <LazyLoadImage
+                            src={postPicture}
+                            width='100%'
+                            effect='blur'
+                            style={{ cursor: 'pointer' }}
+                          />
+                          {i === 4 && postPictures.length > 5 && (
+                            <div
+                              style={{
+                                position: 'absolute',
+                                top: '0px',
+                                left: '0px',
+                                zIndex: '1',
+                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                width: '100%',
+                                height: '100%',
+                              }}
+                            >
+                              {postPictures.length > 5 && (
+                                <div
+                                  style={{
+                                    color: 'white',
+                                    marginTop: '20px',
+                                    fontSize: '2rem',
+                                    fontWeight: 'bold',
+                                    flexWrap: 'wrap',
+                                  }}
+                                >
+                                  {'+' + String(postPictures.length - 5)}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )
+                    )
+                  })}
+                </div>
+              ) : undefined}
               <div
                 style={{
                   textAlign: 'left',
                   padding: '10px',
-                  margin: 'auto 15px',
+                  margin: '15px',
                   borderRadius: '10px',
                   backgroundColor: 'white',
                 }}
