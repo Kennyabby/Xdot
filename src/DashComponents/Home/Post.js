@@ -6,6 +6,7 @@ import '../Events/Events.css'
 
 import profimg from '../Events/assets/profile.png'
 import close from '../Events/assets/close.png'
+import cls from '../assets/close.png'
 import back from '../Events/assets/left.png'
 import opt from './assets/opt.png'
 import comment from '../Events/assets/comment.png'
@@ -54,6 +55,7 @@ const Post = ({
   const [showReactionList, setShowReactionList] = useState(false)
   const [showComments, setShowComments] = useState(false)
   const [showPost, setShowPost] = useState(true)
+  const [showImage, setShowImage] = useState({ show: false })
   const [postShow, setPostShow] = useState(null)
   const [update, setUpdate] = useState({})
   const [postReaction, setPostReaction] = useState({
@@ -122,6 +124,7 @@ const Post = ({
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
+      setImgLoaded(true)
       if (updt.postPicture.length) {
         if (!postPictures.length) {
           setPostPictures([])
@@ -146,14 +149,14 @@ const Post = ({
           })
         }
       }
-      setImgLoaded(true)
     }
   }, [postUser])
   useEffect(async () => {
     setUpdate(updt)
-    setUserImgUrl(profimg)
-    setPostPictures([])
-    setImgLoaded(false)
+    if (!imgLoaded) {
+      setUserImgUrl(profimg)
+      setPostPictures([])
+    }
     try {
       const opts = {
         method: 'POST',
@@ -413,6 +416,56 @@ const Post = ({
               : 'solid rgba(200,200,200,1) 0px',
         }}
       >
+        <AnimatePresence>
+          {showImage.show && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ ease: 'easeOut' }}
+              exit={{ opacity: 0, transition: { ease: 'easeIn' } }}
+              style={{
+                position: 'fixed',
+                width: '100vw',
+                height: '100vh',
+                top: '0px',
+                zIndex: '3',
+                left: '0px',
+                backgroundColor: 'rgba(19,19,20,1)',
+              }}
+            >
+              <img
+                src={cls}
+                style={{
+                  position: 'fixed',
+                  top: '5px',
+                  left: '5px',
+                  zIndex: '3',
+                  cursor: 'pointer',
+                }}
+                height='20px'
+                onClick={() => {
+                  setShowImage((showImage) => {
+                    return { ...showImage, show: false }
+                  })
+                }}
+              />
+              <motion.div
+                initial={{ scale: 0.2 }}
+                animate={{ scale: 1 }}
+                transition={{ ease: 'easeOut' }}
+                exit={{ scale: 0.2, transition: { ease: 'easeIn' } }}
+                className='profimgview'
+              >
+                <LazyLoadImage
+                  src={showImage.src}
+                  width='100%'
+                  effect='blur'
+                  alt='user photo'
+                />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         {status !== undefined ? (
           <div>
             <div className='toppostlabel'>
@@ -489,6 +542,11 @@ const Post = ({
                   style={{
                     cursor: 'pointer',
                   }}
+                  onClick={() => {
+                    setShowImage((showImage) => {
+                      return { ...showImage, show: true, src: userImgUrl }
+                    })
+                  }}
                 >
                   <LazyLoadImage
                     src={userImgUrl}
@@ -556,6 +614,15 @@ const Post = ({
                             cursor: 'pointer',
                             margin: '0px',
                             width: '100%',
+                          }}
+                          onClick={() => {
+                            setShowImage((showImage) => {
+                              return {
+                                ...showImage,
+                                show: true,
+                                src: postPicture,
+                              }
+                            })
                           }}
                         >
                           <LazyLoadImage
