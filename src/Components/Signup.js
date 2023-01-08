@@ -5,11 +5,14 @@ import BasicInfo from './BasicInfo'
 import SchoolInfo from './SchoolInfo'
 import ContactInfo from './ContactInfo'
 import SignupInfo from './SignupInfo'
+import FewBasicInfo from './FewBasicInfo'
+import FewSchoolInfo from './FewSchoolInfo'
+import FewSignupInfo from './FewSinupInfo'
 import Finish from './Finish'
 import Intro from './Intro'
 import SideNavigator from './SideNavigator'
 import cancel from './cancel.png'
-const Signup = ({ showNavbar, server }) => {
+const Signup = ({ showNavbar, showNavOpt, server }) => {
   const history = useHistory()
   const [content, setContent] = useState('Loading Form...')
   const [labelRefs, setLabelRefs] = useState([])
@@ -18,6 +21,7 @@ const Signup = ({ showNavbar, server }) => {
     password: '',
     confirmPassword: '',
   })
+  const [fillAllFields, setFillAllFields] = useState(false)
   const [isStartValidating, setIsStartValidating] = useState(false)
   const [basicConfirmed, setBasicConfirmed] = useState({
     check: false,
@@ -100,10 +104,12 @@ const Signup = ({ showNavbar, server }) => {
     setLabelRefs(refs)
   }
   useEffect(() => {
-    if (id !== 'signup' && id !== undefined) {
-      showNavbar(false)
-    } else {
+    showNavbar(false)
+    showNavOpt(false)
+    if (id === undefined) {
       setShowView(false)
+    } else {
+      setShowView(true)
     }
   }, [id])
   const getCoverList = (list) => {
@@ -113,6 +119,14 @@ const Signup = ({ showNavbar, server }) => {
     setCoverPos(pos)
   }
   useEffect(() => {
+    const faf = window.localStorage.getItem('fill-all-fields')
+    if (faf !== null) {
+      if (faf === 'true') {
+        setFillAllFields(true)
+      } else {
+        setFillAllFields(false)
+      }
+    }
     var basicCount = 0
     basicInfo.map((info) => {
       if (studentInfo[info] !== '') {
@@ -226,65 +240,110 @@ const Signup = ({ showNavbar, server }) => {
       }
     })
     window.scrollTo(0, 0)
-    if (id === 'basicInfo') {
+    if (id === undefined) {
       setContent(
-        <BasicInfo
-          getCoverList={getCoverList}
-          getCoverPos={getCoverPos}
-          setBasicConfirmed={(isConfirmed) => {
-            setBasicConfirmed((setConfirmed) => {
-              return { ...setConfirmed, check: isConfirmed }
-            })
-          }}
+        <Intro
+          fillAllFields={fillAllFields}
+          setFillAllFields={setFillAllFields}
         />
       )
+    } else if (id === 'basicInfo') {
+      if (fillAllFields) {
+        setContent(
+          <BasicInfo
+            getCoverList={getCoverList}
+            getCoverPos={getCoverPos}
+            setBasicConfirmed={(isConfirmed) => {
+              setBasicConfirmed((setConfirmed) => {
+                return { ...setConfirmed, check: isConfirmed }
+              })
+            }}
+          />
+        )
+      } else {
+        setContent(
+          <FewBasicInfo
+            setBasicConfirmed={(isConfirmed) => {
+              setBasicConfirmed((setConfirmed) => {
+                return { ...setConfirmed, check: isConfirmed }
+              })
+            }}
+          />
+        )
+      }
     } else if (id === 'schoolInfo') {
-      setContent(
-        <SchoolInfo
-          server={server}
-          getCoverList={getCoverList}
-          getCoverPos={getCoverPos}
-          setSchoolConfirmed={(isConfirmed) => {
-            setSchoolConfirmed((setConfirmed) => {
-              return { ...setConfirmed, check: isConfirmed }
-            })
-          }}
-        />
-      )
+      if (fillAllFields) {
+        setContent(
+          <SchoolInfo
+            server={server}
+            getCoverList={getCoverList}
+            getCoverPos={getCoverPos}
+            setSchoolConfirmed={(isConfirmed) => {
+              setSchoolConfirmed((setConfirmed) => {
+                return { ...setConfirmed, check: isConfirmed }
+              })
+            }}
+          />
+        )
+      } else {
+        setContent(
+          <FewSchoolInfo
+            setSchoolConfirmed={(isConfirmed) => {
+              setSchoolConfirmed((setConfirmed) => {
+                return { ...setConfirmed, check: isConfirmed }
+              })
+            }}
+          />
+        )
+      }
     } else if (id === 'contactInfo') {
-      setContent(
-        <ContactInfo
-          getCoverList={getCoverList}
-          getCoverPos={getCoverPos}
-          setContactConfirmed={(isConfirmed) => {
-            setContactConfirmed((setConfirmed) => {
-              return { ...setConfirmed, check: isConfirmed }
-            })
-          }}
-        />
-      )
+      if (fillAllFields) {
+        setContent(
+          <ContactInfo
+            getCoverList={getCoverList}
+            getCoverPos={getCoverPos}
+            setContactConfirmed={(isConfirmed) => {
+              setContactConfirmed((setConfirmed) => {
+                return { ...setConfirmed, check: isConfirmed }
+              })
+            }}
+          />
+        )
+      }
     } else if (id === 'signupInfo') {
-      setContent(
-        <SignupInfo
-          basicConfirmed={basicConfirmed}
-          schoolConfirmed={schoolConfirmed}
-          contactConfirmed={contactConfirmed}
-          credentials={confidentials}
-          setValidate={(validate) => {
-            setIsStartValidating(validate)
-          }}
-          getCoverList={getCoverList}
-          getCoverPos={getCoverPos}
-          setSignupConfirmed={(isConfirmed) => {
-            setSignupConfirmed((setConfirmed) => {
-              return { ...setConfirmed, check: isConfirmed }
-            })
-          }}
-          sendConfidentialDetails={(confidentials) => {
-            setConfidentials(confidentials)
-          }}
-        />
-      )
+      if (fillAllFields) {
+        setContent(
+          <SignupInfo
+            basicConfirmed={basicConfirmed}
+            schoolConfirmed={schoolConfirmed}
+            contactConfirmed={contactConfirmed}
+            credentials={confidentials}
+            setValidate={(validate) => {
+              setIsStartValidating(validate)
+            }}
+            getCoverList={getCoverList}
+            getCoverPos={getCoverPos}
+            setSignupConfirmed={(isConfirmed) => {
+              setSignupConfirmed((setConfirmed) => {
+                return { ...setConfirmed, check: isConfirmed }
+              })
+            }}
+            sendConfidentialDetails={(confidentials) => {
+              setConfidentials(confidentials)
+            }}
+          />
+        )
+      } else {
+        setContent(
+          <FewSignupInfo
+            setSignupConfirmed={(isConfirmed) => {
+              setSignupConfirmed((setConfirmed) => {
+                return { ...setConfirmed, check: isConfirmed }
+              })
+            }}
+          />
+        )
+      }
     } else if (id === 'finish') {
       setContent(
         <Finish
@@ -310,9 +369,8 @@ const Signup = ({ showNavbar, server }) => {
         />
       )
     } else {
-      setContent(<Intro />)
     }
-  }, [id])
+  }, [id, fillAllFields])
   const resetThisSession = () => {
     var infos = []
     infos = infos.concat(basicInfo)
@@ -334,6 +392,7 @@ const Signup = ({ showNavbar, server }) => {
                 position: 'fixed',
                 width: 'fit-content',
                 height: 'fit-content',
+                zIndex: '2',
                 top: '8px',
                 right: '7px',
                 cursor: 'pointer',
@@ -369,7 +428,7 @@ const Signup = ({ showNavbar, server }) => {
             </p>
           ) : undefined}
           <div className='cover'>
-            {showView ? (
+            {showView && fillAllFields && (
               <SideNavigator
                 setValidate={(validate) => {
                   setIsStartValidating(validate)
@@ -377,11 +436,11 @@ const Signup = ({ showNavbar, server }) => {
                 infoConfirmedList={infoConfirmedList}
                 getLabelRefs={getLabelRefs}
               />
-            ) : undefined}
+            )}
             <AnimatePresence exitBeforeEnter>
-              <motion.div style={{ overflowY: 'auto', height: '100vh' }}>
+              <motion.div>
                 {content}
-                {showView ? (
+                {showView && fillAllFields ? (
                   <div className='currv' ref={currRef}>
                     {cover.map((v, i) => {
                       return <div key={i} className='viewcurr'></div>

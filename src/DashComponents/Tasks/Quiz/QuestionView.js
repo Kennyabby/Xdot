@@ -8,11 +8,11 @@ const QuestionView = ({ question, index, editQuestion, removeQuestion }) => {
     <>
       <div
         style={{
-          backgroundColor: 'black',
+          backgroundColor: 'rgba(0,0,0,0.95)',
           borderRadius: '10px',
           margin: '10px',
           padding: '10px',
-          boxShadow: '0px 0px 7px black',
+          // boxShadow: '0px 0px 7px black',
         }}
       >
         <div className='questionview'>
@@ -22,7 +22,7 @@ const QuestionView = ({ question, index, editQuestion, removeQuestion }) => {
                 padding: '15px',
                 fontSize: '1.1rem',
                 fontWeight: 'bold',
-                backgroundColor: 'blue',
+                backgroundColor: 'darkred',
                 borderRadius: '50%',
                 color: 'white',
               }}

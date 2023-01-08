@@ -1,4 +1,6 @@
-import { React } from 'react'
+import { React, useContext } from 'react'
+
+import ContextProvider from '../ContextProvider'
 
 const ConnectionModal = ({
   title,
@@ -9,6 +11,7 @@ const ConnectionModal = ({
   func1,
   func2,
 }) => {
+  const { darkMode } = useContext(ContextProvider)
   return (
     <>
       <div
@@ -26,8 +29,8 @@ const ConnectionModal = ({
           style={{
             padding: '20px',
             margin: '40px',
-            backgroundColor: 'white',
-            color: 'black',
+            backgroundColor: darkMode ? 'white' : 'rgba(0,0,0,0.9)',
+            color: darkMode ? 'black' : 'white',
             fontFamily: 'monospace',
             fontSize: '0.9rem',
             borderRadius: '15px',

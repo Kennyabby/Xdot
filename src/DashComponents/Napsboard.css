@@ -30,6 +30,9 @@
   top: 2px;
   display: inline-flex;
 }
+.viewbg {
+  background-color: rgb(250, 250, 250, 0.9);
+}
 .hometoggle {
   text-shadow: white 0px 0px 7px;
   display: inline-flex;
@@ -46,13 +49,19 @@
   width: 50px;
   margin: auto;
 }
+.hometogglegroup1 {
+  position: fixed;
+  top: 40px;
+  left: 10px;
+  display: flex;
+}
 .coverDetail {
   margin: 5px;
   font-family: monospace;
   font-size: 0.6rem;
 }
 .userbar {
-  width: 205px;
+  width: 250px;
   z-index: 2;
   color: white;
   display: block;
@@ -62,10 +71,9 @@
   border-bottom-right-radius: 0px;
   margin: 0px;
   z-index: 2;
-  padding-left: 2px;
-  width: 200px;
+  padding-left: 10px;
+  width: 240px;
   background-color: rgba(255, 255, 255, 0.9);
-  border-right: solid rgba(230, 230, 230, 1) 3px;
   height: 100vh;
   overflow-y: auto;
   list-style: none;
@@ -81,7 +89,7 @@
   color: darkorange;
   float: left;
   text-align: left;
-  width: 195px;
+  width: 215px;
   text-decoration: none;
   cursor: pointer;
 }
@@ -98,19 +106,19 @@
 }
 .userlefttop {
   display: block;
-  content-visibility: visible;
+  content-visibility: hidden;
   margin: 20px;
   font-weight: bold;
   font-size: 1.2rem;
-  margin-bottom: 70px;
+  margin-bottom: 110px;
   text-align: center;
   text-decoration: none;
   color: white;
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0);
   padding: 7px;
   border-radius: 20px;
-  box-shadow: darkorange 0px 0px 4px;
+  /* box-shadow: darkorange 0px 0px 4px; */
 }
 .userleftbottom {
   display: block;
@@ -391,11 +399,15 @@
   padding: 0px;
 }
 .profiledetailsitem {
-  display: flex;
+  display: block;
   font-family: monospace;
   border-bottom: solid rgba(210, 210, 210, 1) 2px;
   padding: 10px;
   padding-top: 20px;
+}
+.profiledetailsitemtitle {
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 .profimgview {
   background-color: rgba(0, 0, 0, 1);
@@ -468,6 +480,8 @@
   }
   .usersidebar {
     position: absolute;
+    padding-left: 18px;
+    padding-top: 0px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     height: 90vh;
@@ -505,15 +519,23 @@
     padding: 3px 20px;
     border-radius: 15px;
   }
+  .hometogglegroup1 {
+    position: initial;
+    display: flex;
+  }
   .profiledetails {
     padding: 0px;
   }
   .profiledetailsitem {
-    display: flex;
+    display: block;
     font-family: monospace;
     border-bottom: solid rgba(210, 210, 210, 1) 2px;
     padding: 10px;
     padding-top: 20px;
+  }
+  .profiledetailsitemtitle {
+    font-weight: bold;
+    margin-bottom: 20px;
   }
   .napsitesearchcover {
     width: 90%;

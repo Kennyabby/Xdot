@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import '../Events/Events.css'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -7,20 +7,24 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import profimg from '../Events/assets/profile.png'
 import Post from './Post'
 import PostPageModal from './PostPageModal'
+import ContextProvider from '../../ContextProvider'
 
 import events from './assets/events.png'
 import tasks from './assets/tasks.png'
 import voting from './assets/events.png'
 import chat from './assets/chat.png'
+import wchat from './assets/wchat.png'
 import notifications from './assets/notifications.png'
 import settings from './assets/settings.jpg'
 import search from './assets/search.png'
+import wsearch from './assets/wsearch.png'
 import xdotlogo from './assets/xdotlogo.png'
 
-const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
+const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
   const lastPostRef = useRef(null)
+  const [winSize, setWinSize] = useState(window.innerWidth)
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
   const [lastPostDimension, setLastPostDimension] = useState('')
@@ -37,6 +41,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
   const [highlightedPost, setHighlightedPost] = useState(null)
   const [currentPostShow, setCurrentPostShow] = useState(null)
   const [newPostShow, setNewPostShow] = useState(null)
+  const { darkMode } = useContext(ContextProvider)
   const minSwipeDistance = 20
   const maxNumberOfRequest = 4
 
@@ -63,6 +68,15 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
   useEffect(() => {
     showHomeToggle(true)
   }, [])
+  const checkSize = () => {
+    setWinSize(window.innerWidth)
+  }
+  useEffect(() => {
+    window.addEventListener('resize', checkSize)
+    return () => {
+      window.removeEventListener('resize', checkSize)
+    }
+  }, [winSize])
   useEffect(async () => {
     if (user.matricNo !== undefined) {
       try {
@@ -268,7 +282,14 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
   return (
     <>
       <div
-        style={{ paddingTop: highlightedPost !== null ? '50px' : '10px' }}
+        style={{
+          paddingTop:
+            highlightedPost !== null
+              ? '50px'
+              : winSize <= 700
+              ? '20px'
+              : '25px',
+        }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -291,9 +312,11 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                 fontSize: '.8rem',
                 fontWeight: 'bold',
                 fontFamily: 'monospace',
-                backgroundColor: 'rgba(0,0,0,0.9)',
+                backgroundColor: darkMode
+                  ? 'rgba(255,255,255,0.9)'
+                  : 'rgba(0,0,0,0.9)',
                 borderRadius: '10px',
-                color: 'white',
+                color: darkMode ? 'black' : 'white',
               }}
             >
               {notificationMessage}
@@ -317,140 +340,149 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
         {highlightedPost === null ? (
           <div
             style={{
-              paddingTop: '65px',
-              position: 'relative',
-              textAlign: 'center',
-              justifyContent: 'center',
+              paddingTop: '0px',
+              // position: 'relative',
+              display: 'flex',
+              width: '100%',
+              textAlign: winSize <= 700 ? 'center' : 'left',
+              justifyContent: winSize <= 700 ? 'center' : 'left',
             }}
           >
-            <AnimatePresence>
-              {showSearch && (
+            <div
+              style={{
+                width: winSize <= 700 ? '100%' : '50%',
+              }}
+            >
+              <AnimatePresence>
+                {showSearch && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.1 }}
+                    exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                    style={{
+                      position: 'sticky',
+                      position: '-webkit-sticky',
+                      display: 'flex',
+                      zIndex: '2',
+                      top: '0px',
+                      left: '0px',
+                      margin: '0px',
+                      marginBottom: '10px',
+                      padding: '5px 0px',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      backgroundColor: darkMode
+                        ? 'rgba(0,0,0,0)'
+                        : 'rgba(255,255,255,0)',
+                    }}
+                  >
+                    <Link to='/dashboard/profile' style={{ margin: 'auto' }}>
+                      <div
+                        style={{
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <LazyLoadImage
+                          src={userImgUrl}
+                          width={40}
+                          height={40}
+                          style={{
+                            boxShadow: darkMode
+                              ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
+                              : '-5px -5px 10px rgba(250,250,250,0.1),5px 5px 10px rgba(250,250,250,0.1)',
+                            backgroundColor: darkMode
+                              ? 'rgba(255,255,255,0.2)'
+                              : 'rgba(240,240,240,1)',
+                            backgroundSize: 'cover',
+                            borderRadius: '50%',
+                            border: 'solid rgba(220,220,220,1) 1px',
+                            margin: '5px auto',
+                          }}
+                          PlaceholderSrc={profimg}
+                          effect='blur'
+                          alt='user photo'
+                        />
+                      </div>
+                    </Link>
+                    <div
+                      style={{
+                        backgroundColor: darkMode
+                          ? 'rgba(255,255,255,0.1)'
+                          : 'rgba(255,255,255,1)',
+                        width: winSize <= 700 ? '75%' : '80%',
+                        margin: 'auto',
+                        boxShadow: darkMode
+                          ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
+                          : '-5px -5px 10px rgba(250,250,250,0.1),5px 5px 10px rgba(250,250,250,0.1)',
+                        borderRadius: '20px',
+                      }}
+                    >
+                      <div
+                        style={{
+                          backgroundColor: darkMode
+                            ? 'rgba(255,255,255,0.1)'
+                            : 'rgba(255,255,255,1)',
+                          borderRadius: '20px',
+                          width: '100%',
+                          display: 'flex',
+                        }}
+                      >
+                        <img
+                          src={darkMode ? wsearch : search}
+                          height={darkMode ? '15px' : '20px'}
+                          style={{
+                            marginTop: '15px',
+                            marginLeft: '15px',
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => {}}
+                        />
+                        <input
+                          type='search'
+                          placeholder='Search Pages, Posts, Clusters...'
+                          style={{
+                            backgroundColor: darkMode
+                              ? 'rgba(255,255,255,0)'
+                              : 'white',
+                            color: darkMode ? 'white' : 'black',
+                            padding: '15px 10px',
+                            outline: 'none',
+                            border: 'solid black 0px',
+                            borderRadius: '20px',
+                            width: '90%',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.1 }}
-                  exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
+                  onClick={() => {
+                    setShowPostPage(true)
+                  }}
+                  className='saysm'
                   style={{
-                    position: 'fixed',
-                    display: 'flex',
-                    width: '100%',
-                    zIndex: '2',
-                    top: '0px',
-                    left: '0px',
-                    margin: '0px',
-                    marginBottom: '10px',
-                    padding: '10px 0px',
-                    justifyContent: winSize <= 700 ? 'center' : 'left',
-                    textAlign: 'left',
-                    backgroundColor: 'rgba(255,255,255,1)',
+                    backgroundColor: darkMode ? 'black' : 'white',
+                    boxShadow: darkMode
+                      ? '-4px -4px 10px rgba(10,10,18,0.1), 4px 4px 10px rgba(10,10,18,0.1)'
+                      : '-4px -4px 10px rgba(240,240,255,0.1), 4px 4px 10px rgba(240,240,255,0.1)',
+                    color: darkMode ? 'white' : 'black',
                   }}
                 >
-                  <div
-                    style={{
-                      width: '15%',
-                      textAlign: 'center',
-                      marginTop: '8px',
-                      width: 'fit-content',
-                      flexWrap: 'wrap',
-                      margin: winSize <= 700 ? 'auto' : 'auto 50px',
-                      textShadow: '0px 0px 3px black',
-                      color: 'blue',
-                      display: 'block',
-                      fontFamily: 'monospace',
-                      fontSize: '21px',
-                      fontWeight: 'bolder',
-                    }}
-                  >
-                    <img src={xdotlogo} height='30px' />
-
-                    <label style={{ margin: '5px' }}>XDot</label>
-                  </div>
-                  <div
-                    style={{
-                      width: winSize <= 700 ? '70%' : '40%',
-                      margin: winSize <= 700 ? 'auto' : 'auto 50px',
-                      boxShadow:
-                        '-5px -5px 15px rgba(0,0,0,0.1),5px 5px 15px rgba(0,0,0,0.1)',
-                      borderRadius: '20px',
-                    }}
-                  >
-                    <div
-                      style={{
-                        backgroundColor: 'white',
-                        borderRadius: '20px',
-                        width: '98%',
-                        display: 'flex',
-                      }}
-                    >
-                      <img
-                        src={search}
-                        height='20px'
-                        style={{
-                          marginTop: '15px',
-                          marginLeft: '15px',
-                          cursor: 'pointer',
-                        }}
-                        onClick={() => {}}
-                      />
-                      <input
-                        type='text'
-                        placeholder='Search Pages, Posts, Clusters...'
-                        style={{
-                          padding: '15px 10px',
-                          outline: 'none',
-                          border: 'solid black 0px',
-                          borderRadius: '20px',
-                          width: '80%',
-                        }}
-                      />
-                    </div>
-                  </div>
+                  {'Something on your mind?'}
                 </motion.div>
-              )}
-            </AnimatePresence>
-            <div
-              style={{
-                display: 'flex',
-                // margin: '10px',
-                width: winSize <= 700 ? '100%' : '60%',
-              }}
-            >
-              <Link to='/dashboard/profile' style={{ margin: 'auto' }}>
-                <div
-                  style={{
-                    cursor: 'pointer',
-                  }}
-                >
-                  <LazyLoadImage
-                    src={userImgUrl}
-                    width={40}
-                    height={40}
-                    style={{
-                      boxShadow:
-                        '-5px -5px 8px rgba(0,0,0,0.1),5px 5px 8px rgba(0,0,0,0.1)',
-                      backgroundColor: 'rgba(240,240,240,1)',
-                      backgroundSize: 'cover',
-                      borderRadius: '50%',
-                      border: 'solid rgba(220,220,220,1) 1px',
-                      margin: '5px auto',
-                    }}
-                    PlaceholderSrc={profimg}
-                    effect='blur'
-                    alt='user photo'
-                  />
-                </div>
-              </Link>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
-                onClick={() => {
-                  setShowPostPage(true)
-                }}
-                className='saysm'
-              >
-                {'Something on your mind?'}
-              </motion.div>
+              </div>
             </div>
           </div>
         ) : undefined}
@@ -463,23 +495,28 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
         >
           <div
             style={{
-              width: winSize <= 700 ? '100%' : '40%',
+              width: winSize <= 700 ? '100%' : '50%',
               margin: winSize <= 700 ? '0px' : 'auto',
               marginTop: winSize <= 700 ? '0px' : '30px',
               borderRadius: winSize <= 700 ? '0px' : '10px',
+              backgroundColor: darkMode ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0)',
               boxShadow:
                 winSize <= 700
                   ? ''
-                  : '-4px -4px 10px rgba(0,0,0,0.1), 4px 4px 10px rgba(0,0,0,0.1)',
+                  : darkMode
+                  ? '-4px -4px 10px rgba(0,0,0,0.3), 4px 4px 10px rgba(0,0,0,0.3)'
+                  : '-4px -4px 15px rgba(255,255,255,0.5), 4px 4px 15px rgba(255,255,255,0.5)',
             }}
           >
             {highlightedPost === null ? (
               <div
                 style={{
+                  position: 'sticky',
+                  position: '-webkit-sticky',
+                  top: '0px',
                   padding: '10px',
                   marginBottom: '20px',
                   justifyContent: 'center',
-                  // borderBottom: 'solid rgba(210,210,210,1) 2px',
                 }}
               >
                 <button
@@ -487,11 +524,15 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                     getNewUpdates(user.lastPostUpdate)
                   }}
                   style={{
-                    padding: '7px 20px',
-                    borderRadius: '15px',
-                    backgroundColor: 'white',
-                    color: 'blue',
+                    padding: '9px 25px',
+                    borderRadius: '22px',
+                    backgroundColor: 'blue',
+                    color: 'white',
+                    boxShadow: darkMode
+                      ? '-5px -5px 10px rgba(10,10,18,0.1),5px 5px 10px rgba(10,10,18,0.1)'
+                      : '-5px -5px 10px rgba(243,243,255,0.1),5px 5px 10px rgba(243,243,255,0.1)',
                     fontFamily: 'monospace',
+                    fontWeight: 'bold',
                     border: 'solid rgba(0,0,255,1) 2px',
                     cursor: 'pointer',
                   }}
@@ -588,7 +629,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                   fontFamily: 'Courier New',
                   fontWeight: 'bold',
                   margin: '40px',
-                  marginBottom:'60px',
+                  marginBottom: '60px',
                   borderRadius: '15px',
                   boxShadow: '0px 0px 7px rgba(20,20,20,1)',
                   padding: '20px',
@@ -614,8 +655,8 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                   position: 'relative',
                   margin: '10px auto',
                   padding: '10px 0px',
-                  borderTop: 'solid rgba(210,210,210,1) 4px',
-                  borderBottom: 'solid rgba(210,210,210,1) 4px',
+                  // borderTop: 'solid rgba(210,210,210,1) 4px',
+                  // borderBottom: 'solid rgba(210,210,210,1) 4px',
                   textAlign: 'left',
                   fontFamily: 'monospace',
                 }}
@@ -648,7 +689,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                     overflowX: 'auto',
                     overflowY: 'hide',
                     flexWrap: 'wrap',
-                    backgroundColor: 'rgba(240,240,240,1)',
+                    // backgroundColor: darkMode ? 'black' : 'rgba(240,240,240,1)',
                     display: 'flex',
                     justifyContent: 'center',
                     height: '160px',
@@ -675,8 +716,9 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                           width: '100px',
                           height: '130px',
                           backgroundColor: 'white',
-                          boxShadow:
-                            '-4px -4px 20px rgba(0,0,0,0.1),4px 4px 20px rgba(0,0,0,0.1)',
+                          boxShadow: darkMode
+                            ? '-5px -5px 10px rgba(7,7,18,0.5),5px 5px 10px rgba(7,7,18,0.5)'
+                            : '-5px -5px 10px rgba(240,240,255,0.5),5px 5px 10px rgba(240,240,255,0.5)',
                           borderRadius: '10px',
                           textAlign: 'center',
                           justifyContent: 'center',
@@ -720,8 +762,8 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                   position: 'relative',
                   margin: '10px auto',
                   padding: '10px 0px',
-                  borderTop: 'solid rgba(210,210,210,1) 4px',
-                  borderBottom: 'solid rgba(210,210,210,1) 4px',
+                  // borderTop: 'solid rgba(210,210,210,1) 4px',
+                  // borderBottom: 'solid rgba(210,210,210,1) 4px',
                   textAlign: 'left',
                   fontFamily: 'monospace',
                 }}
@@ -754,8 +796,6 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                     overflowX: 'auto',
                     overflowY: 'hide',
                     flexWrap: 'wrap',
-                    // backgroundColor: 'rgba(240,240,240,1)',
-                    backgroundColor: 'whitesmoke',
                     display: 'flex',
                     justifyContent: 'center',
                     height: '160px',
@@ -782,8 +822,9 @@ const Updates = ({ user, server, showHomeToggle, viewRef, winSize }) => {
                           width: '100px',
                           height: '130px',
                           backgroundColor: 'white',
-                          boxShadow:
-                            '-4px -4px 20px rgba(0,0,0,0.1),4px 4px 20px rgba(0,0,0,0.1)',
+                          boxShadow: darkMode
+                            ? '-5px -5px 10px rgba(7,7,18,0.5),5px 5px 10px rgba(7,7,18,0.5)'
+                            : '-5px -5px 10px rgba(240,240,255,0.5),5px 5px 10px rgba(240,240,255,0.5)',
                           borderRadius: '10px',
                           textAlign: 'center',
                           justifyContent: 'center',

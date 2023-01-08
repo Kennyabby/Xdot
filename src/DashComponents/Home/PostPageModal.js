@@ -1,9 +1,12 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import cancel from '../Events/assets/close.png'
 import './Home.css'
 
+import ContextProvider from '../../ContextProvider'
+
+import cancel from '../Events/assets/close.png'
+import wcancel from './assets/close.png'
 import camera from './assets/camera.png'
 import wcamera from './assets/wcamera.png'
 
@@ -11,6 +14,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
   const history = useHistory()
   const postLabel = ['public', 'group', 'napsite']
   const [showUpdateStatus, setShowUpdateStatus] = useState(false)
+  const { darkMode } = useContext(ContextProvider)
   const label = {
     napsite: { collection: 'NapsitesFeed', value: 'Napsites' },
     public: { collection: 'NapsPublic', value: 'Public' },
@@ -21,7 +25,6 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
     postTo: 'Public',
   })
   const imgRef = useRef(null)
-  const [files, setFiles] = useState([])
   const [convertedFiles, setConvertedFiles] = useState([])
   useEffect(() => {}, [])
   const handleInputChange = (e) => {
@@ -43,10 +46,10 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
     })
     var imagesInfo = []
     var imagesName = []
-    files.forEach((file, i) => {
+    convertedFiles.forEach((file, i) => {
       var imgSrc = user.matricNo + '_' + String(Date.now() + i)
       var imageInfo = {
-        image: convertedFiles[i],
+        image: file,
         imageName: imgSrc,
         imageType: file.type,
       }
@@ -88,7 +91,6 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
     for (var i = 0; i < files.length; i++) {
       fileList = fileList.concat(files[i])
     }
-    setFiles(fileList)
     fileList.forEach((file) => {
       var reader = new FileReader()
       reader.readAsDataURL(file)
@@ -134,7 +136,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
         }}
         className='postmodalpage'
         style={{
-          backgroundColor: 'rgba(255,255,255,1)',
+          backgroundColor: darkMode ? 'rgba(8,8,8,1)' : 'whitesmoke',
         }}
       >
         <img
@@ -149,7 +151,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
             borderRadius: '50%',
             cursor: 'pointer',
           }}
-          src={cancel}
+          src={darkMode ? wcancel : cancel}
           alt='close post page'
           height='20px'
         />
@@ -200,13 +202,18 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                   border: 'solid lightgreen 2px',
                   outline: 'none',
                   cursor: 'pointer',
+                  color: darkMode ? 'white' : 'black',
                   padding: '5px 10px',
                 }}
                 name='postTo'
                 value={fields.postTo}
               >
                 {postLabel.map((labl) => {
-                  return <option>{label[labl].value}</option>
+                  return (
+                    <option style={{ color: 'black' }}>
+                      {label[labl].value}
+                    </option>
+                  )
                 })}
               </select>
               <div style={{ margin: 'auto 20px', fontFamily: 'monospace' }}>
@@ -220,7 +227,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                   onChange={fileHandler}
                 />
                 <img
-                  src={camera}
+                  src={darkMode ? wcamera : camera}
                   height='20px'
                   style={{ margin: 'auto 10px', cursor: 'pointer' }}
                   onClick={() => {
@@ -235,8 +242,11 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                 value={fields.postComment}
                 placeholder='Say Something...'
                 style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
                   padding: '10px',
+                  color: darkMode ? 'white' : 'black',
                   fontSize: '1rem',
+                  fontFamily: 'calibri',
                   borderRadius: '10px',
                   height: '200px',
                   margin: 'auto',
@@ -315,14 +325,14 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                             padding: '3px',
                             borderRadius: '50%',
                             border: 'solid black 1px',
-                            background: 'white',
-                            bottom: '0px',
-                            right: '0px',
+                            background: darkMode ? 'rgba(10,10,10,1)' : 'white',
+                            bottom: '-5px',
+                            right: '-5px',
                             zIndex: '1',
                             borderRadius: '50%',
                             cursor: 'pointer',
                           }}
-                          src={cancel}
+                          src={darkMode ? wcancel : cancel}
                           alt='remove post picture'
                           height='10px'
                         />
@@ -350,8 +360,9 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                   fontSize: '1rem',
                   padding: '10px',
                   borderRadius: '10px',
-                  color: 'green',
-                  border: 'solid green 2px',
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.1)' : 'white',
+                  color: darkMode ? 'lightgreen' : 'green',
+                  border: darkMode ? 'solid lightgreen 2px' : 'solid green 2px',
                   cursor: 'pointer',
                 }}
               >

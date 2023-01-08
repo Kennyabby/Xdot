@@ -1,10 +1,13 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import { useParams } from 'react-router-dom'
+
+import ContextProvider from '../../ContextProvider'
 import Updates from './Updates'
 
 import home from './assets/home.png'
 import notifications from './assets/notifications.png'
 import blhome from './assets/blhome.png'
+import whome from './assets/whome.png'
 import blbell from './assets/blbell.png'
 
 const Home = ({
@@ -13,7 +16,6 @@ const Home = ({
   homerf,
   chatrf,
   notificationsrf,
-  setBodyLeft,
   setShowNavigator,
   showHomeToggle,
   viewRef,
@@ -22,20 +24,22 @@ const Home = ({
   const [view, setView] = useState('')
   const [showUpdates, setShowUpdates] = useState(true)
   const { id } = useParams()
+  const { darkMode } = useContext(ContextProvider)
   useEffect(() => {
     showHomeToggle(true)
     if (notificationsrf.current !== null) {
       notificationsrf.current.childNodes[0].childNodes[0].src = notifications
-      notificationsrf.current.childNodes[0].childNodes[1].style.color = 'black'
+      notificationsrf.current.childNodes[0].childNodes[1].style.color = darkMode
+        ? 'white'
+        : 'black'
     }
     if (homerf.current !== null) {
       homerf.current.childNodes[0].childNodes[0].src =
-        id === undefined ? blhome : home
+        id === undefined ? blhome : darkMode ? whome : home
       homerf.current.childNodes[0].childNodes[1].style.color = 'blue'
       // chatrf.current.style.backgroundColor = 'rgba(0,0,0,0)'
       // chatrf.current.style.boxShadow = 'none'
     }
-    setBodyLeft()
     setShowNavigator()
   }, [homerf, id])
   useEffect(() => {

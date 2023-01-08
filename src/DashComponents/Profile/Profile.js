@@ -1,22 +1,26 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { PaystackButton } from 'react-paystack'
 
-import imgcover from './assets/userimgcover.jpg'
-import profimg from './assets/user.png'
-import userimgmenu from './assets/userimgmenu.png'
-import usercontrolopt from './assets/usercontrolopt.png'
-import edit from './assets/edit1.png'
-import settings from './assets/settings.jpg'
-import home from './assets/home.png'
-import notifications from './assets/notifications.png'
-import close from './assets/close.png'
-import cancel from './assets/cancel.png'
-import sblike from './assets/sblike.png'
-import blhome from './assets/blhome.png'
-import blbell from './assets/blbell.png'
+import ContextProvider from '../../ContextProvider'
+
+import imgcover from '../assets/userimgcover.jpg'
+import profimg from '../assets/user.png'
+import userimgmenu from '../assets/userimgmenu.png'
+import userimgwmenu from '../assets/wcamera.png'
+import usercontrolopt from '../assets/usercontrolopt.png'
+import edit from '../assets/edit1.png'
+import settings from '../assets/settings.jpg'
+import home from '../assets/home.png'
+import whome from '../assets/whome.png'
+import notifications from '../assets/notifications.png'
+import close from '../assets/close.png'
+import cancel from '../assets/cancel.png'
+import sblike from '../assets/sblike.png'
+import blhome from '../assets/blhome.png'
+import blbell from '../assets/blbell.png'
 
 import AdminBoard from './AdminBoard'
 
@@ -38,6 +42,7 @@ const Profile = ({
   const [showAllDetails, setShowAllDetails] = useState(false)
   const [showStatus, setShowStatus] = useState('View All Details')
   const [aboutSaveStatus, setAboutSaveStatus] = useState('Done')
+  const [allowedLength, setAllowedLength] = useState(61)
   const [imgUpdateName, setImgUpdateName] = useState('')
   const [file, setFile] = useState(null)
   const [convertedFile, setConvertedFile] = useState(null)
@@ -57,6 +62,41 @@ const Profile = ({
   const [editStatus, setEditStatus] = useState(
     user.isEditable === 'false' ? 'Enable Edit Access' : 'Disable Edit Access'
   )
+  const [editMain, setEditMain] = useState(false)
+  const [mainField, setMainField] = useState({
+    firstName: user.firstName,
+    middleName: user.middleName,
+    lastName: user.lastName,
+    level: user.level,
+    hallOfResidence: user.hallOfResidence,
+    access: user.access,
+  })
+  const [viewMainSave, setViewMainSave] = useState(false)
+  const [mainUpdateStatus, setMainUpdateStatus] = useState('Save')
+  const [otherField, setOtherField] = useState({
+    matricNo: user.matricNo,
+    gender: user.gender,
+    dateOfBirth: user.dateOfBirth,
+    modeOfEntry: user.modeOfEntry,
+    yearOfAdmission: user.yearOfAdmission,
+    guardianName: user.guardianName,
+  })
+  const [editOtherInfo, setEditOtherInfo] = useState(false)
+  const [otherProfileUpdateStatus, setOtherProfileUpdateStatus] =
+    useState('Save')
+  const [contactField, setContactField] = useState({
+    schoolEmail: user.schoolEmail,
+    otherEmail: user.otherEmail,
+    contactNo: user.contactNo,
+    otherContactNo: user.otherContactNo,
+    guardianContactNo: user.guardianContactNo,
+    otherGuardianContactNo: user.otherGuardianContactNo,
+    currentAddress: user.currentAddress,
+    guardianCurrentAddress: user.guardianCurrentAddress,
+  })
+  const [editContactInfo, setEditContactInfo] = useState(false)
+  const [contactProfileUpdateStatus, setContactProfileUpdateStatus] =
+    useState('Save')
   const [aboutField, setAboutField] = useState('')
   const [selectedDues, setSelectedDues] = useState([])
   const [dueFields, setDueFields] = useState({
@@ -103,6 +143,7 @@ const Profile = ({
       available: ['100'],
     },
   })
+  const { darkMode } = useContext(ContextProvider)
   const [showPayments, setShowPayments] = useState(false)
   const [paystackButtonLabel, setPaystackButtonLabel] =
     useState('Continue Payment')
@@ -277,48 +318,53 @@ const Profile = ({
   }
 
   const contactDetailsName = [
-    'Current Address',
+    'School Email',
+    'Other Email',
     'Contact No',
     'Other Contact No',
-    'Guardian Name',
-    'Guardian Current Address',
     'Guardian Contact No',
     'Other Guardian Contact No',
+    'Current Address',
+    'Guardian Current Address',
   ]
   const contactDetailsValue = [
-    'currentAddress',
+    'schoolEmail',
+    'otherEmail',
     'contactNo',
     'otherContactNo',
-    'guardianName',
-    'guardianCurrentAddress',
     'guardianContactNo',
     'otherGuardianContactNo',
+    'currentAddress',
+    'guardianCurrentAddress',
   ]
   const allUserDetailName = [
     'Matric No',
     'Gender',
     'Date Of Birth',
-    'School Email',
-    'Other Email',
-    'Year Of Admission',
     'Mode Of Entry',
+    'Year Of Admission',
+    'Guardian Name',
   ]
   const allUserDetailValue = [
     'matricNo',
     'gender',
     'dateOfBirth',
-    'schoolEmail',
-    'otherEmail',
-    'yearOfAdmission',
     'modeOfEntry',
+    'yearOfAdmission',
+    'guardianName',
   ]
   const fewUserDetailName = [
     'Matric No',
     'Gender',
-    'Other Email',
+    'Year Of Admission',
     'Mode Of Entry',
   ]
-  const fewUserDetailValue = ['matricNo', 'gender', 'otherEmail', 'modeOfEntry']
+  const fewUserDetailValue = [
+    'matricNo',
+    'gender',
+    'yearOfAdmission',
+    'modeOfEntry',
+  ]
   useEffect(async () => {
     if (user !== null) {
       const opts1 = {
@@ -372,7 +418,7 @@ const Profile = ({
     }
     if (homerf !== undefined && chatrf !== undefined) {
       if (homerf.current !== null && chatrf.current !== null) {
-        homerf.current.childNodes[0].childNodes[0].src = home
+        homerf.current.childNodes[0].childNodes[0].src = darkMode ? whome : home
         homerf.current.childNodes[0].childNodes[1].style.color = 'blue'
       }
     }
@@ -383,7 +429,7 @@ const Profile = ({
       ) {
         notificationsrf.current.childNodes[0].childNodes[0].src = notifications
         notificationsrf.current.childNodes[0].childNodes[1].style.color =
-          'black'
+          darkMode ? 'white' : 'black'
       }
     }
   }, [homerf])
@@ -511,15 +557,15 @@ const Profile = ({
       }
     }
   }
-
-  const handleShowDetails = () => {
+  useEffect(() => {
     if (showAllDetails) {
-      setShowAllDetails(false)
-      setShowStatus('View More Details')
-    } else {
-      setShowAllDetails(true)
       setShowStatus('View Few Details')
+    } else {
+      setShowStatus('View More Details')
     }
+  }, [showAllDetails])
+  const handleShowDetails = () => {
+    setShowAllDetails(!showAllDetails)
   }
   const handleAdminBoard = () => {
     setShowAdminBoard(true)
@@ -612,6 +658,96 @@ const Profile = ({
         })
       }
     }
+  }
+  const updateContactProfile = async () => {
+    setContactProfileUpdateStatus('Saving...')
+    const updated = await updateOneUser({
+      findBy: { matricNo: user.matricNo },
+      update: contactField,
+    })
+    if (updated) {
+      setContactProfileUpdateStatus('Saved')
+      Object.keys(contactField).forEach((field) => {
+        user[field] = contactField[field]
+      })
+      setEditContactInfo(false)
+      setContactProfileUpdateStatus('Save')
+    } else {
+      setContactProfileUpdateStatus('An Error Occured')
+    }
+  }
+  const handleContactFieldUpdate = (e) => {
+    const name = e.target.getAttribute('name')
+    const value = e.target.value
+    setContactField((contactField) => {
+      return { ...contactField, [name]: value }
+    })
+  }
+  const updateOtherProfile = async () => {
+    setOtherProfileUpdateStatus('Saving...')
+    const updated = await updateOneUser({
+      findBy: { matricNo: user.matricNo },
+      update: otherField,
+    })
+    if (updated) {
+      setOtherProfileUpdateStatus('Saved')
+      Object.keys(otherField).forEach((field) => {
+        user[field] = otherField[field]
+      })
+      setEditOtherInfo(false)
+      setOtherProfileUpdateStatus('Save')
+    } else {
+      setOtherProfileUpdateStatus('An Error Occured')
+    }
+  }
+  const handleOtherFieldUpdate = (e) => {
+    const name = e.target.getAttribute('name')
+    const value = e.target.value
+    setOtherField((otherField) => {
+      return { ...otherField, [name]: value }
+    })
+  }
+  useEffect(() => {
+    setViewMainSave(true)
+  }, [mainField])
+  const updateMainProfile = async () => {
+    setMainUpdateStatus('Saving...')
+    const updated = await updateOneUser({
+      findBy: { matricNo: user.matricNo },
+      update: mainField,
+    })
+    if (updated) {
+      setMainUpdateStatus('Saved')
+      Object.keys(mainField).forEach((field) => {
+        user[field] = mainField[field]
+      })
+      setEditMain(false)
+      setMainUpdateStatus('Save')
+    } else {
+      setMainUpdateStatus('An Error Occured')
+    }
+  }
+  const handleMainFieldUpdate = (e) => {
+    const name = e.target.getAttribute('name')
+    const value = e.target.value
+    setMainField((mainField) => {
+      return { ...mainField, [name]: value }
+    })
+  }
+
+  const mainLabelStyle = {
+    color: darkMode ? 'white' : 'black',
+    display: 'block',
+    padding: '15px',
+    margin: '10px auto',
+  }
+  const mainFieldStyle = {
+    padding: '15px',
+    margin: '10px auto',
+    border: 'solid black 0px',
+    color: darkMode ? 'white' : 'black',
+    borderRadius: '10px',
+    background: darkMode ? 'rgba(0,0,0,0.9)' : 'rgba(255,255,255,0.9)',
   }
   return (
     <>
@@ -787,6 +923,153 @@ const Profile = ({
             </motion.div>
           )}
         </AnimatePresence>
+        <AnimatePresence>
+          {editMain && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ ease: 'easeOut' }}
+              exit={{ opacity: 0, transition: { ease: 'easeIn' } }}
+              style={{
+                position: 'fixed',
+                width: '100vw',
+                height: '100vh',
+                top: '0px',
+                overflowY: 'auto',
+                zIndex: '3',
+                left: '0px',
+                color: darkMode ? 'white' : 'black',
+                backgroundColor: darkMode
+                  ? 'rgba(10,10,10,0.9)'
+                  : 'rgba(247,247,255,0.95)',
+              }}
+            >
+              <img
+                src={darkMode ? close : cancel}
+                style={{
+                  position: 'fixed',
+                  top: '5px',
+                  left: '5px',
+                  zIndex: '3',
+                  cursor: 'pointer',
+                }}
+                height='20px'
+                onClick={() => {
+                  setEditMain(false)
+                }}
+              />
+              <div onChange={handleMainFieldUpdate}>
+                <div
+                  style={{
+                    margin: '15px auto',
+                    marginBottom: '25px',
+                    fontFamily: 'Courier New',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Edit Profile
+                </div>
+                <div style={mainLabelStyle}>
+                  <div style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
+                    First Name
+                  </div>
+                  <input
+                    name='firstName'
+                    style={mainFieldStyle}
+                    placeholder='Enter First Name'
+                    value={mainField.firstName}
+                  />
+                </div>
+                <div style={mainLabelStyle}>
+                  <div style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
+                    Middle Name
+                  </div>
+                  <input
+                    name='middleName'
+                    style={mainFieldStyle}
+                    placeholder='Enter Middle Name'
+                    value={mainField.middleName}
+                  />
+                </div>
+                <div style={mainLabelStyle}>
+                  <div style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
+                    Last Name
+                  </div>
+                  <input
+                    name='lastName'
+                    style={mainFieldStyle}
+                    placeholder='Enter Last Name'
+                    value={mainField.lastName}
+                  />
+                </div>
+                <div style={mainLabelStyle}>
+                  <div style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
+                    Level
+                  </div>
+                  <select
+                    name='level'
+                    style={mainFieldStyle}
+                    placeholder='Enter Level'
+                    value={mainField.level}
+                  >
+                    <option value=''>Enter Level</option>
+                    <option value='100'>100</option>
+                    <option value='200'>200</option>
+                    <option value='300'>300</option>
+                    <option value='400'>400</option>
+                  </select>
+                </div>
+                <div style={mainLabelStyle}>
+                  <div style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
+                    Hall Of Residence
+                  </div>
+                  <select
+                    name='hallOfResidence'
+                    style={mainFieldStyle}
+                    placeholder='Enter Hall Of Residence'
+                    value={mainField.hallOfResidence}
+                  >
+                    <option value=''>Hall of Residence Allocated</option>
+                    <option value='MELLANBY'>MELLANBY</option>
+                    <option value='TEDDER'>TEDDER</option>
+                    <option value='KUTI'>KUTI</option>
+                    <option value='SULTAN BELLO'>SULTAN BELLO</option>
+                    <option value='QUEEN ELIZABETH II'>
+                      QUEEN ELIZABETH II
+                    </option>
+                    <option value='INDEPENDENCE'>INDEPENDENCE</option>
+                    <option value='IDIA'>IDIA</option>
+                    <option value='OBAFEMI AWOLOWO'>OBAFEMI AWOLOWO</option>
+                    <option value='ALEXANDER BROWN'>ALEXANDER BROWN</option>
+                    <option value='ABDULSALAMI ABUBAKAR'>
+                      ABDULSALAMI ABUBAKAR
+                    </option>
+                  </select>
+                </div>
+                {viewMainSave && (
+                  <div style={{ margin: '20px auto' }}>
+                    <button
+                      style={{
+                        padding: '10px 35px',
+                        borderRadius: '25px',
+                        fontWeight: 'bold',
+                        fontSize: '1.1rem',
+                        fontFamily: 'monospace',
+                        background: 'blue',
+                        color: 'white',
+                        border: 'solid blue 2px',
+                        cursor: 'pointer',
+                      }}
+                      onClick={updateMainProfile}
+                    >
+                      {mainUpdateStatus}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         <div className='profcover'>
           <div
             className='imgcover'
@@ -817,7 +1100,11 @@ const Profile = ({
             <div
               onClick={handleProfMenuDrop}
               className='profmenu'
-              style={{ backgroundImage: `url(${userimgmenu})` }}
+              style={{
+                backgroundImage: `url(${
+                  darkMode ? userimgwmenu : userimgmenu
+                })`,
+              }}
             ></div>
             {showProfMenuDrop && (
               <ul className='profmenudrop' onClick={handleMenuItem}>
@@ -880,6 +1167,9 @@ const Profile = ({
                   marginLeft: 'auto',
                   cursor: 'pointer',
                 }}
+                onClick={() => {
+                  setEditMain(true)
+                }}
               >
                 <img
                   src={edit}
@@ -940,7 +1230,7 @@ const Profile = ({
                   >
                     <label
                       style={{
-                        color: 'green',
+                        color: darkMode ? 'lightgreen' : 'green',
                         cursor: clickAdmin ? 'pointer' : 'auto',
                       }}
                     >
@@ -1031,7 +1321,8 @@ const Profile = ({
               </div>
             </div>
           )}
-          {isSearched && user.about === undefined ? undefined : (
+          {isSearched &&
+          (user.about === undefined || user.about === '') ? undefined : (
             <div className='userabout'>
               <div
                 style={{
@@ -1080,7 +1371,6 @@ const Profile = ({
                   margin: '15px auto',
                   padding: '10px',
                   fontFamily: 'monospace',
-                  maxHeight: '300px',
                   fontSize: '.8rem',
                   border: 'solid rgba(210, 210, 210, 1) 2px',
                   borderRadius: '10px',
@@ -1090,7 +1380,44 @@ const Profile = ({
                   (user.about !== null &&
                   user.about !== undefined &&
                   user.about !== '' ? (
-                    <label>{user.about}</label>
+                    <label>
+                      {user.about.split(' ').length <= '60' ? (
+                        user.about
+                      ) : (
+                        <label>
+                          {user.about
+                            .split(' ')
+                            .slice(0, allowedLength)
+                            .join(' ') +
+                            (allowedLength <= user.about.split(' ').length
+                              ? ' ... '
+                              : '')}
+                          {
+                            <label
+                              onClick={() => {
+                                if (
+                                  allowedLength <= user.about.split(' ').length
+                                ) {
+                                  setAllowedLength((allowedLength) => {
+                                    return allowedLength + 70
+                                  })
+                                } else {
+                                  setAllowedLength(61)
+                                }
+                              }}
+                              style={{
+                                cursor: 'pointer',
+                                color: darkMode ? 'lightgreen' : 'green',
+                              }}
+                            >
+                              {allowedLength <= user.about.split(' ').length
+                                ? 'See More'
+                                : 'Collapse'}
+                            </label>
+                          }
+                        </label>
+                      )}
+                    </label>
                   ) : (
                     <label
                       style={{
@@ -1147,7 +1474,7 @@ const Profile = ({
                         style={{
                           width: 'fit-content',
                           marginLeft: 'auto',
-                          color: 'green',
+                          color: darkMode ? 'lightgreen' : 'green',
                           fontWeight: 'bold',
                           cursor: 'pointer',
                         }}
@@ -1191,12 +1518,16 @@ const Profile = ({
               }}
             >
               Other Info{' '}
-              {!isSearched && user.isEditable === 'true' && (
+              {!isSearched && user.isEditable === 'true' && !editOtherInfo && (
                 <div
                   style={{
                     width: 'fit-content',
                     marginLeft: 'auto',
                     cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    setShowAllDetails(true)
+                    setEditOtherInfo(true)
                   }}
                 >
                   <img
@@ -1222,14 +1553,34 @@ const Profile = ({
                 }}
               >
                 {showAllDetails ? (
-                  <div>
+                  <div onChange={handleOtherFieldUpdate}>
                     {allUserDetailName.map((detail, i) => {
                       return (
                         <div className='profiledetailsitem' key={i}>
-                          <label style={{ fontWeight: 'bold' }}>{detail}</label>
-                          <label style={{ marginLeft: 'auto' }}>
-                            {user[allUserDetailValue[i]]}
-                          </label>
+                          <div className='profiledetailsitemtitle'>
+                            <label>{detail}</label>
+                          </div>
+                          {!editOtherInfo ? (
+                            <label>{user[allUserDetailValue[i]]}</label>
+                          ) : ![
+                              'Gender',
+                              'Matric No',
+                              'Mode Of Entry',
+                            ].includes(detail) ? (
+                            <input
+                              type={detail === 'Date Of Birth' ? 'Date' : ''}
+                              style={{
+                                padding: '10px',
+                                borderRadius: '10px',
+                                color: darkMode ? 'white' : 'black',
+                                backgroundColor: darkMode ? 'black' : 'white',
+                              }}
+                              name={allUserDetailValue[i]}
+                              value={otherField[allUserDetailValue[i]]}
+                            />
+                          ) : (
+                            <label>{user[allUserDetailValue[i]]}</label>
+                          )}
                         </div>
                       )
                     })}
@@ -1239,30 +1590,59 @@ const Profile = ({
                     {fewUserDetailName.map((detail, i) => {
                       return (
                         <div className='profiledetailsitem' key={i}>
-                          <label style={{ fontWeight: 'bold' }}>{detail}</label>
-                          <label style={{ marginLeft: 'auto' }}>
-                            {user[fewUserDetailValue[i]]}
-                          </label>
+                          <div className='profiledetailsitemtitle'>
+                            <label>{detail}</label>
+                          </div>
+                          <label>{user[fewUserDetailValue[i]]}</label>
                         </div>
                       )
                     })}
                   </div>
                 )}
-                <div
-                  style={{
-                    cursor: 'pointer',
-                    width: 'fit-content',
-                    margin: 'auto',
-                    marginTop: '10px',
-                    fontFamily: 'monospace',
-                    fontWeight: 'bold',
-                    fontSize: '.8rem',
-                    color: 'green',
-                  }}
-                  onClick={handleShowDetails}
-                >
-                  <label style={{ cursor: 'pointer' }}>{showStatus}</label>
-                </div>
+                {!editOtherInfo ? (
+                  <div
+                    style={{
+                      cursor: 'pointer',
+                      width: 'fit-content',
+                      margin: 'auto',
+                      marginTop: '10px',
+                      fontFamily: 'monospace',
+                      fontWeight: 'bold',
+                      fontSize: '.8rem',
+                      color: darkMode ? 'lightgreen' : 'green',
+                    }}
+                    onClick={handleShowDetails}
+                  >
+                    <label style={{ cursor: 'pointer' }}>{showStatus}</label>
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      display: 'flex',
+                      margin: '10px',
+                      justifyContent: 'space-between',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    <label
+                      style={{ color: 'red', cursor: 'pointer' }}
+                      onClick={() => {
+                        setEditOtherInfo(false)
+                      }}
+                    >
+                      Cancel
+                    </label>
+                    <label
+                      style={{
+                        color: darkMode ? 'lightgreen' : 'green',
+                        cursor: 'pointer',
+                      }}
+                      onClick={updateOtherProfile}
+                    >
+                      {otherProfileUpdateStatus}
+                    </label>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1645,12 +2025,15 @@ const Profile = ({
               }}
             >
               Contacts{' '}
-              {!isSearched && user.isEditable === 'true' && (
+              {!isSearched && user.isEditable === 'true' && !editContactInfo && (
                 <div
                   style={{
                     width: 'fit-content',
                     marginLeft: 'auto',
                     cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    setEditContactInfo(!editContactInfo)
                   }}
                 >
                   <img
@@ -1675,17 +2058,60 @@ const Profile = ({
                   borderRadius: '10px',
                 }}
               >
-                <div>
+                <div onChange={handleContactFieldUpdate}>
                   {contactDetailsName.map((detail, i) => {
                     return (
                       <div className='profiledetailsitem' key={i}>
-                        <label style={{ fontWeight: 'bold' }}>{detail}</label>
-                        <label style={{ marginLeft: 'auto' }}>
-                          {user[contactDetailsValue[i]]}
-                        </label>
+                        <div className='profiledetailsitemtitle'>
+                          <label>{detail}</label>
+                        </div>
+                        {!editContactInfo ? (
+                          <label>{user[contactDetailsValue[i]]}</label>
+                        ) : !['Other Email'].includes(detail) ? (
+                          <input
+                            style={{
+                              padding: '10px',
+                              borderRadius: '10px',
+                              color: darkMode ? 'white' : 'black',
+                              backgroundColor: darkMode ? 'black' : 'white',
+                            }}
+                            name={contactDetailsValue[i]}
+                            value={contactField[contactDetailsValue[i]]}
+                          />
+                        ) : (
+                          <label>{user[contactDetailsValue[i]]}</label>
+                        )}
                       </div>
                     )
                   })}
+                  {editContactInfo && (
+                    <div
+                      style={{
+                        display: 'flex',
+                        margin: '10px',
+                        justifyContent: 'space-between',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      <label
+                        style={{ color: 'red', cursor: 'pointer' }}
+                        onClick={() => {
+                          setEditContactInfo(false)
+                        }}
+                      >
+                        Cancel
+                      </label>
+                      <label
+                        style={{
+                          color: darkMode ? 'lightgreen' : 'green',
+                          cursor: 'pointer',
+                        }}
+                        onClick={updateContactProfile}
+                      >
+                        {contactProfileUpdateStatus}
+                      </label>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

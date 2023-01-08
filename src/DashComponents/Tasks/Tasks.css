@@ -15,7 +15,7 @@
 .scrollpos {
   position: fixed;
   bottom: 120px;
-  left: 170px;
+  left: 210px;
   color: white;
   padding: 10px;
   font-weight: bold;
@@ -30,7 +30,7 @@
   padding: 10px;
   position: fixed;
   top: 5px;
-  left: 205px;
+  left: 255px;
   z-index: 1;
   font-size: 0.9rem;
   font-weight: bold;
@@ -40,9 +40,10 @@
   color: white;
 }
 .updateinput {
-  padding: 10px;
+  padding: 15px;
   border: solid black 0px;
-  color: black;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
   font-size: 0.9rem;
   border-radius: 10px;
 }
@@ -83,7 +84,7 @@
 }
 .backtoquiz {
   position: fixed;
-  left: 205px;
+  left: 255px;
   top: 5px;
   padding: 5px;
   background-color: white;

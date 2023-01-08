@@ -1,5 +1,7 @@
-import { React } from 'react'
+import { React, useContext } from 'react'
 import { motion } from 'framer-motion'
+
+import ContextProvider from '../ContextProvider'
 
 const ConfirmationModal = ({
   message,
@@ -9,6 +11,7 @@ const ConfirmationModal = ({
   func1,
   func2,
 }) => {
+  const { darkMode } = useContext(ContextProvider)
   return (
     <>
       <motion.div
@@ -22,8 +25,8 @@ const ConfirmationModal = ({
           left: '0px',
           width: '100vw',
           height: '100vh',
-          zIndex: '2',
-          backgroundColor: 'rgba(0,0,0,0.8)',
+          zIndex: '3',
+          backgroundColor: darkMode ? 'rgba(0,0,0,0.95)' : 'rgba(0,0,0,0.8)',
           alignContent: 'center',
           textAlign: 'center',
           paddingTop: '50px',
@@ -47,7 +50,7 @@ const ConfirmationModal = ({
             width: '70%',
             margin: 'auto',
             textAlign: 'left',
-            backgroundColor: 'white',
+            backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
             borderRadius: '10px',
             fontFamily: 'monospace',
             fontSize: '1rem',
@@ -57,7 +60,7 @@ const ConfirmationModal = ({
           <h2>
             <center>{title}</center>
           </h2>
-          <label>{message}</label>
+          <div>{message}</div>
           <div
             style={{
               display: 'flex',

@@ -5,11 +5,9 @@ import logo from './user.png'
 
 const containerVariants = {
   hidden: {
-    x: 1000,
     opacity: 0,
   },
   visible: {
-    x: 0,
     opacity: 1,
     // dampness: 1000,
     // stiffness: 500,
@@ -374,7 +372,7 @@ const BasicInfo = ({ getCoverList, getCoverPos, setBasicConfirmed }) => {
       variants={containerVariants}
       initial='hidden'
       animate='visible'
-      exit={{ x: -1000 }}
+      exit={{ opacity: 0 }}
       style={{ display: 'block' }}
       ref={basicCoverRef}
     >

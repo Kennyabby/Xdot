@@ -27,7 +27,7 @@
 }
 .qback {
   position: fixed;
-  left: 205px;
+  left: 255px;
   top: 10px;
   z-index: 1;
   border-radius: 50%;
@@ -36,8 +36,8 @@
 .saysm {
   border-radius: 20px;
   width: 60%;
-  padding: 10px;
-  margin: auto 20px;
+  padding: 15px 10px;
+  margin: auto;
   /* background-color: rgba(235, 235, 235, 1); */
   background-color: whitesmoke;
   justify-content: center;
@@ -47,7 +47,7 @@
 .postcover {
   position: fixed;
   top: 0px;
-  left: 202px;
+  left: 255px;
   background-color: white;
   padding-top: 70px;
   width: 'max-content';
@@ -74,8 +74,7 @@
   .saysm {
     border-radius: 20px;
     width: 80%;
-    padding: 10px;
-    margin: 10px 10px;
+    margin: 10px auto;
     font-size: 0.9rem;
     justify-content: center;
     text-align: center;

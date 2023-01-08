@@ -1,5 +1,7 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import { Link } from 'react-router-dom'
+
+import ContextProvider from '../../ContextProvider'
 
 import home from './assets/home.png'
 import xdotlogo from './assets/xdotlogo.png'
@@ -9,28 +11,31 @@ const Chats = ({
   homerf,
   chatrf,
   notificationsrf,
-  setBodyLeft,
   setShowNavigator,
   showHomeToggle,
 }) => {
+  const { darkMode } = useContext(ContextProvider)
   useEffect(() => {
     showHomeToggle(false)
-
-    setBodyLeft()
     setShowNavigator()
   }, [chatrf])
   return (
     <>
-      <div style={{ textAlign: 'center', width: '100vw', textAlign: 'center' }}>
+      <div
+        style={{
+          textAlign: 'center',
+          width: '100%',
+          height: '100vh',
+          textAlign: 'center',
+          backgroundColor: 'black',
+        }}
+      >
         <div
           style={{
             textAlign: 'center',
             position: 'fixed',
-            top: '0px',
-            left: '0px',
-            width: '100vw',
-            display: 'flex',
-            borderBottom: 'solid rgba(200,200,200,1) 2px',
+            top: '10px',
+            right: '0px',
           }}
         >
           <Link
@@ -55,23 +60,34 @@ const Chats = ({
             <img src={xdotlogo} height='30px' />
             <label style={{ margin: '5px' }}>XDot</label>
           </Link>
+        </div>
+        <div style={{ display: 'flex', height: '100%' }}>
           <div
             style={{
-              fontSize: '1.1rem',
-              fontFamily: 'fantasy',
-              fontWeight: 'bold',
-              letterSpacing: '.2rem',
-              padding: '10px 20px',
-              width: 'fit-content',
-              margin: '10px auto',
-              borderRadius: '10px',
-              border: 'solid rgba(200,200,200,1) 1px',
+              height: '100%',
+              width: '30%',
+              backgroundColor: 'whitesmoke',
+              margin: 'auto 5px',
             }}
-          >
-            <label>Chats</label>
-          </div>
+          ></div>
+          <div
+            style={{
+              height: '100%',
+              width: '40%',
+              backgroundColor: 'tomato',
+              opacity: '0.8',
+              margin: 'auto 5px',
+            }}
+          ></div>
+          <div
+            style={{
+              height: '100%',
+              width: '30%',
+              backgroundColor: 'tomato',
+              margin: 'auto 5px',
+            }}
+          ></div>
         </div>
-        <div style={{ marginTop: '90px' }}>Chats Will Appear Here...</div>
       </div>
     </>
   )

@@ -137,6 +137,7 @@ const QuizShareModal = ({
               <select
                 className='updateinput'
                 style={{
+                  color: 'black',
                   border: 'solid lightgreen 2px',
                   cursor: 'pointer',
                   fontSize: '.8rem',

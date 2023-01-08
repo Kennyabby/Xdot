@@ -3,7 +3,7 @@ import { React, useState, useEffect, useRef } from 'react'
 import Profile from './Profile'
 import NapsiteSearch from './NapsiteSearch'
 
-import close from './assets/close.png'
+import close from '../assets/close.png'
 
 const AdminBoard = ({ closeAdminBoard, currentUser, server }) => {
   const searchNapsiteRef = useRef(null)

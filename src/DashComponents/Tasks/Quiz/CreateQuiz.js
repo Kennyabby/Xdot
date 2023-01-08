@@ -157,7 +157,8 @@ const CreateQuiz = ({ user, viewQuestions, server }) => {
                 }}
                 style={{
                   fontStyle: 'italic',
-                  boxShadow: '0px 0px 7px black',
+                  // boxShadow: '0px 0px 7px black',
+                  backgroundColor: 'whitesmoke',
                   borderRadius: '10px',
                   padding: '10px',
                   margin: '60px',

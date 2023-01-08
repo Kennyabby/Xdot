@@ -1,5 +1,7 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useContext } from 'react'
 import '../Events/Events.css'
+
+import ContextProvider from '../../ContextProvider'
 
 import close from '../Events/assets/close.png'
 import profimg from '../Events/assets/profile.png'
@@ -22,7 +24,7 @@ const QuizReactionList = ({ list, closeReactionList }) => {
     { name: 'angry', src: angry },
   ]
   const [reactionEmoji, setReactionEmoji] = useState({})
-
+  const { darkMode } = useContext(ContextProvider)
   return (
     <>
       <div
@@ -32,7 +34,7 @@ const QuizReactionList = ({ list, closeReactionList }) => {
           left: '0px',
           width: '100%',
           height: '100%',
-          backgroundColor: 'rgba(250,250,250,1)',
+          backgroundColor: darkMode ? 'rgba(0,0,0,0.9)' : 'rgba(250,250,250,1)',
           overflowY: 'auto',
           zIndex: '3',
         }}

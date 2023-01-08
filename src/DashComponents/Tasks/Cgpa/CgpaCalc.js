@@ -136,7 +136,6 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
     setShowNotification(true)
     setNotificationMessage(message)
     setTimeout(() => {
-      setNotificationMessage('')
       setShowNotification(false)
     }, 3000)
   }
@@ -218,7 +217,7 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
   }
   return (
     <>
-      <div>
+      <div style={{ width: '100%' }}>
         <div
           onClick={(e) => {
             const name = e.target.getAttribute('name')
@@ -267,7 +266,13 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
           </label>
         </div>
         {showStore ? (
-          <div style={{ textAlign: 'center', width: 'fit-content' }}>
+          <div
+            style={{
+              textAlign: 'center',
+              width: 'fit-content',
+              margin: 'auto',
+            }}
+          >
             <AnimatePresence>
               {showNotification && (
                 <motion.div
@@ -355,6 +360,7 @@ const CgpaCalc = ({ user, updateUser, winSize, server }) => {
                 textAlign: 'center',
                 justifyContent: 'center',
                 width: 'fit-content',
+                margin: 'auto',
                 marginTop: '20px',
               }}
             >

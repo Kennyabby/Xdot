@@ -1,4 +1,6 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
+
+import ContextProvider from '../../../../ContextProvider'
 
 const FirstChild = ({
   setFields,
@@ -24,6 +26,7 @@ const FirstChild = ({
     studentOfficesHeld: '',
   })
   const forminfoRef = useRef(null)
+  const { darkMode } = useContext(ContextProvider)
   const onInputChange = (e) => {
     const name = e.target.getAttribute('name')
     const value = e.target.value
@@ -44,13 +47,27 @@ const FirstChild = ({
         ref.childNodes[1].getAttribute('name') !== null
       ) {
         if (ref.childNodes[1].getAttribute('name') === name) {
-          ref.childNodes[0].style.color = 'blue'
+          ref.childNodes[0].style.color = darkMode ? 'lightgreen' : 'green'
+          ref.childNodes[0].style.backgroundColor = darkMode
+            ? 'rgba(52,52,52,0)'
+            : 'white'
           ref.childNodes[0].style.fontWeight = 'bold'
-          ref.childNodes[1].style.border = 'solid blue 2px'
+          ref.childNodes[1].style.border = darkMode
+            ? 'solid lightgreen 2px'
+            : 'solid green 2px'
+          ref.childNodes[1].style.borderTop = 'solid lightgreen 0px'
         } else {
-          ref.childNodes[0].style.color = 'black'
+          ref.childNodes[0].style.color = darkMode ? 'white' : 'black'
+          ref.childNodes[0].style.backgroundColor = darkMode
+            ? 'rgba(52,52,52,1)'
+            : 'white'
           ref.childNodes[0].style.fontWeight = ''
-          ref.childNodes[1].style.border = 'solid black 1px'
+          ref.childNodes[1].style.border = darkMode
+            ? 'solid rgba(190,190,190) 2px'
+            : 'solid black 1px'
+          ref.childNodes[1].style.borderTop = darkMode
+            ? 'solid rgba(190,190,190) 2px'
+            : 'solid black 1px'
         }
       }
     })
@@ -63,6 +80,8 @@ const FirstChild = ({
       <div
         ref={firstChildRef}
         style={{
+          backgroundColor: darkMode ? 'black' : 'white',
+          color: darkMode ? 'white' : 'black',
           position: position,
           left: left + 'px',
           top: top + 'px',
@@ -71,31 +90,101 @@ const FirstChild = ({
         onChange={onInputChange}
         onFocus={handleFocus}
       >
-        <div className='forminfo' ref={forminfoRef}>
-          <div className='forminfochild'>
+        <div
+          className='forminfo'
+          ref={forminfoRef}
+          style={{
+            backgroundColor: darkMode ? 'black' : 'white',
+            color: darkMode ? 'white' : 'black',
+          }}
+        >
+          <div
+            className='forminfochild'
+            style={{
+              backgroundColor: darkMode ? 'black' : 'white',
+              color: darkMode ? 'white' : 'black',
+            }}
+          >
             <h2 className='infoheader'>Personal Info</h2>
-            <div className='forminputcover'>
-              <label className='formlabel'>Enter your CGPA</label>
+            <div
+              className='forminputcover'
+              style={{
+                backgroundColor: darkMode ? 'black' : 'white',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
+              <label
+                className='formlabel'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(52,52,52,1)' : 'white',
+                  borderRadius: '10px',
+                  color: darkMode ? 'white' : 'black',
+                }}
+              >
+                Enter your CGPA
+              </label>
               <input
                 placeholder='cgpa'
                 type='number'
                 className='forminput'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
+                  color: darkMode ? 'white' : 'black',
+                  border: darkMode
+                    ? 'solid rgba(190,190,190,1) 2px'
+                    : 'solid black 2px',
+                }}
                 name='cgpa'
                 value={fields.cgpa}
               />
             </div>
-            <div className='forminputcover'>
-              <label className='formlabel'>{'Previous Office(s) Held'}</label>
+            <div
+              className='forminputcover'
+              style={{
+                backgroundColor: darkMode ? 'black' : 'white',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
+              <label
+                className='formlabel'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(52,52,52,1)' : 'white',
+                  borderRadius: '10px',
+                  color: darkMode ? 'white' : 'black',
+                }}
+              >
+                {'Previous Office(s) Held'}
+              </label>
               <textarea
                 name='contestantOfficesHeld'
                 placeholder='previous office(s) held'
                 type='text'
                 className='formtextarea'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
+                  color: darkMode ? 'white' : 'black',
+                  border: darkMode
+                    ? 'solid rgba(190,190,190,1) 2px'
+                    : 'solid black 2px',
+                }}
                 value={fields.contestantOfficesHeld}
               />
             </div>
-            <div className='forminputcover'>
-              <label className='formlabel'>
+            <div
+              className='forminputcover'
+              style={{
+                backgroundColor: darkMode ? 'black' : 'white',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
+              <label
+                className='formlabel'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(52,52,52,1)' : 'white',
+                  borderRadius: '10px',
+                  color: darkMode ? 'white' : 'black',
+                }}
+              >
                 {'Contributions To The Faculty'}
               </label>
               <textarea
@@ -103,11 +192,31 @@ const FirstChild = ({
                 placeholder='contributions to the faculty (if any)'
                 type='text'
                 className='formtextarea'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
+                  color: darkMode ? 'white' : 'black',
+                  border: darkMode
+                    ? 'solid rgba(190,190,190,1) 2px'
+                    : 'solid black 2px',
+                }}
                 value={fields.facultycontributions}
               />
             </div>
-            <div className='forminputcover'>
-              <label className='formlabel'>
+            <div
+              className='forminputcover'
+              style={{
+                backgroundColor: darkMode ? 'black' : 'white',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
+              <label
+                className='formlabel'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(52,52,52,1)' : 'white',
+                  borderRadius: '10px',
+                  color: darkMode ? 'white' : 'black',
+                }}
+              >
                 {'Reason For Vying For This Office'}
               </label>
               <textarea
@@ -115,6 +224,13 @@ const FirstChild = ({
                 placeholder='reasons(s) for vying'
                 type='text'
                 className='formtextarea'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
+                  color: darkMode ? 'white' : 'black',
+                  border: darkMode
+                    ? 'solid rgba(190,190,190,1) 2px'
+                    : 'solid black 2px',
+                }}
                 value={fields.reasons}
               />
             </div>
@@ -127,31 +243,88 @@ const FirstChild = ({
             <div className='reftype'>
               <label>Academic Staff</label>
             </div>
-            <div className='forminputcover'>
-              <label className='formlabel'>Academic Staff's Name</label>
+            <div
+              className='forminputcover'
+              style={{
+                backgroundColor: darkMode ? 'black' : 'white',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
+              <label
+                className='formlabel'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(52,52,52,1)' : 'white',
+                  borderRadius: '10px',
+                  color: darkMode ? 'white' : 'black',
+                }}
+              >
+                Academic Staff's Name
+              </label>
               <input
                 name='academicStaffName'
                 placeholder="academic staff's name"
                 type='text'
                 className='forminput'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
+                  color: darkMode ? 'white' : 'black',
+                  border: darkMode
+                    ? 'solid rgba(190,190,190,1) 2px'
+                    : 'solid black 2px',
+                }}
                 value={fields.academicStaffName}
               />
             </div>
-            <div className='forminputcover'>
-              <label className='formlabel'>Academic Staff's Phone Number</label>
+            <div
+              className='forminputcover'
+              style={{
+                backgroundColor: darkMode ? 'black' : 'white',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
+              <label
+                className='formlabel'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(52,52,52,1)' : 'white',
+                  borderRadius: '10px',
+                  color: darkMode ? 'white' : 'black',
+                }}
+              >
+                Academic Staff's Phone Number
+              </label>
               <input
                 name='academicStaffNumber'
                 placeholder="academic staff's phone number"
                 type='number'
                 className='forminput'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
+                  color: darkMode ? 'white' : 'black',
+                  border: darkMode
+                    ? 'solid rgba(190,190,190,1) 2px'
+                    : 'solid black 2px',
+                }}
                 value={fields.academicStaffNumber}
               />
             </div>
             <div className='reftype'>
               <label>Student</label>
             </div>
-            <div className='forminputcover'>
-              <label className='formlabel'>
+            <div
+              className='forminputcover'
+              style={{
+                backgroundColor: darkMode ? 'black' : 'white',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
+              <label
+                className='formlabel'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(52,52,52,1)' : 'white',
+                  borderRadius: '10px',
+                  color: darkMode ? 'white' : 'black',
+                }}
+              >
                 Student's Matriculation Number
               </label>
               <input
@@ -159,31 +332,95 @@ const FirstChild = ({
                 placeholder="student's matric number"
                 type='number'
                 className='forminput'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
+                  color: darkMode ? 'white' : 'black',
+                  border: darkMode
+                    ? 'solid rgba(190,190,190,1) 2px'
+                    : 'solid black 2px',
+                }}
                 value={fields.studentMatricNo}
               />
             </div>
-            <div className='forminputcover'>
-              <label className='formlabel'>Student's Name</label>
+            <div
+              className='forminputcover'
+              style={{
+                backgroundColor: darkMode ? 'black' : 'white',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
+              <label
+                className='formlabel'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(52,52,52,1)' : 'white',
+                  borderRadius: '10px',
+                  color: darkMode ? 'white' : 'black',
+                }}
+              >
+                Student's Name
+              </label>
               <input
                 name='studentName'
                 placeholder="student's name"
                 type='text'
                 className='forminput'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
+                  color: darkMode ? 'white' : 'black',
+                  border: darkMode
+                    ? 'solid rgba(190,190,190,1) 2px'
+                    : 'solid black 2px',
+                }}
                 value={fields.studentName}
               />
             </div>
-            <div className='forminputcover'>
-              <label className='formlabel'>Student's Level</label>
+            <div
+              className='forminputcover'
+              style={{
+                backgroundColor: darkMode ? 'black' : 'white',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
+              <label
+                className='formlabel'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(52,52,52,1)' : 'white',
+                  borderRadius: '10px',
+                  color: darkMode ? 'white' : 'black',
+                }}
+              >
+                Student's Level
+              </label>
               <input
                 name='studentLevel'
                 placeholder="student's level"
                 type='text'
                 className='forminput'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
+                  color: darkMode ? 'white' : 'black',
+                  border: darkMode
+                    ? 'solid rgba(190,190,190,1) 2px'
+                    : 'solid black 2px',
+                }}
                 value={fields.studentLevel}
               />
             </div>
-            <div className='forminputcover'>
-              <label className='formlabel'>
+            <div
+              className='forminputcover'
+              style={{
+                backgroundColor: darkMode ? 'black' : 'white',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
+              <label
+                className='formlabel'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(52,52,52,1)' : 'white',
+                  borderRadius: '10px',
+                  color: darkMode ? 'white' : 'black',
+                }}
+              >
                 {'Office(s) Held By Student (if any)'}
               </label>
               <textarea
@@ -191,6 +428,13 @@ const FirstChild = ({
                 placeholder='previous office(s) held (if any)'
                 type='text'
                 className='formtextarea'
+                style={{
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
+                  color: darkMode ? 'white' : 'black',
+                  border: darkMode
+                    ? 'solid rgba(190,190,190,1) 2px'
+                    : 'solid black 2px',
+                }}
                 value={fields.studentOfficesHeld}
               />
             </div>

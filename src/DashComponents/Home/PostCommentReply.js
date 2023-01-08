@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useRef } from 'react'
+import { React, useEffect, useState, useRef, useContext } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import '../Events/Events.css'
 
@@ -13,6 +13,7 @@ import sad from '../Events/assets/sad.png'
 import angry from '../Events/assets/angry.png'
 
 import ReactionList from './ReactionList'
+import ContextProvider from '../../ContextProvider'
 
 const PostCommentReply = ({
   server,
@@ -38,7 +39,7 @@ const PostCommentReply = ({
     { name: 'sad', src: sad },
     { name: 'angry', src: angry },
   ]
-
+  const { darkMode } = useContext(ContextProvider)
   useEffect(() => {
     rep.commentReply.reaction.forEach((rct) => {
       if (rct.matricNo === user.matricNo) {
@@ -87,7 +88,9 @@ const PostCommentReply = ({
             width: '100%',
             height: '100%',
             zIndex: '2',
-            backgroundColor: 'rgba(250,250,250,0.9)',
+            backgroundColor: darkMode
+              ? 'rgba(0,0,0,0.8)'
+              : 'rgba(255,255,255,0.9)',
           }}
         >
           <img
@@ -140,7 +143,9 @@ const PostCommentReply = ({
               display: 'flex',
               padding: '10px',
               borderRadius: '10px',
-              backgroundColor: 'rgba(0,0,0,0.6)',
+              backgroundColor: darkMode
+                ? 'rgba(255,255,255,0.3)'
+                : 'rgba(0,0,0,0.6)',
             }}
           >
             {emojis.map((rct, i) => {
@@ -175,7 +180,7 @@ const PostCommentReply = ({
               borderRadius: '50%',
               border: 'solid rgba(220,220,220,1) 1px',
               backgroundSize: 'cover',
-              backgroundColor: 'white',
+              backgroundColor: darkMode ? 'black' : 'white',
               margin: '5px auto',
             }}
             PlaceholderSrc={profimg}
@@ -186,8 +191,7 @@ const PostCommentReply = ({
         <div
           style={{
             position: 'relative',
-            // backgroundColor: 'rgba(235,235,235,.9)',
-            backgroundColor: 'whitesmoke',
+            backgroundColor: darkMode ? 'rgba(0,0,0,1)' : 'rgba(255,255,255,1)',
             fontSize: '.9rem',
             textAlign: 'left',
             width: '70%',
@@ -247,8 +251,13 @@ const PostCommentReply = ({
                 style={{
                   cursor: 'pointer',
                   borderRadius: '50%',
-                  backgroundColor: 'rgba(235,235,235,0.9)',
-                  border: 'solid rgba(235,235,235,0.9) 3px',
+                  padding: '1px',
+                  backgroundColor: darkMode
+                    ? 'rgba(10,10,18,1)'
+                    : 'rgba(247,247,255,1)',
+                  border: darkMode
+                    ? 'solid rgba(10,10,18,1) 3px'
+                    : 'solid rgba(247,247,255,1) 3px',
                 }}
                 src={commentReaction.src}
                 alt='reaction'
@@ -264,9 +273,11 @@ const PostCommentReply = ({
                 borderRadius: '10px',
                 position: 'absolute',
                 right: '-7px',
-                color: 'black',
+                color: darkMode ? 'white' : 'black',
                 top: '-5px',
-                backgroundColor: 'rgba(235,235,235,0.9)',
+                backgroundColor: darkMode
+                  ? 'rgba(10,10,18,1)'
+                  : 'rgba(247,247,255,1)',
                 cursor: 'pointer',
                 display: 'flex',
                 justifyContent: 'center',

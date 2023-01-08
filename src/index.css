@@ -37,8 +37,10 @@ code {
   font-size: 1rem;
   gap: 90px;
   display: flex;
-  padding: 10px;
+  padding: 5px auto;
+  padding-bottom: 0px;
   margin: 10px;
+  margin-bottom: 0px;
   color: white;
   list-style: none;
 }
@@ -76,12 +78,25 @@ code {
 .home {
   display: flex;
   flex-wrap: wrap;
-  padding: 30px;
+  padding: auto;
   margin: 0 auto;
   margin-top: 0px;
   padding-top: 85px;
-  /* background-color: rgba(31, 29, 29, 1); */
   background-color: black;
+}
+.homep {
+  width: 100vw;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin: 0px;
+  margin-top: 70px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.homepimg {
+  width: 100%;
+  border-radius: 60px;
 }
 .sitewall {
   width: 50vw;
@@ -138,7 +153,6 @@ code {
   color: black;
   font-family: 'monospace';
   word-spacing: 5px;
-  font-style: italic;
   font-size: 1.5rem;
 }
 .introLabel {
@@ -193,25 +207,12 @@ code {
   border: solid rgba(50, 49, 49, 1) 2px;
 }
 .signBack {
-  position: fixed;
-  top: 0px;
-  left: 0px;
   text-align: center;
   background-color: white;
-  z-index: 1;
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 100vw;
-  height: 100vh;
 }
 .sign {
-  position: fixed;
-  top: 0px;
-  left: 0px;
   text-align: center;
   background-color: white;
-  width: 100%;
-  height: 100%;
 }
 .close {
   font-size: 1.3rem;
@@ -234,11 +235,10 @@ code {
   position: fixed;
   left: 0px;
   top: 50px;
-  height: 50vw;
+  /* height: 50vw; */
 }
 .sideBar {
   margin: 0px;
-  margin-right: auto;
   padding: 0px;
   height: 100%;
   border-top-right-radius: 20px;
@@ -260,12 +260,10 @@ code {
 .container {
   color: black;
   font-family: monospace;
-  overflow-y: auto;
   padding-bottom: 170px;
   font-size: 1rem;
   margin: 20px;
   display: inline-block;
-  height: 100vh;
   text-align: center;
 }
 .usr {
@@ -314,6 +312,7 @@ code {
 .currv {
   position: fixed;
   bottom: 20px;
+  z-index: 2;
   display: inline-flex;
   gap: 5px;
   border-radius: 10px;
@@ -345,6 +344,7 @@ code {
   position: fixed;
   top: 5px;
   left: 5px;
+  z-index: 2;
   margin: 0px;
   border: none;
   outline: none;
@@ -364,7 +364,6 @@ code {
   margin-top: 25px;
   margin-bottom: 25px;
   display: block;
-  overflow-x: auto;
   border: solid rgba(230, 230, 230, 1);
 }
 .infotag {
@@ -430,11 +429,23 @@ code {
     margin-top: 20px;
   }
   .home {
-    padding: 15px;
+    padding: auto 15px;
     margin: 0 auto;
     margin-top: 0px;
     padding-top: 60px;
     background-color: black;
+  }
+  .homep {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding-bottom: 0px;
+  }
+  .homepimg {
+    margin: 0px;
+    border-radius: 0px;
+  }
+  .hreverse {
+    flex-wrap: wrap-reverse;
   }
   .ui-logo {
     float: right;
@@ -462,16 +473,16 @@ code {
   .opt-bar {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    border: solid rgba(50, 49, 49, 1) 2px;
+    /* border: solid rgba(50, 49, 49, 1) 2px; */
     border-left: solid rgba(0, 0, 0, 1) 0px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.95);
+    background-color: rgba(0, 0, 0, 0.98);
     font-family: monospace;
     font-size: 1.2rem;
     gap: 120px;
     overflow-y: auto;
     height: 90%;
-    width: 70%;
+    width: 95%;
     display: inline-block;
     padding-bottom: 50px;
     margin: 0px;
@@ -482,7 +493,7 @@ code {
   .opt-left {
     display: inline-block;
     border-bottom: solid rgba(50, 49, 49, 1) 2px;
-    width: 60%;
+    width: 70%;
     padding: 40px 25px;
     color: rgb(187, 183, 183);
     text-decoration: none;
@@ -503,7 +514,6 @@ code {
     text-align: left;
     font-family: 'New Courier';
     word-spacing: 5px;
-    font-style: italic;
     font-size: 1rem;
     width: 90vw;
   }
@@ -541,27 +551,12 @@ code {
     background-color: black;
   }
   .signBack {
-    position: fixed;
-    top: 0px;
-    left: 0px;
     text-align: center;
-    background-color: white;
-    color: 'black';
-    z-index: 1;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100vw;
-    height: 100vh;
+    background-color: #ffffff;
   }
   .sign {
-    position: absolute;
-    top: 0px;
-    color: black;
-    left: 0px;
     text-align: center;
     background-color: white;
-    width: 100vw;
-    height: 100%;
   }
   .close {
     font-size: 1.1rem;
@@ -620,13 +615,10 @@ code {
   .container {
     color: black;
     font-family: monospace;
-    overflow-y: auto;
     padding-bottom: 170px;
     font-size: 1rem;
     padding-left: 0px;
     display: inline-block;
-    width: 90vw;
-    height: 100vh;
     text-align: center;
   }
   .usr {
@@ -725,7 +717,6 @@ code {
     margin-bottom: 25px;
     padding: 0px;
     border-radius: 10px;
-    overflow-x: auto;
     border: solid rgba(230, 230, 230, 1);
   }
 

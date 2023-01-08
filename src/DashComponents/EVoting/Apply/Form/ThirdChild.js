@@ -1,4 +1,6 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
+
+import ContextProvider from '../../../../ContextProvider'
 
 const ThirdChild = ({
   fields,
@@ -11,18 +13,27 @@ const ThirdChild = ({
   thirdChildRef,
   handleButtonEvent,
 }) => {
+  const { darkMode } = useContext(ContextProvider)
   return (
     <>
       <div
         ref={thirdChildRef}
         style={{
+          backgroundColor: darkMode ? 'black' : 'white',
+          color: darkMode ? 'white' : 'black',
           position: position,
           left: left + 'px',
           top: top + 'px',
           width: size <= 700 ? size : '100%',
         }}
       >
-        <div className='forminfo'>
+        <div
+          className='forminfo'
+          style={{
+            backgroundColor: darkMode ? 'black' : 'white',
+            color: darkMode ? 'white' : 'black',
+          }}
+        >
           <div>{'Third Child'}</div>
           <div style={{ margin: '30px' }}>
             <button

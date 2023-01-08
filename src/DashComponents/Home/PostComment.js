@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useRef } from 'react'
+import { React, useEffect, useState, useRef, useContext } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import '../Events/Events.css'
 
@@ -14,6 +14,7 @@ import angry from '../Events/assets/angry.png'
 
 import ReactionList from './ReactionList'
 import PostCommentReply from './PostCommentReply'
+import ContextProvider from '../../ContextProvider'
 
 const PostComment = ({
   server,
@@ -32,6 +33,7 @@ const PostComment = ({
   const [commentReactionList, setCommentReactionList] = useState(
     elem.comment.reaction
   )
+  const { darkMode } = useContext(ContextProvider)
   const [statement, setStatement] = useState(elem.comment.statement)
   const [showReactionList, setShowReactionList] = useState(false)
   const [imgLoaded, setImgLoaded] = useState(false)
@@ -95,7 +97,10 @@ const PostComment = ({
             width: '100%',
             height: '100%',
             zIndex: '2',
-            backgroundColor: 'rgba(250,250,250,0.9)',
+            color: darkMode ? 'white' : 'black',
+            backgroundColor: darkMode
+              ? 'rgba(0,0,0,0.9)'
+              : 'rgba(250,250,250,0.9)',
           }}
         >
           <img
@@ -144,7 +149,9 @@ const PostComment = ({
               display: 'flex',
               padding: '10px',
               borderRadius: '10px',
-              backgroundColor: 'rgba(0,0,0,0.6)',
+              backgroundColor: darkMode
+                ? 'rgba(255,255,255,0.2)'
+                : 'rgba(0,0,0,0.6)',
             }}
           >
             {emojis.map((rct, i) => {
@@ -179,7 +186,7 @@ const PostComment = ({
               borderRadius: '50%',
               border: 'solid rgba(220,220,220,1) 1px',
               backgroundSize: 'cover',
-              backgroundColor: 'white',
+              backgroundColor: darkMode ? 'black' : 'white',
               margin: '5px auto',
             }}
             PlaceholderSrc={profimg}
@@ -190,8 +197,9 @@ const PostComment = ({
         <div
           style={{
             position: 'relative',
-            // backgroundColor: 'rgba(235,235,235,.9)',
-            backgroundColor: 'whitesmoke',
+            backgroundColor: darkMode
+              ? 'rgba(0,0,0,0.9)'
+              : 'rgba(255,255,255,.9)',
             fontSize: '.9rem',
             textAlign: 'left',
             width: '70%',
@@ -251,8 +259,13 @@ const PostComment = ({
                 style={{
                   cursor: 'pointer',
                   borderRadius: '50%',
-                  backgroundColor: 'rgba(235,235,235,0.9)',
-                  border: 'solid rgba(235,235,235,0.9) 3px',
+                  padding: '1px',
+                  backgroundColor: darkMode
+                    ? 'rgba(10,10,18,1)'
+                    : 'rgba(245,245,255,1)',
+                  border: darkMode
+                    ? 'solid rgba(10,10,18,1) 3px'
+                    : 'solid rgba(245,245,255,1) 3px',
                 }}
                 src={commentReaction.src}
                 alt='reaction'
@@ -270,7 +283,9 @@ const PostComment = ({
                 right: '-7px',
                 color: 'black',
                 top: '-5px',
-                backgroundColor: 'rgba(235,235,235,0.9)',
+                backgroundColor: darkMode
+                  ? 'rgba(10,10,18,1)'
+                  : 'rgba(245,245,255,0.9)',
                 cursor: 'pointer',
                 display: 'flex',
                 justifyContent: 'center',
@@ -304,6 +319,7 @@ const PostComment = ({
                   })}
                 <div
                   style={{
+                    color: darkMode ? 'white' : 'black',
                     fontSize: '.7rem',
                     marginLeft: '5px',
                     fontWeight: 'bold',

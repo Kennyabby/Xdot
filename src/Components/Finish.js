@@ -8,15 +8,13 @@ import logo from './user.png'
 
 const containerVariants = {
   hidden: {
-    x: '100vw',
     opacity: 0,
   },
   visible: {
-    x: 0,
     opacity: 1,
     transition: {
       when: 'beforeChildren',
-      // ease: 'easeInOut',
+      ease: 'easeInOut',
     },
   },
 }
@@ -562,7 +560,7 @@ const Finish = ({
       variants={containerVariants}
       initial='hidden'
       animate='visible'
-      exit={{ x: -1000 }}
+      exit={{ opacity: 0 }}
       ref={finishCoverRef}
     >
       {showModal && (

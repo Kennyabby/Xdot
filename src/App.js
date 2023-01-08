@@ -10,11 +10,12 @@ import Help from './Components/Help'
 import Napsboard from './DashComponents/Napsboard'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
+import ContextProvider from './ContextProvider'
 const App = () => {
   const SERVER = 'https://napsuiserver.herokuapp.com'
   // const SERVER = 'http://localhost:3001'
   const [bars, setBars] = useState([])
+  const [darkMode, setDarkMode] = useState(false)
   const [size, setSize] = useState(window.innerWidth)
   const getTopBar = (bars) => {
     setBars(bars)
@@ -27,130 +28,45 @@ const App = () => {
     setSize(window.innerWidth)
   }
   useEffect(() => {
+    const mode = window.localStorage.getItem('preference-mode')
+    if (mode !== null) {
+      if (mode === 'dark') {
+        setDarkMode(true)
+      } else {
+        setDarkMode(false)
+      }
+    }
+  }, [])
+  useEffect(() => {
+    if (darkMode) {
+      window.localStorage.setItem('preference-mode', 'dark')
+    } else {
+      window.localStorage.setItem('preference-mode', 'light')
+    }
+  }, [darkMode])
+  useEffect(() => {
     window.addEventListener('resize', checkSize)
     return () => {
       window.removeEventListener('resize', checkSize)
     }
   }, [size])
   return (
-    <Router>
-      {showNavbar && <Navbar getTopBar={getTopBar} />}
-      {showNavOpt && (
-        <NavOptbar
-          getTopBar={getTopBar}
-          isShow={isShow}
-          setBackShow={(show) => {
-            setIsShow(show)
-          }}
-        />
-      )}
-      <Switch>
-        <Route exact path='/'>
-          <Home
-            winSize={size}
-            showNavbar={(show) => {
-              setShowNavbar(() => {
-                return show
-              })
-            }}
-            showNavOpt={(show) => {
-              setShowNavOpt(() => {
-                return show
-              })
-            }}
-            bars={bars}
-            setIsShow={(show) => {
+    <ContextProvider.Provider
+      value={{ darkMode, setDarkMode, server: SERVER, winSize: size }}
+    >
+      <Router>
+        {showNavbar && <Navbar getTopBar={getTopBar} />}
+        {showNavOpt && (
+          <NavOptbar
+            getTopBar={getTopBar}
+            isShow={isShow}
+            setBackShow={(show) => {
               setIsShow(show)
             }}
           />
-        </Route>
-        <Route path='/signin'>
-          <Signin
-            server={SERVER}
-            showNavbar={(show) => {
-              setShowNavbar(() => {
-                return show
-              })
-            }}
-            showNavOpt={(show) => {
-              setShowNavOpt(() => {
-                return show
-              })
-            }}
-            sendId={(id) => {
-              setUserId(id)
-            }}
-          />
-        </Route>
-        <Route path='/help'>
-          <Help
-            winSize={size}
-            showNavbar={(show) => {
-              setShowNavbar(() => {
-                return show
-              })
-            }}
-            showNavOpt={(show) => {
-              setShowNavOpt(() => {
-                return show
-              })
-            }}
-          />
-        </Route>
-        <Route path={'/dashboard/settings/:id'}>
-          <Napsboard
-            rootView='settings'
-            server={SERVER}
-            userId={userId}
-            winSize={size}
-          />
-        </Route>
-        <Route path={'/dashboard/e-voting/:id'}>
-          <Napsboard
-            rootView='e-voting'
-            server={SERVER}
-            userId={userId}
-            winSize={size}
-          />
-        </Route>
-        <Route path={'/dashboard/tasks/:id'}>
-          <Napsboard
-            rootView='tasks'
-            server={SERVER}
-            userId={userId}
-            winSize={size}
-          />
-        </Route>
-        <Route path={'/dashboard/events/:id'}>
-          <Napsboard
-            rootView='events'
-            server={SERVER}
-            userId={userId}
-            winSize={size}
-          />
-        </Route>
-        <Route
-          path={'/dashboard/:' + 'id'}
-          children={
-            <Napsboard server={SERVER} userId={userId} winSize={size} />
-          }
-        ></Route>
-        <Route path={'/dashboard'}>
-          <Napsboard server={SERVER} userId={userId} winSize={size} />
-        </Route>
-        <Route path='/signup/:id' children={<Signup server={SERVER} />}>
-          <Signup
-            server={SERVER}
-            showNavbar={(show) => {
-              setShowNavbar(() => {
-                return show
-              })
-            }}
-          />
-        </Route>
-        <Route
-          path='/:id'
-          children={
+        )}
+        <Switch>
+          <Route exact path='/'>
             <Home
               winSize={size}
               showNavbar={(show) => {
@@ -168,13 +84,142 @@ const App = () => {
                 setIsShow(show)
               }}
             />
-          }
-        ></Route>
-        <Route path='*'>
-          <Error />
-        </Route>
-      </Switch>
-    </Router>
+          </Route>
+          <Route path='/signin'>
+            <Signin
+              server={SERVER}
+              showNavbar={(show) => {
+                setShowNavbar(() => {
+                  return show
+                })
+              }}
+              showNavOpt={(show) => {
+                setShowNavOpt(() => {
+                  return show
+                })
+              }}
+              sendId={(id) => {
+                setUserId(id)
+              }}
+            />
+          </Route>
+          <Route path='/help'>
+            <Help
+              winSize={size}
+              showNavbar={(show) => {
+                setShowNavbar(() => {
+                  return show
+                })
+              }}
+              showNavOpt={(show) => {
+                setShowNavOpt(() => {
+                  return show
+                })
+              }}
+            />
+          </Route>
+          <Route path={'/dashboard/settings/:id'}>
+            <Napsboard
+              rootView='settings'
+              server={SERVER}
+              userId={userId}
+              winSize={size}
+            />
+          </Route>
+          <Route path={'/dashboard/e-voting/:id'}>
+            <Napsboard
+              rootView='e-voting'
+              server={SERVER}
+              userId={userId}
+              winSize={size}
+            />
+          </Route>
+          <Route path={'/dashboard/tasks/:id'}>
+            <Napsboard
+              rootView='tasks'
+              server={SERVER}
+              userId={userId}
+              winSize={size}
+            />
+          </Route>
+          <Route path={'/dashboard/events/:id'}>
+            <Napsboard
+              rootView='events'
+              server={SERVER}
+              userId={userId}
+              winSize={size}
+            />
+          </Route>
+          <Route
+            path={'/dashboard/:' + 'id'}
+            children={
+              <Napsboard server={SERVER} userId={userId} winSize={size} />
+            }
+          ></Route>
+          <Route path={'/dashboard'}>
+            <Napsboard server={SERVER} userId={userId} winSize={size} />
+          </Route>
+          <Route
+            path='/signup/:id'
+            children={
+              <Signup
+                server={SERVER}
+                showNavbar={(show) => {
+                  setShowNavbar(() => {
+                    return show
+                  })
+                }}
+                showNavOpt={(show) => {
+                  setShowNavOpt(() => {
+                    return show
+                  })
+                }}
+              />
+            }
+          ></Route>
+          <Route path='/signup'>
+            <Signup
+              server={SERVER}
+              showNavbar={(show) => {
+                setShowNavbar(() => {
+                  return show
+                })
+              }}
+              showNavOpt={(show) => {
+                setShowNavOpt(() => {
+                  return show
+                })
+              }}
+            />
+          </Route>
+          <Route
+            path='/:id'
+            children={
+              <Home
+                winSize={size}
+                showNavbar={(show) => {
+                  setShowNavbar(() => {
+                    return show
+                  })
+                }}
+                showNavOpt={(show) => {
+                  setShowNavOpt(() => {
+                    return show
+                  })
+                }}
+                bars={bars}
+                setIsShow={(show) => {
+                  setIsShow(show)
+                }}
+              />
+            }
+          ></Route>
+          <Route path='*'>
+            <Error />
+          </Route>
+        </Switch>
+      </Router>
+    </ContextProvider.Provider>
   )
 }
 

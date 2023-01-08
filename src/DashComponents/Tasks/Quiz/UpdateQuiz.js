@@ -125,7 +125,7 @@ const UpdateQuiz = ({
           width: '100%',
           height: '100%',
           zIndex: '3',
-          backgroundColor: 'rgba(0,0,25,1)',
+          backgroundColor: 'rgba(0,0,25,0.95)',
         }}
       >
         <img
@@ -215,8 +215,10 @@ const UpdateQuiz = ({
                     <p>
                       <select
                         style={{
-                          padding: '5px',
+                          padding: '10px',
+                          backgroundColor: 'rgba(255,255,255,0.3)',
                           fontSize: '1.1rem',
+                          color: 'white',
                           borderRadius: '5px',
                           width: '200px',
                         }}
@@ -225,7 +227,11 @@ const UpdateQuiz = ({
                       >
                         {label.value.map((value, i) => {
                           return (
-                            <option key={i} value={value}>
+                            <option
+                              key={i}
+                              value={value}
+                              style={{ color: 'black' }}
+                            >
                               {value}
                             </option>
                           )

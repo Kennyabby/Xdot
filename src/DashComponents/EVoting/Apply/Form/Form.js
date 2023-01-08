@@ -1,5 +1,7 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import '../../EVoting.css'
+
+import ContextProvider from '../../../../ContextProvider'
 
 import FirstChild from './FirstChild'
 import SecondChild from './SecondChild'
@@ -40,6 +42,7 @@ const Form = ({ server, viewPage, user, data, viewRef }) => {
   const [thirdPosition, setThirdPosition] = useState('fixed')
   const minSwipeDistance = 40
   const [fields, setFields] = useState({})
+  const { darkMode, winSize } = useContext(ContextProvider)
   const highlightNav = (currentNav) => {
     navList.forEach((nav) => {
       if (nav === currentNav) {
@@ -268,35 +271,39 @@ const Form = ({ server, viewPage, user, data, viewRef }) => {
   }
   return (
     <>
-      <div style={{}}>
+      <div>
         <div
           ref={backRef}
           className='bpd'
-          style={{ backgroundColor: 'white' }}
+          style={{
+            backgroundColor: darkMode ? 'black' : 'white',
+            color: darkMode ? 'lightgreen' : 'green',
+            border: darkMode ? ' solid lightgreen 1px' : 'solid green 1px',
+          }}
           onClick={() => {
             viewPage()
           }}
         >
           {'<< View Office Duties'}
         </div>
-        <div>
+        <div style={{ width: winSize < 700 ? '100%' : '60%', margin: 'auto' }}>
           <div
             style={{
               paddingTop: '70px',
               textAlign: 'center',
-              backgroundColor: 'white',
+              backgroundColor: darkMode ? 'black' : 'white',
             }}
           >
-            <div style={{ margin: '20px', marginBottom: '50px' }}>
+            <div style={{ margin: '20px auto', marginBottom: '50px' }}>
               <label
                 style={{
                   padding: '10px 15px',
-                  margin: '20px 10px',
+                  margin: '20px auto',
                   fontFamily: 'fantasy',
                   width: 'fit-content',
                   fontSize: '1.3rem',
                   borderRadius: '10px',
-                  boxShadow: '0px 0px 9px',
+                  // boxShadow: '0px 0px 9px',
                   letterSpacing: '.2rem',
                 }}
               >
@@ -309,6 +316,9 @@ const Form = ({ server, viewPage, user, data, viewRef }) => {
                 height: '120px',
                 width: '120px',
                 margin: 'auto',
+                backgroundColor: darkMode
+                  ? 'rgba(255,255,255,0.3)'
+                  : 'whitesmoke',
                 marginTop: '30px',
                 boxShadow: '0px 0px 7px black',
               }}
@@ -318,9 +328,9 @@ const Form = ({ server, viewPage, user, data, viewRef }) => {
                 width: 'fit-content',
                 margin: '10px auto',
                 padding: '5px 10px',
-                color: 'green',
-                backgroundColor: 'white',
-                border: 'solid green 1px',
+                color: darkMode ? 'lightgreen' : 'green',
+                backgroundColor: darkMode ? 'black' : 'white',
+                border: darkMode ? 'solid lightgreen 1px' : 'solid green 1px',
                 borderRadius: '10px',
                 fontSize: '.8rem',
                 fontFamily: 'monospace',

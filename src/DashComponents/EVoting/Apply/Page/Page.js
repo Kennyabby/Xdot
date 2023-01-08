@@ -1,13 +1,15 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import { motion } from 'framer-motion'
+
 import ExecDetails from './ExecDetails'
+import ContextProvider from '../../../../ContextProvider'
 
 import '../../EVoting.css'
 const Page = ({ server, viewForm, user, winSize }) => {
   const [currentSession, setCurrentSession] = useState('Current Session...')
   const [applicationDetails, setApplicationDetails] = useState({})
   const sessionLabelRef = useRef(null)
-
+  const { darkMode } = useContext(ContextProvider)
   useEffect(async () => {
     try {
       const opts = {
@@ -41,6 +43,7 @@ const Page = ({ server, viewForm, user, winSize }) => {
   }, [currentSession])
   const excos = [
     {
+      ref: useRef(null),
       title: 'President',
       brief: 'First member and the head of the association',
       details: [
@@ -53,6 +56,7 @@ const Page = ({ server, viewForm, user, winSize }) => {
       ],
     },
     {
+      ref: useRef(null),
       title: 'Vice President',
       brief:
         'Assistant and advisor to the president in the performance of his duties',
@@ -66,6 +70,7 @@ const Page = ({ server, viewForm, user, winSize }) => {
       ],
     },
     {
+      ref: useRef(null),
       title: 'General Secretary',
       brief: 'Responsible for all the secretarial duties of the association',
       details: [
@@ -77,6 +82,7 @@ const Page = ({ server, viewForm, user, winSize }) => {
       ],
     },
     {
+      ref: useRef(null),
       title: 'Assistant General Secretary',
       brief:
         'Assistant and Advisor to the general secretary in the performance of his duties',
@@ -87,6 +93,7 @@ const Page = ({ server, viewForm, user, winSize }) => {
       ],
     },
     {
+      ref: useRef(null),
       title: 'Public Relation Officer',
       brief: "Responsible for the publicity of the association's activities",
       details: [
@@ -99,6 +106,7 @@ const Page = ({ server, viewForm, user, winSize }) => {
       ],
     },
     {
+      ref: useRef(null),
       title: 'Financial Secretary',
       brief:
         "Responsible for recieving and accounting for all the association's money derived from any source",
@@ -115,6 +123,7 @@ const Page = ({ server, viewForm, user, winSize }) => {
       ],
     },
     {
+      ref: useRef(null),
       title: 'Social Director',
       brief:
         'Responsible for the promotion and organization of social and recreational activities of the association',
@@ -126,6 +135,7 @@ const Page = ({ server, viewForm, user, winSize }) => {
       ],
     },
     {
+      ref: useRef(null),
       title: 'Sport Director',
       brief: 'Coordinator of all sporting activities of the association',
       details: [
@@ -137,6 +147,7 @@ const Page = ({ server, viewForm, user, winSize }) => {
       ],
     },
     {
+      ref: useRef(null),
       title: 'Academic Coordinator',
       brief: 'Chairman of the academic committee of the association',
       details: [
@@ -177,8 +188,10 @@ const Page = ({ server, viewForm, user, winSize }) => {
     'In the case of withdrawal of any member of the council during his/her tenure due to unforeseen circumstances, a by-election will be conducted by an ad-hoc committee set up by the council within two(2) weeks.',
   ]
 
+  const lightboxShadow =
+    '-7px -7px 20px rgba(7,10,10,0.5), 7px 7px 20px rgba(7,7,10,0.5)'
   const boxShadow =
-    '-7px -7px 20px rgba(0,0,0,0.1), 7px 7px 20px rgba(0,0,0,0.1)'
+    '-7px -7px 20px rgba(240,240,255,0.5), 7px 7px 20px rgba(240,240,255,0.5)'
   return (
     <>
       <div style={{ justifyContent: 'center' }}>
@@ -208,18 +221,26 @@ const Page = ({ server, viewForm, user, winSize }) => {
               width: 'fit-content',
               borderRadius: '10px',
               fontFamily: 'monospace',
-              backgroundColor: 'white',
+              backgroundColor: darkMode ? 'black' : 'white',
               fontSize: '1rem',
-              margin: '30px',
+              margin: '30px auto',
               marginTop: '40px',
               padding: '15px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              textAlign: 'center',
+              justifyContent: 'space-evenly',
             }}
           >
-            <p>
-              {'Your Application For The Office Of ' +
-                applicationDetails.post +
-                ' Is Currently Pending.'}
-            </p>
+            <div>
+              <label style={{ whiteSpace: 'pre-wrap' }}>
+                {'Your Application\n\nFor The Office Of '}
+              </label>
+              <label style={{ fontWeight: 'bold' }}>
+                {applicationDetails.post.toUpperCase()}
+              </label>
+              <label>{' Is Currently Pending.'}</label>
+            </div>
             <motion.button
               initial={{ background: 'red' }}
               animate={{ scale: 1.1, background: 'blue' }}
@@ -231,7 +252,12 @@ const Page = ({ server, viewForm, user, winSize }) => {
                 viewForm({ data: applicationDetails.post })
               }}
               className='ebtn'
-              style={{ backgroundColor: 'blue', color: 'white' }}
+              style={{
+                backgroundColor: 'blue',
+                border: 'solid blue 2px',
+                color: 'white',
+                margin: '15px',
+              }}
             >
               {'Continue >>'}
             </motion.button>
@@ -250,8 +276,8 @@ const Page = ({ server, viewForm, user, winSize }) => {
               margin: '10px',
               marginTop: '20px',
               padding: '10px',
-              boxShadow: boxShadow,
-              backgroundColor: 'white',
+              boxShadow: darkMode ? lightboxShadow : boxShadow,
+              backgroundColor: darkMode ? 'black' : 'white',
               borderRadius: '10px',
               fontFamily: 'monospace',
             }}
@@ -271,8 +297,8 @@ const Page = ({ server, viewForm, user, winSize }) => {
               margin: '10px',
               marginTop: '20px',
               padding: '10px',
-              backgroundColor: 'white',
-              boxShadow: boxShadow,
+              backgroundColor: darkMode ? 'black' : 'white',
+              boxShadow: darkMode ? lightboxShadow : boxShadow,
               borderRadius: '10px',
               fontFamily: 'monospace',
             }}
@@ -292,8 +318,8 @@ const Page = ({ server, viewForm, user, winSize }) => {
               margin: '10px',
               marginTop: '20px',
               padding: '10px',
-              backgroundColor: 'white',
-              boxShadow: boxShadow,
+              backgroundColor: darkMode ? 'black' : 'white',
+              boxShadow: darkMode ? lightboxShadow : boxShadow,
               borderRadius: '10px',
               fontFamily: 'monospace',
             }}
@@ -313,8 +339,8 @@ const Page = ({ server, viewForm, user, winSize }) => {
               margin: '10px',
               marginTop: '20px',
               padding: '10px',
-              backgroundColor: 'white',
-              boxShadow: boxShadow,
+              backgroundColor: darkMode ? 'black' : 'white',
+              boxShadow: darkMode ? lightboxShadow : boxShadow,
               borderRadius: '10px',
               fontFamily: 'monospace',
             }}
@@ -354,6 +380,7 @@ const Page = ({ server, viewForm, user, winSize }) => {
           {excos.map((exco, id) => {
             return (
               <ExecDetails
+                reference={exco.ref}
                 key={id}
                 exco={exco}
                 viewForm={({ data }) => {

@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+
+import ContextProvider from '../ContextProvider'
 
 import tasks from './assets/tasks.png'
 import events from './assets/events.png'
@@ -49,6 +51,8 @@ const SideNavigator = ({
 
   const applyRef = useRef(null)
   const voteRef = useRef(null)
+
+  const { darkMode } = useContext(ContextProvider)
 
   const tasksLabelRefs = [cgpacalcRef, todolistRef, quizappRef]
   const eventsLabelRefs = [grandquizRef, dailypuzzleRef, studytableRef]
@@ -160,10 +164,15 @@ const SideNavigator = ({
           }}
           exit={{ x: '-100vw', transition: { duration: 0.5, ease: 'easeIn' } }}
           className='usersidebar'
-          style={{ left: String(xOffset) + 'px' }}
+          style={{
+            left: String(xOffset) + 'px',
+            backgroundColor: darkMode
+              ? 'rgba(0,0,0,0.95)'
+              : 'rgba(255,255,255,0.9)',
+          }}
         >
           <Link to='/dashboard' className='userlefttop'>
-            <label style={{ cursor: 'pointer' }}>{'< NAPSITE />'}</label>
+            <label style={{ cursor: 'pointer' }}>{'< SECTIONS />'}</label>
           </Link>
           <li name='profile' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/profile'>

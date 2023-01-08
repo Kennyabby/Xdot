@@ -1,12 +1,13 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
+import ContextProvider from '../../ContextProvider'
+
 import home from './assets/home.png'
+import whome from './assets/whome.png'
 import notifications from './assets/notifications.png'
 import profile from './assets/profile.png'
-import blhome from './assets/blhome.png'
-import blbell from './assets/blbell.png'
 
 const EVoting = ({
   chatrf,
@@ -32,8 +33,8 @@ const EVoting = ({
   const [postHeld, setPostHeld] = useState([])
   const [postAvailable, setPostAvailable] = useState([])
   const [postContested, setPostContested] = useState([])
-  const [winSize, setWinSize] = useState(window.innerWidth)
   const postsLabelRef = [postHeldRef, postAvailableRef, postContestedRef]
+  const { darkMode, winSize } = useContext(ContextProvider)
   useEffect(() => {
     showHomeToggle(true)
     if (
@@ -46,11 +47,13 @@ const EVoting = ({
         homerf.current !== null &&
         chatrf.current !== null
       ) {
-        homerf.current.childNodes[0].childNodes[0].src = home
-        homerf.current.childNodes[0].childNodes[1].style.color = 'blue'
+        homerf.current.childNodes[0].childNodes[0].src = darkMode ? whome : home
+        homerf.current.childNodes[0].childNodes[1].style.color = darkMode
+          ? 'white'
+          : 'blue'
         notificationsrf.current.childNodes[0].childNodes[0].src = notifications
         notificationsrf.current.childNodes[0].childNodes[1].style.color =
-          'black'
+          darkMode ? 'white' : 'black'
       }
     }
   }, [homerf])
@@ -59,18 +62,10 @@ const EVoting = ({
     postsLabelRef.forEach((labelRef) => {
       labelRef.current.style.boxShadow = 'none'
     })
-    ref.current.style.boxShadow =
-      ' -5px -5px 15px rgba(0,0,0,0.1),5px 5px 15px rgba(0,0,0,0.1)'
+    ref.current.style.boxShadow = darkMode
+      ? ' -5px -5px 15px rgba(255,255,255,0.1),5px 5px 15px rgba(255,255,255,0.1)'
+      : ' -5px -5px 15px rgba(0,0,0,0.1),5px 5px 15px rgba(0,0,0,0.1)'
   }
-  const checkSize = () => {
-    setWinSize(window.innerWidth)
-  }
-  useEffect(() => {
-    window.addEventListener('resize', checkSize)
-    return () => {
-      window.removeEventListener('resize', checkSize)
-    }
-  }, [winSize])
 
   useEffect(async () => {
     try {
@@ -154,7 +149,7 @@ const EVoting = ({
               borderRadius: '15px',
               padding: '15px 15px',
               border: 'solid rgba(200,200,200,1) 2px',
-              backgroundColor: 'white',
+              backgroundColor: darkMode ? 'black' : 'white',
               borderBottom: 'solid rgba(0,50,0,0.9) 4px',
             }}
           >
@@ -179,7 +174,7 @@ const EVoting = ({
                 margin: '20px 10px',
                 borderRadius: '20px',
                 border: 'solid rgba(210,210,210) 2px',
-                backgroundColor: 'white',
+                backgroundColor: darkMode ? 'black' : 'white',
               }}
             >
               <div
@@ -260,13 +255,15 @@ const EVoting = ({
                           color: 'red',
                           border: 'solid red 2px',
                           fontWeight: 'bold',
-                          backgroundColor: 'white',
+                          backgroundColor: darkMode
+                            ? 'rgba(50,50,50,1)'
+                            : 'white',
                           borderRadius: '10px',
                           fontFamily: 'monospace',
                           cursor: 'pointer',
                         }}
                       >
-                        {'Held >>'}
+                        {'Held'}
                       </button>
                     </div>
                   </div>
@@ -292,13 +289,15 @@ const EVoting = ({
                           color: 'red',
                           border: 'solid red 2px',
                           fontWeight: 'bold',
-                          backgroundColor: 'white',
+                          backgroundColor: darkMode
+                            ? 'rgba(50,50,50,1)'
+                            : 'white',
                           borderRadius: '10px',
                           fontFamily: 'monospace',
                           cursor: 'pointer',
                         }}
                       >
-                        {'Available >>'}
+                        {'Available'}
                       </button>
                     </div>
                   </div>
@@ -324,13 +323,15 @@ const EVoting = ({
                           color: 'red',
                           border: 'solid red 2px',
                           fontWeight: 'bold',
-                          backgroundColor: 'white',
+                          backgroundColor: darkMode
+                            ? 'rgba(50,50,50,1)'
+                            : 'white',
                           borderRadius: '10px',
                           fontFamily: 'monospace',
                           cursor: 'pointer',
                         }}
                       >
-                        {'Contested >>'}
+                        {'Contested'}
                       </button>
                     </div>
                   </div>
@@ -342,85 +343,97 @@ const EVoting = ({
                     margin: '20px auto',
                   }}
                 >
-                  {postView.map((position) => {
-                    return (
-                      <div
-                        style={{
-                          position: 'relative',
-                          display: 'flex',
-                          margin: '10px',
-                          padding: '10px',
-                          borderRadius: '10px',
-                          justifyContent: 'left',
-                          textAlign: 'left',
-                          border: 'solid rgba(200,200,200,1) 1px',
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: '80px',
-                            height: '80px',
-                            margin: 'auto',
-                            marginRight: '10px',
-                            borderRadius: '50%',
-                            boxShadow:
-                              '-4px -4px 10px rgba(0,0,0,0.1), 4px 4px 10px rgba(0,0,0,0.1)',
-                          }}
-                        ></div>
-                        <div style={{ width: 'fit-content', margin: 'auto' }}>
+                  {postView.length
+                    ? postView.map((position) => {
+                        return (
                           <div
                             style={{
-                              fontWeight: 'bold',
-                              width: 'fit-content',
-                              cursor: 'pointer',
-                            }}
-                            onClick={() => {
-                              history.push('/dashboard/e-voting/apply')
-                            }}
-                          >
-                            {position.position.toUpperCase()}
-                          </div>
-                          <label
-                            style={{
-                              fontFamily: 'monospace',
-                              fontStyle: 'italic',
+                              position: 'relative',
+                              display: 'flex',
+                              margin: '10px',
+                              padding: '20px',
+                              borderRadius: '10px',
+                              justifyContent: 'left',
+                              textAlign: 'left',
+                              border: 'solid rgba(200,200,200,1) 1px',
                             }}
                           >
-                            {position.description}
-                          </label>
-                        </div>
-                        {postViewLabel === 'available' &&
-                          currentApplication.post.toLowerCase() ===
-                            position.position.toLowerCase() && (
                             <div
                               style={{
-                                position: 'absolute',
-                                top: '5px',
-                                right: '5px',
-                                fontFamily: 'monospace',
-                                color: 'green',
-                                fontSize: '.7rem',
-                                fontWeight: 'bold',
-                                cursor: 'pointer',
+                                width: '80px',
+                                height: '80px',
+                                margin: 'auto',
+                                marginRight: '10px',
+                                borderRadius: '50%',
+                                boxShadow: darkMode
+                                  ? '-4px -4px 10px rgba(255,255,255,0.1), 4px 4px 10px rgba(255,255,255,0.1)'
+                                  : '-4px -4px 10px rgba(0,0,0,0.1), 4px 4px 10px rgba(0,0,0,0.1)',
                               }}
-                              onClick={() => {
-                                window.sessionStorage.setItem(
-                                  'fm-dt',
-                                  position.position
-                                )
-                                window.sessionStorage.setItem(
-                                  'fm-z-cr-pg',
-                                  'true'
-                                )
-                                history.push('/dashboard/e-voting/apply')
-                              }}
+                            ></div>
+                            <div
+                              style={{ width: 'fit-content', margin: 'auto' }}
                             >
-                              application in progress...
+                              <div
+                                style={{
+                                  fontWeight: 'bold',
+                                  width: 'fit-content',
+                                  cursor: 'pointer',
+                                }}
+                                onClick={() => {
+                                  window.sessionStorage.setItem(
+                                    'scrl-dt',
+                                    position.position
+                                  )
+                                  history.push('/dashboard/e-voting/apply')
+                                }}
+                              >
+                                {position.position.toUpperCase()}
+                              </div>
+                              <label
+                                style={{
+                                  fontFamily: 'monospace',
+                                  fontStyle: 'italic',
+                                }}
+                              >
+                                {position.description}
+                              </label>
                             </div>
-                          )}
-                      </div>
-                    )
-                  })}
+                            {postViewLabel === 'available' &&
+                              currentApplication.post !== undefined &&
+                              currentApplication.post.toLowerCase() ===
+                                position.position.toLowerCase() && (
+                                <div
+                                  style={{
+                                    position: 'absolute',
+                                    top: '5px',
+                                    right: '5px',
+                                    fontFamily: 'monospace',
+                                    color: darkMode ? 'lightgreen' : 'green',
+                                    fontSize: '.7rem',
+                                    fontWeight: 'bold',
+                                    cursor: 'pointer',
+                                  }}
+                                  onClick={() => {
+                                    window.sessionStorage.setItem(
+                                      'fm-dt',
+                                      position.position
+                                    )
+                                    window.sessionStorage.setItem(
+                                      'fm-z-cr-pg',
+                                      'true'
+                                    )
+                                    history.push('/dashboard/e-voting/apply')
+                                  }}
+                                >
+                                  application in progress...
+                                </div>
+                              )}
+                          </div>
+                        )
+                      })
+                    : postViewLabel !== '' && (
+                        <div>{'No ' + postViewLabel + ' Posts.'}</div>
+                      )}
                 </div>
               </div>
               <div
@@ -511,7 +524,7 @@ const EVoting = ({
                 fontFamily: 'monospace',
                 padding: '20px',
                 margin: '10px',
-                backgroundColor: 'white',
+                backgroundColor: darkMode ? 'black' : 'white',
                 boxShadow:
                   '-7px -7px 15px rgb(0,0,0,0.1),7px 7px 15px rgb(0,0,0,0.1)',
                 borderRadius: '10px',
@@ -586,7 +599,7 @@ const EVoting = ({
               textAlign: 'left',
               padding: '10px',
               border: 'solid rgba(200,200,200,1) 2px',
-              backgroundColor: 'white',
+              backgroundColor: darkMode ? 'black' : 'white',
               borderRadius: '15px',
               margin: '10px',
             }}
@@ -611,8 +624,9 @@ const EVoting = ({
                 <li
                   style={{
                     padding: '10px',
-                    boxShadow:
-                      '-5px -5px 15px rgb(0,0,0,0.1),5px 5px 15px rgb(0,0,0,0.1)',
+                    boxShadow: darkMode
+                      ? '-5px -5px 15px rgb(255,255,255,0.1),5px 5px 15px rgb(255,255,255,0.1)'
+                      : '-5px -5px 15px rgb(10,10,10,0.1),5px 5px 15px rgb(10,10,10,0.1)',
                     borderRadius: '15px',
                     fontSize: '.8rem',
                     fontWeight: 'bold',
@@ -626,8 +640,9 @@ const EVoting = ({
                 <li
                   style={{
                     padding: '10px',
-                    boxShadow:
-                      '-5px -5px 15px rgb(0,0,0,0.1),5px 5px 15px rgb(0,0,0,0.1)',
+                    boxShadow: darkMode
+                      ? '-5px -5px 15px rgb(255,255,255,0.1),5px 5px 15px rgb(255,255,255,0.1)'
+                      : '-5px -5px 15px rgb(0,0,0,0.1),5px 5px 15px rgb(0,0,0,0.1)',
                     borderRadius: '15px',
                     fontSize: '.8rem',
                     fontWeight: 'bold',

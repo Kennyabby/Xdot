@@ -1,12 +1,13 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import { useParams, useHistory, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import './Napsboard.css'
 
+import ContextProvider from '../ContextProvider'
 import SideNavigator from './SideNavigator'
 import Home from './Home/Home'
 import Chats from './Chats/Chats'
-import Profile from './Profile'
+import Profile from './Profile/Profile'
 import Settings from './Settings/Settings'
 import Events from './Events/Events'
 import Tasks from './Tasks/Tasks'
@@ -28,9 +29,12 @@ import Privacy from './Settings/Privacy/Privacy'
 
 import userimg from './assets/user.png'
 import home from './assets/home.png'
+import whome from './assets/whome.png'
 import chats from './assets/chat.png'
+import wchats from './assets/wchat.png'
 import notifications from './assets/notifications.png'
 import navigatormenu from './assets/navigatormenu.png'
+import wnavigatormenu from './assets/whamburger.png'
 import close from './assets/cancel.png'
 
 const Napsboard = ({ rootView, userId, winSize, server }) => {
@@ -42,7 +46,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   const [user, setUser] = useState({})
   const [showNavigator, setShowNavigator] = useState(true)
   const [showNav, setShowNav] = useState(false)
-  const [bodyLeft, setBodyLeft] = useState('0px')
   const [logoutStatus, setLogoutStatus] = useState('Log out')
   const [labelRefs, setLabelRefs] = useState([])
   const [tasksLabelRefs, setTasksLabelRefs] = useState([])
@@ -56,6 +59,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
   const minSwipeDistance = 50
+  const { darkMode } = useContext(ContextProvider)
   const shade = ({ width, prevPadding, newPadding, radius, shade }) => {
     return {
       padding: user.userName ? prevPadding : newPadding,
@@ -163,9 +167,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           chatrf={chatsRef}
           homerf={homeRef}
           notificationsrf={notificationsRef}
-          setBodyLeft={() => {
-            setBodyLeft('0px')
-          }}
           setShowNavigator={() => {
             setShowNavigator(false)
           }}
@@ -184,7 +185,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             homerf={homeRef}
             notificationsrf={notificationsRef}
             user={user}
-            setBodyLeft={setBodyLeft('150px')}
             setShowNavigator={setShowNavigator(true)}
             setShowNav={setShowNav(false)}
             padding={'0px'}
@@ -201,7 +201,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       setView(
         <Tasks
           server={server}
-          setBodyLeft={setBodyLeft('150px')}
           chatrf={chatsRef}
           homerf={homeRef}
           notificationsrf={notificationsRef}
@@ -216,7 +215,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       setView(
         <Events
           server={server}
-          setBodyLeft={setBodyLeft('150px')}
           chatrf={chatsRef}
           homerf={homeRef}
           setShowNav={setShowNav(false)}
@@ -235,7 +233,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           homerf={homeRef}
           notificationsrf={notificationsRef}
           setShowNav={setShowNav(false)}
-          setBodyLeft={setBodyLeft('150px')}
           setShowNavigator={setShowNavigator(true)}
           showHomeToggle={(show) => {
             setShowHomeToggle(show)
@@ -248,7 +245,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       setView(
         <Notifications
           server={server}
-          setBodyLeft={setBodyLeft('150px')}
           chatrf={chatsRef}
           homerf={homeRef}
           notificationsrf={notificationsRef}
@@ -263,7 +259,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       setView(
         <Settings
           server={server}
-          setBodyLeft={setBodyLeft('150px')}
           chatrf={chatsRef}
           homerf={homeRef}
           notificationsrf={notificationsRef}
@@ -282,9 +277,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           chatrf={chatsRef}
           homerf={homeRef}
           notificationsrf={notificationsRef}
-          setBodyLeft={() => {
-            setBodyLeft('150px')
-          }}
           setShowNavigator={() => {
             setShowNavigator(true)
           }}
@@ -311,7 +303,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                 })
               }}
               winSize={winSize}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
               viewRef={viewRef}
@@ -322,7 +313,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             <TodoList
               server={server}
               user={user}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
               viewRef={viewRef}
@@ -333,7 +323,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             <QuizApp
               server={server}
               user={user}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
               viewRef={viewRef}
@@ -343,7 +332,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           setView(
             <Tasks
               server={server}
-              setBodyLeft={setBodyLeft('150px')}
               chatrf={chatsRef}
               homerf={homeRef}
               setShowNavigator={setShowNavigator(true)}
@@ -361,7 +349,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             <GrandQuiz
               server={server}
               user={user}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
               showHomeToggle={(show) => {
@@ -374,7 +361,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           setView(
             <DailyPuzzles
               server={server}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
               viewRef={viewRef}
@@ -384,7 +370,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           setView(
             <StudyTable
               server={server}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
               viewRef={viewRef}
@@ -394,7 +379,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           setView(
             <Events
               server={server}
-              setBodyLeft={setBodyLeft('150px')}
               chatrf={chatsRef}
               homerf={homeRef}
               setShowNavigator={setShowNavigator(true)}
@@ -412,7 +396,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             <Apply
               server={server}
               user={user}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
               viewRef={viewRef}
@@ -424,7 +407,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             <Vote
               server={server}
               user={user}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
               viewRef={viewRef}
@@ -437,7 +419,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               server={server}
               chatrf={chatsRef}
               homerf={homeRef}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
               showHomeToggle={(show) => {
@@ -455,7 +436,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             <Admin
               server={server}
               user={user}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
             />
@@ -465,7 +445,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             <Messaging
               server={server}
               user={user}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
             />
@@ -475,7 +454,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             <Notifier
               server={server}
               user={user}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
             />
@@ -485,7 +463,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             <Preferences
               server={server}
               user={user}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
             />
@@ -495,7 +472,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             <Privacy
               server={server}
               user={user}
-              setBodyLeft={setBodyLeft('150px')}
               setShowNavigator={setShowNavigator(true)}
               setShowNav={setShowNav(false)}
             />
@@ -504,7 +480,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           setView(
             <Settings
               server={server}
-              setBodyLeft={setBodyLeft('150px')}
               chatrf={chatsRef}
               homerf={homeRef}
               notificationsrf={notificationsRef}
@@ -525,9 +500,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               chatrf={chatsRef}
               homerf={homeRef}
               notificationsrf={notificationsRef}
-              setBodyLeft={() => {
-                setBodyLeft('150px')
-              }}
               setShowNavigator={() => {
                 setShowNavigator(true)
               }}
@@ -623,14 +595,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   }, [eVotingLabelRefs])
 
   useEffect(async () => {
-    var uid = window.sessionStorage.getItem('user-id')
+    var uid = window.localStorage.getItem('user-id')
     var sess = 0
     if (userId !== null) {
       userId.split('').forEach((elem) => {
         sess += elem.codePointAt(0)
       })
-      const sesn = window.sessionStorage.getItem('sess-recg-id')
-      const session = window.sessionStorage.getItem('idt-curr-usr')
+      const sesn = window.localStorage.getItem('sess-recg-id')
+      const session = window.localStorage.getItem('idt-curr-usr')
       if (sesn !== null && session !== null) {
         if (sesn / session === sess) {
           fetchUserAPI({ data: { sessionId: userId }, req: 'getUserDetails' })
@@ -650,8 +622,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         uid.split('').forEach((elem) => {
           sess += elem.codePointAt(0)
         })
-        const sesn = window.sessionStorage.getItem('sess-recg-id')
-        const session = window.sessionStorage.getItem('idt-curr-usr')
+        const sesn = window.localStorage.getItem('sess-recg-id')
+        const session = window.localStorage.getItem('idt-curr-usr')
         if (sesn !== null && session !== null) {
           if (sesn / session === sess) {
             fetchUserAPI({ data: { sessionId: uid }, req: 'getUserDetails' })
@@ -677,9 +649,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     setLabelRefs(refs)
   }
   const removeSessions = () => {
-    window.sessionStorage.removeItem('sess-recg-id')
-    window.sessionStorage.removeItem('idt-curr-usr')
-    window.sessionStorage.removeItem('user-id')
+    window.localStorage.removeItem('sess-recg-id')
+    window.localStorage.removeItem('idt-curr-usr')
+    window.localStorage.removeItem('user-id')
   }
   const logout = async () => {
     setLogoutStatus('Ending Session...')
@@ -731,7 +703,15 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   return (
     <>
       {isNewSession ? (
-        <div style={{ color: 'black' }}>
+        <div
+          style={{
+            color: darkMode ? 'white' : 'black',
+            backgroundColor: darkMode
+              ? 'rgba(10,10,10,1)'
+              : 'rgba(250,250,250,1)',
+            height: '100vh',
+          }}
+        >
           <div
             className='body'
             style={{
@@ -789,13 +769,21 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                   onTouchStart={onTouchStart}
                   onTouchMove={onTouchMove}
                   onTouchEnd={onTouchEnd}
+                  className='viewbg'
                   style={{
-                    backgroundColor: 'rgba(250,250,250,1)',
+                    backgroundColor: darkMode
+                      ? 'rgba(10,10,15,1)'
+                      : 'rgba(247,247,255,1)',
                     height: winSize > 700 ? '100vh' : 'auto',
                     overflowY: winSize > 700 ? 'auto' : 'none',
                     // margin: '0px auto',
                     justifyContent: 'center',
-                    width: winSize <= 700 ? '100%' : '87%',
+                    width:
+                      winSize <= 700
+                        ? '100%'
+                        : id === 'chats' || rootView === 'chats'
+                        ? '100%'
+                        : '87%',
                     textAlign: 'center',
                   }}
                 >
@@ -866,18 +854,20 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                   <div className='hometoggleCover'>
                     <div
                       className='hometoggle'
-                      style={
-                        {
-                          // justifyContent: id === 'chats' ? ' center' : 'left',
-                        }
-                      }
+                      style={{
+                        backgroundColor: darkMode
+                          ? 'rgba(0,0,0,0.8)'
+                          : 'rgba(255,255,255,0.9)',
+                      }}
                     >
                       {winSize <= 700 && showNavigator && (
                         <div
                           name='menu'
                           title='toggle to show or hide navigator'
                           className='hometoggleitem'
-                          style={{ display: 'block' }}
+                          style={{
+                            display: 'block',
+                          }}
                           onClick={() => {
                             if (showNav) {
                               setShowNav(false)
@@ -892,90 +882,106 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             }}
                             name='menu'
                             alt='menu'
-                            src={showNav ? close : navigatormenu}
+                            src={
+                              showNav
+                                ? close
+                                : darkMode
+                                ? wnavigatormenu
+                                : navigatormenu
+                            }
                             height='18px'
                           />{' '}
                           <div
                             style={{
                               fontSize: '.7rem',
                               fontFamily: 'monospace',
-                              color: 'black',
+                              color: darkMode ? 'white' : 'black',
                             }}
                           >
                             <label>Menu</label>
                           </div>
                         </div>
                       )}
-                      <Link
-                        ref={homeRef}
-                        to='/dashboard'
-                        className='hometoggleitem'
+                      <div
+                        className='hometogglegroup1'
                         style={{
-                          textDecoration: 'none',
-                          height: 'fit-content',
+                          backgroundColor: darkMode
+                            ? 'rgba(0,0,0,0.8)'
+                            : 'rgba(255,255,255,0.8)',
+                          borderRadius: '10px',
                         }}
                       >
-                        <div
-                          style={{ display: 'block' }}
-                          name='home'
-                          title='Clck to go to Home Page'
+                        <Link
+                          ref={homeRef}
+                          to='/dashboard'
+                          className='hometoggleitem'
+                          style={{
+                            textDecoration: 'none',
+                            height: 'fit-content',
+                          }}
                         >
-                          <img
-                            style={{
-                              borderRadius: '50%',
-                              cursor: 'pointer',
-                            }}
+                          <div
+                            style={{ display: 'block' }}
                             name='home'
-                            src={home}
-                            alt='home'
-                            height='20px'
-                          />
-                          <div
-                            style={{
-                              fontSize: '.7rem',
-                              fontFamily: 'monospace',
-                              color: 'black',
-                            }}
+                            title='Clck to go to Home Page'
                           >
-                            <label>Home</label>
+                            <img
+                              style={{
+                                borderRadius: '50%',
+                                cursor: 'pointer',
+                              }}
+                              name='home'
+                              src={darkMode ? whome : home}
+                              alt='home'
+                              height='20px'
+                            />
+                            <div
+                              style={{
+                                fontSize: '.7rem',
+                                fontFamily: 'monospace',
+                                color: darkMode ? 'white' : 'black',
+                              }}
+                            >
+                              <label>Home</label>
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                      <Link
-                        className='hometoggleitem'
-                        ref={chatsRef}
-                        style={{
-                          textDecoration: 'none',
-                          color: 'black',
-                          height: 'fit-content',
-                        }}
-                        to='/dashboard/chats'
-                      >
-                        <div
-                          style={{ display: 'block' }}
-                          name='chats'
-                          title='Clck to go to Chats'
+                        </Link>
+                        <Link
+                          className='hometoggleitem'
+                          ref={chatsRef}
+                          style={{
+                            textDecoration: 'none',
+                            color: darkMode ? 'white' : 'black',
+                            height: 'fit-content',
+                          }}
+                          to='/dashboard/chats'
                         >
-                          <img
-                            style={{
-                              cursor: 'pointer',
-                            }}
-                            name='chats'
-                            src={chats}
-                            alt='chats'
-                            height='20px'
-                          />
                           <div
-                            style={{
-                              fontSize: '.7rem',
-                              fontFamily: 'monospace',
-                              color: 'black',
-                            }}
+                            style={{ display: 'block' }}
+                            name='chats'
+                            title='Clck to go to Chats'
                           >
-                            <label>Chats</label>
+                            <img
+                              style={{
+                                cursor: 'pointer',
+                              }}
+                              name='chats'
+                              src={darkMode ? wchats : chats}
+                              alt='chats'
+                              height='20px'
+                            />
+                            <div
+                              style={{
+                                fontSize: '.7rem',
+                                fontFamily: 'monospace',
+                                color: darkMode ? 'white' : 'black',
+                              }}
+                            >
+                              <label>Chats</label>
+                            </div>
                           </div>
-                        </div>
-                      </Link>
+                        </Link>
+                      </div>
                       {winSize <= 700 && showNavigator ? (
                         <Link
                           to='/dashboard/notifications'
@@ -1005,7 +1011,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                               style={{
                                 fontSize: '.7rem',
                                 fontFamily: 'monospace',
-                                color: 'black',
+                                color: darkMode ? 'white' : 'black',
                               }}
                             >
                               <label>Updates</label>
@@ -1065,17 +1071,11 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         </div>
       ) : (
         <div
-          // variance={spinnerVariance}
-          // initial='hidden'
-          // animate='visible'
           style={{
-            color: 'black',
-            // position: 'fixed',
-            // top: '0px',
-            // left: '0px',
-            // width: '100vw',
-            // height: '100vh',
-            // zIndex: '1',
+            color: darkMode ? 'white' : 'black',
+            backgroundColor: darkMode ? 'black' : 'white',
+            width: '100vw',
+            height: '100vh',
           }}
         >
           <div
@@ -1086,6 +1086,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
               textAlign: 'center',
               justifyContent: 'center',
               padding: 'auto auto',
+              color: darkMode ? 'white' : 'black',
+              backgroundColor: darkMode ? 'black' : 'white',
             }}
           >
             <div
@@ -1097,7 +1099,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                 fontSize: '1rem',
                 margin: 'auto',
                 borderRadius: '10px',
-                boxShadow: '0px 0px 7px black',
+                boxShadow: darkMode ? '0px 0px 7px white' : '0px 0px 7px black',
               }}
             >
               XDot
@@ -1136,6 +1138,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           </div>
           <div
             style={{
+              color: darkMode ? 'white' : 'black',
+              backgroundColor: darkMode ? 'black' : 'white',
               fontFamily: 'monospace',
               fontSize: '0.8rem',
               position: 'fixed',

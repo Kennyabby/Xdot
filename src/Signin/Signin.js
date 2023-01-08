@@ -1,9 +1,11 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { useGoogleLogin } from 'react-google-login'
 import { GoogleLogin } from 'react-google-login'
+
+import ContextProvider from '../ContextProvider'
 import ConnectionModal from '../Components/ConnectionModal'
 
 import usrImg from './usrImg.png'
@@ -13,6 +15,7 @@ import signinwall from './signin-wall.jpg'
 import google from './google.png'
 
 const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
+  const { darkMode } = useContext(ContextProvider)
   const [fields, setFields] = useState({
     matricNo: '',
     password: '',
@@ -36,7 +39,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
     showNavOpt(false)
   })
   useEffect(async () => {
-    if (window.sessionStorage.getItem('user-id') !== null) {
+    if (window.localStorage.getItem('user-id') !== null) {
       history.push('./dashboard')
     }
     // const opts1 = {
@@ -69,9 +72,9 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       idVal.split('').forEach((elem) => {
         sess += elem.codePointAt(0)
       })
-      window.sessionStorage.setItem('sess-recg-id', now * sess)
-      window.sessionStorage.setItem('idt-curr-usr', now)
-      window.sessionStorage.setItem('user-id', idVal)
+      window.localStorage.setItem('sess-recg-id', now * sess)
+      window.localStorage.setItem('idt-curr-usr', now)
+      window.localStorage.setItem('user-id', idVal)
       history.push('./dashboard')
       setPassValidated(false)
     }
@@ -89,8 +92,12 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   }
   const handleFocus = (e) => {
     const name = e.target.getAttribute('name')
-    matricNoRef.current.style.borderBottom = 'solid black 1px'
-    passwordRef.current.style.borderBottom = 'solid black 1px'
+    matricNoRef.current.style.borderBottom = darkMode
+      ? 'solid rgba(200,200,200,1) 1px'
+      : 'solid black 1px'
+    passwordRef.current.style.borderBottom = darkMode
+      ? 'solid rgba(200,200,200,1) 1px'
+      : 'solid black 1px'
     matricNoRef.current.parentElement.childNodes[1].style.color = 'lightgreen'
     passwordRef.current.parentElement.childNodes[1].style.color = 'lightgreen'
     passwordRef.current.parentElement.childNodes[1].style.display = 'none'
@@ -160,8 +167,12 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
     setError('')
     matricNoRef.current.parentElement.childNodes[1].style.display = 'none'
     passwordRef.current.parentElement.childNodes[1].style.display = 'none'
-    matricNoRef.current.style.borderBottom = 'solid black 1px'
-    passwordRef.current.style.borderBottom = 'solid black 1px'
+    matricNoRef.current.style.borderBottom = darkMode
+      ? 'solid rgba(200,200,200,1) 1px'
+      : 'solid black 1px'
+    passwordRef.current.style.borderBottom = darkMode
+      ? 'solid rgba(200,200,200,1) 1px'
+      : 'solid black 1px'
     if (fields.password === '') {
       passwordRef.current.style.borderBottom = 'solid red 2px'
       passwordRef.current.parentElement.childNodes[1].style.color = 'red'
@@ -184,8 +195,8 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   }
   const handleGoogleSuccess = async (googleData) => {
     setSignView('hold on...')
-    console.log('successful')
-    console.log(googleData.tokenId)
+    // console.log('successful')
+    // console.log(googleData.tokenId)
     const res = await fetch(server + '/api/v1/auth/google', {
       method: 'POST',
       body: JSON.stringify({
@@ -196,9 +207,9 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       },
     })
     const data = await res.json()
-    console.log(data)
+    // console.log(data)
     const user = data.user
-    console.log(user)
+    // console.log(user)
     const res1 = await fetch('/isEmailPresent', {
       method: 'POST',
       body: JSON.stringify({
@@ -227,7 +238,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
     }
   }
   const handleGoogleFailure = async (err) => {
-    console.log(err)
+    // console.log(err)
     setPassValidated(false)
     setError('No Email To Validate!')
     setTimeout(() => {
@@ -246,7 +257,14 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   })
   return (
     <>
-      <div className='signin'>
+      <div
+        className='signin'
+        style={{
+          backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
+          color: darkMode ? 'white' : 'black',
+          height: '100vh',
+        }}
+      >
         {showModal && (
           <ConnectionModal
             title='Ooops... Connection Error'
@@ -264,7 +282,13 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
             }}
           />
         )}
-        <div className='signinregion'>
+        <div
+          className='signinregion'
+          style={{
+            backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
+            color: darkMode ? 'white' : 'black',
+          }}
+        >
           <div className='signincov'>
             <div
               className='signinCover'
@@ -285,7 +309,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                   history.push('/')
                 }}
               >
-                NAPS UI
+                Encart oO
               </motion.p>
               <img
                 className='usr'
@@ -320,6 +344,12 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 <input
                   ref={matricNoRef}
                   className='signinfield'
+                  style={{
+                    borderBottom: darkMode
+                      ? 'solid rgba(200,200,200,1) 1px'
+                      : 'solid black 1px',
+                    color: darkMode ? 'white' : 'black',
+                  }}
                   type='number'
                   name='matricNo'
                   placeholder='Enter Your Matric No'
@@ -340,6 +370,12 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 <input
                   ref={passwordRef}
                   className='signinfield'
+                  style={{
+                    borderBottom: darkMode
+                      ? 'solid rgba(200,200,200,1) 1px'
+                      : 'solid black 1px',
+                    color: darkMode ? 'white' : 'black',
+                  }}
                   type={passType}
                   name='password'
                   placeholder='Enter Password'
@@ -381,7 +417,13 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 fontStyle: 'italic',
               }}
             >
-              <Link style={{ color: 'black', fontSize: '0.9rem' }} to='/help'>
+              <Link
+                style={{
+                  color: darkMode ? 'white' : 'black',
+                  fontSize: '0.9rem',
+                }}
+                to='/help'
+              >
                 Forgot Password?
               </Link>
             </p>

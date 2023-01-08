@@ -168,7 +168,7 @@ const UpdateQuestion = ({
           left: '0px',
           overflowY: 'auto',
           zIndex: '3',
-          backgroundColor: 'rgba(0,0,25,1)',
+          backgroundColor: 'rgba(0,0,0,0.95)',
           paddingBottom: '50px',
           width: '100%',
           height: '100%',
@@ -223,6 +223,8 @@ const UpdateQuestion = ({
                       height: '150px',
                       padding: '20px',
                       fontSize: '1rem',
+                      backgroundColor: 'rgba(255,255,255,0.2)',
+                      color: 'white',
                       borderRadius: '10px',
                     }}
                   />
@@ -333,7 +335,11 @@ const UpdateQuestion = ({
                     >
                       {options.map((option) => {
                         return (
-                          <option name={option} value={option}>
+                          <option
+                            name={option}
+                            value={option}
+                            style={{ color: 'black' }}
+                          >
                             {option}
                           </option>
                         )

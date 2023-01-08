@@ -1,7 +1,7 @@
 .bpd {
   position: fixed;
   top: 5px;
-  left: 208px;
+  left: 258px;
   z-index: 1;
   padding: 10px;
   border: solid green 2px;
@@ -13,9 +13,9 @@
   cursor: pointer;
 }
 .ebtn {
-  padding: 10px;
+  padding: 10px 15px;
   font-family: monospace;
-  border-radius: 10px;
+  border-radius: 20px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -39,12 +39,9 @@
   width: 350px;
   height: 150px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0);
-  color: black;
 }
 .formlabel {
   position: absolute;
-  background-color: white;
   padding: 5px;
   padding-top: 0px;
   top: -10px;
@@ -61,11 +58,8 @@
 .forminfo {
   margin: 30px auto;
   padding-bottom: 35px;
-  box-shadow: 0px 0px 8px black;
-  background-color: white;
   width: 95%;
   border-radius: 60px 60px 0px 0px;
-  color: black;
   padding-top: 50px;
   text-align: center;
 }

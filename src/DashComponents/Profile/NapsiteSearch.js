@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 
-import remove from './assets/cancel.png'
-import napsimg from './assets/profile.png'
+import remove from '../assets/cancel.png'
+import napsimg from '../assets/profile.png'
 
 const NapsiteSearch = ({
   server,

@@ -1,14 +1,37 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect, useContext } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+
+import ContextProvider from '../../../../ContextProvider'
 import ConfirmationModal from '../../../ConfirmationModal'
 
-const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
+const ExecDetails = ({
+  reference,
+  exco,
+  viewForm,
+  user,
+  currentSession,
+  server,
+}) => {
   const [showDetails, setShowDetails] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [toggleStatus, setToggleStatus] = useState('<< >>')
   const [buttonStatus, setButtonStatus] = useState('Apply >>')
   const [message, setMessage] = useState('')
+  const { darkMode } = useContext(ContextProvider)
 
+  useEffect(() => {
+    const scrollData = window.sessionStorage.getItem('scrl-dt')
+    if (
+      scrollData !== null &&
+      exco.title.toLowerCase() === scrollData.toLowerCase()
+    ) {
+      handleToggle()
+      setTimeout(() => {
+        reference.current.scrollIntoView()
+        window.sessionStorage.removeItem('scrl-dt')
+      }, 300)
+    }
+  }, [reference])
   const handleToggle = () => {
     if (showDetails) {
       setShowDetails(false)
@@ -123,13 +146,17 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
         ) : undefined}
       </AnimatePresence>
       <div
+        ref={reference}
         style={{
           fontFamily: 'monospace',
           fontSize: '1rem',
-          backgroundColor: 'rgba(235,235,235)',
-          border: 'solid rgba(200,200,200,1) 1px',
-          boxShadow:
-            '-7px -7px 9px rgba(0,0,0,0.05),7px 7px 9px rgba(0,0,0,0.05)',
+          backgroundColor: darkMode ? 'rgba(0,0,0,1)' : 'rgba(235,235,235)',
+          border: darkMode
+            ? 'solid black 1px'
+            : 'solid rgba(200,200,200,1) 1px',
+          boxShadow: darkMode
+            ? '-7px -7px 10px rgba(7,10,10,0.5),7px 7px 10px rgba(7,10,10,0.5)'
+            : '-7px -7px 10px rgba(240,240,255,0.5),7px 7px 10px rgba(240,240,255,0.5)',
           borderRadius: '5px',
           paddingBottom: '15px',
           margin: '7px',
@@ -159,7 +186,7 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
                 }}
                 style={{
                   textAlign: 'left',
-                  backgroundColor: 'white',
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.1)' : 'white',
                   marginTop: '10px',
                   marginBottom: '10px',
                   padding: '10px',
@@ -181,7 +208,7 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
             <button
               style={{
                 padding: '8px',
-                backgroundColor: 'white',
+                backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'white',
                 borderRadius: '10px',
                 color: 'red',
                 cursor: 'pointer',
@@ -198,7 +225,7 @@ const ExecDetails = ({ exco, viewForm, user, currentSession, server }) => {
           onClick={handleToggle}
           style={{
             cursor: 'pointer',
-            backgroundColor: 'white',
+            backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
             padding: '5px',
           }}
         >

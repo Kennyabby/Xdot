@@ -165,7 +165,7 @@ const UpdateCourse = ({
           top: '0px',
           left: '0px',
           zIndex: '3',
-          backgroundColor: 'rgba(0,0,25,1)',
+          backgroundColor: 'rgba(0,0,0,0.95)',
           width: '100%',
           height: '100%',
           overflowY: 'auto',

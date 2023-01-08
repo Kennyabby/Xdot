@@ -4,12 +4,10 @@ import { motion } from 'framer-motion'
 import logo from './user.png'
 
 const containerVariants = {
-  hidden: {
-    x: '100vw',
+  hidden: {    
     opacity: 0,
   },
-  visible: {
-    x: 0,
+  visible: {    
     opacity: 1,
     transition: {
       duration: 0.7,
@@ -353,7 +351,7 @@ const SignupInfo = ({
       variants={containerVariants}
       initial='hidden'
       animate='visible'
-      exit={{ x: -1000 }}
+      exit={{ opacity: 0 }}
       ref={signupCoverRef}
     >
       <motion.div

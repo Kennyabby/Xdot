@@ -18,15 +18,15 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
   const othersRef = useRef(null)
   const [updattingQuestion, setUpdattingQuestion] = useState(null)
   useEffect(() => {
-    allRef.current.style.borderBottom = 'solid lightgreen 0px'
-    objRef.current.style.borderBottom = 'solid lightgreen 0px'
-    othersRef.current.style.borderBottom = 'solid lightgreen 0px'
+    allRef.current.style.borderBottom = 'solid red 0px'
+    objRef.current.style.borderBottom = 'solid red 0px'
+    othersRef.current.style.borderBottom = 'solid red 0px'
     if (sectionValue === 'all') {
-      allRef.current.style.borderBottom = 'solid lightgreen 2px'
+      allRef.current.style.borderBottom = 'solid red 2px'
     } else if (sectionValue === 'obj') {
-      objRef.current.style.borderBottom = 'solid lightgreen 2px'
+      objRef.current.style.borderBottom = 'solid red 2px'
     } else if (sectionValue === 'others') {
-      othersRef.current.style.borderBottom = 'solid lightgreen 2px'
+      othersRef.current.style.borderBottom = 'solid red 2px'
     }
   }, [sectionValue])
   const filteredQuizQuestions = () => {
@@ -140,7 +140,11 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
             fontFamily: 'monospace',
             fontSize: '1.2rem',
             fontWeight: 'bold',
-            margin: '50px',
+            width: 'fit-content',
+            padding: '10px',
+            borderRadius: '10px',
+            margin: '50px auto',
+            backgroundColor: 'whitesmoke',
           }}
         >
           <label>{'Quiz: ' + quiz.title.toUpperCase()}</label>
@@ -149,7 +153,7 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
           onClick={handleSectionValue}
           style={{
             fontFamily: 'monospace',
-            fontSize: '.78rem',
+            fontSize: '.85rem',
             marginBottom: '40px',
             textAlign: 'center',
             justifyContent: 'center',
@@ -269,8 +273,9 @@ const CreateQuestion = ({ user, quiz, viewQuiz, server }) => {
                 fontSize: '1rem',
                 fontWeight: 'bold',
                 padding: '10px',
+                backgroundColor: 'whitesmoke',
                 borderRadius: '10px',
-                boxShadow: '0px 0px 7px black',
+                // boxShadow: '0px 0px 2px black',
                 margin: '50px',
               }}
             >

@@ -1,18 +1,32 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
+
+import ContextProvider from '../ContextProvider'
 
 const Acts = ({ title, content, clickVar, id }) => {
+  const { darkMode } = useContext(ContextProvider)
   return (
-    <div key={id} className='acts'>
+    <div
+      key={id}
+      className='acts'
+      style={{
+        backgroundColor: darkMode ? 'black' : 'white',
+        color: darkMode ? 'white' : 'black',
+        boxShadow: darkMode
+          ? '-7px -7px 15px rgba(0, 0, 0, 0.1), 7px 7px 15px rgba(0, 0, 0, 0.1)'
+          : '-7px -7px 15px rgba(255, 255, 255, 0.1), 7px 7px 15px rgba(255, 255, 255, 0.1)',
+      }}
+    >
       <div>
-        <label
+        <h2
           style={{
             margin: '10px',
             fontWeight: 'bold',
+            fontFamily: 'monospace',
             borderBottom: 'solid rgba(49,49,50,1) 2px',
           }}
         >
           {title}
-        </label>
+        </h2>
       </div>
       <div
         style={{
@@ -29,7 +43,7 @@ const Acts = ({ title, content, clickVar, id }) => {
       <div
         style={{
           position: 'absolute',
-          bottom: '10px',
+          bottom: '15px',
           left: '0px',
           width: '100%',
           textAlign: 'center',
@@ -37,12 +51,11 @@ const Acts = ({ title, content, clickVar, id }) => {
       >
         <button
           style={{
-            padding: '10px',
-            paddingTop: '5px',
+            padding: '13px 18px',
             border: 'solid blue 2px',
             fontFamily: 'monospace',
-            paddingBottom: '5px',
-            borderRadius: '10px',
+            borderRadius: '25px',
+            fontSize: '.9rem',
             backgroundColor: 'blue',
             color: 'white',
             outline: 'none',
@@ -57,6 +70,7 @@ const Acts = ({ title, content, clickVar, id }) => {
   )
 }
 const Events = ({ setRef }) => {
+  const { darkMode } = useContext(ContextProvider)
   const event = useRef(null)
   useEffect(() => {
     setRef(event)
@@ -64,47 +78,59 @@ const Events = ({ setRef }) => {
   const eventsList = [
     {
       title: 'CGPA CALCULATOR',
-      content: 'Calculate and Store Your CGPA Here.',
+      content: 'Monitor, Calculate and Store Your CGPA Here.',
       clickVar: 'Check It Out!',
+      path: '',
     },
     {
       title: 'QUIZ APPLICATION',
       content: 'Create, Take, and Post Quiz Here.',
       clickVar: 'Check It Out!',
+      path: '',
     },
     {
       title: 'TO DO LIST',
       content: 'Store, Order, and Strategize Your Tasks, Goals, and Aim Here.',
       clickVar: 'List That Aim Here!',
+      path: '',
     },
-    {
-      title: 'PAY DUES',
-      content: 'Pay Your Departmental Dues Here!',
-      clickVar: 'Pay For It Here!',
-    },
+    // {
+    //   title: 'PAY DUES',
+    //   content: 'Pay Your Departmental Dues Here!',
+    //   clickVar: 'Pay For It Here!',
+    //   path: '',
+    // },
   ]
   return (
     <>
       <div
         ref={event}
         style={{
-          color: 'white',
+          color: darkMode ? 'white' : 'black',
           padding: '50px auto',
-          backgroundColor: 'rgba(31,29,29,1)',
+          backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
           display: 'block',
         }}
       >
         <div
           style={{
-            backgroundColor: 'rgba(31,29,29,1)',
-            fontSize: '1rem',
+            backgroundColor: 'rgba(0,0,0,0)',
+            fontWeight: 'bold',
+            fontSize: '1.2rem',
             fontFamily: 'Courier New',
-            padding: '10px',
+            padding: '20px',
+            paddingBottom: '20px',
           }}
         >
-          Check Out The Features Available To You
+          Check Out Offers Available To You
         </div>
-        <div className='events'>
+        <div
+          className='events'
+          style={{
+            backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
+            color: darkMode ? 'white' : 'black',
+          }}
+        >
           {eventsList.map((event, id) => {
             return (
               <div key={id}>

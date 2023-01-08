@@ -5,11 +5,9 @@ import logo from './user.png'
 
 const containerVariants = {
   hidden: {
-    x: '100vw',
     opacity: 0,
   },
   visible: {
-    x: 0,
     opacity: 1,
     transition: {
       duration: 0.7,
@@ -326,7 +324,7 @@ const ContactInfo = ({ getCoverList, getCoverPos, setContactConfirmed }) => {
       variants={containerVariants}
       initial='hidden'
       animate='visible'
-      exit={{ x: -1000 }}
+      exit={{ opacity: 0 }}
       ref={contactCoverRef}
     >
       <motion.div

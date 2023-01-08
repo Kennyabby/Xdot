@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { useParams, useHistory } from 'react-router-dom'
@@ -8,12 +8,16 @@ import profimg from '../Events/assets/profile.png'
 import close from '../Events/assets/close.png'
 import cls from '../assets/close.png'
 import back from '../Events/assets/left.png'
-import opt from './assets/opt.png'
+import opt from './assets/b3dots.png'
+import wopt from './assets/w3dots.png'
 import comment from '../Events/assets/comment.png'
+import wcomment from './assets/wcomment.png'
 import blcomment from '../Events/assets/blcomment.png'
+import lbcomment from './assets/lbcomment.png'
 import sbllike from '../Events/assets/sbllike.png'
 import share from '../Events/assets/share.png'
 import like from '../Events/assets/like.png'
+import wreact from './assets/wnlike.png'
 import love from '../Events/assets/love.png'
 import care from '../Events/assets/care.png'
 import haha from '../Events/assets/haha.png'
@@ -24,6 +28,8 @@ import send from '../Events/assets/send.png'
 import react from '../Events/assets/react.png'
 import PostComment from './PostComment'
 import ReactionList from './ReactionList'
+
+import ContextProvider from '../../ContextProvider'
 
 const Post = ({
   server,
@@ -43,7 +49,7 @@ const Post = ({
   const commentInputRef = useRef(null)
   const reactActionRef = useRef(null)
   const reactionsRef = useRef(null)
-  const [postUser, setPostUser] = useState({ userName: 'Napsite' })
+  const [postUser, setPostUser] = useState({ userName: 'Creator' })
   const [leftOffset, setLeftOffset] = useState('')
   const [topOffset, setTopOffset] = useState('')
   const [userImgUrl, setUserImgUrl] = useState(profimg)
@@ -63,6 +69,7 @@ const Post = ({
     src: react,
   })
   const [postComment, setPostComment] = useState('')
+  const { darkMode } = useContext(ContextProvider)
   const emojis = [
     { name: 'like', src: like },
     { name: 'love', src: love },
@@ -125,7 +132,7 @@ const Post = ({
       const url = response1.url
       setUserImgUrl(url)
       setImgLoaded(true)
-      if (updt.postPicture.length) {
+      if (updt.postPicture !== undefined && updt.postPicture.length) {
         if (!postPictures.length) {
           setPostPictures([])
           updt.postPicture.forEach(async (picture) => {
@@ -409,11 +416,12 @@ const Post = ({
           margin: 'auto',
           marginBottom: '10px',
           padding: '0px',
-          backgroundColor: 'rgba(255,255,255,1)',
-          borderBottom:
-            status === undefined
-              ? 'solid rgba(200,200,200,1) 5px'
-              : 'solid rgba(200,200,200,1) 0px',
+          backgroundColor: darkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)',
+          borderBottom: darkMode
+            ? 'solid black 0px'
+            : status === undefined
+            ? 'solid rgba(200,200,200,1) 0px'
+            : 'solid rgba(200,200,200,1) 0px',
         }}
       >
         <AnimatePresence>
@@ -468,7 +476,15 @@ const Post = ({
         </AnimatePresence>
         {status !== undefined ? (
           <div>
-            <div className='toppostlabel'>
+            <div
+              className='toppostlabel'
+              style={{
+                backgroundColor: darkMode
+                  ? 'rgba(255,255,255,0.3)'
+                  : 'rgba(255,255,255,0.9)',
+                color: darkMode ? 'white' : 'black',
+              }}
+            >
               <img
                 onClick={() => {
                   if (postShow === null) {
@@ -520,7 +536,7 @@ const Post = ({
               }}
               onClick={() => {}}
             >
-              <img src={opt} height='15px' />
+              <img src={darkMode ? wopt : opt} height='15px' />
             </div>
             <div
               style={{
@@ -532,7 +548,7 @@ const Post = ({
               <div
                 style={{
                   margin: '10px',
-                  marginLeft: '5px',
+                  marginLeft: '8px',
                   textAlign: 'center',
                   justifyContent: 'center',
                   display: 'block',
@@ -556,7 +572,9 @@ const Post = ({
                       borderRadius: '50%',
                       border: 'solid rgba(220,220,220,1) 1px',
                       backgroundSize: 'cover',
-                      backgroundColor: 'white',
+                      backgroundColor: darkMode
+                        ? 'rgba(255,255,255,0.2)'
+                        : 'white',
                       margin: '5px auto',
                     }}
                     PlaceholderSrc={profimg}
@@ -567,7 +585,8 @@ const Post = ({
               </div>
               <div
                 style={{
-                  marginTop: '25px',
+                  marginTop: '20px',
+                  marginLeft: '5px',
                   fontStyle: 'italic',
                   fontSize: '.7rem',
                   textAlign: 'left',
@@ -591,9 +610,16 @@ const Post = ({
             </div>
             <div
               style={{
-                backgroundColor: 'rgba(245,245,255,1)',
+                backgroundColor: darkMode
+                  ? 'rgba(10,10,10,0)'
+                  : 'rgba(247,247,255,0)',
                 padding: '0px',
+                width: '92%',
+                marginLeft: 'auto',
                 paddingBottom: '15px',
+                borderLeft: darkMode
+                  ? 'solid rgba(250,250,250,1) 1px'
+                  : 'solid rgba(10,10,10,1) 1px',
               }}
             >
               {postPictures.length ? (
@@ -663,14 +689,20 @@ const Post = ({
                     )
                   })}
                 </div>
-              ) : undefined}
+              ) : (
+                <div style={{ paddingBottom: '15px' }}></div>
+              )}
               <div
                 style={{
                   textAlign: 'left',
-                  padding: '10px',
+                  padding: '15px',
                   margin: '15px',
-                  borderRadius: '10px',
-                  backgroundColor: 'white',
+                  fontFamily: 'calibri',
+                  borderRadius: '15px',
+                  backgroundColor: darkMode ? 'black' : 'white',
+                  boxShadow: darkMode
+                    ? '-4px -4px 10px rgba(10,10,18,0.1), 4px 4px 10px rgba(10,10,18,0.1)'
+                    : '-4px -4px 10px rgba(240,240,255,0.1), 4px 4px 10px rgba(240,240,255,0.1)',
                 }}
               >
                 <label>{update.postComment}</label>
@@ -687,7 +719,9 @@ const Post = ({
             <div>
               <div
                 style={{
+                  width: '90%',
                   margin: '5px',
+                  marginLeft: 'auto',
                   display: 'flex',
                 }}
               >
@@ -724,7 +758,7 @@ const Post = ({
                 ) : (
                   ''
                 )}
-                <label style={{ fontSize: '0.7rem', marginLeft: '10px' }}>
+                <label style={{ fontSize: '0.8rem', marginLeft: '10px' }}>
                   {update['react'] !== undefined
                     ? (isReacted ? 'You ' : '') +
                       (update['react'].length
@@ -755,6 +789,8 @@ const Post = ({
                   borderBottom:
                     status === undefined ? '' : 'solid rgba(210,210,210,1) 2px',
                   marginTop: '15px',
+                  width: '92%',
+                  marginLeft: 'auto',
                 }}
               >
                 <div
@@ -767,9 +803,10 @@ const Post = ({
                     padding: '5px',
                     paddingLeft: '20px',
                     paddingRight: '20px',
-                    // backgroundColor: 'rgba(235,235,235,1)',
-                    backgroundColor: 'whitesmoke',
-                    color: 'black',
+                    backgroundColor: darkMode
+                      ? 'rgba(255,255,255,0.5)'
+                      : 'rgba(235,235,235,1)',
+                    color: darkMode ? 'white' : 'black',
                     borderRadius: '15px',
                     cursor: 'pointer',
                   }}
@@ -839,7 +876,9 @@ const Post = ({
                             display: 'flex',
                             padding: '10px',
                             borderRadius: '10px',
-                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            backgroundColor: darkMode
+                              ? 'rgba(255,255,255,0.2)'
+                              : 'rgba(0,0,0,0.7)',
                           }}
                         >
                           <div>
@@ -890,6 +929,8 @@ const Post = ({
                         ? postReaction.name === 'like'
                           ? sbllike
                           : postReaction.src
+                        : darkMode
+                        ? wreact
                         : react
                     }
                     alt='reaction'
@@ -922,8 +963,10 @@ const Post = ({
                     padding: '5px',
                     paddingLeft: '20px',
                     paddingRight: '20px',
-                    // backgroundColor: 'rgba(235,235,235,1)',
-                    backgroundColor: 'whitesmoke',
+                    backgroundColor: darkMode
+                      ? 'rgba(255,255,255,0.5)'
+                      : 'rgba(235,235,235,1)',
+                    color: darkMode ? 'white' : 'black',
                     borderRadius: '15px',
                     cursor: 'pointer',
                   }}
@@ -931,7 +974,15 @@ const Post = ({
                 >
                   <div style={{ display: 'flex' }}>
                     <img
-                      src={isCommented ? blcomment : comment}
+                      src={
+                        isCommented
+                          ? darkMode
+                            ? lbcomment
+                            : blcomment
+                          : darkMode
+                          ? wcomment
+                          : comment
+                      }
                       alt='comment'
                       name='comment'
                       style={{
@@ -961,8 +1012,10 @@ const Post = ({
                     display: 'flex',
                     width: 'fit-content',
                     padding: '5px 20px',
-                    // backgroundColor: 'rgba(235,235,235,1)',
-                    backgroundColor: 'whitesmoke',
+                    backgroundColor: darkMode
+                      ? 'rgba(255,255,255,0.3)'
+                      : 'rgba(235,235,235,1)',
+                    color: darkMode ? 'white' : 'black',
                     borderRadius: '15px',
                     cursor: 'pointer',
                   }}
@@ -995,9 +1048,12 @@ const Post = ({
               <div
                 name='commentView'
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: darkMode
+                    ? 'rgba(10,10,18,1)'
+                    : 'rgba(245,245,255,1)',
                   paddingTop: '30px',
                   paddingBottom: '100px',
+                  color: darkMode ? 'white' : 'black',
                 }}
               >
                 {postShow === null ? (
@@ -1071,7 +1127,16 @@ const Post = ({
                 }}
                 className='cmCover'
               >
-                <div className='commentinput'>
+                <div
+                  className='commentinput'
+                  style={{
+                    backgroundColor: darkMode
+                      ? 'rgba(50,50,50,1)'
+                      : 'rgba(245, 245, 245, 1)',
+                    border: 'solid rgba(180, 180, 180, 1) 3px',
+                    color: darkMode ? 'white' : 'black',
+                  }}
+                >
                   <div
                     contentEditable='true'
                     placeholder='Comment...'
@@ -1088,10 +1153,11 @@ const Post = ({
                       overflowY: 'auto',
                       textAlign: 'left',
                       wordSpacing: '3px',
+                      fontFamily: 'calibri',
                       backgroundColor: 'rgba(0,0,0,0)',
                       border: 'none',
                       outline: 'none',
-                      color: 'black',
+                      color: darkMode ? 'white' : 'black',
                     }}
                   ></div>
                   {postComment ? (

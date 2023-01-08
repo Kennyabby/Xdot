@@ -14,8 +14,8 @@ const QuizView = ({ quiz, editQuiz, removeQuiz, viewQuestions, shareQuiz }) => {
       <div style={{ marginBottom: '20px' }}>
         <div
           style={{
-            // backgroundColor: 'rgba(240,240,240,0.8)',
-            boxShadow: '0px 0px 8px black',
+            backgroundColor: 'whitesmoke',
+            boxShadow: '0px 0px 4px black',
             borderRadius: '10px',
             margin: '10px',
             padding: '10px',

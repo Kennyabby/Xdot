@@ -1,26 +1,32 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useContext } from 'react'
 import { Link, useParams } from 'react-router-dom'
+
+import ContextProvider from '../../ContextProvider'
 
 import right from './assets/right.png'
 import home from './assets/home.png'
+import whome from './assets/whome.png'
 import notifications from './assets/notifications.png'
 import blhome from './assets/blhome.png'
 import blbell from './assets/blbell.png'
 
 const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
   const { id } = useParams()
+  const { darkMode } = useContext(ContextProvider)
   useEffect(() => {
     showHomeToggle(true)
     if (homerf !== undefined && chatrf !== undefined) {
       if (homerf.current !== null && chatrf.current !== null) {
-        homerf.current.childNodes[0].childNodes[0].src = home
+        homerf.current.childNodes[0].childNodes[0].src = darkMode ? whome : home
         homerf.current.childNodes[0].childNodes[1].style.color =
-          id === 'settings' ? 'black' : 'blue'
+          id === 'settings' ? (darkMode ? 'white' : 'black') : 'blue'
       }
     }
     if (notificationsrf.current !== null) {
       notificationsrf.current.childNodes[0].childNodes[0].src = notifications
-      notificationsrf.current.childNodes[0].childNodes[1].style.color = 'black'
+      notificationsrf.current.childNodes[0].childNodes[1].style.color = darkMode
+        ? 'white'
+        : 'black'
     }
   }, [homerf, id])
   return (
@@ -30,8 +36,8 @@ const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
           style={{
             margin: '5px',
             borderRadius: '10px',
-            backgroundColor: 'rgba(220,220,220)',
-            boxShadow: '0px 0px 8px black',
+            backgroundColor: darkMode ? 'black' : 'rgba(220,220,220)',
+            boxShadow: darkMode ? '0px 0px 8px white' : '0px 0px 8px black',
             // border: 'solid rgba(200,200,200) 2px',
             padding: '15px',
           }}
@@ -43,12 +49,16 @@ const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
             style={{
               margin: '5px',
               borderRadius: '10px',
+              backgroundColor: darkMode ? 'black' : 'white',
               border: 'solid rgba(210,210,210) 2px',
               padding: '10px',
             }}
           >
             <Link
-              style={{ textDecoration: 'none', color: 'black' }}
+              style={{
+                textDecoration: 'none',
+                color: darkMode ? 'white' : 'black',
+              }}
               to='/dashboard/settings/preferences'
             >
               <div
@@ -76,12 +86,16 @@ const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
             style={{
               margin: '5px',
               borderRadius: '10px',
+              backgroundColor: darkMode ? 'black' : 'white',
               border: 'solid rgba(210,210,210) 2px',
               padding: '10px',
             }}
           >
             <Link
-              style={{ textDecoration: 'none', color: 'black' }}
+              style={{
+                textDecoration: 'none',
+                color: darkMode ? 'white' : 'black',
+              }}
               to='/dashboard/settings/messaging'
             >
               <div
@@ -109,12 +123,16 @@ const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
             style={{
               margin: '5px',
               borderRadius: '10px',
+              backgroundColor: darkMode ? 'black' : 'white',
               border: 'solid rgba(210,210,210) 2px',
               padding: '10px',
             }}
           >
             <Link
-              style={{ textDecoration: 'none', color: 'black' }}
+              style={{
+                textDecoration: 'none',
+                color: darkMode ? 'white' : 'black',
+              }}
               to='/dashboard/settings/notifier'
             >
               <div
@@ -142,12 +160,16 @@ const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
             style={{
               margin: '5px',
               borderRadius: '10px',
+              backgroundColor: darkMode ? 'black' : 'white',
               border: 'solid rgba(210,210,210) 2px',
               padding: '10px',
             }}
           >
             <Link
-              style={{ textDecoration: 'none', color: 'black' }}
+              style={{
+                textDecoration: 'none',
+                color: darkMode ? 'white' : 'black',
+              }}
               to='/dashboard/settings/admin'
             >
               <div
@@ -175,12 +197,16 @@ const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
             style={{
               margin: '5px',
               borderRadius: '10px',
+              backgroundColor: darkMode ? 'black' : 'white',
               border: 'solid rgba(210,210,210) 2px',
               padding: '10px',
             }}
           >
             <Link
-              style={{ textDecoration: 'none', color: 'black' }}
+              style={{
+                textDecoration: 'none',
+                color: darkMode ? 'white' : 'black',
+              }}
               to='/dashboard/settings/privacy'
             >
               <div

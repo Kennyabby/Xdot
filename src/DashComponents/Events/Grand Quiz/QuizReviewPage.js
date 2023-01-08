@@ -36,14 +36,7 @@ const QuizReviewPage = ({ user, quiz, answers, showQuizUpdates }) => {
           onClick={() => {
             showQuizUpdates()
           }}
-          style={{
-            position: 'fixed',
-            top: '10px',
-            left: '10px',
-            zIndex: '1',
-            borderRadius: '50%',
-            cursor: 'pointer',
-          }}
+          className='qback'
           src={back}
           alt='close quiz page'
           height='28px'
