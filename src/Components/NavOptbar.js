@@ -85,6 +85,9 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
         response.user.firstName === undefined ||
         response.user.firstName === null
       ) {
+        window.localStorage.removeItem('sess-recg-id')
+        window.localStorage.removeItem('idt-curr-usr')
+        window.localStorage.removeItem('user-id')
       } else {
         const user = response.user
         setUser(user)
