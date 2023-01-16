@@ -79,19 +79,27 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
       }
       const resp = await fetch(server + '/' + req, opts)
       const response = await resp.json()
-      const user = response.user
-      setUser(user)
-      const opts1 = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
+      if (
+        response === null ||
+        response === undefined ||
+        response.user.firstName === undefined ||
+        response.user.firstName === null
+      ) {
+      } else {
+        const user = response.user
+        setUser(user)
+        const opts1 = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
+        }
+        const resp1 = await fetch(server + '/getImgUrl', opts1)
+        const response1 = await resp1.json()
+        const url = response1.url
+        setUserImgUrl(url)
       }
-      const resp1 = await fetch(server + '/getImgUrl', opts1)
-      const response1 = await resp1.json()
-      const url = response1.url
-      // setUserImgUrl(url)
     } catch (TypeError) {}
   }
   useEffect(() => {
