@@ -812,8 +812,8 @@ const Post = ({
                   whiteSpace: 'pre-wrap',
                   backgroundColor: darkMode ? '' : '',
                   boxShadow: darkMode
-                    ? '-4px -4px 10px rgba(10,10,10,0.1), 4px 4px 10px rgba(10,10,10,0.1)'
-                    : '-4px -4px 10px rgba(220,220,220,0.1), 4px 4px 10px rgba(220,220,220,0.1)',
+                    ? '-4px -4px 10px rgba(2,2,2,0.1), 4px 4px 10px rgba(2,2,2,0.1)'
+                    : '-4px -4px 10px rgba(100,100,100,0.1), 4px 4px 10px rgba(100,100,100,0.1)',
                 }}
               >
                 {update.postComment !== undefined &&
