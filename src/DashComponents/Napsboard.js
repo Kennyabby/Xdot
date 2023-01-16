@@ -79,20 +79,31 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       }
       const resp = await fetch(server + '/' + req, opts)
       const response = await resp.json()
-      const user = response.user
-      setUser(user)
-      const opts1 = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
+      if (
+        response === null ||
+        response === undefined ||
+        response.user.firstName === undefined ||
+        response.user.firstName === null
+      ) {
+        window.localStorage.removeItem('sess-recg-id')
+        window.localStorage.removeItem('idt-curr-usr')
+        window.localStorage.removeItem('user-id')
+      } else {
+        const user = response.user
+        setUser(user)
+        const opts1 = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
+        }
+        const resp1 = await fetch(server + '/getImgUrl', opts1)
+        const response1 = await resp1.json()
+        const url = response1.url
+        setUserImgUrl(url)
+        setIsNewSession(true)
       }
-      const resp1 = await fetch(server + '/getImgUrl', opts1)
-      const response1 = await resp1.json()
-      const url = response1.url
-      setUserImgUrl(url)
-      setIsNewSession(true)
     } catch (TypeError) {}
   }
   useEffect(() => {
@@ -595,9 +606,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   }, [eVotingLabelRefs])
 
   useEffect(async () => {
-    window.localStorage.removeItem('user-id')
-    window.localStorage.removeItem('sess-recg-id')
-    window.localStorage.removeItem('idt-curr-usr')
     var uid = window.localStorage.getItem('user-id')
     var sess = 0
     if (userId !== null) {
