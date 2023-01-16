@@ -12,7 +12,7 @@ import Napsboard from './DashComponents/Napsboard'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ContextProvider from './ContextProvider'
 const App = () => {
-  const SERVER = 'https://napsuiserver.herokuapp.com'
+  const SERVER = 'https://encarto-server.vercel.app'
   // const SERVER = 'http://localhost:3001'
   const [bars, setBars] = useState([])
   const [darkMode, setDarkMode] = useState(false)

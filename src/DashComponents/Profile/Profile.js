@@ -97,7 +97,8 @@ const Profile = ({
   const [editContactInfo, setEditContactInfo] = useState(false)
   const [contactProfileUpdateStatus, setContactProfileUpdateStatus] =
     useState('Save')
-  const [aboutField, setAboutField] = useState('')
+  const [aboutField, setAboutField] = useState(user.aboutField || '')
+  const [enterPressed, setEnterPressed] = useState(false)
   const [selectedDues, setSelectedDues] = useState([])
   const [dueFields, setDueFields] = useState({
     basic: {
@@ -735,6 +736,55 @@ const Profile = ({
     })
   }
 
+  const setCaretPosition = (el, pos) => {
+    const range = document.createRange()
+    range.selectNodeContents(el.current)
+    range.setStart(range.endContainer, 0)
+    const childNodes = el.current.childNodes
+    let found = false
+    let offset = 0
+    for (const childNode of childNodes) {
+      if (offset + childNode.textContent.length >= pos) {
+        range.setStart(childNode, pos - offset)
+        range.setEnd(childNode, pos - offset)
+        found = true
+        break
+      }
+      offset += childNode.textContent.length
+    }
+    if (found) {
+      const selection = window.getSelection()
+      selection.removeAllRanges()
+      selection.addRange(range)
+    }
+  }
+  const getCaretPosition = (el) => {
+    let caretOffset = 0
+    const doc = el.current.ownerDocument || el.current.document
+    const win = doc.defaultView || doc.parentWindow
+    const sel = win.getSelection()
+    if (sel.rangeCount > 0) {
+      const range = sel.getRangeAt(0)
+      const preCaretRange = range.cloneRange()
+      preCaretRange.selectNodeContents(el.current)
+      preCaretRange.setEnd(range.endContainer, range.endOffset)
+      caretOffset = preCaretRange.toString().length
+    }
+
+    return caretOffset
+  }
+  useEffect(() => {
+    if (aboutEditRef.current !== null) {
+      const caretPos = getCaretPosition(aboutEditRef)
+      aboutEditRef.current.textContent = aboutField
+      if (enterPressed) {
+        setCaretPosition(aboutEditRef, caretPos + 1)
+        setEnterPressed(false)
+      } else {
+        setCaretPosition(aboutEditRef, caretPos)
+      }
+    }
+  }, [aboutField])
   const mainLabelStyle = {
     color: darkMode ? 'white' : 'black',
     display: 'block',
@@ -1192,26 +1242,14 @@ const Profile = ({
               </label>
             </div>
             <div style={{ display: 'flex', margin: '5px auto' }}>
-              <div
-                style={{
-                  fontFamily: 'monospace',
-                  fontSize: '1rem',
-                  fontStyle: 'italic',
-                  marginRight: '10px',
-                }}
-              >
-                <label>{user.userName}</label>
-              </div>
-              <label>{' . '}</label>
               <label
                 style={{
-                  fontWeight: 'bold',
+                  fontStyle: 'italic',
+                  fontSize: '1rem',
                   fontFamily: 'monospace',
-                  fontSize: '.9rem',
-                  marginLeft: '10px',
                 }}
               >
-                {user.hallOfResidence + ' Hall'}
+                {user.userName}
               </label>
               {user.access === 'Admin' ? (
                 <div style={{ display: 'flex', marginLeft: '10px' }}>
@@ -1254,7 +1292,26 @@ const Profile = ({
                 borderRadius: '10px',
               }}
             >
-              {user.level + ' level student of the department of Physics'}
+              <div
+                style={{
+                  fontFamily: 'monospace',
+                  fontSize: '1rem',
+                  fontStyle: 'italic',
+                  margin: '10px auto',
+                }}
+              >
+                <label
+                  style={{
+                    fontWeight: 'bold',
+                    fontFamily: 'monospace',
+                    fontSize: '.9rem',
+                  }}
+                >
+                  {user.hallOfResidence + ' Hall'}
+                </label>
+              </div>
+              {user.level +
+                ' level student of the department of Physics, University of Ibadan.'}
             </div>
           </div>
         </div>
@@ -1352,6 +1409,7 @@ const Profile = ({
                           aboutEditRef.current.focus()
                           aboutEditRef.current.textContent = user.about
                           setAboutField(user.about)
+                          setCaretPosition(aboutEditRef, user.about.length)
                         }, 300)
                       }
                     }}
@@ -1374,6 +1432,7 @@ const Profile = ({
                   fontSize: '.8rem',
                   border: 'solid rgba(210, 210, 210, 1) 2px',
                   borderRadius: '10px',
+                  whiteSpace: 'pre-wrap',
                 }}
               >
                 {!addSummary &&
@@ -1384,7 +1443,7 @@ const Profile = ({
                       {user.about.split(' ').length <= '60' ? (
                         user.about
                       ) : (
-                        <label>
+                        <label style={{ whiteSpace: 'pre-wrap' }}>
                           {user.about
                             .split(' ')
                             .slice(0, allowedLength)
@@ -1445,10 +1504,32 @@ const Profile = ({
                         outline: 'none',
                         overflowY: 'auto',
                         fontSize: '.8rem',
+                        whiteSpace: 'pre-space',
                       }}
+                      type='text'
                       ref={aboutEditRef}
                       contentEditable='true'
                       placeholder='Add a summary about you'
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault()
+                          let caretPos = getCaretPosition(aboutEditRef)
+                          const value = e.currentTarget.textContent
+                          let preVal = value.slice(0, caretPos)
+                          let postVal = value.slice(caretPos)
+                          setEnterPressed(true)
+                          if (postVal.length === 0) {
+                            const newValue = value + '\n\n'
+                            setAboutField(newValue)
+                          } else {
+                            let newPreVal = preVal + '\n'
+                            const newValue = newPreVal + postVal
+                            setAboutField(newValue)
+                          }
+                        } else {
+                          setEnterPressed(false)
+                        }
+                      }}
                       onInput={(e) => {
                         const value = e.currentTarget.textContent
                         setAboutField(value)
@@ -1483,11 +1564,11 @@ const Profile = ({
                             setAboutSaveStatus('Saving...')
                             const updated = await updateOneUser({
                               findBy: { matricNo: user.matricNo },
-                              update: { about: aboutField },
+                              update: { about: aboutField.trim() },
                             })
                             if (updated) {
                               setAboutSaveStatus('Saved')
-                              user.about = aboutField
+                              user.about = aboutField.trim()
                               setAboutField('')
                               setAddSummary(false)
                               setAboutSaveStatus('Done')

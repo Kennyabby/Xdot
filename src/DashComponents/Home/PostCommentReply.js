@@ -197,6 +197,7 @@ const PostCommentReply = ({
             width: '70%',
             margin: '20px',
             marginTop: '10px',
+            whiteSpace: 'pre-wrap',
             padding: '10px',
             borderRadius: '20px',
             borderTopLeftRadius: '0px',
@@ -212,12 +213,18 @@ const PostCommentReply = ({
             {userName.slice(0, 1).toUpperCase() + userName.slice(1)}
           </label>
           <p>
-            <label style={{ fontSize: '.8rem' }}>
+            <label style={{ fontSize: '.8rem', whiteSpace: 'pre-wrap' }}>
               {statement.split(' ').map((cmt) => {
-                if (cmt.includes('@')) {
+                if (cmt.slice(0, 1) === '@' && cmt.length > 1) {
                   return (
-                    <label style={{ color: 'blue', fontWeight: 'bold' }}>
-                      {cmt + ' '}
+                    <label
+                      style={{
+                        color: darkMode ? 'darkorange' : 'orange',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {cmt.slice(1) + ' '}
                     </label>
                   )
                 }
@@ -361,7 +368,7 @@ const PostCommentReply = ({
         <label
           onClick={() => {
             if (rep.matricNo !== user.matricNo) {
-              reply({ value: rep.userName + ' ', matricNo: rep.matricNo })
+              reply({ value: '@' + rep.userName + ' ', matricNo: rep.matricNo })
             }
           }}
           style={{

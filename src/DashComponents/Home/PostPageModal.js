@@ -24,7 +24,9 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
     postComment: '',
     postTo: 'Public',
   })
+  const [enterPressed, setEnterPressed] = useState(false)
   const imgRef = useRef(null)
+  const postFieldRef = useRef(null)
   const [convertedFiles, setConvertedFiles] = useState([])
   useEffect(() => {}, [])
   const handleInputChange = (e) => {
@@ -119,6 +121,55 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
       }
     })
   }
+  const setCaretPosition = (el, pos) => {
+    const range = document.createRange()
+    range.selectNodeContents(el.current)
+    range.setStart(range.endContainer, 0)
+    const childNodes = el.current.childNodes
+    let found = false
+    let offset = 0
+    for (const childNode of childNodes) {
+      if (offset + childNode.textContent.length >= pos) {
+        range.setStart(childNode, pos - offset)
+        range.setEnd(childNode, pos - offset)
+        found = true
+        break
+      }
+      offset += childNode.textContent.length
+    }
+    if (found) {
+      const selection = window.getSelection()
+      selection.removeAllRanges()
+      selection.addRange(range)
+    }
+  }
+  const getCaretPosition = (el) => {
+    let caretOffset = 0
+    const doc = el.current.ownerDocument || el.current.document
+    const win = doc.defaultView || doc.parentWindow
+    const sel = win.getSelection()
+    if (sel.rangeCount > 0) {
+      const range = sel.getRangeAt(0)
+      const preCaretRange = range.cloneRange()
+      preCaretRange.selectNodeContents(el.current)
+      preCaretRange.setEnd(range.endContainer, range.endOffset)
+      caretOffset = preCaretRange.toString().length
+    }
+
+    return caretOffset
+  }
+  useEffect(() => {
+    if (postFieldRef.current !== null) {
+      const caretPos = getCaretPosition(postFieldRef)
+      postFieldRef.current.textContent = fields.postComment
+      if (enterPressed) {
+        setCaretPosition(postFieldRef, caretPos + 1)
+        setEnterPressed(false)
+      } else {
+        setCaretPosition(postFieldRef, caretPos)
+      }
+    }
+  }, [fields.postComment])
   return (
     <>
       <motion.div
@@ -136,7 +187,9 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
         }}
         className='postmodalpage'
         style={{
-          backgroundColor: darkMode ? 'rgba(8,8,8,1)' : 'whitesmoke',
+          backgroundColor: darkMode
+            ? 'rgba(10,10,18,1)'
+            : 'rgba(247,247,255,1)',
         }}
       >
         <img
@@ -236,25 +289,59 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                 />
               </div>
             </div>
-            <div style={{ margin: 'auto' }}>
-              <textarea
-                name='postComment'
-                value={fields.postComment}
-                placeholder='Say Something...'
-                style={{
-                  backgroundColor: darkMode ? 'rgba(255,255,255,0.2)' : 'white',
-                  padding: '10px',
-                  color: darkMode ? 'white' : 'black',
-                  fontSize: '1rem',
-                  fontFamily: 'calibri',
-                  borderRadius: '10px',
-                  height: '200px',
-                  margin: 'auto',
-                  outline: 'none',
-                  width: '90%',
-                }}
-              />
-            </div>
+            <div
+              ref={postFieldRef}
+              contentEditable='true'
+              placeholder='Say Something...'
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  let caretPos = getCaretPosition(postFieldRef)
+                  const value = e.currentTarget.textContent
+                  let preVal = value.slice(0, caretPos)
+                  let postVal = value.slice(caretPos)
+                  setEnterPressed(true)
+                  if (postVal.length === 0) {
+                    const newValue = value + '\n\n'
+                    setFields((fields) => {
+                      return { ...fields, postComment: newValue }
+                    })
+                  } else {
+                    let newPreVal = preVal + '\n'
+                    const newValue = newPreVal + postVal
+                    setFields((fields) => {
+                      return { ...fields, postComment: newValue }
+                    })
+                  }
+                } else {
+                  setEnterPressed(false)
+                }
+              }}
+              onInput={(e) => {
+                const value = e.currentTarget.textContent
+                setFields((fields) => {
+                  return { ...fields, postComment: value }
+                })
+              }}
+              style={{
+                margin: 'auto',
+                textAlign: 'left',
+                backgroundColor: darkMode ? 'black' : 'white',
+                padding: '10px',
+                color: darkMode ? 'white' : 'black',
+                fontSize: '1rem',
+                fontFamily: 'calibri',
+                fontWeight: 'normal',
+                whiteSpace: 'pre-wrap',
+                borderRadius: '10px',
+                maxHeight: '300px',
+                height: '200px',
+                overflowY: 'auto',
+                margin: 'auto',
+                outline: 'none',
+                width: '90%',
+              }}
+            ></div>
           </div>
           {convertedFiles.length ? (
             <div

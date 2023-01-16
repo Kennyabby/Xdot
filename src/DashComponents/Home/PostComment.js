@@ -33,6 +33,7 @@ const PostComment = ({
   const [commentReactionList, setCommentReactionList] = useState(
     elem.comment.reaction
   )
+  const [allowedLength, setAllowedLength] = useState(61)
   const { darkMode } = useContext(ContextProvider)
   const [statement, setStatement] = useState(elem.comment.statement)
   const [showReactionList, setShowReactionList] = useState(false)
@@ -206,6 +207,7 @@ const PostComment = ({
             margin: '20px',
             marginTop: '10px',
             padding: '10px',
+            whiteSpace: 'pre-wrap',
             borderRadius: '20px',
             borderTopLeftRadius: '0px',
           }}
@@ -220,17 +222,75 @@ const PostComment = ({
             {userName.slice(0, 1).toUpperCase() + userName.slice(1)}
           </label>
           <p>
-            <label style={{ fontSize: '.8rem' }}>
-              {statement.split(' ').map((cmt) => {
-                if (cmt.includes('@')) {
-                  return (
-                    <label style={{ color: 'blue', fontWeight: 'bold' }}>
-                      {cmt + ' '}
-                    </label>
-                  )
-                }
-                return <label>{cmt + ' '}</label>
-              })}
+            <label style={{ fontSize: '.8rem', whiteSpace: 'pre-wrap' }}>
+              {statement !== undefined &&
+                (statement.split(' ').length <= 60 ? (
+                  <label>
+                    {statement.split(' ').map((cmt) => {
+                      if (cmt.slice(0, 1) === '@' && cmt.length > 1) {
+                        return (
+                          <label
+                            style={{
+                              color: darkMode ? 'darkorange' : 'orange',
+                              fontWeight: 'bold',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            {cmt.slice(1) + ' '}
+                          </label>
+                        )
+                      }
+                      return <label>{cmt + ' '}</label>
+                    })}
+                  </label>
+                ) : (
+                  <label style={{ whiteSpace: 'pre-wrap' }}>
+                    {(
+                      statement.split(' ').slice(0, allowedLength).join(' ') +
+                      (allowedLength <= statement.split(' ').length
+                        ? ' ... '
+                        : '')
+                    )
+                      .split(' ')
+                      .map((cmt) => {
+                        if (cmt.slice(0, 1) === '@' && cmt.length > 1) {
+                          return (
+                            <label
+                              style={{
+                                color: darkMode ? 'darkorange' : 'orange',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              {cmt.slice(1) + ' '}
+                            </label>
+                          )
+                        }
+                        return <label>{cmt + ' '}</label>
+                      })}
+                    {
+                      <label
+                        onClick={() => {
+                          if (allowedLength <= statement.split(' ').length) {
+                            setAllowedLength((allowedLength) => {
+                              return allowedLength + 70
+                            })
+                          } else {
+                            setAllowedLength(61)
+                          }
+                        }}
+                        style={{
+                          cursor: 'pointer',
+                          color: darkMode ? 'orange' : 'darkorange',
+                        }}
+                      >
+                        {allowedLength <= statement.split(' ').length
+                          ? 'See More'
+                          : ''}
+                      </label>
+                    }
+                  </label>
+                ))}
             </label>
           </p>
           <div

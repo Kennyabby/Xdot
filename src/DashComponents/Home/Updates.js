@@ -23,6 +23,7 @@ import xdotlogo from './assets/xdotlogo.png'
 const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
+  const postRef = useRef(null)
   const lastPostRef = useRef(null)
   const [winSize, setWinSize] = useState(window.innerWidth)
   const [touchStart, setTouchStart] = useState(null)
@@ -337,155 +338,154 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
             />
           )}
         </AnimatePresence>
-        {highlightedPost === null ? (
+        <div
+          style={{
+            paddingTop: '0px',
+            // position: 'relative',
+            display: 'flex',
+            width: '100%',
+            textAlign: winSize <= 700 ? 'center' : 'left',
+            justifyContent: winSize <= 700 ? 'center' : 'left',
+          }}
+        >
           <div
             style={{
-              paddingTop: '0px',
-              // position: 'relative',
-              display: 'flex',
-              width: '100%',
-              textAlign: winSize <= 700 ? 'center' : 'left',
-              justifyContent: winSize <= 700 ? 'center' : 'left',
+              width: winSize <= 700 ? '100%' : '50%',
             }}
           >
-            <div
-              style={{
-                width: winSize <= 700 ? '100%' : '50%',
-              }}
-            >
-              <AnimatePresence>
-                {showSearch && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.1 }}
-                    exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            <AnimatePresence>
+              {showSearch && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.1 }}
+                  exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                  style={{
+                    position: 'sticky',
+                    position: '-webkit-sticky',
+                    display: 'flex',
+                    zIndex: '2',
+                    top: '0px',
+                    left: '0px',
+                    margin: '0px',
+                    marginBottom: '10px',
+                    padding: '5px 0px',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    backgroundColor: darkMode
+                      ? 'rgba(0,0,0,0)'
+                      : 'rgba(255,255,255,0)',
+                  }}
+                >
+                  <Link to='/dashboard/profile' style={{ margin: 'auto' }}>
+                    <div
+                      style={{
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <LazyLoadImage
+                        src={userImgUrl}
+                        width={40}
+                        height={40}
+                        style={{
+                          boxShadow: darkMode
+                            ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
+                            : '-5px -5px 10px rgba(250,250,250,0.1),5px 5px 10px rgba(250,250,250,0.1)',
+                          backgroundColor: darkMode
+                            ? 'rgba(255,255,255,0.2)'
+                            : 'rgba(240,240,240,1)',
+                          backgroundSize: 'cover',
+                          borderRadius: '50%',
+                          border: 'solid rgba(220,220,220,1) 1px',
+                          margin: '5px auto',
+                        }}
+                        PlaceholderSrc={profimg}
+                        effect='blur'
+                        alt='user photo'
+                      />
+                    </div>
+                  </Link>
+                  <div
                     style={{
-                      position: 'sticky',
-                      position: '-webkit-sticky',
-                      display: 'flex',
-                      zIndex: '2',
-                      top: '0px',
-                      left: '0px',
-                      margin: '0px',
-                      marginBottom: '10px',
-                      padding: '5px 0px',
-                      justifyContent: 'center',
-                      textAlign: 'center',
                       backgroundColor: darkMode
-                        ? 'rgba(0,0,0,0)'
-                        : 'rgba(255,255,255,0)',
+                        ? 'rgba(255,255,255,0.1)'
+                        : 'rgba(255,255,255,1)',
+                      width: winSize <= 700 ? '75%' : '80%',
+                      margin: 'auto',
+                      boxShadow: darkMode
+                        ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
+                        : '-5px -5px 10px rgba(250,250,250,0.1),5px 5px 10px rgba(250,250,250,0.1)',
+                      borderRadius: '20px',
                     }}
                   >
-                    <Link to='/dashboard/profile' style={{ margin: 'auto' }}>
-                      <div
-                        style={{
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <LazyLoadImage
-                          src={userImgUrl}
-                          width={40}
-                          height={40}
-                          style={{
-                            boxShadow: darkMode
-                              ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
-                              : '-5px -5px 10px rgba(250,250,250,0.1),5px 5px 10px rgba(250,250,250,0.1)',
-                            backgroundColor: darkMode
-                              ? 'rgba(255,255,255,0.2)'
-                              : 'rgba(240,240,240,1)',
-                            backgroundSize: 'cover',
-                            borderRadius: '50%',
-                            border: 'solid rgba(220,220,220,1) 1px',
-                            margin: '5px auto',
-                          }}
-                          PlaceholderSrc={profimg}
-                          effect='blur'
-                          alt='user photo'
-                        />
-                      </div>
-                    </Link>
                     <div
                       style={{
                         backgroundColor: darkMode
                           ? 'rgba(255,255,255,0.1)'
                           : 'rgba(255,255,255,1)',
-                        width: winSize <= 700 ? '75%' : '80%',
-                        margin: 'auto',
-                        boxShadow: darkMode
-                          ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
-                          : '-5px -5px 10px rgba(250,250,250,0.1),5px 5px 10px rgba(250,250,250,0.1)',
                         borderRadius: '20px',
+                        width: '100%',
+                        display: 'flex',
                       }}
                     >
-                      <div
+                      <img
+                        src={darkMode ? wsearch : search}
+                        height={darkMode ? '15px' : '20px'}
+                        style={{
+                          marginTop: '15px',
+                          marginLeft: '15px',
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => {}}
+                      />
+                      <input
+                        type='search'
+                        placeholder='Search Pages, Posts, Clusters...'
                         style={{
                           backgroundColor: darkMode
-                            ? 'rgba(255,255,255,0.1)'
-                            : 'rgba(255,255,255,1)',
+                            ? 'rgba(255,255,255,0)'
+                            : 'white',
+                          color: darkMode ? 'white' : 'black',
+                          padding: '15px 10px',
+                          outline: 'none',
+                          border: 'solid black 0px',
                           borderRadius: '20px',
-                          width: '100%',
-                          display: 'flex',
+                          width: '90%',
                         }}
-                      >
-                        <img
-                          src={darkMode ? wsearch : search}
-                          height={darkMode ? '15px' : '20px'}
-                          style={{
-                            marginTop: '15px',
-                            marginLeft: '15px',
-                            cursor: 'pointer',
-                          }}
-                          onClick={() => {}}
-                        />
-                        <input
-                          type='search'
-                          placeholder='Search Pages, Posts, Clusters...'
-                          style={{
-                            backgroundColor: darkMode
-                              ? 'rgba(255,255,255,0)'
-                              : 'white',
-                            color: darkMode ? 'white' : 'black',
-                            padding: '15px 10px',
-                            outline: 'none',
-                            border: 'solid black 0px',
-                            borderRadius: '20px',
-                            width: '90%',
-                          }}
-                        />
-                      </div>
+                      />
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-              <div
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                onClick={() => {
+                  setShowPostPage(true)
+                }}
+                className='saysm'
                 style={{
-                  display: 'flex',
-                  justifyContent: 'center',
+                  backgroundColor: darkMode ? 'black' : 'white',
+                  boxShadow: darkMode
+                    ? '-4px -4px 10px rgba(10,10,18,0.1), 4px 4px 10px rgba(10,10,18,0.1)'
+                    : '-4px -4px 10px rgba(240,240,255,0.1), 4px 4px 10px rgba(240,240,255,0.1)',
+                  color: darkMode ? 'white' : 'black',
                 }}
               >
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2, ease: 'easeOut' }}
-                  onClick={() => {
-                    setShowPostPage(true)
-                  }}
-                  className='saysm'
-                  style={{
-                    backgroundColor: darkMode ? 'black' : 'white',
-                    boxShadow: darkMode
-                      ? '-4px -4px 10px rgba(10,10,18,0.1), 4px 4px 10px rgba(10,10,18,0.1)'
-                      : '-4px -4px 10px rgba(240,240,255,0.1), 4px 4px 10px rgba(240,240,255,0.1)',
-                    color: darkMode ? 'white' : 'black',
-                  }}
-                >
-                  {'Something on your mind?'}
-                </motion.div>
-              </div>
+                {'Something on your mind?'}
+              </motion.div>
             </div>
           </div>
-        ) : undefined}
+        </div>
+
         <div
           style={{
             display: 'flex',
@@ -508,45 +508,43 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                   : '-4px -4px 15px rgba(255,255,255,0.5), 4px 4px 15px rgba(255,255,255,0.5)',
             }}
           >
-            {highlightedPost === null ? (
-              <div
+            <div
+              style={{
+                position: 'sticky',
+                position: '-webkit-sticky',
+                top: '0px',
+                padding: '10px',
+                marginBottom: '20px',
+                justifyContent: 'center',
+              }}
+            >
+              <button
+                onClick={() => {
+                  getNewUpdates(user.lastPostUpdate)
+                }}
                 style={{
-                  position: 'sticky',
-                  position: '-webkit-sticky',
-                  top: '0px',
-                  padding: '10px',
-                  marginBottom: '20px',
-                  justifyContent: 'center',
+                  padding: '9px 25px',
+                  borderRadius: '22px',
+                  backgroundColor: 'blue',
+                  color: 'white',
+                  boxShadow: darkMode
+                    ? '-5px -5px 10px rgba(10,10,18,0.1),5px 5px 10px rgba(10,10,18,0.1)'
+                    : '-5px -5px 10px rgba(243,243,255,0.1),5px 5px 10px rgba(243,243,255,0.1)',
+                  fontFamily: 'monospace',
+                  fontWeight: 'bold',
+                  border: 'solid rgba(0,0,255,1) 2px',
+                  cursor: 'pointer',
                 }}
               >
-                <button
-                  onClick={() => {
-                    getNewUpdates(user.lastPostUpdate)
-                  }}
-                  style={{
-                    padding: '9px 25px',
-                    borderRadius: '22px',
-                    backgroundColor: 'blue',
-                    color: 'white',
-                    boxShadow: darkMode
-                      ? '-5px -5px 10px rgba(10,10,18,0.1),5px 5px 10px rgba(10,10,18,0.1)'
-                      : '-5px -5px 10px rgba(243,243,255,0.1),5px 5px 10px rgba(243,243,255,0.1)',
-                    fontFamily: 'monospace',
-                    fontWeight: 'bold',
-                    border: 'solid rgba(0,0,255,1) 2px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  New Posts
-                </button>
-              </div>
-            ) : undefined}
+                New Posts
+              </button>
+            </div>
             {updates.length ? (
               <div>
                 <div>
-                  {highlightedPost === null ? (
-                    updates.map((update, i) => {
-                      return (
+                  {updates.map((update, i) => {
+                    return (
+                      <div>
                         <Post
                           server={server}
                           key={i}
@@ -571,38 +569,72 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                           }}
                           viewRef={viewRef}
                         />
-                      )
-                    })
-                  ) : (
-                    <Post
-                      server={server}
-                      status={'highlighted'}
-                      user={user}
-                      updt={highlightedPost}
-                      newPostShow={newPostShow}
-                      updatePostAt={async ({ createdAt, refresh, rct }) => {
-                        var done = await updatePostAt({
-                          createdAt: createdAt,
-                          refresh: refresh,
-                          rct: rct,
-                        })
-                        return done
-                      }}
-                      currentPostShow={(post) => {
-                        setCurrentPostShow(post)
-                      }}
-                      setHighlightedPost={(post) => {
-                        setHighlightedPost(post)
-                      }}
-                      showHomeToggle={(show) => {
-                        showHomeToggle(show)
-                      }}
-                      setScrollCompleted={(scrollStatus) => {
-                        setScrollCompleted(scrollStatus)
-                      }}
-                      viewRef={viewRef}
-                    />
-                  )}
+                      </div>
+                    )
+                  })}
+                  <AnimatePresence>
+                    {highlightedPost !== null && (
+                      <motion.div
+                        initial={{
+                          scale: winSize <= 700 ? 0.7 : 1,
+                          opacity: winSize <= 700 ? 1 : 0,
+                        }}
+                        animate={{
+                          scale: winSize <= 700 ? 1 : 1,
+                          opacity: winSize <= 700 ? 1 : 1,
+                        }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                        exit={{
+                          scale: winSize <= 700 ? 0.7 : 1,
+                          opacity: winSize <= 700 ? 1 : 0,
+                          transition: { ease: 'easeIn' },
+                        }}
+                        ref={postRef}
+                        style={{
+                          position: 'fixed',
+                          left: winSize <= 700 ? '0px' : '265px',
+                          top: '0px',
+                          width: winSize <= 700 ? '100vw' : '42%',
+                          background: darkMode
+                            ? 'rgba(10,10,15,1)'
+                            : 'rgba(247,247,250,1)',
+                          zIndex: '3',
+                          height: '100%',
+                          overflowY: 'auto',
+                        }}
+                      >
+                        <Post
+                          server={server}
+                          status={'highlighted'}
+                          user={user}
+                          postRef={postRef}
+                          updt={highlightedPost}
+                          newPostShow={newPostShow}
+                          updatePostAt={async ({ createdAt, refresh, rct }) => {
+                            var done = await updatePostAt({
+                              createdAt: createdAt,
+                              refresh: refresh,
+                              rct: rct,
+                            })
+                            return done
+                          }}
+                          currentPostShow={(post) => {
+                            setCurrentPostShow(post)
+                          }}
+                          setHighlightedPost={(post) => {
+                            setHighlightedPost(post)
+                          }}
+                          showHomeToggle={(show) => {
+                            showHomeToggle(show)
+                          }}
+                          setScrollCompleted={(scrollStatus) => {
+                            setScrollCompleted(scrollStatus)
+                          }}
+                          viewRef={viewRef}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
                 <div ref={lastPostRef} style={{ paddingBottom: '90px' }}>
                   {highlightedPost === null && showPostUpdatesStatus ? (
@@ -750,7 +782,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                 </motion.div>
               </motion.div>
             </div>
-          ) : highlightedPost === null ? (
+          ) : (
             <div
               style={{
                 width: winSize <= 700 ? '100%' : '40%',
@@ -856,7 +888,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                 </motion.div>
               </motion.div>
             </div>
-          ) : undefined}
+          )}
         </div>
       </div>
     </>

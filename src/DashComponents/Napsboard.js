@@ -772,8 +772,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                   className='viewbg'
                   style={{
                     backgroundColor: darkMode
-                      ? 'rgba(10,10,15,1)'
-                      : 'rgba(247,247,255,1)',
+                      ? 'rgba(10,10,20,1)'
+                      : 'rgba(247,247,250,1)',
                     height: winSize > 700 ? '100vh' : 'auto',
                     overflowY: winSize > 700 ? 'auto' : 'none',
                     // margin: '0px auto',
@@ -856,8 +856,11 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                       className='hometoggle'
                       style={{
                         backgroundColor: darkMode
-                          ? 'rgba(0,0,0,0.8)'
+                          ? 'rgba(0,0,0,0.95)'
                           : 'rgba(255,255,255,0.9)',
+                        borderTop: darkMode
+                          ? 'solid black 2px'
+                          : 'solid white 2px',
                       }}
                     >
                       {winSize <= 700 && showNavigator && (

@@ -35,6 +35,7 @@ const Post = ({
   server,
   status,
   currentPostShow,
+  postRef,
   user,
   updt,
   setHighlightedPost,
@@ -69,6 +70,8 @@ const Post = ({
     src: react,
   })
   const [postComment, setPostComment] = useState('')
+  const [enterPressed, setEnterPressed] = useState(false)
+  const [allowedLength, setAllowedLength] = useState(61)
   const { darkMode } = useContext(ContextProvider)
   const emojis = [
     { name: 'like', src: like },
@@ -408,6 +411,111 @@ const Post = ({
     }
   }
 
+  const setCaretPosition = (el, pos) => {
+    const range = document.createRange()
+    console.log(el.current)
+    const childNodes = el.current.childNodes
+    console.log(childNodes)
+    // console.log('comment: ', childNode.innerHTML)
+    let found = false
+    let offset = 0
+    for (const childNode of childNodes) {
+      range.selectNodeContents(childNode)
+      const childLength = childNode.textContent.length
+      if (offset + childLength >= pos) {
+        if (childNode.innerHTML !== undefined) {
+          for (const child of childNode.childNodes) {
+            range.selectNodeContents(child)
+            range.setStart(range.endContainer, pos - offset)
+            range.setEnd(range.endContainer, pos - offset)
+          }
+        } else {
+          range.setStart(range.endContainer, pos - offset)
+          range.setEnd(range.endContainer, pos - offset)
+        }
+        found = true
+        break
+      }
+      offset += childLength
+    }
+
+    if (found) {
+      const selection = window.getSelection()
+      selection.removeAllRanges()
+      selection.addRange(range)
+    }
+  }
+  const getCaretPosition = (el) => {
+    let caretOffset = 0
+    const doc = el.current.ownerDocument || el.current.document
+    const win = doc.defaultView || doc.parentWindow
+    const sel = win.getSelection()
+    if (sel.rangeCount > 0) {
+      const range = sel.getRangeAt(0)
+      const preCaretRange = range.cloneRange()
+      preCaretRange.selectNodeContents(el.current)
+      preCaretRange.setEnd(range.endContainer, range.endOffset)
+      caretOffset = preCaretRange.toString().length
+    }
+
+    return caretOffset
+  }
+  useEffect(() => {
+    if (commentInputRef.current !== null) {
+      const caretPos = getCaretPosition(commentInputRef)
+      commentInputRef.current.innerHTML = postComment
+      if (enterPressed) {
+        setCaretPosition(commentInputRef, caretPos + 1)
+        setEnterPressed(false)
+      } else {
+        setCaretPosition(commentInputRef, caretPos)
+      }
+    }
+  }, [postComment])
+  const inspectPost = async (value) => {
+    const valueList = value.split(' ')
+    var validatedValue = value
+    valueList.forEach((val, index) => {
+      if (val.slice(0, 1) === '@' && val.length > 1) {
+        valueList[index] =
+          `<label style=color:${darkMode ? 'darkorange' : 'orange'}>` +
+          val +
+          '</label>'
+      }
+    })
+    validatedValue = valueList.join(' ')
+    return validatedValue
+  }
+  const filterComment = (comment) => {
+    var filteredComment = comment
+    const commentList = comment.split(' ')
+    commentList.forEach((word, i) => {
+      if (
+        i !== commentList.length - 1 &&
+        word === '<label' &&
+        commentList[i + 1].slice(0, 5) === 'style' &&
+        commentList[i + 1].slice(commentList[i + 1].length - 1) === '>'
+      ) {
+        let checkWord = word + ' ' + commentList[i + 1]
+        const div = document.createElement('div')
+        div.innerHTML = checkWord
+        const firstNode = div.childNodes[0]
+        if (
+          firstNode.innerHTML !== undefined &&
+          firstNode.innerHTML.slice(0, 1) === '@'
+        ) {
+          commentList[i] = ''.trim()
+          commentList[i + 1] = firstNode.innerHTML.trim()
+        }
+      }
+    })
+    filteredComment = commentList
+      .filter((word) => {
+        return word !== ''
+      })
+      .join(' ')
+    return filteredComment
+  }
   return (
     <>
       <div
@@ -416,6 +524,7 @@ const Post = ({
           margin: 'auto',
           marginBottom: '10px',
           padding: '0px',
+          paddingTop: status === undefined ? '0px' : '60px',
           backgroundColor: darkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)',
           borderBottom: darkMode
             ? 'solid black 0px'
@@ -489,6 +598,7 @@ const Post = ({
                 onClick={() => {
                   if (postShow === null) {
                     setHighlightedPost(null)
+                    showHomeToggle(true)
                     var pageOffset = Number(
                       window.sessionStorage.getItem('pageOffset')
                     )
@@ -618,8 +728,8 @@ const Post = ({
                 marginLeft: 'auto',
                 paddingBottom: '15px',
                 borderLeft: darkMode
-                  ? 'solid rgba(250,250,250,1) 1px'
-                  : 'solid rgba(10,10,10,1) 1px',
+                  ? 'solid rgba(250,250,250,1) 2px'
+                  : 'solid rgba(10,10,10,1) 2px',
               }}
             >
               {postPictures.length ? (
@@ -699,13 +809,88 @@ const Post = ({
                   margin: '15px',
                   fontFamily: 'calibri',
                   borderRadius: '15px',
-                  backgroundColor: darkMode ? 'black' : 'white',
+                  whiteSpace: 'pre-wrap',
+                  backgroundColor: darkMode ? '' : '',
                   boxShadow: darkMode
-                    ? '-4px -4px 10px rgba(10,10,18,0.1), 4px 4px 10px rgba(10,10,18,0.1)'
-                    : '-4px -4px 10px rgba(240,240,255,0.1), 4px 4px 10px rgba(240,240,255,0.1)',
+                    ? '-4px -4px 10px rgba(10,10,10,0.1), 4px 4px 10px rgba(10,10,10,0.1)'
+                    : '-4px -4px 10px rgba(220,220,220,0.1), 4px 4px 10px rgba(220,220,220,0.1)',
                 }}
               >
-                <label>{update.postComment}</label>
+                {update.postComment !== undefined &&
+                  (update.postComment.split(' ').length <= 60 ? (
+                    <label>
+                      {update.postComment.split(' ').map((cmt) => {
+                        if (cmt.slice(0, 1) === '@' && cmt.length > 1) {
+                          return (
+                            <label
+                              style={{
+                                color: darkMode ? 'darkorange' : 'orange',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              {cmt.slice(1) + ' '}
+                            </label>
+                          )
+                        }
+                        return <label>{cmt + ' '}</label>
+                      })}
+                    </label>
+                  ) : (
+                    <label style={{ whiteSpace: 'pre-wrap' }}>
+                      {(
+                        update.postComment
+                          .split(' ')
+                          .slice(0, allowedLength)
+                          .join(' ') +
+                        (allowedLength <= update.postComment.split(' ').length
+                          ? ' ... '
+                          : '')
+                      )
+                        .split(' ')
+                        .map((cmt) => {
+                          if (cmt.slice(0, 1) === '@' && cmt.length > 1) {
+                            return (
+                              <label
+                                style={{
+                                  color: darkMode ? 'darkorange' : 'orange',
+                                  fontWeight: 'bold',
+                                  cursor: 'pointer',
+                                }}
+                              >
+                                {cmt.slice(1) + ' '}
+                              </label>
+                            )
+                          }
+                          return <label>{cmt + ' '}</label>
+                        })}
+
+                      {
+                        <label
+                          onClick={() => {
+                            if (
+                              allowedLength <=
+                              update.postComment.split(' ').length
+                            ) {
+                              setAllowedLength((allowedLength) => {
+                                return allowedLength + 70
+                              })
+                            } else {
+                              setAllowedLength(61)
+                            }
+                          }}
+                          style={{
+                            cursor: 'pointer',
+                            color: darkMode ? 'orange' : 'darkorange',
+                          }}
+                        >
+                          {allowedLength <= update.postComment.split(' ').length
+                            ? 'See More'
+                            : ''}
+                        </label>
+                      }
+                    </label>
+                  ))}
               </div>
             </div>
             {showReactionList ? (
@@ -1080,6 +1265,9 @@ const Post = ({
                           setPostComment={({ value, matricNo }) => {
                             setPostComment(value)
                             commentInputRef.current.focus()
+                            setTimeout(() => {
+                              setCaretPosition(commentInputRef, value.length)
+                            }, 100)
                           }}
                         />
                       )
@@ -1105,6 +1293,9 @@ const Post = ({
                     setPostComment={({ value, matricNo }) => {
                       setPostComment(value)
                       commentInputRef.current.focus()
+                      setTimeout(() => {
+                        setCaretPosition(commentInputRef, value.length)
+                      }, 100)
                     }}
                   />
                 )}
@@ -1141,9 +1332,31 @@ const Post = ({
                     contentEditable='true'
                     placeholder='Comment...'
                     ref={commentInputRef}
-                    onInput={(e) => {
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                        let caretPos = getCaretPosition(commentInputRef)
+                        const value = e.currentTarget.textContent
+                        let preVal = value.slice(0, caretPos)
+                        let postVal = value.slice(caretPos)
+                        setEnterPressed(true)
+                        if (postVal.length === 0) {
+                          const newValue = value + '\n\n'
+                          setPostComment(newValue)
+                        } else {
+                          let newPreVal = preVal + '\n'
+                          const newValue = newPreVal + postVal
+                          setPostComment(newValue)
+                        }
+                      } else {
+                        setEnterPressed(false)
+                      }
+                    }}
+                    onInput={async (e) => {
                       const value = e.currentTarget.textContent
-                      setPostComment(value)
+                      await inspectPost(value).then((validatedValue) => {
+                        setPostComment(validatedValue)
+                      })
                     }}
                     style={{
                       width: '80%',
@@ -1157,6 +1370,8 @@ const Post = ({
                       backgroundColor: 'rgba(0,0,0,0)',
                       border: 'none',
                       outline: 'none',
+                      whiteSpace: 'pre-wrap',
+                      caretColor: darkMode ? 'lightgreen' : 'green',
                       color: darkMode ? 'white' : 'black',
                     }}
                   ></div>
@@ -1165,24 +1380,26 @@ const Post = ({
                       onClick={() => {
                         commentInputRef.current.innerText = ''
                         if (postShow === null) {
+                          filterComment(postComment)
                           updateReactions({
                             rct: 'comment',
-                            comment: postComment,
+                            comment: filterComment(postComment),
                           })
                           setPostComment('')
                         } else {
+                          filterComment(postComment)
                           updateReactions({
                             rct: 'comment',
                             statorBody: {
                               createdAt: postShow.createdAt,
-                              comment: postComment,
+                              comment: filterComment(postComment),
                               action: 'comment',
                             },
                           })
                           setPostComment('')
                         }
                         setTimeout(() => {
-                          window.scrollTo(0, Number.MAX_SAFE_INTEGER)
+                          postRef.current.scrollTo(0, Number.MAX_SAFE_INTEGER)
                         }, 500)
                       }}
                       src={send}
