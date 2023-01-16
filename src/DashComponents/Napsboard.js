@@ -79,23 +79,11 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       }
       const resp = await fetch(server + '/' + req, opts)
       const response = await resp.json()
-      console.log(
-        'response: ',
-        response,
-        ' responseUser: ',
-        response.user,
-        ' responseUserFirstName: ',
-        response.user.firstName
-      )
-      if (
-        response === null ||
-        response === undefined ||
-        response.user.firstName === undefined ||
-        response.user.firstName === null
-      ) {
+      if (response.user === null) {
         window.localStorage.removeItem('sess-recg-id')
         window.localStorage.removeItem('idt-curr-usr')
         window.localStorage.removeItem('user-id')
+        history.push('/signin')
       } else {
         const user = response.user
         setUser(user)

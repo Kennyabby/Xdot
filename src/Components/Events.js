@@ -69,12 +69,8 @@ const Acts = ({ title, content, clickVar, id }) => {
     </div>
   )
 }
-const Events = ({ setRef }) => {
+const Events = ({ eventRef }) => {
   const { darkMode } = useContext(ContextProvider)
-  const event = useRef(null)
-  useEffect(() => {
-    setRef(event)
-  }, [])
   const eventsList = [
     {
       title: 'CGPA CALCULATOR',
@@ -104,7 +100,7 @@ const Events = ({ setRef }) => {
   return (
     <>
       <div
-        ref={event}
+        ref={eventRef}
         style={{
           color: darkMode ? 'white' : 'black',
           padding: '50px auto',

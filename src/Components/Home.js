@@ -75,6 +75,9 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
   const [touchEnd, setTouchEnd] = useState(null)
   const { id } = useParams()
   const refHome = useRef(null)
+  const eventRef = useRef(null)
+  const currentRef = useRef(null)
+  const aboutRef = useRef(null)
   const history = useHistory()
   const { darkMode } = useContext(ContextProvider)
   const minSwipeDistance = 50
@@ -194,14 +197,19 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
       })
     }
 
-    if (id === 'offers' && eventDimension != null) {
-      window.scrollTo(eventDimension.x, eventDimension.y - 30)
-    } else if (id === 'services' && currentDimension != null) {
-      window.scrollTo(currentDimension.x, currentDimension.y - 30)
-    } else if (id === 'about' && aboutDimension != null) {
-      window.scrollTo(aboutDimension.x, aboutDimension.y - 30)
+    if (id === 'offers') {
+      // window.scrollTo(eventDimension.x, eventDimension.y - 30, {
+      //   behavior: 'smooth',
+      // })
+      eventRef.current.scrollIntoView({ behavior: 'smooth' })
+    } else if (id === 'services') {
+      // window.scrollTo(currentDimension.x, currentDimension.y - 30)
+      currentRef.current.scrollIntoView({ behavior: 'smooth' })
+    } else if (id === 'about') {
+      // window.scrollTo(aboutDimension.x, aboutDimension.y - 30)
+      aboutRef.current.scrollIntoView({ behavior: 'smooth' })
     } else if (id === undefined) {
-      window.scrollTo(0, 0)
+      refHome.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [id, bars])
   const onTouchStart = (e) => {
@@ -264,7 +272,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                   cursor: 'pointer',
                 }}
                 onClick={() => {
-                  window.scrollTo(0, 0)
+                  history.push('/')
                 }}
               >
                 Top
@@ -732,16 +740,18 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
           </div>
         </div>
         <Events
-          setRef={(ref) => {
-            setEventDimension(ref.current.getBoundingClientRect())
-          }}
+          // setRef={(ref) => {
+          //   setEventDimension(ref.current.getBoundingClientRect())
+          // }}
+          eventRef={eventRef}
         />
         <Current
-          setRef={(ref) => {
-            setCurrentDimension(ref.current.getBoundingClientRect())
-          }}
+          // setRef={(ref) => {
+          //   setCurrentDimension(ref.current.getBoundingClientRect())
+          // }}
+          currentRef={currentRef}
         />
-        <About setRef={refAbout} />
+        <About aboutRef={aboutRef} />
       </div>
     </>
   )

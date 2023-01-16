@@ -5,12 +5,9 @@ import ContextProvider from '../ContextProvider'
 const Curr = () => {
   return <div className='curr'></div>
 }
-const Current = ({ setRef }) => {
+const Current = ({ currentRef }) => {
   const { darkMode } = useContext(ContextProvider)
-  const event = useRef(null)
-  useEffect(() => {
-    setRef(event)
-  }, [])
+
   return (
     <>
       <div
@@ -18,7 +15,7 @@ const Current = ({ setRef }) => {
         style={{
           backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
         }}
-        ref={event}
+        ref={currentRef}
       >
         <Curr />
         <Curr />

@@ -2,12 +2,8 @@ import React, { useEffect, useRef, useContext } from 'react'
 
 import ContextProvider from '../ContextProvider'
 
-const About = ({ setRef }) => {
+const About = ({ aboutRef }) => {
   const { darkMode, server } = useContext(ContextProvider)
-  const event = useRef(null)
-  useEffect(() => {
-    setRef(event)
-  }, [])
   return (
     <>
       <footer
@@ -17,7 +13,7 @@ const About = ({ setRef }) => {
           color: darkMode ? 'white' : 'black',
           border: darkMode ? 'solid black 2px' : 'solid white 2px',
         }}
-        ref={event}
+        ref={aboutRef}
       ></footer>
     </>
   )
