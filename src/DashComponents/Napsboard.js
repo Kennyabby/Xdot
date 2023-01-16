@@ -606,9 +606,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   }, [eVotingLabelRefs])
 
   useEffect(async () => {
-    window.localStorage.removeItem('sess-recg-id')
-    window.localStorage.removeItem('idt-curr-usr')
-    window.localStorage.removeItem('user-id')
     var uid = window.localStorage.getItem('user-id')
     var sess = 0
     if (userId !== null) {
