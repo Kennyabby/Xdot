@@ -779,7 +779,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                   className='viewbg'
                   style={{
                     backgroundColor: darkMode
-                      ? 'rgba(10,10,20,1)'
+                      ? 'rgba(10,10,27,1)'
                       : 'rgba(247,247,250,1)',
                     height: winSize > 700 ? '100vh' : 'auto',
                     overflowY: winSize > 700 ? 'auto' : 'none',
