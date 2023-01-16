@@ -413,9 +413,9 @@ const Post = ({
 
   const setCaretPosition = (el, pos) => {
     const range = document.createRange()
-    console.log(el.current)
+    // console.log(el.current)
     const childNodes = el.current.childNodes
-    console.log(childNodes)
+    // console.log(childNodes)
     // console.log('comment: ', childNode.innerHTML)
     let found = false
     let offset = 0
