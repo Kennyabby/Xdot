@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useRef, useContext } from 'react'
 import '../Events/Events.css'
-import { Link } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Link, useHistory, useParams } from 'react-router-dom'
+import { motion, AnimatePresence, usePresence } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 import profimg from '../Events/assets/profile.png'
@@ -24,6 +24,8 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [updates, setUpdates] = useState([])
   const [prevUpdates, setPrevUpdates] = useState([])
   const postRef = useRef(null)
+  const history = useHistory()
+  const { id } = useParams()
   const lastPostRef = useRef(null)
   const [winSize, setWinSize] = useState(window.innerWidth)
   const [touchStart, setTouchStart] = useState(null)
@@ -45,7 +47,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const { darkMode } = useContext(ContextProvider)
   const minSwipeDistance = 20
   const maxNumberOfRequest = 4
-
+  var stackPos = 0
   const notify = ({ message }) => {
     setShowNotification(true)
     setNotificationMessage(message)
@@ -97,6 +99,35 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   }, [user])
   useEffect(() => {
     setNewPostShow(currentPostShow)
+    console.log('current Post Show dependency: ', currentPostShow)
+    if (currentPostShow !== null) {
+      // stackPos = 1
+      console.log('stack pos:', 1)
+    } else {
+      // stackPos = 0
+      // console.log('stack pos:', 0)
+    }
+  }, [currentPostShow])
+  const handlePopState = () => {
+    console.log('stack pos:', stackPos, 'current Post:', currentPostShow)
+    if (currentPostShow === null) {
+      // stackPos = 1
+      setHighlightedPost(null)
+    }
+    // else if (stackPos === 1) {
+    //   stackPos = 0
+    // }
+  }
+  useEffect(() => {
+    console.log('curr stack pos:', stackPos)
+    const unlisten = history.listen((location, action) => {
+      if (action === 'POP') {
+        handlePopState()
+      }
+    })
+    return () => {
+      unlisten()
+    }
   }, [currentPostShow])
   const checkLastPostDimension = async () => {
     setLastPostDimension(lastPostRef.current.getBoundingClientRect().y)
@@ -559,9 +590,14 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                             return done
                           }}
                           currentPostShow={(post) => {
+                            console.log('update: ', post)
                             setCurrentPostShow(post)
                           }}
                           setHighlightedPost={(post) => {
+                            history.push({
+                              pathname: history.location.pathname,
+                              state: { modal: true },
+                            })
                             setHighlightedPost(post)
                           }}
                           showHomeToggle={(show) => {
@@ -618,11 +654,18 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                             })
                             return done
                           }}
+                          goBack={() => {
+                                                        
+                          }}
                           currentPostShow={(post) => {
+                            console.log('update modal: ', post)
                             setCurrentPostShow(post)
                           }}
                           setHighlightedPost={(post) => {
                             setHighlightedPost(post)
+                            if (post === null) {
+                              history.goBack()
+                            }
                           }}
                           showHomeToggle={(show) => {
                             showHomeToggle(show)

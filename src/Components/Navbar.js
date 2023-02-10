@@ -58,7 +58,6 @@ const Navbar = ({ getTopBar }) => {
         window.localStorage.removeItem('sess-recg-id')
         window.localStorage.removeItem('idt-curr-usr')
         window.localStorage.removeItem('user-id')
-        history.push('/signin')
       } else {
         const user = response.user
         setUser(user)

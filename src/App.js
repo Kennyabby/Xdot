@@ -9,11 +9,20 @@ import Signin from './Signin/Signin'
 import Help from './Components/Help'
 import Napsboard from './DashComponents/Napsboard'
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useParams,
+  useHistory,
+} from 'react-router-dom'
 import ContextProvider from './ContextProvider'
 const App = () => {
   const SERVER = 'https://encarto-server.vercel.app'
   // const SERVER = 'http://localhost:3001'
+  // const { id } = useParams()
+  const history = useHistory()
+  const [intervalId, setIntervalId] = useState(null)
   const [bars, setBars] = useState([])
   const [darkMode, setDarkMode] = useState(false)
   const [size, setSize] = useState(window.innerWidth)
@@ -27,6 +36,39 @@ const App = () => {
   const checkSize = () => {
     setSize(window.innerWidth)
   }
+  const fetchUserAPI = async ({ data, req }) => {
+    try {
+      const opts = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }
+      const resp = await fetch(SERVER + '/' + req, opts)
+      const response = await resp.json()
+      if (response.user === null) {
+        window.localStorage.removeItem('sess-recg-id')
+        window.localStorage.removeItem('idt-curr-usr')
+        window.localStorage.removeItem('user-id')
+        window.location.reload()
+      }
+    } catch (TypeError) {}
+  }
+  useEffect(() => {
+    if (intervalId !== null) {
+      clearInterval(intervalId)
+    }
+    var intId = null
+    intId = setInterval(() => {
+      clearInterval(intervalId)
+      const uid = window.localStorage.getItem('user-id')
+      if (uid !== null) {
+        fetchUserAPI({ data: { sessionId: uid }, req: 'getUserDetails' })
+      }
+    }, 5000)
+    setIntervalId(intId)
+  }, [])
   useEffect(() => {
     const mode = window.localStorage.getItem('preference-mode')
     if (mode !== null) {
@@ -50,6 +92,7 @@ const App = () => {
       window.removeEventListener('resize', checkSize)
     }
   }, [size])
+
   return (
     <ContextProvider.Provider
       value={{ darkMode, setDarkMode, server: SERVER, winSize: size }}

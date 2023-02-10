@@ -44,6 +44,7 @@ const Post = ({
   showHomeToggle,
   setScrollCompleted,
   viewRef,
+  goBack,
 }) => {
   const { id } = useParams()
   const history = useHistory()
@@ -72,7 +73,7 @@ const Post = ({
   const [postComment, setPostComment] = useState('')
   const [enterPressed, setEnterPressed] = useState(false)
   const [allowedLength, setAllowedLength] = useState(61)
-  const { darkMode } = useContext(ContextProvider)
+  const { darkMode, winSize } = useContext(ContextProvider)
   const emojis = [
     { name: 'like', src: like },
     { name: 'love', src: love },
@@ -100,7 +101,22 @@ const Post = ({
       String(reactActionRef.current.getBoundingClientRect().top - 140) + 'px'
     )
   }, [])
-
+  const handlePopState = () => {
+    setPostShow(null)
+    currentPostShow(null)
+    // if (location.state && location.state.modal) {
+    // }
+  }
+  useEffect(() => {
+    const unlisten = history.listen((location, action) => {
+      if (action === 'POP') {
+        handlePopState()
+      }
+    })
+    return () => {
+      unlisten()
+    }
+  }, [postShow])
   const watchScroll = () => {
     setTopOffset(
       String(reactActionRef.current.getBoundingClientRect().top - 140) + 'px'
@@ -614,6 +630,7 @@ const Post = ({
                   } else {
                     setPostShow(null)
                     currentPostShow(null)
+                    goBack()
                   }
                 }}
                 style={{
@@ -1241,10 +1258,8 @@ const Post = ({
                   color: darkMode ? 'white' : 'black',
                 }}
               >
-                {postShow === null ? (
-                  update['comment'] !== undefined &&
-                  update['comment'].length ? (
-                    update['comment'].map((elem, i) => {
+                {update['comment'] !== undefined && update['comment'].length
+                  ? update['comment'].map((elem, i) => {
                       return (
                         <PostComment
                           server={server}
@@ -1255,13 +1270,16 @@ const Post = ({
                             updateReactions(value)
                           }}
                           setShowPost={(req) => {
+                            history.push({
+                              pathname: history.location.pathname,
+                              state: { modal: true },
+                            })
+                            console.log('post js: ', req.post)
                             setShowPost(req.show)
                             setPostShow(req.post)
                             currentPostShow(req.post)
                           }}
-                          postShow={
-                            newPostShow === null ? postShow : newPostShow
-                          }
+                          postShow={null}
                           setPostComment={({ value, matricNo }) => {
                             setPostComment(value)
                             commentInputRef.current.focus()
@@ -1272,33 +1290,65 @@ const Post = ({
                         />
                       )
                     })
-                  ) : (
-                    'Be the first to comment'
-                  )
-                ) : (
-                  <PostComment
-                    server={server}
-                    elem={newPostShow === null ? postShow : newPostShow}
-                    user={user}
-                    postShow={newPostShow === null ? postShow : newPostShow}
-                    updateReactions={(value) => {
-                      updateReactions(value)
-                    }}
-                    setShowPost={(req) => {
-                      setShowPost(req.show)
-                      setPostShow(req.post)
-                      currentPostShow(req.post)
-                    }}
-                    showPost={showPost}
-                    setPostComment={({ value, matricNo }) => {
-                      setPostComment(value)
-                      commentInputRef.current.focus()
-                      setTimeout(() => {
-                        setCaretPosition(commentInputRef, value.length)
-                      }, 100)
-                    }}
-                  />
-                )}
+                  : 'Be the first to comment'}
+                <AnimatePresence>
+                  {postShow !== null && (
+                    <motion.div
+                      initial={{
+                        scale: winSize <= 700 ? 0.7 : 1,
+                        opacity: winSize <= 700 ? 1 : 0,
+                      }}
+                      animate={{
+                        scale: winSize <= 700 ? 1 : 1,
+                        opacity: winSize <= 700 ? 1 : 1,
+                      }}
+                      transition={{ duration: 0.3, ease: 'easeOut' }}
+                      exit={{
+                        scale: winSize <= 700 ? 0.7 : 1,
+                        opacity: winSize <= 700 ? 1 : 0,
+                        transition: { ease: 'easeIn' },
+                      }}
+                      ref={postRef}
+                      style={{
+                        position: 'fixed',
+                        left: winSize <= 700 ? '0px' : '265px',
+                        top: '0px',
+                        paddingTop: '50px',
+                        width: winSize <= 700 ? '100vw' : '42%',
+                        background: darkMode
+                          ? 'rgba(10,10,15,1)'
+                          : 'rgba(247,247,250,1)',
+                        zIndex: '0',
+                        height: '100%',
+                        overflowY: 'auto',
+                      }}
+                    >
+                      <PostComment
+                        server={server}
+                        elem={newPostShow === null ? postShow : newPostShow}
+                        user={user}
+                        postShow={newPostShow === null ? postShow : newPostShow}
+                        updateReactions={(value) => {
+                          updateReactions(value)
+                        }}
+                        setShowPost={(req) => {
+                          console.log('post js modal: ', req.post)
+                          setShowPost(req.show)
+                          setPostShow(req.post)
+                          currentPostShow(req.post)
+                        }}
+                        showPost={showPost}
+                        setPostComment={({ value, matricNo }) => {
+                          setPostComment(value)
+                          commentInputRef.current.focus()
+                          setTimeout(() => {
+                            setCaretPosition(commentInputRef, value.length)
+                          }, 100)
+                        }}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
               <motion.div
                 initial={{

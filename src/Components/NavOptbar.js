@@ -83,7 +83,6 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
         window.localStorage.removeItem('sess-recg-id')
         window.localStorage.removeItem('idt-curr-usr')
         window.localStorage.removeItem('user-id')
-        history.push('/signin')
       } else {
         const user = response.user
         setUser(user)
@@ -245,7 +244,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                     backgroundColor: darkMode
                       ? 'rgba(255,255,255,0.3)'
                       : 'rgba(0,0,0,0.3)',
-                    width: '60px',
+                    width: '40px',
                     borderRadius: '7px',
                     padding: '2px',
                   }}
@@ -362,6 +361,8 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                           justifyContent: 'left',
                           fontFamily: 'monospace',
                           cursor: 'pointer',
+                          margin: '5px',
+                          marginTop: '7px',
                         }}
                         onClick={() => {
                           setDarkMode(!darkMode)
@@ -602,19 +603,20 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                   style={{ borderBottom: 'solid black 0px' }}
                 >
                   <div className='top'>
-                    <label
+                    <button
                       className='top'
                       style={{
                         backgroundColor: 'blue',
+                        border: 'solid blue 2px',
                         color: 'white',
                         fontWeight: 'bold',
-                        padding: '8px 10px',
-                        borderRadius: '10px',
+                        padding: '10px 16px',
+                        borderRadius: '15px',
                       }}
                       name='signin'
                     >
                       sign in
-                    </label>
+                    </button>
                   </div>
                 </Link>
               </li>

@@ -273,6 +273,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                 }}
                 onClick={() => {
                   history.push('/')
+                  refHome.current.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
                 Top
@@ -281,7 +282,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
           </AnimatePresence>
           <div
             style={{
-              fontSize: '1rem',
+              fontSize: '.8rem',
               fontFamily: 'monospace',
               fontWeight: 'bold',
               borderRadius: '10px',
@@ -290,8 +291,8 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                 ? 'rgba(29,29,30,0.8)'
                 : 'rgba(240,240,241,0.8)',
               color: darkMode ? 'white' : 'black',
-              margin: winSize <= 700 ? '50px' : '5px auto',
-              marginTop: winSize <= 700 ? '50px' : '75px',
+              margin: winSize <= 700 ? '30px' : '5px auto',
+              marginTop: '75px',
             }}
           >
             Connect, Meet New People, Set Goals, Develop Your Self and Skills,
@@ -304,7 +305,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                 ? 'rgba(6,6,6,1)'
                 : 'rgba(249,249,249,1)',
               color: darkMode ? 'white' : 'black',
-              height: '70vh',
+              height: winSize <= 700 ? 'fit-content' : '70vh',
               margin: '0px',
               padding: '0px',
               width: '100vw',
@@ -396,7 +397,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                         <LazyLoadImage
                           src={csl.src}
                           style={{
-                            height: '99%',
+                            height: '100%',
                             width: '100%',
                             margin: '0px',
                             padding: '0px',

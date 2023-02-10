@@ -481,7 +481,7 @@ code {
     font-size: 1.2rem;
     gap: 120px;
     overflow-y: auto;
-    height: 90%;
+    height: 100%;
     width: 95%;
     display: inline-block;
     padding-bottom: 50px;

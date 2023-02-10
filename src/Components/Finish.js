@@ -259,9 +259,9 @@ const Finish = ({
     const message =
       "<h2>Napsite Account Created Successfully</h2><p style='font-family:monospace; font-size: 1rem;'>Hi, <b>" +
       studentInfo.firstName +
-      "</b>.</p><p style='font-family:monospace; font-size: 1rem;'>You are getting this email to confirm that you have just created an account with the National Association Of Physics Students, University of Ibadan Chapter <b>(NAPS UI)</b>, using the Matric No: <b>" +
+      "</b>.</p><p style='font-family:monospace; font-size: 1rem;'>You are getting this email to confirm that you have just created an account with <b>Encartoo</b>, using the Matric No: <b>" +
       studentInfo.matricNo +
-      "</b>.</p> <h2>What Do I Need To Do?</h2><p style='font-family:monospace; font-size: 1rem;'>If this is you, you don't need to do anything. If this was not you, kindly <a href='https://napsui.herokuapp.com/help'>click here</a>. </p><p style='margin-top: 50px; font-family:monospace;'>Regards. <b>The XDot Team</b> in partnership with <b>Zerox</b>.</p><p style='margin-top: 150px; font-family:monospace'>If you do no want to get future notifications through this email, kindly <a href='https://napsui.herokuapp.com/help'>stop it here</a>.</p>"
+      "</b>.</p> <h2>What Do I Need To Do?</h2><p style='font-family:monospace; font-size: 1rem;'>If this is you, you don't need to do anything. If this was not you, kindly <a href='https://xdot.vercel.app/help'>click here</a>. </p><p style='margin-top: 50px; font-family:monospace;'>Regards. <b>The XDot Team</b> in partnership with <b>Zerox</b>.</p><p style='margin-top: 150px; font-family:monospace'>If you do no want to get future notifications through this email, kindly <a href='https://xdot.vercel.app/help'>stop it here</a>.</p>"
     const opts = {
       method: 'POST',
       headers: {
