@@ -889,7 +889,7 @@ const Profile = ({
                 style={{
                   borderRadius: imgUpdateName === 'Cover Photo' ? '0px' : '50%',
                   width: imgUpdateName === 'Cover Photo' ? '90%' : '150px',
-                  height: imgUpdateName === 'Cover Photo' ? 'auto' : '150px',
+                  height: imgUpdateName === 'Cover Photo' ? '70vh' : '150px',
                   margin: 'auto',
                 }}
               />
