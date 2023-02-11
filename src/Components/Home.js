@@ -10,7 +10,6 @@ import Events from './Events'
 import Signup from './Signup'
 import ContextProvider from '../ContextProvider'
 
-import sitewall from './site-wall.png'
 import vision from './vision.jpg'
 import neural from './neural.jpg'
 import roboai from './roboai.jpg'
@@ -435,9 +434,9 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                                   opacity: 0,
                                   transition: { duration: 0.5 },
                                 }}
+                                style={{ fontSize: '2.2rem' }}
                               >
-                                <img
-                                  src={left}
+                                <FaChevronLeft
                                   style={{
                                     position: 'absolute',
                                     left: '30px',
@@ -447,8 +446,6 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                                     cursor: 'pointer',
                                     borderRadius: '50%',
                                   }}
-                                  height='60px'
-                                  width='60px'
                                   onClick={() => {
                                     setInitialXOffset(-100)
                                     setPos((pos) => {
@@ -460,8 +457,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                                     })
                                   }}
                                 />
-                                <img
-                                  src={right}
+                                <FaChevronRight
                                   style={{
                                     position: 'absolute',
                                     right: '30px',
@@ -471,8 +467,6 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                                     cursor: 'pointer',
                                     borderRadius: '50%',
                                   }}
-                                  height='60px'
-                                  width='60px'
                                   onClick={() => {
                                     setPos((pos) => {
                                       return pos + 1
