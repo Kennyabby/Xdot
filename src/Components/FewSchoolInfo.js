@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { FaUserCircle, FaAngleLeft } from 'react-icons/fa'
+
 import logo from './user.png'
 
 import ConnectionModal from './ConnectionModal'
@@ -592,7 +594,10 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
         }
       }
     }
-    if (e.target.value === 'Prev') {
+    if (
+      e.target.value === 'Prev' ||
+      e.target.getAttribute('value') === 'Prev'
+    ) {
       setShowValidatingStatus(false)
       history.push('./basicInfo')
     }
@@ -766,11 +771,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   }
   const prevNext = (
     <div className='np' onClick={getButtonEvent}>
-      {
-        <button className='prv' type='submit' name='button' value='Prev'>
-          {'<< Prev'}
-        </button>
-      }
+      {<FaAngleLeft className='prv' value='Prev' />}
       {emailVerified && (
         <button
           className='nxt'
@@ -779,7 +780,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           value='Next'
           enable={emailVerified}
         >
-          {'Next >>'}
+          {'Next'}
         </button>
       )}
     </div>
@@ -836,183 +837,200 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
         </div>
       ) : undefined}
       <div className='container' onChange={getInputEvent} onFocus={handleFocus}>
-        <img className='usr' src={logo} alt='user' height='100px' />
-        <p className='over' style={{ padding: '13px' }}>
-          <input
-            ref={matricNoRef}
-            className='input'
-            type='text'
-            name='matricNo'
-            placeholder='Enter Your Matric No'
-            value={schoolInfo.matricNo}
-            required
-            title='Enter Your Matric No'
-          />
-          <p className='inputStyle'></p>
-        </p>
-        <p className='over' style={{ padding: '13px' }}>
-          <select
-            ref={levelRef}
-            className='input black'
-            type='text'
-            name='level'
-            placeholder='Choose Your Level'
-            value={schoolInfo.level}
-            required
-            title='Choose Your Level'
-          >
-            <option value=''>Level</option>
-            <option value='100'>100</option>
-            <option value='200'>200</option>
-            <option value='300'>300</option>
-            <option value='400'>400</option>
-          </select>
-          <p className='inputStyle'></p>
-        </p>
-        <div style={{ display: 'flex', margin: '20px' }}>
-          <label>Add School Email?</label>
-          <input
-            type='checkbox'
-            checked={addSchoolEmail}
-            onChange={() => {
-              setAddSchoolEmail(!addSchoolEmail)
-            }}
-            style={{ marginLeft: '20px', cursor: 'pointer' }}
-          />
-        </div>
-        {addSchoolEmail && (
+        <FaUserCircle
+          className='usr'
+          style={{
+            fontSize: '5rem',
+            color: 'rgba(20,20,100,0.3)',
+          }}
+        />
+        <div
+          style={{
+            width: 'fit-content',
+            borderRadius: '20px',
+            padding: '7px',
+            margin: '15px auto',
+            boxShadow:
+              '-5px -5px 10px rgba(0, 0, 0, 0.1), 5px 5px 10px rgba(0, 0, 0, 0.1)',
+          }}
+        >
           <p className='over' style={{ padding: '13px' }}>
             <input
-              ref={schoolEmailRef}
+              ref={matricNoRef}
               className='input'
-              type='email'
-              name='schoolEmail'
-              placeholder='Enter Your School Email'
-              value={schoolInfo.schoolEmail}
+              type='text'
+              name='matricNo'
+              placeholder='Enter Your Matric No'
+              value={schoolInfo.matricNo}
               required
-              title='Enter Your School Email'
+              title='Enter Your Matric No'
             />
             <p className='inputStyle'></p>
           </p>
-        )}
-        <p className='over' style={{ padding: '13px' }}>
-          <input
-            ref={otherEmailRef}
-            className='input'
-            type='email'
-            name='otherEmail'
-            placeholder='Enter Your Personal Email'
-            value={schoolInfo.otherEmail}
-            required
-            title='Enter Your Personal Email'
-          />
-          <p className='inputStyle'></p>
-        </p>
-        {!otherEmailExist && matchEmail(schoolInfo.otherEmail) && (
-          <div
-            style={{ margin: '5px', textAlign: 'center', fontSize: '.8rem' }}
-          >
-            <label
-              style={{
-                color: darkMode ? 'lightgreen' : 'green',
-                fontWeight: 'bold',
-              }}
+          <p className='over' style={{ padding: '13px' }}>
+            <select
+              ref={levelRef}
+              className='input black'
+              type='text'
+              name='level'
+              placeholder='Choose Your Level'
+              value={schoolInfo.level}
+              required
+              title='Choose Your Level'
             >
-              {'Verify Email (' + schoolInfo.otherEmail + ')'}
-            </label>
-            {emailVerified ? (
-              <p
+              <option value=''>Level</option>
+              <option value='100'>100</option>
+              <option value='200'>200</option>
+              <option value='300'>300</option>
+              <option value='400'>400</option>
+            </select>
+            <p className='inputStyle'></p>
+          </p>
+          <div style={{ display: 'flex', margin: '20px' }}>
+            <label>Add School Email?</label>
+            <input
+              type='checkbox'
+              checked={addSchoolEmail}
+              onChange={() => {
+                setAddSchoolEmail(!addSchoolEmail)
+              }}
+              style={{ marginLeft: '20px', cursor: 'pointer' }}
+            />
+          </div>
+          {addSchoolEmail && (
+            <p className='over' style={{ padding: '13px' }}>
+              <input
+                ref={schoolEmailRef}
+                className='input'
+                type='email'
+                name='schoolEmail'
+                placeholder='Enter Your School Email'
+                value={schoolInfo.schoolEmail}
+                required
+                title='Enter Your School Email'
+              />
+              <p className='inputStyle'></p>
+            </p>
+          )}
+          <p className='over' style={{ padding: '13px' }}>
+            <input
+              ref={otherEmailRef}
+              className='input'
+              type='email'
+              name='otherEmail'
+              placeholder='Enter Your Personal Email'
+              value={schoolInfo.otherEmail}
+              required
+              title='Enter Your Personal Email'
+            />
+            <p className='inputStyle'></p>
+          </p>
+          {!otherEmailExist && matchEmail(schoolInfo.otherEmail) && (
+            <div
+              style={{ margin: '5px', textAlign: 'center', fontSize: '.8rem' }}
+            >
+              <label
                 style={{
-                  textAlign: 'center',
-                  color: 'green',
+                  color: darkMode ? 'lightgreen' : 'green',
                   fontWeight: 'bold',
                 }}
               >
-                Email Verified
-              </p>
-            ) : (
-              <div>
-                {codeSent && (
-                  <div
-                    style={{
-                      display: 'flex',
-                      margin: '15px',
-                      justifyContent: 'center',
-                    }}
-                    onChange={handleCodeInput}
-                    onKeyDown={handleBackSpace}
-                  >
-                    {validatingCode.map((code, i) => {
-                      return (
-                        <input
-                          ref={code.ref}
-                          type='number'
-                          style={{
-                            border: 'solid black 1px',
-                            margin: '5px',
-                            width: '30px',
-                            height: '30px',
-                            fontSize: '1.2rem',
-                            textAlign: 'center',
-                          }}
-                          editable={
-                            codeStatus !== 'Sending' &&
-                            codeStatus !== 'Send Code'
-                          }
-                          name={i}
-                          value={code.code}
-                        />
-                      )
-                    })}
-                  </div>
-                )}
-                {!codeSent ? (
-                  <div
-                    style={{
-                      margin: '25px auto',
-                      width: 'fit-content',
-                      textAlign: 'center',
-                      fontSize: '.9rem',
-                      fontWeight: 'bold',
-                      border: 'solid rgba(200,200,200,1)',
-                      padding: '6px 10px',
-                      borderRadius: '10px',
-                      cursor: 'pointer',
-                    }}
-                    onClick={handleSendCode}
-                  >
-                    <label style={{ cursor: 'pointer' }}>{codeStatus}</label>
-                  </div>
-                ) : (
-                  <div>
-                    {inCorrectCode ? (
-                      <div style={{ color: 'red' }}>Incorrect Code </div>
-                    ) : (
-                      ''
-                    )}
-                    <label>Resend Code </label>
-                    <label>
-                      {spanLeft ? (
-                        'in : ' + String(spanLeft) + 's'
+                {'Verify Email (' + schoolInfo.otherEmail + ')'}
+              </label>
+              {emailVerified ? (
+                <p
+                  style={{
+                    textAlign: 'center',
+                    color: 'green',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Email Verified
+                </p>
+              ) : (
+                <div>
+                  {codeSent && (
+                    <div
+                      style={{
+                        display: 'flex',
+                        margin: '15px',
+                        justifyContent: 'center',
+                      }}
+                      onChange={handleCodeInput}
+                      onKeyDown={handleBackSpace}
+                    >
+                      {validatingCode.map((code, i) => {
+                        return (
+                          <input
+                            ref={code.ref}
+                            type='number'
+                            style={{
+                              border: 'solid black 1px',
+                              margin: '5px',
+                              width: '30px',
+                              height: '30px',
+                              fontSize: '1.2rem',
+                              textAlign: 'center',
+                            }}
+                            editable={
+                              codeStatus !== 'Sending' &&
+                              codeStatus !== 'Send Code'
+                            }
+                            name={i}
+                            value={code.code}
+                          />
+                        )
+                      })}
+                    </div>
+                  )}
+                  {!codeSent ? (
+                    <div
+                      style={{
+                        margin: '25px auto',
+                        width: 'fit-content',
+                        textAlign: 'center',
+                        fontSize: '.9rem',
+                        fontWeight: 'bold',
+                        border: 'solid rgba(200,200,200,1)',
+                        padding: '6px 10px',
+                        borderRadius: '10px',
+                        cursor: 'pointer',
+                      }}
+                      onClick={handleSendCode}
+                    >
+                      <label style={{ cursor: 'pointer' }}>{codeStatus}</label>
+                    </div>
+                  ) : (
+                    <div>
+                      {inCorrectCode ? (
+                        <div style={{ color: 'red' }}>Incorrect Code </div>
                       ) : (
-                        <label
-                          style={{
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            color: 'green',
-                          }}
-                          onClick={handleSendCode}
-                        >
-                          Resend
-                        </label>
+                        ''
                       )}
-                    </label>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
+                      <label>Resend Code </label>
+                      <label>
+                        {spanLeft ? (
+                          'in : ' + String(spanLeft) + 's'
+                        ) : (
+                          <label
+                            style={{
+                              cursor: 'pointer',
+                              fontWeight: 'bold',
+                              color: 'green',
+                            }}
+                            onClick={handleSendCode}
+                          >
+                            Resend
+                          </label>
+                        )}
+                      </label>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         {prevNext}
       </div>
     </motion.div>

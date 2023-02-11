@@ -342,7 +342,7 @@ code {
   font-size: 1rem;
   font-weight: bold;
   width: max-content;
-  padding: 10px 20px;
+  padding: 10px 50px;
   border-radius: 20px;
   cursor: pointer;
 }
@@ -350,16 +350,8 @@ code {
   position: fixed;
   top: 5px;
   left: 5px;
-  outline: none;
-  font-family: monospace;
-  color: white;
-  border: solid red 2px;
-  background-color: red;
-  font-size: 1rem;
-  font-weight: bold;
-  width: max-content;
-  padding: 6px 20px;
-  border-radius: 20px;
+  color: red;
+  font-size: 1.6rem;
   cursor: pointer;
 }
 :hover.nxt {
@@ -368,8 +360,8 @@ code {
 }
 .inf {
   position: fixed;
-  top: 15px;
-  left: 125px;
+  top: 5px;
+  left: 45px;
   z-index: 2;
   margin: 0px;
   border: none;

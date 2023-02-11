@@ -278,7 +278,7 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
             style={{
               width: 'fit-content',
               borderRadius: '20px',
-              padding: '10px',
+              padding: '7px',
               margin: '15px auto',
               boxShadow:
                 '-5px -5px 10px rgba(0, 0, 0, 0.1), 5px 5px 10px rgba(0, 0, 0, 0.1)',
@@ -425,7 +425,7 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
           </div>
           <div className='np' onClick={getButtonEvent}>
             <button className='nxt' type='submit' name='button' value='Next'>
-              {'Next >>'}
+              {'Next'}
             </button>
           </div>
         </div>
