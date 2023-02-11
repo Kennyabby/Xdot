@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useHistory } from 'react-router-dom'
+import { FaUserCircle } from 'react-icons/fa'
 
 import logo from './user.png'
 
@@ -90,11 +91,11 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
       if (infoRef.current !== null) {
         if (infoRef.current.required) {
           if (infoRef.current.value === '') {
-            infoRef.current.style.borderBottom = 'solid red 1px'
+            infoRef.current.style.border = 'solid red 2px'
             infoRef.current.parentElement.childNodes[1].style.display = 'block'
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
           } else {
-            infoRef.current.style.borderBottom = 'solid black 1px'
+            infoRef.current.style.border = 'solid black 1px'
             infoRef.current.parentElement.childNodes[1].style.display = 'none'
             infoRef.current.parentElement.childNodes[1].style.color = 'blue'
             count++
@@ -138,17 +139,17 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
     var name = e.target.getAttribute('name')
     infoRefList.forEach((infoRef) => {
       if (infoRef.current != null) {
-        infoRef.current.style.borderBottom = 'solid black 1px'
+        infoRef.current.style.border = 'solid black 1px'
         infoRef.current.parentElement.childNodes[1].style.display = 'none'
         infoRef.current.placeholder = infoRef.current.title
         if (infoRef.current.value === '' && infoRef.current.required) {
-          infoRef.current.style.borderBottom = 'solid red 1px'
+          infoRef.current.style.border = 'solid red 2px'
           infoRef.current.parentElement.childNodes[1].style.display = 'block'
           infoRef.current.parentElement.childNodes[1].style.color = 'red'
           setBasicConfirmed(false)
         }
         if (infoRef.current.name === name) {
-          infoRef.current.style.borderBottom = 'solid blue 1px'
+          infoRef.current.style.border = 'solid blue 2px'
           infoRef.current.parentElement.childNodes[1].style.display = 'block'
           infoRef.current.placeholder = ''
           infoRef.current.parentElement.scrollIntoView()
@@ -169,10 +170,10 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
     infoRefList.forEach((infoRef) => {
       if (infoRef.current != null) {
         if (infoRef.current.name === name) {
-          infoRef.current.style.borderBottom = 'solid blue 1px'
+          infoRef.current.style.border = 'solid blue 2px'
           infoRef.current.parentElement.childNodes[1].style.color = 'blue'
           if (infoRef.current.value === '' && infoRef.current.required) {
-            infoRef.current.style.borderBottom = 'solid red 1px'
+            infoRef.current.style.border = 'solid red 2px'
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
           }
         }
@@ -204,7 +205,14 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
           onChange={getInputEvent}
           onFocus={handleFocus}
         >
-          <img className='usr' src={logo} alt='user' height='100px' />
+          <FaUserCircle
+            className='usr'
+            style={{
+              fontSize: '5rem',
+              color: 'rgba(10,10, 120, 1)',
+              border: 'solid black 2px',
+            }}
+          />
           <p className='over' style={{ padding: '13px' }}>
             <input
               ref={firstNameRef}

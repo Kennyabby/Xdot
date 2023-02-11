@@ -7,7 +7,6 @@ import { FaChevronUp, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import About from './About'
 import Current from './Current'
 import Events from './Events'
-import Signup from './Signup'
 import ContextProvider from '../ContextProvider'
 
 import vision from './vision.jpg'
