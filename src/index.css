@@ -270,7 +270,7 @@ code {
 }
 .usr {
   border-radius: 50%;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.1), 5px 5px 10px rgba(0, 0, 0, 0.1);
   margin: 5px;
 }
 .radio {
@@ -399,7 +399,6 @@ code {
   color: black;
   background-color: white;
   border-radius: 10px;
-  border: solid rgba(230, 230, 230) 2px;
   margin: 20px;
   box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.1), 5px 5px 10px rgba(0, 0, 0, 0.1);
 }
@@ -647,11 +646,6 @@ code {
     padding-left: 0px;
     display: inline-block;
     text-align: center;
-  }
-  .usr {
-    border-radius: 50%;
-    box-shadow: 0px 0px 10px black;
-    margin: 5px;
   }
   .radio {
     cursor: pointer;

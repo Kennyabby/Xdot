@@ -152,7 +152,7 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
           infoRef.current.style.border = 'solid blue 2px'
           infoRef.current.parentElement.childNodes[1].style.display = 'block'
           infoRef.current.placeholder = ''
-          infoRef.current.parentElement.scrollIntoView()
+          // infoRef.current.parentElement.scrollIntoView()
           if (infoRef.current.required) {
             infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
           } else {
@@ -209,8 +209,7 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
             className='usr'
             style={{
               fontSize: '5rem',
-              color: 'rgba(10,10, 120, 1)',
-              border: 'solid black 2px',
+              color: 'rgba(20,20,100,0.3)',
             }}
           />
           <p className='over' style={{ padding: '13px' }}>
