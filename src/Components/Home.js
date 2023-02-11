@@ -291,8 +291,8 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                 ? 'rgba(29,29,30,0.8)'
                 : 'rgba(240,240,241,0.8)',
               color: darkMode ? 'white' : 'black',
-              margin: winSize <= 700 ? '30px' : '30px',
-              marginTop: winSize <= 700 ? '75px' : '115px',
+              margin: winSize <= 700 ? '30px' : '30px auto',
+              marginTop: winSize <= 700 ? '75px' : '145px',
             }}
           >
             Connect, Meet New People, Set Goals, Develop Your Self and Skills,
