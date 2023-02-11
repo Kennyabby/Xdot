@@ -909,7 +909,9 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           <p className='inputStyle'></p>
         </p>
         {!otherEmailExist && matchEmail(schoolInfo.otherEmail) && (
-          <div style={{ margin: '5px', textAlign: 'center' }}>
+          <div
+            style={{ margin: '5px', textAlign: 'center', fontSize: '.8rem' }}
+          >
             <label
               style={{
                 color: darkMode ? 'lightgreen' : 'green',

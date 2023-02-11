@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { FaTimes } from 'react-icons/fa'
 import BasicInfo from './BasicInfo'
 import SchoolInfo from './SchoolInfo'
 import ContactInfo from './ContactInfo'
@@ -11,7 +12,7 @@ import FewSignupInfo from './FewSinupInfo'
 import Finish from './Finish'
 import Intro from './Intro'
 import SideNavigator from './SideNavigator'
-import cancel from './cancel.png'
+
 const Signup = ({ showNavbar, showNavOpt, server }) => {
   const history = useHistory()
   const [content, setContent] = useState('Loading Form...')
@@ -398,7 +399,7 @@ const Signup = ({ showNavbar, showNavOpt, server }) => {
                 cursor: 'pointer',
               }}
             >
-              <img src={cancel} height='20px' title='Close Sign up Page' />
+              <FaTimes style={{ fontSize: '1.3rem' }} />
             </div>
           </Link>
           {sessionStatus ? (

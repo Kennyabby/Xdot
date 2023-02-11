@@ -2,16 +2,9 @@ import { React, useRef, useState, useEffect, useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-
+import { FaTimes, FaSearch, FaBars, FaMoon, FaSun } from 'react-icons/fa'
 import ContextProvider from '../ContextProvider'
-
-import menu from './whamburger.png'
 import userimg from './profile.png'
-import bmenu from './menu.png'
-import close from './close.png'
-import bclose from './cancel.png'
-import srch from './wsearch.png'
-import bsrch from './search.png'
 const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
   const homeRef = useRef(null)
   const currentRef = useRef(null)
@@ -283,7 +276,12 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                 }}
                 onClick={showBar}
               >
-                <img src={darkMode ? menu : bmenu} alt='menu' height='25px' />
+                <FaBars
+                  style={{
+                    fontSize: '1.6rem',
+                    color: darkMode ? 'white' : 'black',
+                  }}
+                />
               </div>
             </div>
           </motion.div>
@@ -361,14 +359,19 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                           justifyContent: 'left',
                           fontFamily: 'monospace',
                           cursor: 'pointer',
-                          margin: '5px',
+                          margin: '10px',
                           marginTop: '7px',
+                          fontSize: '1.4rem',
                         }}
                         onClick={() => {
                           setDarkMode(!darkMode)
                         }}
                       >
-                        {darkMode ? 'Light Mode' : 'Dark Mode'}
+                        {darkMode ? (
+                          <FaSun style={{ color: 'white' }} />
+                        ) : (
+                          <FaMoon style={{ color: 'black' }} />
+                        )}
                       </div>
                     </section>
                   </div>
@@ -467,14 +470,19 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                     marginTop: '30px',
                   }}
                 >
-                  <motion.img
+                  <motion.div
                     initial={{ x: '40px' }}
                     animate={{ x: 0 }}
                     transition={{ duration: 0.8, ease: 'easeOut' }}
-                    src={darkMode ? srch : bsrch}
-                    style={{ marginTop: darkMode ? '15px' : '20px' }}
-                    height={darkMode ? '18px' : '20px'}
-                  />
+                  >
+                    <FaSearch
+                      style={{
+                        color: darkMode ? 'white' : 'black',
+                        fontSize: '1.3rem',
+                        marginTop: '18px',
+                      }}
+                    />
+                  </motion.div>
                   <input
                     type='search'
                     value={search}
@@ -505,14 +513,13 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                     backgroundColor: darkMode ? 'black' : 'white',
                   }}
                 >
-                  <img
-                    src={darkMode ? close : bclose}
-                    height='15px'
+                  <FaTimes
                     style={{
                       position: 'absolute',
-                      top: '3px',
-                      right: '23px',
+                      top: '5px',
+                      right: '7px',
                       cursor: 'pointer',
+                      color: darkMode ? 'white' : 'black',
                     }}
                     onClick={() => {
                       setSearch('')

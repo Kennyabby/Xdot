@@ -1,17 +1,19 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import {
+  FaTimes,
+  FaSearch,
+  FaMoon,
+  FaSun,
+  FaChevronUp,
+  FaChevronDown,
+} from 'react-icons/fa'
 
 import ContextProvider from '../ContextProvider'
 
-import logo from './UI-logo.png'
-import wsrch from './wsearch.png'
-import srch from './search.png'
-import close from './close.png'
-import bclose from './cancel.png'
 import userImg from './profile.png'
-import wuparrow from './uparrow.png'
-import downarrow from './downarrow.png'
+
 const Navbar = ({ getTopBar }) => {
   const [showBorder, setShowBorder] = useState(false)
   const [search, setSearch] = useState('')
@@ -291,10 +293,11 @@ const Navbar = ({ getTopBar }) => {
                 marginTop: '30px',
               }}
             >
-              <img
-                src={darkMode ? wsrch : srch}
-                style={{ marginTop: darkMode ? '12px' : '12px' }}
-                height={darkMode ? '16px' : '20px'}
+              <FaSearch
+                style={{
+                  marginTop: '15px',
+                  color: darkMode ? 'white' : 'black',
+                }}
               />
               <input
                 type='search'
@@ -358,16 +361,28 @@ const Navbar = ({ getTopBar }) => {
                     }}
                   />
                   {showDrop ? (
-                    <div style={{ marginTop: '-12px' }}>
-                      <LazyLoadImage
-                        src={downarrow}
-                        width='10px'
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => {
-                          setShowViewInfo(!showViewInfo)
-                          setShowIconLabel(!showIconLabel)
-                        }}
-                      />
+                    <div
+                      style={{ marginTop: '-7px' }}
+                      onClick={() => {
+                        setShowViewInfo(!showViewInfo)
+                        setShowIconLabel(!showIconLabel)
+                      }}
+                    >
+                      {showViewInfo ? (
+                        <FaChevronUp
+                          style={{
+                            cursor: 'pointer',
+                            color: darkMode ? 'white' : 'black',
+                          }}
+                        />
+                      ) : (
+                        <FaChevronDown
+                          style={{
+                            cursor: 'pointer',
+                            color: darkMode ? 'white' : 'black',
+                          }}
+                        />
+                      )}
                     </div>
                   ) : undefined}
                   {showViewInfo && (
@@ -410,12 +425,15 @@ const Navbar = ({ getTopBar }) => {
                               justifyContent: 'left',
                               fontFamily: 'monospace',
                               cursor: 'pointer',
+                              margin: '10px',
+                              color: darkMode ? 'white' : 'black',
+                              fontSize: '1.3rem',
                             }}
                             onClick={() => {
                               setDarkMode(!darkMode)
                             }}
                           >
-                            {darkMode ? 'Light Mode' : 'Dark Mode'}
+                            {darkMode ? <FaSun /> : <FaMoon />}
                           </div>
                         </section>
                       </div>
@@ -518,12 +536,11 @@ const Navbar = ({ getTopBar }) => {
                 backgroundColor: darkMode ? 'black' : 'white',
               }}
             >
-              <img
-                src={darkMode ? close : bclose}
-                height='15px'
+              <FaTimes
                 style={{
                   position: 'absolute',
-                  top: '3px',
+                  top: '10px',
+                  color: darkMode ? 'white' : 'black',
                   right: '23px',
                   cursor: 'pointer',
                 }}

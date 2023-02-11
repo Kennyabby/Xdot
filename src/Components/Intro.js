@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { FaCheckSquare } from 'react-icons/fa'
 
 import ContextProvider from '../ContextProvider'
 
@@ -50,16 +51,39 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
               challenges finishing up if you do not.
             </li>
           </div>
-          <div style={{ margin: '10px', fontSize: '1.1rem' }}>
-            <input
-              type='checkbox'
-              style={{ marginRight: '10px', cursor: 'pointer' }}
-              checked={fillAllFields}
-              onChange={() => {
+          <div
+            style={{
+              margin: '10px',
+              fontSize: '1.1rem',
+              display: 'flex',
+            }}
+          >
+            <div
+              style={{ width: 'fit-content', marginRight: '20px' }}
+              onClick={() => {
                 setFillAllFields(!fillAllFields)
               }}
-            />
-            <label>Fill in all required fields?</label>
+            >
+              {fillAllFields ? (
+                <FaCheckSquare
+                  style={{
+                    cursor: 'pointer',
+                    color: 'green',
+                  }}
+                />
+              ) : (
+                <input
+                  type='checkbox'
+                  checked={false}
+                  style={{
+                    cursor: 'pointer',
+                    fontSize: '1.2rem',
+                  }}
+                />
+              )}
+            </div>
+
+            <label>Fill in all required fields</label>
           </div>
         </div>
         <Link to='/signup/basicInfo'>
@@ -75,7 +99,7 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
               border: 'solid red 1px',
               borderRadius: '20px',
               color: 'white',
-              marginBottom: '70px',
+              marginBottom: '50px',
             }}
             initial={{ x: '-100vw', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -84,9 +108,9 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
           </motion.button>
         </Link>
         <div style={{ color: 'black' }}>
-          <label>Already have an account?</label>
-          <Link to='/signin'>
-            <label style={{ cursor: 'pointer' }}>{' Sign in'}</label>
+          <label>Already have an account?{'  '}</label>
+          <Link to='/signin' style={{ color: 'blue' }}>
+            <label style={{ cursor: 'pointer' }}>{'Sign in'}</label>
           </Link>
         </div>
       </div>
