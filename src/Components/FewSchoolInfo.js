@@ -70,9 +70,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     levelRef,
   ])
   var matricValidated = false
-  var schoolEmailValidated = false
-  var schoolEmailExist = false
-  const [otherEmailValidated, setOtherEmailValidated] = useState(false)
+  const [schoolEmailExist, setSchoolEmailExist] = useState(false)
   const [otherEmailExist, setOtherEmailExist] = useState(false)
   const [emailVerified, setEmailVerified] = useState(false)
   const [codeSent, setCodeSent] = useState(false)
@@ -135,55 +133,27 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
             infoRef.current.parentElement.childNodes[1].style.display = 'none'
             infoRef.current.parentElement.childNodes[1].style.color = 'blue'
             if (infoRef.current.name === 'matricNo') {
-              if (
-                Number(infoRef.current.value) &&
-                infoRef.current.value.length === 6
-              ) {
-                if (matricValidated) {
-                  infoRef.current.style.borderBottom = 'solid red 1px'
-                  infoRef.current.parentElement.childNodes[1].style.display =
-                    'block'
-                  infoRef.current.parentElement.childNodes[1].style.color =
-                    'red'
-                  infoRef.current.parentElement.childNodes[1].innerHTML =
-                    'This Matric Number Has Been Registered!'
-                  count--
-                }
-              } else {
-                count--
+              if (matricValidated) {
                 infoRef.current.style.borderBottom = 'solid red 1px'
                 infoRef.current.parentElement.childNodes[1].style.display =
                   'block'
                 infoRef.current.parentElement.childNodes[1].style.color = 'red'
                 infoRef.current.parentElement.childNodes[1].innerHTML =
-                  'Enter a Valid Matric Number'
+                  'This Matric Number Has Been Registered!'
+                count--
               }
             }
             if (infoRef.current.name === 'schoolEmail') {
-              if (matchSchoolEmail(infoRef.current.value)) {
-                if (schoolEmailValidated) {
-                  if (schoolEmailExist) {
-                    infoRef.current.style.borderBottom = 'solid red 1px'
-                    infoRef.current.parentElement.childNodes[1].style.display =
-                      'block'
-                    infoRef.current.parentElement.childNodes[1].style.color =
-                      'red'
-                    infoRef.current.parentElement.childNodes[1].innerHTML =
-                      'This Email Has Been Registered!'
-                    count--
-                  } else {
-                    // count++;
-                    // console.log("increased to:",count);
-                  }
-                } else {
-                  count--
+              if (matchEmail(infoRef.current.value)) {
+                if (schoolEmailExist) {
                   infoRef.current.style.borderBottom = 'solid red 1px'
                   infoRef.current.parentElement.childNodes[1].style.display =
                     'block'
                   infoRef.current.parentElement.childNodes[1].style.color =
                     'red'
                   infoRef.current.parentElement.childNodes[1].innerHTML =
-                    '* Could Not Validate Email Address'
+                    'This Email Has Been Registered!'
+                  count--
                 }
               } else {
                 infoRef.current.style.borderBottom = 'solid red 1px'
@@ -197,30 +167,15 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
             }
             if (infoRef.current.name === 'otherEmail') {
               if (matchEmail(infoRef.current.value)) {
-                if (otherEmailValidated) {
-                  if (otherEmailExist) {
-                    infoRef.current.style.borderBottom = 'solid red 1px'
-                    infoRef.current.parentElement.childNodes[1].style.display =
-                      'block'
-                    infoRef.current.parentElement.childNodes[1].style.color =
-                      'red'
-                    infoRef.current.parentElement.childNodes[1].innerHTML =
-                      'This Email Has Been Registered!'
-                    count--
-                  } else {
-                    // count++;
-                    // console.log("increased to:",count);
-                  }
-                } else {
-                  count--
+                if (otherEmailExist) {
                   infoRef.current.style.borderBottom = 'solid red 1px'
                   infoRef.current.parentElement.childNodes[1].style.display =
                     'block'
                   infoRef.current.parentElement.childNodes[1].style.color =
                     'red'
                   infoRef.current.parentElement.childNodes[1].innerHTML =
-                    '* Could Not Validate Email Address'
-                  // window.location.reload()
+                    'This Email Has Been Registered!'
+                  count--
                 }
               } else {
                 infoRef.current.style.borderBottom = 'solid red 1px'
@@ -233,13 +188,12 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
               }
             }
             count++
-            // console.log(count)
           }
         }
       }
     })
 
-    if (infos.length === count && emailVerified) {
+    if (infos.length === count) {
       setSchoolConfirmed(true)
       return true
     } else {
@@ -260,18 +214,47 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           if (infoRef.current.value === '') {
           } else {
             if (infoRef.current.name === 'matricNo') {
-              if (
-                Number(infoRef.current.value) &&
-                infoRef.current.value.length === 6
-              ) {
-                if (all) {
+              if (all) {
+                try {
+                  const opts = {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ matricNo: infoRef.current.value }),
+                  }
+                  const resp = await fetch(server + '/isMatricPresent', opts)
+
+                  const response = await resp.json()
+                  const isPresent = response.isPresent
+                  if (isPresent) {
+                    matricValidated = true
+                    infoRef.current.style.borderBottom = 'solid red 1px'
+                    infoRef.current.parentElement.childNodes[1].style.display =
+                      'block'
+                    infoRef.current.parentElement.childNodes[1].style.color =
+                      'red'
+                    infoRef.current.parentElement.childNodes[1].innerHTML =
+                      'This Matric Number Has Been Registered!'
+                    count--
+                  } else {
+                    matricValidated = false
+                  }
+                  setShowModal(false)
+                } catch (TypeError) {
+                  setShowModal(true)
+                }
+              } else {
+                if (name === 'matricNo') {
                   try {
                     const opts = {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',
                       },
-                      body: JSON.stringify({ matricNo: infoRef.current.value }),
+                      body: JSON.stringify({
+                        matricNo: infoRef.current.value,
+                      }),
                     }
                     const resp = await fetch(server + '/isMatricPresent', opts)
 
@@ -289,62 +272,16 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                       count--
                     } else {
                       matricValidated = false
-                      // count++;
-                      // console.log("increased to:",count);
                     }
                     setShowModal(false)
                   } catch (TypeError) {
-                    // console.log(TypeError)
                     setShowModal(true)
                   }
-                } else {
-                  if (name === 'matricNo') {
-                    try {
-                      const opts = {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                          matricNo: infoRef.current.value,
-                        }),
-                      }
-                      const resp = await fetch(
-                        server + '/isMatricPresent',
-                        opts
-                      )
-
-                      const response = await resp.json()
-                      const isPresent = response.isPresent
-                      if (isPresent) {
-                        matricValidated = true
-                        infoRef.current.style.borderBottom = 'solid red 1px'
-                        infoRef.current.parentElement.childNodes[1].style.display =
-                          'block'
-                        infoRef.current.parentElement.childNodes[1].style.color =
-                          'red'
-                        infoRef.current.parentElement.childNodes[1].innerHTML =
-                          'This Matric Number Has Been Registered!'
-                        count--
-                      } else {
-                        matricValidated = false
-                        // count++;
-                        // console.log("increased to:",count);
-                      }
-                      setShowModal(false)
-                    } catch (TypeError) {
-                      // console.log(TypeError)
-                      setShowModal(true)
-                    }
-                  }
                 }
-              } else {
-                count--
               }
             }
             if (infoRef.current.name === 'schoolEmail') {
-              // infoRef.current.parentElement.childNodes[1].style.color = 'blue'
-              if (matchSchoolEmail(infoRef.current.value)) {
+              if (matchEmail(infoRef.current.value)) {
                 if (all) {
                   try {
                     const opts = {
@@ -352,67 +289,28 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                       headers: {
                         'Content-Type': 'application/json',
                       },
-                      body: JSON.stringify({ email: infoRef.current.value }),
+                      body: JSON.stringify({
+                        schoolEmail: infoRef.current.value,
+                      }),
                     }
-                    const resp = await fetch(server + '/validateMail', opts)
+                    const resp = await fetch(server + '/isEmailPresent', opts)
                     const response = await resp.json()
-                    const validated1 = response.isValid
-
-                    if (validated1) {
-                      schoolEmailValidated = true
-                      infoRef.current.style.borderBottom =
-                        'solid lightgreen 1px'
-                      infoRef.current.parentElement.childNodes[1].style.display =
-                        'block'
-                      infoRef.current.parentElement.childNodes[1].style.color =
-                        'lightgreen'
-                      infoRef.current.parentElement.childNodes[1].innerHTML = `* Email Validated!`
-                      try {
-                        const opts = {
-                          method: 'POST',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify({
-                            schoolEmail: infoRef.current.value,
-                          }),
-                        }
-                        const resp = await fetch(
-                          server + '/isEmailPresent',
-                          opts
-                        )
-                        const response = await resp.json()
-                        const isPresent = response.isPresent
-                        if (isPresent) {
-                          schoolEmailExist = true
-                          infoRef.current.style.borderBottom = 'solid red 1px'
-                          infoRef.current.parentElement.childNodes[1].style.display =
-                            'block'
-                          infoRef.current.parentElement.childNodes[1].style.color =
-                            'red'
-                          infoRef.current.parentElement.childNodes[1].innerHTML =
-                            'This Email Has Been Registered!'
-                          count--
-                        } else {
-                          schoolEmailExist = false
-                          // count++;
-                          // console.log("increased to:",count);
-                        }
-                      } catch (TypeError) {}
-                    } else {
-                      schoolEmailValidated = false
+                    const isPresent = response.isPresent
+                    if (isPresent) {
+                      setSchoolEmailExist(true)
                       infoRef.current.style.borderBottom = 'solid red 1px'
                       infoRef.current.parentElement.childNodes[1].style.display =
                         'block'
                       infoRef.current.parentElement.childNodes[1].style.color =
                         'red'
                       infoRef.current.parentElement.childNodes[1].innerHTML =
-                        'Enter a Valid Email Address'
+                        'This Email Has Been Registered!'
                       count--
+                      setShowModal(false)
+                    } else {
+                      setSchoolEmailExist(false)
                     }
-                    setShowModal(false)
                   } catch (TypeError) {
-                    // console.log(TypeError)
                     setShowModal(true)
                   }
                 } else {
@@ -423,67 +321,28 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                         headers: {
                           'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ email: infoRef.current.value }),
+                        body: JSON.stringify({
+                          schoolEmail: infoRef.current.value,
+                        }),
                       }
-                      const resp = await fetch(server + '/validateMail', opts)
+                      const resp = await fetch(server + '/isEmailPresent', opts)
                       const response = await resp.json()
-                      const validated1 = response.isValid
-
-                      if (validated1) {
-                        schoolEmailValidated = true
-                        infoRef.current.style.borderBottom =
-                          'solid lightgreen 1px'
-                        infoRef.current.parentElement.childNodes[1].style.display =
-                          'block'
-                        infoRef.current.parentElement.childNodes[1].style.color =
-                          'lightgreen'
-                        infoRef.current.parentElement.childNodes[1].innerHTML = `* Email Validated!`
-                        try {
-                          const opts = {
-                            method: 'POST',
-                            headers: {
-                              'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                              schoolEmail: infoRef.current.value,
-                            }),
-                          }
-                          const resp = await fetch(
-                            server + '/isEmailPresent',
-                            opts
-                          )
-                          const response = await resp.json()
-                          const isPresent = response.isPresent
-                          if (isPresent) {
-                            schoolEmailExist = true
-                            infoRef.current.style.borderBottom = 'solid red 1px'
-                            infoRef.current.parentElement.childNodes[1].style.display =
-                              'block'
-                            infoRef.current.parentElement.childNodes[1].style.color =
-                              'red'
-                            infoRef.current.parentElement.childNodes[1].innerHTML =
-                              'This Email Has Been Registered!'
-                            count--
-                          } else {
-                            schoolEmailExist = false
-                            // count++;
-                            // console.log("increased to:",count);
-                          }
-                        } catch (TypeError) {}
-                      } else {
-                        schoolEmailValidated = false
+                      const isPresent = response.isPresent
+                      if (isPresent) {
+                        setSchoolEmailExist(true)
                         infoRef.current.style.borderBottom = 'solid red 1px'
                         infoRef.current.parentElement.childNodes[1].style.display =
                           'block'
                         infoRef.current.parentElement.childNodes[1].style.color =
                           'red'
                         infoRef.current.parentElement.childNodes[1].innerHTML =
-                          'Enter a Valid Email Address'
+                          'This Email Has Been Registered!'
                         count--
+                        setShowModal(false)
+                      } else {
+                        setSchoolEmailExist(false)
                       }
-                      setShowModal(false)
                     } catch (TypeError) {
-                      // console.log(TypeError)
                       setShowModal(true)
                     }
                   }
@@ -494,12 +353,11 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                   'block'
                 infoRef.current.parentElement.childNodes[1].style.color = 'red'
                 infoRef.current.parentElement.childNodes[1].innerHTML =
-                  'Enter A Valid School Email!'
+                  'Email Is Not Valid!'
                 count--
               }
             }
             if (infoRef.current.name === 'otherEmail') {
-              // infoRef.current.parentElement.childNodes[1].style.color = 'blue'
               if (matchEmail(infoRef.current.value)) {
                 if (all) {
                   try {
@@ -508,68 +366,28 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                       headers: {
                         'Content-Type': 'application/json',
                       },
-                      body: JSON.stringify({ email: infoRef.current.value }),
+                      body: JSON.stringify({
+                        otherEmail: infoRef.current.value,
+                      }),
                     }
-                    const resp = await fetch(server + '/validateMail', opts)
+                    const resp = await fetch(server + '/isEmailPresent', opts)
                     const response = await resp.json()
-                    const validated2 = response.isValid
-
-                    if (validated2) {
-                      setOtherEmailValidated(true)
-                      infoRef.current.style.borderBottom =
-                        'solid lightgreen 1px'
-                      infoRef.current.parentElement.childNodes[1].style.display =
-                        'block'
-                      infoRef.current.parentElement.childNodes[1].style.color =
-                        'lightgreen'
-                      infoRef.current.parentElement.childNodes[1].innerHTML = `* Email Validated!`
-                      try {
-                        const opts = {
-                          method: 'POST',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify({
-                            otherEmail: infoRef.current.value,
-                          }),
-                        }
-                        const resp = await fetch(
-                          server + '/isEmailPresent',
-                          opts
-                        )
-                        const response = await resp.json()
-                        const isPresent = response.isPresent
-                        if (isPresent) {
-                          setOtherEmailExist(true)
-                          infoRef.current.style.borderBottom = 'solid red 1px'
-                          infoRef.current.parentElement.childNodes[1].style.display =
-                            'block'
-                          infoRef.current.parentElement.childNodes[1].style.color =
-                            'red'
-                          infoRef.current.parentElement.childNodes[1].innerHTML =
-                            'This Email Has Been Registered!'
-                          count--
-                          setOtherEmailValidated(false)
-                        } else {
-                          setOtherEmailExist(false)
-                          // count++;
-                          // console.log("increased to:",count);
-                        }
-                      } catch (TypeError) {}
-                    } else {
-                      setOtherEmailValidated(false)
+                    const isPresent = response.isPresent
+                    if (isPresent) {
+                      setOtherEmailExist(true)
                       infoRef.current.style.borderBottom = 'solid red 1px'
                       infoRef.current.parentElement.childNodes[1].style.display =
                         'block'
                       infoRef.current.parentElement.childNodes[1].style.color =
                         'red'
                       infoRef.current.parentElement.childNodes[1].innerHTML =
-                        'Enter a Valid Email Address'
+                        'This Email Has Been Registered!'
                       count--
+                      setShowModal(false)
+                    } else {
+                      setOtherEmailExist(false)
                     }
-                    setShowModal(false)
                   } catch (TypeError) {
-                    // console.log(TypeError)
                     setShowModal(true)
                   }
                 } else {
@@ -580,68 +398,28 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                         headers: {
                           'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ email: infoRef.current.value }),
+                        body: JSON.stringify({
+                          otherEmail: infoRef.current.value,
+                        }),
                       }
-                      const resp = await fetch(server + '/validateMail', opts)
+                      const resp = await fetch(server + '/isEmailPresent', opts)
                       const response = await resp.json()
-                      const validated2 = response.isValid
-
-                      if (validated2) {
-                        setOtherEmailValidated(true)
-                        infoRef.current.style.borderBottom =
-                          'solid lightgreen 1px'
-                        infoRef.current.parentElement.childNodes[1].style.display =
-                          'block'
-                        infoRef.current.parentElement.childNodes[1].style.color =
-                          'lightgreen'
-                        infoRef.current.parentElement.childNodes[1].innerHTML = `* Email Validated!`
-                        try {
-                          const opts = {
-                            method: 'POST',
-                            headers: {
-                              'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                              otherEmail: infoRef.current.value,
-                            }),
-                          }
-                          const resp = await fetch(
-                            server + '/isEmailPresent',
-                            opts
-                          )
-                          const response = await resp.json()
-                          const isPresent = response.isPresent
-                          if (isPresent) {
-                            setOtherEmailExist(true)
-                            infoRef.current.style.borderBottom = 'solid red 1px'
-                            infoRef.current.parentElement.childNodes[1].style.display =
-                              'block'
-                            infoRef.current.parentElement.childNodes[1].style.color =
-                              'red'
-                            infoRef.current.parentElement.childNodes[1].innerHTML =
-                              'This Email Has Been Registered!'
-                            count--
-                            setOtherEmailValidated(false)
-                          } else {
-                            setOtherEmailExist(false)
-                            // count++;
-                            // console.log("increased to:",count);
-                          }
-                        } catch (TypeError) {}
-                      } else {
-                        setOtherEmailValidated(false)
+                      const isPresent = response.isPresent
+                      if (isPresent) {
+                        setOtherEmailExist(true)
                         infoRef.current.style.borderBottom = 'solid red 1px'
                         infoRef.current.parentElement.childNodes[1].style.display =
                           'block'
                         infoRef.current.parentElement.childNodes[1].style.color =
                           'red'
                         infoRef.current.parentElement.childNodes[1].innerHTML =
-                          'Enter a Valid Email Address'
+                          'This Email Has Been Registered!'
                         count--
+                        setShowModal(false)
+                      } else {
+                        setOtherEmailExist(false)
                       }
-                      setShowModal(false)
                     } catch (TypeError) {
-                      // console.log(TypeError)
                       setShowModal(true)
                     }
                   }
@@ -687,17 +465,6 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     window.localStorage.setItem('otherEmail', schoolInfo.otherEmail)
     window.localStorage.setItem('level', schoolInfo.level)
   }, [schoolInfo])
-  useEffect(() => {
-    const first = localStorage.getItem('firstName').slice(0, 1)
-    const last = localStorage.getItem('lastName')
-    const matric = schoolInfo.matricNo.slice(3)
-    setSchoolInfo((schoolInfo) => {
-      return {
-        ...schoolInfo,
-        schoolEmail: (first + last + matric + '@stu.ui.edu.ng').toLowerCase(),
-      }
-    })
-  }, [schoolInfo.matricNo])
   const getButtonEvent = async (e) => {
     if (e.target.value === 'Next') {
       if (
@@ -707,7 +474,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
       ) {
         setShowValidatingStatus(true)
         setTimeout(() => {
-          validatorRef.current.scrollIntoView()
+          validatorRef.current.scrollIntoView({ behavior: 'smooth' })
         }, [500])
         try {
           const opts = {
@@ -726,76 +493,44 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           } else {
             matricValidated = false
           }
-          const opts2 = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: otherEmailRef.current.value }),
-          }
-          const resp2 = await fetch(server + '/validateMail', opts2)
-          const response2 = await resp2.json()
-          const validated2 = response2.isValid
-
-          if (validated2) {
-            setOtherEmailValidated(true)
-            try {
-              const opts = {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  otherEmail: otherEmailRef.current.value,
-                }),
-              }
-              const resp = await fetch(server + '/isEmailPresent', opts)
-              const response = await resp.json()
-              const isPresent = response.isPresent
-              if (isPresent) {
-                setOtherEmailExist(true)
-              } else {
-                setOtherEmailExist(false)
-              }
-            } catch (TypeError) {}
-          } else {
-            setOtherEmailValidated(false)
-          }
-          const opts1 = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: schoolEmailRef.current.value }),
-          }
-          const resp1 = await fetch(server + '/validateMail', opts1)
-          const response1 = await resp1.json()
-          const validated1 = response1.isValid
-
-          if (validated1) {
-            schoolEmailValidated = true
-            try {
-              const opts = {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  schoolEmail: schoolEmailRef.current.value,
-                }),
-              }
-              const resp = await fetch(server + '/isEmailPresent', opts)
-              const response = await resp.json()
-              const isPresent = response.isPresent
-              if (isPresent) {
-                schoolEmailExist = true
-              } else {
-                schoolEmailExist = false
-              }
-            } catch (TypeError) {}
-          } else {
-            schoolEmailValidated = false
-          }
+          try {
+            const opts = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                otherEmail: otherEmailRef.current.value,
+              }),
+            }
+            const resp = await fetch(server + '/isEmailPresent', opts)
+            const response = await resp.json()
+            const isPresent = response.isPresent
+            if (isPresent) {
+              setOtherEmailExist(true)
+            } else {
+              setOtherEmailExist(false)
+            }
+          } catch (TypeError) {}
+          try {
+            const opts = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                schoolEmail: schoolEmailRef.current.value,
+              }),
+            }
+            const resp = await fetch(server + '/isEmailPresent', opts)
+            const response = await resp.json()
+            const isPresent = response.isPresent
+            if (isPresent) {
+              setSchoolEmailExist(true)
+            } else {
+              setSchoolEmailExist(false)
+            }
+          } catch (TypeError) {}
           setShowModal(false)
           if (validateInputs()) {
             history.push('./signInfo')
@@ -829,42 +564,26 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           } else {
             matricValidated = false
           }
-          const opts2 = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: otherEmailRef.current.value }),
-          }
-          const resp2 = await fetch(server + '/validateMail', opts2)
-          const response2 = await resp2.json()
-          const validated2 = response2.isValid
-
-          if (validated2) {
-            setOtherEmailValidated(true)
-            try {
-              const opts = {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  otherEmail: otherEmailRef.current.value,
-                }),
-              }
-              const resp = await fetch(server + '/isEmailPresent', opts)
-              const response = await resp.json()
-              const isPresent = response.isPresent
-              if (isPresent) {
-                setOtherEmailExist(true)
-              } else {
-                setOtherEmailExist(false)
-              }
-            } catch (TypeError) {}
-          } else {
-            setOtherEmailValidated(false)
-          }
-
+          try {
+            const opts = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                otherEmail: otherEmailRef.current.value,
+              }),
+            }
+            const resp = await fetch(server + '/isEmailPresent', opts)
+            const response = await resp.json()
+            const isPresent = response.isPresent
+            if (isPresent) {
+              setOtherEmailExist(true)
+            } else {
+              setOtherEmailExist(false)
+            }
+          } catch (TypeError) {}
+          setShowModal(false)
           if (validateInputs()) {
             history.push('./signupInfo')
           }
@@ -898,24 +617,6 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           infoRef.current.parentElement.scrollIntoView()
           if (infoRef.current.required) {
             infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
-            if (
-              infoRef.current.name === 'matricNo' &&
-              infoRef.current.value.length > 0
-            ) {
-              if (
-                Number(infoRef.current.value) &&
-                infoRef.current.value.length === 6
-              ) {
-                infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
-              } else {
-                infoRef.current.style.borderBottom = 'solid red 1px'
-                infoRef.current.parentElement.childNodes[1].style.display =
-                  'block'
-                infoRef.current.parentElement.childNodes[1].style.color = 'red'
-                infoRef.current.parentElement.childNodes[1].innerHTML =
-                  'Enter a Valid Matric Number'
-              }
-            }
           } else {
             infoRef.current.parentElement.childNodes[1].innerHTML =
               infoRef.current.title
@@ -935,24 +636,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           infoRef.current.parentElement.childNodes[1].style.color = 'blue'
           infoRef.current.parentElement.childNodes[1].innerHTML =
             infoRef.current.title
-          if (
-            infoRef.current.name === 'matricNo' &&
-            infoRef.current.value.length > 0
-          ) {
-            if (
-              Number(infoRef.current.value) &&
-              infoRef.current.value.length === 6
-            ) {
-              infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
-            } else {
-              infoRef.current.style.borderBottom = 'solid red 1px'
-              infoRef.current.parentElement.childNodes[1].style.display =
-                'block'
-              infoRef.current.parentElement.childNodes[1].style.color = 'red'
-              infoRef.current.parentElement.childNodes[1].innerHTML =
-                'Enter a Valid Matric Number'
-            }
-          }
+
           if (infoRef.current.value === '' && infoRef.current.required) {
             infoRef.current.style.borderBottom = 'solid red 1px'
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
@@ -970,11 +654,9 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     })
     if (validateCode && codes.length === 4) {
       if (verificationCode === codes) {
-        console.log('email verified!')
         setEmailVerified(true)
       } else {
         setInCorrectCode(true)
-        console.log('Incorrect Verification Code!')
       }
     }
   }, [validateCode, validatingCode])
@@ -1085,11 +767,11 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   const prevNext = (
     <div className='np' onClick={getButtonEvent}>
       {
-        <button className='nxt' type='submit' name='button' value='Prev'>
+        <button className='prv' type='submit' name='button' value='Prev'>
           {'<< Prev'}
         </button>
       }
-      {
+      {emailVerified && (
         <button
           className='nxt'
           type='submit'
@@ -1099,7 +781,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
         >
           {'Next >>'}
         </button>
-      }
+      )}
     </div>
   )
 
@@ -1129,12 +811,15 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           }}
         />
       ) : undefined}
-      <motion.div variants={headerVariants} className='infotag'>
-        School Info
+      <motion.div
+        variants={headerVariants}
+        className='infotag'
+        ref={validatorRef}
+      >
+        Education Info
       </motion.div>
       {showValidatingStatus ? (
         <div
-          ref={validatorRef}
           style={{
             padding: '10px',
             margin: '20px',
@@ -1156,7 +841,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           <input
             ref={matricNoRef}
             className='input'
-            type='number'
+            type='text'
             name='matricNo'
             placeholder='Enter Your Matric No'
             value={schoolInfo.matricNo}
@@ -1223,7 +908,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           />
           <p className='inputStyle'></p>
         </p>
-        {otherEmailValidated && (
+        {!otherEmailExist && matchEmail(schoolInfo.otherEmail) && (
           <div style={{ margin: '5px', textAlign: 'center' }}>
             <label
               style={{
@@ -1231,7 +916,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                 fontWeight: 'bold',
               }}
             >
-              Verify Email Address
+              {'Verify Email (' + schoolInfo.otherEmail + ')'}
             </label>
             {emailVerified ? (
               <p

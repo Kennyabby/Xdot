@@ -327,13 +327,30 @@ code {
 .nxt {
   outline: none;
   font-family: monospace;
-  color: red;
+  color: white;
+  border: solid red 2px;
+  background-color: red;
   font-size: 1rem;
+  font-weight: bold;
   width: max-content;
-  padding: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 10px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.prv {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  outline: none;
+  font-family: monospace;
+  color: white;
+  border: solid red 2px;
+  background-color: red;
+  font-size: 1rem;
+  font-weight: bold;
+  width: max-content;
+  padding: 6px 20px;
+  border-radius: 20px;
   cursor: pointer;
 }
 :hover.nxt {
@@ -342,8 +359,8 @@ code {
 }
 .inf {
   position: fixed;
-  top: 5px;
-  left: 5px;
+  top: 15px;
+  left: 125px;
   z-index: 2;
   margin: 0px;
   border: none;
@@ -679,25 +696,12 @@ code {
   }
   .nxt {
     margin: 0px;
-    outline: none;
-    color: red;
-    font-family: monospace;
-    width: max-content;
-    font-size: 1rem;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 10px;
-    cursor: pointer;
   }
   :hover.nxt {
     background-color: white;
     color: red;
   }
   .inf {
-    position: fixed;
-    top: 5px;
-    left: 5px;
     margin: 0px;
     border: none;
     outline: none;
