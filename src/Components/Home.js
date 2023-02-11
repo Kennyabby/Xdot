@@ -292,7 +292,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                 : 'rgba(240,240,241,0.8)',
               color: darkMode ? 'white' : 'black',
               margin: winSize <= 700 ? '30px' : '30px auto',
-              marginTop: '75px',
+              marginTop: winSize <= 700 ? '75px' : '115px',
             }}
           >
             Connect, Meet New People, Set Goals, Develop Your Self and Skills,
