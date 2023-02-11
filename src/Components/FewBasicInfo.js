@@ -75,16 +75,21 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
       .catch((error) => {
         console.log('Error getting countries:', error)
       })
-    fetch('https://restcountries.com/v3.1/all?fields=callingCodes')
-      .then((response) => {
-        return response.json()
-      })
-      .then((data) => {
-        // console.log(data)
-      })
-      .catch((error) => {
-        console.log('Error getting countries:', error)
-      })
+    // fetch('https://restcountries.com/v3.1/all?fields=callingCodes')
+    //   .then((response) => {
+    //     return response.json()
+    //   })
+    //   .then((data) => {
+    //     // console.log(data)
+    //   })
+    //   .catch((error) => {
+    //     console.log('Error getting countries:', error)
+    //   })
+    // fetch('https://api.ipdata.co/')
+    //   .then((res) => {
+    //     return res.json()
+    //   })
+    //   .then((data) => console.log(data))
   }, [])
 
   useEffect(() => {
@@ -269,140 +274,155 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
               color: 'rgba(20,20,100,0.3)',
             }}
           />
-          <p className='over' style={{ padding: '13px' }}>
-            <input
-              ref={firstNameRef}
-              className='input'
-              type='text'
-              name='firstName'
-              show={false}
-              placeholder='Enter First Name'
-              value={basicInfo.firstName}
-              required
-              title='Enter First Name'
-            />
-            <p className='inputStyle'></p>
-          </p>
-          <p className='over' style={{ padding: '13px' }}>
-            <input
-              ref={middleNameRef}
-              className='input'
-              type='text'
-              name='middleName'
-              placeholder='Enter Middle Name'
-              value={basicInfo.middleName}
-              title='Enter Middle Name'
-            />
-            <p className='inputStyle'></p>
-          </p>
-          <p className='over' style={{ padding: '13px' }}>
-            <input
-              ref={lastNameRef}
-              className='input'
-              type='text'
-              name='lastName'
-              placeholder='Enter Last Name'
-              value={basicInfo.lastName}
-              required
-              title='Enter Last Name'
-            />
-            <p className='inputStyle'></p>
-          </p>
-          <p className='over' style={{ padding: '13px' }}>
-            <select
-              ref={genderRef}
-              className='input'
-              name='gender'
-              value={basicInfo.gender}
-              required
-              placeholder='Select Your Gender'
-              title='Select Your Gender'
-            >
-              <option value=''>{'Select Your Gender'}</option>
-              <option value='Male'>Male</option>
-              <option value='Female'>Female</option>
-              <option value='Non Binary'>Non Binary</option>
-              <option value="Don't wish to disclose">
-                Don't wish to disclose
-              </option>
-              <option value='Others'>Others</option>
-            </select>
-            <p className='inputStyle'></p>
-          </p>
-          <p className='over' style={{ padding: '13px' }}>
-            <select
-              ref={identityRef}
-              className='input'
-              name='identity'
-              value={basicInfo.identity}
-              required
-              placeholder='What Do You Identity As?'
-              title='What Do You Identify As?'
-            >
-              <option value=''>{'What Do You Identify As?'}</option>
-              <option value='He/His'>He/His</option>
-              <option value='She/Her'>She/Her</option>
-              <option value='They/Them'>They/Them</option>
-              <option value='Their/Those'>Their/Those</option>
-              <option value="Don't wish to disclose">
-                Don't wish to disclose
-              </option>
-              <option value='Others'>Others</option>
-            </select>
-            <p className='inputStyle'></p>
-          </p>
-          <p className='over' style={{ padding: '13px' }}>
-            <select
-              ref={nationalityRef}
-              className='input'
-              name='nationality'
-              value={basicInfo.nationality}
-              placeholder='Select Your Nationality'
-              title='Select Your Nationality'
-            >
-              <option index='' value=''>
-                {'Select Your Nationality'}
-              </option>
-              <option index='' value="Don't wish to disclose">
-                Don't wish to disclose
-              </option>
-              <option index='' value='Others'>
-                Others
-              </option>
-              {countries.length
-                ? countries.sort().map((country, i) => {
-                    if (country.demonyms !== undefined) {
-                      return (
-                        <option num={i} value={country.demonyms.eng.m} key={i}>
-                          {country.demonyms.eng.m}
-                        </option>
-                      )
-                    } else {
-                      return (
-                        <option num={i} value={country.name.common} key={i}>
-                          {country.name.common}
-                        </option>
-                      )
-                    }
-                  })
-                : undefined}
-            </select>
-            <p className='inputStyle'></p>
-          </p>
+          <div
+            style={{
+              width: 'fit-content',
+              borderRadius: '20px',
+              padding: '10px',
+              margin: '15px auto',
+              boxShadow:
+                '-5px -5px 10px rgba(0, 0, 0, 0.1), 5px 5px 10px rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            <p className='over' style={{ padding: '13px' }}>
+              <input
+                ref={firstNameRef}
+                className='input'
+                type='text'
+                name='firstName'
+                show={false}
+                placeholder='Enter First Name'
+                value={basicInfo.firstName}
+                required
+                title='Enter First Name'
+              />
+              <p className='inputStyle'></p>
+            </p>
+            <p className='over' style={{ padding: '13px' }}>
+              <input
+                ref={middleNameRef}
+                className='input'
+                type='text'
+                name='middleName'
+                placeholder='Enter Middle Name'
+                value={basicInfo.middleName}
+                title='Enter Middle Name'
+              />
+              <p className='inputStyle'></p>
+            </p>
+            <p className='over' style={{ padding: '13px' }}>
+              <input
+                ref={lastNameRef}
+                className='input'
+                type='text'
+                name='lastName'
+                placeholder='Enter Last Name'
+                value={basicInfo.lastName}
+                required
+                title='Enter Last Name'
+              />
+              <p className='inputStyle'></p>
+            </p>
+            <p className='over' style={{ padding: '13px' }}>
+              <select
+                ref={genderRef}
+                className='input'
+                name='gender'
+                value={basicInfo.gender}
+                required
+                placeholder='Select Your Gender'
+                title='Select Your Gender'
+              >
+                <option value=''>{'Select Your Gender'}</option>
+                <option value='Male'>Male</option>
+                <option value='Female'>Female</option>
+                <option value='Non Binary'>Non Binary</option>
+                <option value="Don't wish to disclose">
+                  Don't wish to disclose
+                </option>
+                <option value='Others'>Others</option>
+              </select>
+              <p className='inputStyle'></p>
+            </p>
+            <p className='over' style={{ padding: '13px' }}>
+              <select
+                ref={identityRef}
+                className='input'
+                name='identity'
+                value={basicInfo.identity}
+                required
+                placeholder='What Do You Identity As?'
+                title='What Do You Identify As?'
+              >
+                <option value=''>{'What Do You Identify As?'}</option>
+                <option value='He/His'>He/His</option>
+                <option value='She/Her'>She/Her</option>
+                <option value='They/Them'>They/Them</option>
+                <option value='Their/Those'>Their/Those</option>
+                <option value="Don't wish to disclose">
+                  Don't wish to disclose
+                </option>
+                <option value='Others'>Others</option>
+              </select>
+              <p className='inputStyle'></p>
+            </p>
+            <p className='over' style={{ padding: '13px' }}>
+              <select
+                ref={nationalityRef}
+                className='input'
+                name='nationality'
+                value={basicInfo.nationality}
+                placeholder='Select Your Nationality'
+                title='Select Your Nationality'
+              >
+                <option index='' value=''>
+                  {'Select Your Nationality'}
+                </option>
+                <option index='' value="Don't wish to disclose">
+                  Don't wish to disclose
+                </option>
+                <option index='' value='Others'>
+                  Others
+                </option>
+                {countries.length
+                  ? countries.sort().map((country, i) => {
+                      if (country.demonyms !== undefined) {
+                        return (
+                          <option
+                            num={i}
+                            value={country.demonyms.eng.m}
+                            key={i}
+                          >
+                            {country.demonyms.eng.m}
+                          </option>
+                        )
+                      } else {
+                        return (
+                          <option num={i} value={country.name.common} key={i}>
+                            {country.name.common}
+                          </option>
+                        )
+                      }
+                    })
+                  : undefined}
+              </select>
+              <p className='inputStyle'></p>
+            </p>
 
-          <p className='over' style={{ padding: '13px' }}>
-            <input
-              ref={contactNoRef}
-              className='input'
-              type='number'
-              name='contactNo'
-              placeholder='Enter Your Contact Number'
-              value={basicInfo.contactNo}
-              required
-              title='Enter Your Contact Number'
-            />
-            <p className='inputStyle'></p>
-          </p>
+            <p className='over' style={{ padding: '13px' }}>
+              <input
+                ref={contactNoRef}
+                className='input'
+                type='number'
+                name='contactNo'
+                placeholder='Enter Your Contact Number'
+                value={basicInfo.contactNo}
+                required
+                title='Enter Your Contact Number'
+              />
+              <p className='inputStyle'></p>
+            </p>
+          </div>
           <div className='np' onClick={getButtonEvent}>
             <button className='nxt' type='submit' name='button' value='Next'>
               {'Next >>'}
