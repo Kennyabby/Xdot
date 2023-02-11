@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { motion, AnimatePresence } from 'framer-motion'
+import { FaChevronUp, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
 import About from './About'
 import Current from './Current'
@@ -267,8 +268,8 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                   zIndex: '1',
                   fontWeight: 'bold',
                   fontSize: '1rem',
-                  borderRadius: '20px',
-                  padding: '20px',
+                  borderRadius: '10px',
+                  padding: '10px',
                   cursor: 'pointer',
                 }}
                 onClick={() => {
@@ -276,7 +277,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                   refHome.current.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
-                Top
+                <FaChevronUp />
               </motion.div>
             )}
           </AnimatePresence>

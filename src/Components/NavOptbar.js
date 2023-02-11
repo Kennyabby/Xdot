@@ -461,7 +461,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                     display: 'inline-flex',
                     textAlign: 'center',
                     justifyContent: 'center',
-                    width: '90vw',
+                    width: '95%',
                     borderRadius: '25px',
                     backgroundColor: darkMode
                       ? 'rgba(250,250,250,0.2)'
@@ -616,9 +616,10 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                         backgroundColor: 'blue',
                         border: 'solid blue 2px',
                         color: 'white',
+                        fontSize: '1rem',
                         fontWeight: 'bold',
-                        padding: '10px 16px',
-                        borderRadius: '15px',
+                        padding: '10px 20px',
+                        borderRadius: '20px',
                       }}
                       name='signin'
                     >
@@ -641,7 +642,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                         color: 'white',
                         fontWeight: 'bold',
                         padding: '15px 20px',
-                        borderRadius: '15px',
+                        borderRadius: '18px',
                       }}
                       name='signin'
                     >
