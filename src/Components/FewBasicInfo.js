@@ -269,6 +269,26 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
                 '-5px -5px 10px rgba(0, 0, 0, 0.1), 5px 5px 10px rgba(0, 0, 0, 0.1)',
             }}
           >
+            <div
+              style={{ color: 'blue', margin: '5px auto', fontWeight: 'bold' }}
+            >
+              <label>
+                We need to get the following information from you to help you
+                get started.
+              </label>
+              <div
+                style={{
+                  fontWeight: 'lighter',
+                  fontStyle: 'italic',
+                  fontSize: '.8rem',
+                  marginTop: '20px',
+                  marginLeft: '5px',
+                  textAlign: 'left',
+                }}
+              >
+                Required fields are prefixed with a "*"
+              </div>
+            </div>
             <p className='over' style={{ padding: '13px' }}>
               <input
                 ref={firstNameRef}

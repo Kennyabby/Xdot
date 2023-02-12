@@ -1310,7 +1310,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           <div style={{ margin: '20px auto' }}>
             <label
               style={{
-                fontSize: '.9rem',
+                fontSize: '1rem',
                 fontFamily: 'Courier New',
                 fontStyle: 'italic',
               }}
