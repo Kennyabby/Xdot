@@ -270,7 +270,12 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
             }}
           >
             <div
-              style={{ color: 'blue', margin: '5px auto', fontWeight: 'bold' }}
+              style={{
+                color: 'green',
+                margin: '5px auto',
+                fontWeight: 'bold',
+                fontSize: '.9rem',
+              }}
             >
               <label>
                 We need to get the following information from you to help you
