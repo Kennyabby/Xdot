@@ -55,6 +55,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     instituteCountry: '',
     instituteName: '',
     institute: '',
+    department: '',
     matricNo: '',
     schoolEmail: '',
     otherEmail: '',
@@ -71,6 +72,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   const educationQualificationRef = useRef(null)
   const instituteNameRef = useRef(null)
   const instituteCountryNameRef = useRef(null)
+  const departmentRef = useRef(null)
   const matricNoRef = useRef(null)
   const schoolEmailRef = useRef(null)
   const otherEmailRef = useRef(null)
@@ -79,6 +81,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     educationQualificationRef,
     instituteNameRef,
     instituteCountryNameRef,
+    departmentRef,
     matricNoRef,
     otherEmailRef,
     levelRef,
@@ -95,6 +98,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   const [codeStatus, setCodeStatus] = useState('Send Code')
   const [countries, setCountries] = useState([])
   const [institutes, setInstitutes] = useState([])
+  const [departments, setDepartments] = useState([])
   const nigeria_universities = [
     'University of Uyo',
     'University of Uyo',
@@ -289,6 +293,76 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     'Akanu Ibiam Federal Polytechnic, Unwana',
     'Akanu Ibiam Federal Polytechnic, Unwana',
   ]
+  const department_list = [
+    'Agriculture',
+    'Department of Agricultural Economics and Extension',
+    'Department of Agronomy',
+    'Department of Animal Science',
+    'Department of Soil Science',
+    'Department of Agricultural Engineering',
+    'Department of Forest Resources Management',
+    'Arts',
+    'Department of English Language',
+    'Department of History',
+    'Department of Linguistics',
+    'Department of Literature in English',
+    'Department of Philosophy',
+    'Department of Religion and African Culture',
+    'Department of Theatre Arts',
+    'Education',
+    'Department of Adult Education',
+    'Department of Educational Management',
+    'Department of Educational Psychology',
+    'Department of Guidance and Counselling',
+    'Department of Library and Information Science',
+    'Department of Science Education',
+    'Department of Vocational Education',
+    'Law',
+    'Department of Private and Property Law',
+    'Department of Public Law',
+    'Department of Jurisprudence and International Law',
+    'Medicine and Surgery',
+    'Department of Anaesthesia',
+    'Department of Chemical Pathology',
+    'Department of Haematology and Blood Transfusion',
+    'Department of Medical Microbiology and Parasitology',
+    'Department of Medicine',
+    'Department of Morbid Anatomy and Histopathology',
+    'Department of Paediatrics and Child Health',
+    'Department of Psychiatry',
+    'Department of Radiology',
+    'Department of Surgery',
+    'Pharmacy',
+    'Department of Clinical Pharmacy',
+    'Department of Pharmaceutical Chemistry',
+    'Department of Pharmacology and Therapeutics',
+    'Department of Pharmaceutics and Industrial Pharmacy',
+    'Science',
+    'Department of Biological Sciences',
+    'Department of Chemistry',
+    'Department of Computer Science',
+    'Department of Geology',
+    'Department of Mathematics',
+    'Department of Physics',
+    'Department of Plant Biology and Biotechnology',
+    'Faculty of Social Sciences',
+    'Department of Economics',
+    'Department of Geography',
+    'Department of Political Science',
+    'Department of Psychology',
+    'Department of Sociology',
+    'Department of Social Works',
+    'Technology',
+    'Department of Agricultural and Environmental Engineering',
+    'Department of Food Science and Technology',
+    'Department of Mechanical Engineering',
+    'Department of Industrial and Production Engineering',
+    'Department of Electrical and Electronics Engineering',
+    'Department of Mechatronics Engineering',
+    'Department of Civil Engineering',
+    'Department of Textile Engineering',
+  ]
+
   useEffect(() => {
     fetch('https://restcountries.com/v2/all?')
       .then((response) => {
@@ -315,13 +389,44 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     } catch (TypeError) {
       if (search && country === 'Nigeria') {
         return nigeria_universities.filter((university) => {
-          return university.includes(search)
+          return university.toLowerCase().includes(search.toLowerCase())
         })
       } else {
         return []
       }
     }
   }
+  const getDepartments = (search) => {
+    if (search) {
+      return department_list.filter((university) => {
+        return university.toLowerCase().includes(search.toLowerCase())
+      })
+    } else {
+      return []
+    }
+  }
+  useEffect(() => {
+    // department_list
+    //   .filter((institute) => {
+    //     if (institute.name !== undefined) {
+    //       return institute.name.toLowerCase().trim()
+    //     } else {
+    //       return institute.toLowerCase().trim()
+    //     }
+    //   })
+    //   .includes(schoolInfo.instituteName.toLowerCase().trim())
+    const filteredDepartment = departments.filter((department) => {
+      return department.toLowerCase().trim()
+    })
+    if (
+      !filteredDepartment.includes(schoolInfo.department.toLowerCase().trim())
+    ) {
+      const depts = getDepartments(schoolInfo.department)
+      setDepartments(depts)
+    } else {
+      setDepartments([])
+    }
+  }, [schoolInfo.department])
   useEffect(async () => {
     if (!institutes.includes(schoolInfo.instituteName)) {
       const colleges = await getCollegesInCountry(
@@ -341,6 +446,8 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
       //   console.log(list)
       //   return [...list]
       // })
+    } else {
+      setInstitutes([])
     }
   }, [schoolInfo.instituteName, schoolInfo.instituteCountryName])
   useEffect(() => {
@@ -718,8 +825,15 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
         student: localStorage.getItem('student') === String(true),
         instituteCountryName: localStorage.getItem('instituteContryName'),
         instituteCountry: localStorage.getItem('instituteCountry'),
-        instituteName: localStorage.getItem('instituteName'),
+        instituteName:
+          localStorage.getItem('instituteName') !== null
+            ? localStorage.getItem('instituteName')
+            : '',
         institute: localStorage.getItem('institute'),
+        department:
+          localStorage.getItem('department') !== null
+            ? localStorage.getItem('department')
+            : '',
         matricNo: localStorage.getItem('matricNo'),
         schoolEmail: localStorage.getItem('schoolEmail'),
         otherEmail: localStorage.getItem('otherEmail'),
@@ -741,6 +855,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     window.localStorage.setItem('instituteCountry', schoolInfo.instituteCountry)
     window.localStorage.setItem('institute', schoolInfo.institute)
     window.localStorage.setItem('instituteName', schoolInfo.instituteName)
+    window.localStorage.setItem('department', schoolInfo.department)
     window.localStorage.setItem('matricNo', schoolInfo.matricNo)
     window.localStorage.setItem('schoolEmail', schoolInfo.schoolEmail)
     window.localStorage.setItem('otherEmail', schoolInfo.otherEmail)
@@ -1162,12 +1277,12 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
               className='input black'
               type='text'
               name='educationQualification'
-              placeholder='Educational Qualification'
+              placeholder='Highest Qualification'
               value={schoolInfo.educationQualification}
-              title='Educational Qualification'
+              title='Highest Qualification'
             >
               <option value=''>
-                {'Select Your Educational Qualification'}
+                {'Select Your Highest Educational Qualification'}
               </option>
               <option value='High School Diploma'>
                 {'High School Diploma'}
@@ -1192,17 +1307,23 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
             </select>
             <p className='inputStyle'></p>
           </p>
-          <div style={{ margin: '10px auto' }}>
-            <label style={{ fontSize: '.9rem' }}>
+          <div style={{ margin: '20px auto' }}>
+            <label
+              style={{
+                fontSize: '.9rem',
+                fontFamily: 'Courier New',
+                fontStyle: 'italic',
+              }}
+            >
               Are you currently a student of an Institution (University)?
             </label>
-            <div style={{ display: 'flex', width: '100%', margin: '7px auto' }}>
+            <div
+              style={{ display: 'flex', width: '100%', margin: '15px auto' }}
+            >
               <div
                 className='yesno'
                 style={{
-                  backgroundColor: schoolInfo.student
-                    ? 'blue'
-                    : 'rgba(250,250,250)',
+                  backgroundColor: schoolInfo.student ? 'blue' : 'whitesmoke',
                   color: schoolInfo.student ? 'white' : 'black',
                   border: 'solid blue 2px',
                 }}
@@ -1217,9 +1338,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
               <div
                 className='yesno'
                 style={{
-                  backgroundColor: schoolInfo.student
-                    ? 'rgba(250,250,250)'
-                    : 'blue',
+                  backgroundColor: schoolInfo.student ? 'whitesmoke' : 'blue',
                   color: schoolInfo.student ? 'black' : 'white',
                   border: 'solid blue 2px',
                 }}
@@ -1346,6 +1465,56 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                       </div>
                     )}
                 </div>
+                <div>
+                  <div className='over' style={{ padding: '13px' }}>
+                    <input
+                      ref={departmentRef}
+                      className='input'
+                      type='text'
+                      name='department'
+                      placeholder='Enter Your Department'
+                      value={schoolInfo.department}
+                      required={schoolInfo.student}
+                      title='Enter Your Department'
+                    />
+                    <p className='inputStyle'></p>
+                  </div>
+                  {schoolInfo.department && departments.length > 0 && (
+                    <div
+                      style={{
+                        textAlign: 'left',
+                        backgroundColor: 'white',
+                        listStyle: 'none',
+                        padding: '10px',
+                      }}
+                    >
+                      {departments.map((dept, i) => {
+                        return (
+                          <div
+                            key={i}
+                            style={{
+                              cursor: 'pointer',
+                              padding: '50px auto',
+                              margin: '10px auto',
+                            }}
+                            value={dept}
+                            onClick={() => {
+                              setSchoolInfo((schoolInfo) => {
+                                return {
+                                  ...schoolInfo,
+                                  department: dept,
+                                }
+                              })
+                              setDepartments([])
+                            }}
+                          >
+                            {dept}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
                 <p className='over' style={{ padding: '13px' }}>
                   <input
                     ref={matricNoRef}
@@ -1450,7 +1619,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
             >
               <label
                 style={{
-                  color: darkMode ? 'lightgreen' : 'green',
+                  color: 'green',
                   fontWeight: 'bold',
                 }}
               >
