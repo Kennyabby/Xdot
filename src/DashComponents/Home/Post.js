@@ -1261,7 +1261,7 @@ const Post = ({
                 style={{
                   backgroundColor: darkMode
                     ? 'rgba(10,10,18,1)'
-                    : 'rgba(245,245,255,1)',
+                    : 'rgba(253,253,253,1)',
                   paddingTop: '30px',
                   paddingBottom: '100px',
                   color: darkMode ? 'white' : 'black',

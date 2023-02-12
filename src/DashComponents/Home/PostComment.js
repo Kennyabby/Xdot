@@ -34,7 +34,7 @@ const PostComment = ({
     elem.comment.reaction
   )
   const [allowedLength, setAllowedLength] = useState(61)
-  const { darkMode } = useContext(ContextProvider)
+  const { darkMode, winSize } = useContext(ContextProvider)
   const [statement, setStatement] = useState(elem.comment.statement)
   const [showReactionList, setShowReactionList] = useState(false)
   const [imgLoaded, setImgLoaded] = useState(false)
@@ -198,9 +198,7 @@ const PostComment = ({
         <div
           style={{
             position: 'relative',
-            backgroundColor: darkMode
-              ? 'rgba(0,0,0,0.9)'
-              : 'rgba(255,255,255,.9)',
+            backgroundColor: darkMode ? 'rgba(29,29,30,0.8)' : 'whitesmoke',
             fontSize: '.9rem',
             textAlign: 'left',
             width: '70%',
@@ -322,10 +320,10 @@ const PostComment = ({
                   padding: '1px',
                   backgroundColor: darkMode
                     ? 'rgba(10,10,18,1)'
-                    : 'rgba(245,245,255,1)',
+                    : 'rgba(255,255,255,1)',
                   border: darkMode
                     ? 'solid rgba(10,10,18,1) 3px'
-                    : 'solid rgba(245,245,255,1) 3px',
+                    : 'solid rgba(255,255,255,1) 3px',
                 }}
                 src={commentReaction.src}
                 alt='reaction'
@@ -345,7 +343,7 @@ const PostComment = ({
                 top: '-5px',
                 backgroundColor: darkMode
                   ? 'rgba(10,10,18,1)'
-                  : 'rgba(245,245,255,0.9)',
+                  : 'rgba(255,255,255,0.9)',
                 cursor: 'pointer',
                 display: 'flex',
                 justifyContent: 'center',
