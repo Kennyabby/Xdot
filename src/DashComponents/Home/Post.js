@@ -540,8 +540,11 @@ const Post = ({
           margin: 'auto',
           marginBottom: '10px',
           padding: '0px',
-          paddingTop: status === undefined ? '0px' : '60px',
-          backgroundColor: darkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)',
+          paddingTop: status === undefined ? '6px' : '60px',
+          paddingBottom: '6px',
+          backgroundColor: darkMode ? 'rgba(0,0,0,1)' : 'rgba(255,255,255,1)',
+          borderTopRightRadius: '30px',
+          borderTopLeftRadius: '30px',
           borderBottom: darkMode
             ? 'solid black 0px'
             : status === undefined
@@ -739,16 +742,113 @@ const Post = ({
               style={{
                 backgroundColor: darkMode
                   ? 'rgba(10,10,10,0)'
-                  : 'rgba(247,247,255,0)',
+                  : 'rgba(255,255,255,0)',
                 padding: '0px',
-                width: '92%',
+                width: '100%',
                 marginLeft: 'auto',
                 paddingBottom: '15px',
-                borderLeft: darkMode
-                  ? 'solid rgba(250,250,250,1) 2px'
-                  : 'solid rgba(10,10,10,1) 2px',
+                // borderLeft: darkMode
+                //   ? 'solid rgba(250,250,250,1) 2px'
+                //   : 'solid rgba(10,10,10,1) 2px',
               }}
             >
+              {update.postComment !== undefined &&
+                update.postComment.length > 0 && (
+                  <div
+                    style={{
+                      textAlign: 'left',
+                      padding: '10px',
+                      margin: '15px',
+                      fontFamily: 'Courier New',
+                      borderRadius: '10px',
+                      whiteSpace: 'pre-wrap',
+                      backgroundColor: darkMode
+                        ? 'rgba(29,29,30,0.8)'
+                        : 'whitesmoke',
+                      // boxShadow: darkMode
+                      //   ? '-4px -4px 10px rgba(2,2,2,0.1), 4px 4px 10px rgba(2,2,2,0.1)'
+                      //   : '-4px -4px 10px rgba(100,100,100,0.1), 4px 4px 10px rgba(100,100,100,0.1)',
+                    }}
+                  >
+                    {update.postComment !== undefined &&
+                      (update.postComment.split(' ').length <= 60 ? (
+                        <label>
+                          {update.postComment.split(' ').map((cmt) => {
+                            if (cmt.slice(0, 1) === '@' && cmt.length > 1) {
+                              return (
+                                <label
+                                  style={{
+                                    color: darkMode ? 'darkorange' : 'orange',
+                                    fontWeight: 'bold',
+                                    cursor: 'pointer',
+                                  }}
+                                >
+                                  {cmt.slice(1) + ' '}
+                                </label>
+                              )
+                            }
+                            return <label>{cmt + ' '}</label>
+                          })}
+                        </label>
+                      ) : (
+                        <label style={{ whiteSpace: 'pre-wrap' }}>
+                          {(
+                            update.postComment
+                              .split(' ')
+                              .slice(0, allowedLength)
+                              .join(' ') +
+                            (allowedLength <=
+                            update.postComment.split(' ').length
+                              ? ' ... '
+                              : '')
+                          )
+                            .split(' ')
+                            .map((cmt) => {
+                              if (cmt.slice(0, 1) === '@' && cmt.length > 1) {
+                                return (
+                                  <label
+                                    style={{
+                                      color: darkMode ? 'darkorange' : 'orange',
+                                      fontWeight: 'bold',
+                                      cursor: 'pointer',
+                                    }}
+                                  >
+                                    {cmt.slice(1) + ' '}
+                                  </label>
+                                )
+                              }
+                              return <label>{cmt + ' '}</label>
+                            })}
+
+                          {
+                            <label
+                              onClick={() => {
+                                if (
+                                  allowedLength <=
+                                  update.postComment.split(' ').length
+                                ) {
+                                  setAllowedLength((allowedLength) => {
+                                    return allowedLength + 70
+                                  })
+                                } else {
+                                  setAllowedLength(61)
+                                }
+                              }}
+                              style={{
+                                cursor: 'pointer',
+                                color: darkMode ? 'orange' : 'darkorange',
+                              }}
+                            >
+                              {allowedLength <=
+                              update.postComment.split(' ').length
+                                ? 'See More'
+                                : ''}
+                            </label>
+                          }
+                        </label>
+                      ))}
+                  </div>
+                )}
               {postPictures.length ? (
                 <div
                   style={{
@@ -819,96 +919,6 @@ const Post = ({
               ) : (
                 <div style={{ paddingBottom: '15px' }}></div>
               )}
-              <div
-                style={{
-                  textAlign: 'left',
-                  padding: '15px',
-                  margin: '15px',
-                  fontFamily: 'calibri',
-                  borderRadius: '15px',
-                  whiteSpace: 'pre-wrap',
-                  backgroundColor: darkMode ? '' : '',
-                  boxShadow: darkMode
-                    ? '-4px -4px 10px rgba(2,2,2,0.1), 4px 4px 10px rgba(2,2,2,0.1)'
-                    : '-4px -4px 10px rgba(100,100,100,0.1), 4px 4px 10px rgba(100,100,100,0.1)',
-                }}
-              >
-                {update.postComment !== undefined &&
-                  (update.postComment.split(' ').length <= 60 ? (
-                    <label>
-                      {update.postComment.split(' ').map((cmt) => {
-                        if (cmt.slice(0, 1) === '@' && cmt.length > 1) {
-                          return (
-                            <label
-                              style={{
-                                color: darkMode ? 'darkorange' : 'orange',
-                                fontWeight: 'bold',
-                                cursor: 'pointer',
-                              }}
-                            >
-                              {cmt.slice(1) + ' '}
-                            </label>
-                          )
-                        }
-                        return <label>{cmt + ' '}</label>
-                      })}
-                    </label>
-                  ) : (
-                    <label style={{ whiteSpace: 'pre-wrap' }}>
-                      {(
-                        update.postComment
-                          .split(' ')
-                          .slice(0, allowedLength)
-                          .join(' ') +
-                        (allowedLength <= update.postComment.split(' ').length
-                          ? ' ... '
-                          : '')
-                      )
-                        .split(' ')
-                        .map((cmt) => {
-                          if (cmt.slice(0, 1) === '@' && cmt.length > 1) {
-                            return (
-                              <label
-                                style={{
-                                  color: darkMode ? 'darkorange' : 'orange',
-                                  fontWeight: 'bold',
-                                  cursor: 'pointer',
-                                }}
-                              >
-                                {cmt.slice(1) + ' '}
-                              </label>
-                            )
-                          }
-                          return <label>{cmt + ' '}</label>
-                        })}
-
-                      {
-                        <label
-                          onClick={() => {
-                            if (
-                              allowedLength <=
-                              update.postComment.split(' ').length
-                            ) {
-                              setAllowedLength((allowedLength) => {
-                                return allowedLength + 70
-                              })
-                            } else {
-                              setAllowedLength(61)
-                            }
-                          }}
-                          style={{
-                            cursor: 'pointer',
-                            color: darkMode ? 'orange' : 'darkorange',
-                          }}
-                        >
-                          {allowedLength <= update.postComment.split(' ').length
-                            ? 'See More'
-                            : ''}
-                        </label>
-                      }
-                    </label>
-                  ))}
-              </div>
             </div>
             {showReactionList ? (
               <ReactionList
@@ -986,13 +996,12 @@ const Post = ({
                   position: 'relative',
                   display: 'flex',
                   justifyContent: 'center',
-                  margin: '5px',
+                  margin: '10px auto',
                   paddingBottom: '10px',
                   borderBottom:
                     status === undefined ? '' : 'solid rgba(210,210,210,1) 2px',
                   marginTop: '15px',
                   width: '92%',
-                  marginLeft: 'auto',
                 }}
               >
                 <div
