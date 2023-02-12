@@ -976,8 +976,7 @@ const Post = ({
                         : '') +
                       (update['react'].length - 1 > 0 && isReacted
                         ? ' Other(s)'
-                        : '') +
-                      (update['react'].length ? ' Reacted to this Post' : '')
+                        : '')
                     : ''}
                 </label>
               </div>
