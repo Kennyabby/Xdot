@@ -113,6 +113,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
     if (currentPostShow === null) {
       // stackPos = 1
       setHighlightedPost(null)
+      showHomeToggle(true)
     }
     // else if (stackPos === 1) {
     //   stackPos = 0
@@ -654,9 +655,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                             })
                             return done
                           }}
-                          goBack={() => {
-                                                        
-                          }}
+                          goBack={() => {}}
                           currentPostShow={(post) => {
                             console.log('update modal: ', post)
                             setCurrentPostShow(post)
