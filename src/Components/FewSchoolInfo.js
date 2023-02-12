@@ -70,7 +70,6 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   const validatorRef = useRef(null)
   const educationQualificationRef = useRef(null)
   const instituteNameRef = useRef(null)
-  const instituteRef = useRef(null)
   const instituteCountryNameRef = useRef(null)
   const matricNoRef = useRef(null)
   const schoolEmailRef = useRef(null)
@@ -314,7 +313,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
         return []
       }
     } catch (TypeError) {
-      if (search && country) {
+      if (search && country === 'Nigeria') {
         return nigeria_universities.filter((university) => {
           return university.includes(search)
         })
@@ -1319,7 +1318,6 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                                 cursor: 'pointer',
                                 padding: '50px auto',
                                 margin: '10px auto',
-                                borderBottom: 'solid black 1px',
                               }}
                               value={
                                 institute.name !== undefined

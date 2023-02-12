@@ -70,27 +70,11 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
         return response.json()
       })
       .then((data) => {
-        console.log(data)
         setCountries(data)
       })
       .catch((error) => {
         console.log('Error getting countries:', error)
       })
-    // fetch('https://restcountries.com/v3.1/all?fields=callingCodes')
-    //   .then((response) => {
-    //     return response.json()
-    //   })
-    //   .then((data) => {
-    //     // console.log(data)
-    //   })
-    //   .catch((error) => {
-    //     console.log('Error getting countries:', error)
-    //   })
-    // fetch('https://api.ipdata.co/')
-    //   .then((res) => {
-    //     return res.json()
-    //   })
-    //   .then((data) => console.log(data))
   }, [])
 
   useEffect(() => {
