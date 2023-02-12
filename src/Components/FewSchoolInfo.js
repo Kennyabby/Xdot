@@ -681,7 +681,6 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           infoRef.current.parentElement.childNodes[1].style.display = 'block'
           infoRef.current.parentElement.childNodes[1].style.color = 'blue'
           infoRef.current.placeholder = ''
-          infoRef.current.parentElement.scrollIntoView()
           if (infoRef.current.required) {
             infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
           } else {
@@ -986,7 +985,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                 style={{
                   backgroundColor: schoolInfo.student
                     ? 'blue'
-                    : 'rgba(230,230,230)',
+                    : 'rgba(250,250,250)',
                   color: schoolInfo.student ? 'white' : 'black',
                   border: 'solid blue 2px',
                 }}
@@ -1002,7 +1001,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                 className='yesno'
                 style={{
                   backgroundColor: schoolInfo.student
-                    ? 'rgba(230,230,230)'
+                    ? 'rgba(250,250,250)'
                     : 'blue',
                   color: schoolInfo.student ? 'black' : 'white',
                   border: 'solid blue 2px',
@@ -1153,7 +1152,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                 <div
                   style={{
                     margin: '10px',
-                    fontSize: '1rem',
+                    fontSize: '.9rem',
                     fontWeight: 'bold',
                     display: 'flex',
                   }}
