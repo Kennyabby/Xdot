@@ -65,11 +65,12 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
   })
   const [countries, setCountries] = useState([])
   useEffect(() => {
-    fetch('https://restcountries.com/v3.1/all?')
+    fetch('https://restcountries.com/v2/all?')
       .then((response) => {
         return response.json()
       })
       .then((data) => {
+        console.log(data)
         setCountries(data)
       })
       .catch((error) => {
@@ -95,12 +96,12 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
   useEffect(() => {
     const value = basicInfo.nationality
     countries.forEach((country, i) => {
-      if (country.demonyms !== undefined) {
-        if (value === country.demonyms.eng.m) {
+      if (country.demonym !== undefined) {
+        if (value === country.demonym) {
           setBasicInfo({ ...basicInfo, country: country })
         }
       } else {
-        if (value === country.name.common) {
+        if (value === country.name) {
           setBasicInfo({ ...basicInfo, country: country })
         }
       }
@@ -214,14 +215,14 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
     })
     if (name === 'nationality') {
       countries.forEach((country, i) => {
-        if (country.demonyms !== undefined) {
-          if (value === country.demonyms.eng.m) {
+        if (country.demonym !== undefined) {
+          if (value === country.demonym) {
             setBasicInfo((basicInfo) => {
               return { ...basicInfo, country: country }
             })
           }
         } else {
-          if (value === country.name.common) {
+          if (value === country.name) {
             setBasicInfo((basicInfo) => {
               return { ...basicInfo, country: country }
             })
@@ -386,20 +387,16 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
                 </option>
                 {countries.length
                   ? countries.sort().map((country, i) => {
-                      if (country.demonyms !== undefined) {
+                      if (country.demonym !== undefined) {
                         return (
-                          <option
-                            num={i}
-                            value={country.demonyms.eng.m}
-                            key={i}
-                          >
-                            {country.demonyms.eng.m}
+                          <option num={i} value={country.demonym} key={i}>
+                            {country.demonym}
                           </option>
                         )
                       } else {
                         return (
-                          <option num={i} value={country.name.common} key={i}>
-                            {country.name.common}
+                          <option num={i} value={country.name} key={i}>
+                            {country.name}
                           </option>
                         )
                       }

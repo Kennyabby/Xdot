@@ -440,7 +440,15 @@ code {
   /* padding-bottom: 5px; */
   width: 250px;
 }
-
+.yesno {
+  margin: 5px;
+  background-color: blue;
+  color: white;
+  border-radius: 40px;
+  width: 40%;
+  padding: 10px;
+  cursor: pointer;
+}
 @media screen and (max-width: 700px) {
   .sitewall {
     width: 100vw;

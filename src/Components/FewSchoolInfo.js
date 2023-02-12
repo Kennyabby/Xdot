@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FaUserCircle, FaAngleLeft } from 'react-icons/fa'
+import { FaUserCircle, FaAngleLeft, FaCheckSquare } from 'react-icons/fa'
 
 import logo from './user.png'
 
@@ -49,6 +49,12 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   )
   const [showValidatingStatus, setShowValidatingStatus] = useState(false)
   const [schoolInfo, setSchoolInfo] = useState({
+    educationQualification: '',
+    student: false,
+    instituteCountryName: '',
+    instituteCountry: '',
+    instituteName: '',
+    institute: '',
     matricNo: '',
     schoolEmail: '',
     otherEmail: '',
@@ -62,11 +68,18 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   ])
   const [validateCode, setValidateCode] = useState(false)
   const validatorRef = useRef(null)
+  const educationQualificationRef = useRef(null)
+  const instituteNameRef = useRef(null)
+  const instituteRef = useRef(null)
+  const instituteCountryNameRef = useRef(null)
   const matricNoRef = useRef(null)
   const schoolEmailRef = useRef(null)
   const otherEmailRef = useRef(null)
   const levelRef = useRef(null)
   const [infoRefList, setInfoRefList] = useState([
+    educationQualificationRef,
+    instituteNameRef,
+    instituteCountryNameRef,
     matricNoRef,
     otherEmailRef,
     levelRef,
@@ -81,6 +94,38 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   const [verificationCode, setVerificationCode] = useState(0)
   const [inCorrectCode, setInCorrectCode] = useState(false)
   const [codeStatus, setCodeStatus] = useState('Send Code')
+  const [countries, setCountries] = useState([])
+  const [institutes, setInstitutes] = useState([])
+  useEffect(() => {
+    fetch('https://restcountries.com/v2/all?')
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        setCountries(data)
+      })
+      .catch((error) => {
+        console.log('Error getting countries:', error)
+      })
+  }, [])
+  const getCollegesInCountry = async (search, country) => {
+    const response = await fetch(
+      `http://universities.hipolabs.com/search?name=${search}&country=${country}`
+    )
+    const data = await response.json()
+    if (search && country) {
+      return data
+    } else {
+      return []
+    }
+  }
+  useEffect(async () => {
+    const colleges = await getCollegesInCountry(
+      schoolInfo.instituteName,
+      schoolInfo.instituteCountryName
+    )
+    setInstitutes(colleges)
+  }, [schoolInfo.instituteName, schoolInfo.instituteCountryName])
   useEffect(() => {
     if (addSchoolEmail) {
       setInfoRefList((infoRefList) => {
@@ -113,7 +158,6 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     )
   }
-
   const validateInputs = () => {
     var count = 0
     var infos = infoRefList.filter((infoRef) => {
@@ -126,17 +170,17 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
       if (infoRef.current !== null) {
         if (infoRef.current.required) {
           if (infoRef.current.value === '') {
-            infoRef.current.style.borderBottom = 'solid red 1px'
+            infoRef.current.style.border = 'solid red 2px'
             infoRef.current.parentElement.childNodes[1].style.display = 'block'
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
             infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
           } else {
-            infoRef.current.style.borderBottom = 'solid black 1px'
+            infoRef.current.style.border = 'solid black 1px'
             infoRef.current.parentElement.childNodes[1].style.display = 'none'
             infoRef.current.parentElement.childNodes[1].style.color = 'blue'
             if (infoRef.current.name === 'matricNo') {
               if (matricValidated) {
-                infoRef.current.style.borderBottom = 'solid red 1px'
+                infoRef.current.style.border = 'solid red 2px'
                 infoRef.current.parentElement.childNodes[1].style.display =
                   'block'
                 infoRef.current.parentElement.childNodes[1].style.color = 'red'
@@ -148,7 +192,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
             if (infoRef.current.name === 'schoolEmail') {
               if (matchEmail(infoRef.current.value)) {
                 if (schoolEmailExist) {
-                  infoRef.current.style.borderBottom = 'solid red 1px'
+                  infoRef.current.style.border = 'solid red 2px'
                   infoRef.current.parentElement.childNodes[1].style.display =
                     'block'
                   infoRef.current.parentElement.childNodes[1].style.color =
@@ -158,7 +202,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                   count--
                 }
               } else {
-                infoRef.current.style.borderBottom = 'solid red 1px'
+                infoRef.current.style.border = 'solid red 2px'
                 infoRef.current.parentElement.childNodes[1].style.display =
                   'block'
                 infoRef.current.parentElement.childNodes[1].style.color = 'red'
@@ -170,7 +214,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
             if (infoRef.current.name === 'otherEmail') {
               if (matchEmail(infoRef.current.value)) {
                 if (otherEmailExist) {
-                  infoRef.current.style.borderBottom = 'solid red 1px'
+                  infoRef.current.style.border = 'solid red 2px'
                   infoRef.current.parentElement.childNodes[1].style.display =
                     'block'
                   infoRef.current.parentElement.childNodes[1].style.color =
@@ -180,7 +224,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                   count--
                 }
               } else {
-                infoRef.current.style.borderBottom = 'solid red 1px'
+                infoRef.current.style.border = 'solid red 2px'
                 infoRef.current.parentElement.childNodes[1].style.display =
                   'block'
                 infoRef.current.parentElement.childNodes[1].style.color = 'red'
@@ -231,7 +275,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                   const isPresent = response.isPresent
                   if (isPresent) {
                     matricValidated = true
-                    infoRef.current.style.borderBottom = 'solid red 1px'
+                    infoRef.current.style.border = 'solid red 2px'
                     infoRef.current.parentElement.childNodes[1].style.display =
                       'block'
                     infoRef.current.parentElement.childNodes[1].style.color =
@@ -264,7 +308,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                     const isPresent = response.isPresent
                     if (isPresent) {
                       matricValidated = true
-                      infoRef.current.style.borderBottom = 'solid red 1px'
+                      infoRef.current.style.border = 'solid red 2px'
                       infoRef.current.parentElement.childNodes[1].style.display =
                         'block'
                       infoRef.current.parentElement.childNodes[1].style.color =
@@ -300,7 +344,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                     const isPresent = response.isPresent
                     if (isPresent) {
                       setSchoolEmailExist(true)
-                      infoRef.current.style.borderBottom = 'solid red 1px'
+                      infoRef.current.style.border = 'solid red 2px'
                       infoRef.current.parentElement.childNodes[1].style.display =
                         'block'
                       infoRef.current.parentElement.childNodes[1].style.color =
@@ -332,7 +376,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                       const isPresent = response.isPresent
                       if (isPresent) {
                         setSchoolEmailExist(true)
-                        infoRef.current.style.borderBottom = 'solid red 1px'
+                        infoRef.current.style.border = 'solid red 2px'
                         infoRef.current.parentElement.childNodes[1].style.display =
                           'block'
                         infoRef.current.parentElement.childNodes[1].style.color =
@@ -350,7 +394,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                   }
                 }
               } else {
-                infoRef.current.style.borderBottom = 'solid red 1px'
+                infoRef.current.style.border = 'solid red 2px'
                 infoRef.current.parentElement.childNodes[1].style.display =
                   'block'
                 infoRef.current.parentElement.childNodes[1].style.color = 'red'
@@ -377,7 +421,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                     const isPresent = response.isPresent
                     if (isPresent) {
                       setOtherEmailExist(true)
-                      infoRef.current.style.borderBottom = 'solid red 1px'
+                      infoRef.current.style.border = 'solid red 2px'
                       infoRef.current.parentElement.childNodes[1].style.display =
                         'block'
                       infoRef.current.parentElement.childNodes[1].style.color =
@@ -409,7 +453,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                       const isPresent = response.isPresent
                       if (isPresent) {
                         setOtherEmailExist(true)
-                        infoRef.current.style.borderBottom = 'solid red 1px'
+                        infoRef.current.style.border = 'solid red 2px'
                         infoRef.current.parentElement.childNodes[1].style.display =
                           'block'
                         infoRef.current.parentElement.childNodes[1].style.color =
@@ -427,7 +471,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                   }
                 }
               } else {
-                infoRef.current.style.borderBottom = 'solid red 1px'
+                infoRef.current.style.border = 'solid red 2px'
                 infoRef.current.parentElement.childNodes[1].style.display =
                   'block'
                 infoRef.current.parentElement.childNodes[1].style.color = 'red'
@@ -453,6 +497,12 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     if (window.localStorage.getItem('matricNo') != null) {
       setSchoolInfo({
         ...schoolInfo,
+        educationQualification: localStorage.getItem('educationQualification'),
+        student: localStorage.getItem('student') === String(true),
+        instituteCountryName: localStorage.getItem('instituteContryName'),
+        instituteCountry: localStorage.getItem('instituteCountry'),
+        instituteName: localStorage.getItem('instituteName'),
+        institute: localStorage.getItem('institute'),
         matricNo: localStorage.getItem('matricNo'),
         schoolEmail: localStorage.getItem('schoolEmail'),
         otherEmail: localStorage.getItem('otherEmail'),
@@ -462,6 +512,18 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   }, [])
 
   useEffect(() => {
+    window.localStorage.setItem(
+      'educationQualification',
+      schoolInfo.educationQualification
+    )
+    window.localStorage.setItem('student', schoolInfo.student)
+    window.localStorage.setItem(
+      'instituteContryName',
+      schoolInfo.instituteCountryName
+    )
+    window.localStorage.setItem('instituteCountry', schoolInfo.instituteCountry)
+    window.localStorage.setItem('institute', schoolInfo.institute)
+    window.localStorage.setItem('instituteName', schoolInfo.instituteName)
     window.localStorage.setItem('matricNo', schoolInfo.matricNo)
     window.localStorage.setItem('schoolEmail', schoolInfo.schoolEmail)
     window.localStorage.setItem('otherEmail', schoolInfo.otherEmail)
@@ -606,16 +668,16 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     var name = e.target.getAttribute('name')
     infoRefList.forEach((infoRef) => {
       if (infoRef.current != null) {
-        infoRef.current.style.borderBottom = 'solid black 1px'
+        infoRef.current.style.border = 'solid black 1px'
         infoRef.current.parentElement.childNodes[1].style.display = 'none'
         infoRef.current.placeholder = infoRef.current.title
         if (infoRef.current.value === '' && infoRef.current.required) {
-          infoRef.current.style.borderBottom = 'solid red 1px'
+          infoRef.current.style.border = 'solid red 2px'
           infoRef.current.parentElement.childNodes[1].style.display = 'block'
           infoRef.current.parentElement.childNodes[1].style.color = 'red'
         }
         if (infoRef.current.name === name) {
-          infoRef.current.style.borderBottom = 'solid blue 1px'
+          infoRef.current.style.border = 'solid blue 2px'
           infoRef.current.parentElement.childNodes[1].style.display = 'block'
           infoRef.current.parentElement.childNodes[1].style.color = 'blue'
           infoRef.current.placeholder = ''
@@ -632,18 +694,42 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   }
   const getInputEvent = (e) => {
     var name = e.target.getAttribute('name')
-    setSchoolInfo({ ...schoolInfo, [name]: e.target.value })
-
+    const value = e.target.value
+    setSchoolInfo((schoolInfo) => {
+      return { ...schoolInfo, [name]: value }
+    })
+    if (name === 'instituteCountryName') {
+      countries.forEach((country, i) => {
+        if (country.name !== undefined) {
+          if (value === country.name) {
+            setSchoolInfo((schoolInfo) => {
+              return { ...schoolInfo, instituteCountry: country }
+            })
+          }
+        }
+      })
+    }
+    if (name === 'instituteName') {
+      institutes.forEach((institute, i) => {
+        if (institute.name !== undefined) {
+          if (value === institute.name) {
+            setSchoolInfo((schoolInfo) => {
+              return { ...schoolInfo, institute: institute }
+            })
+          }
+        }
+      })
+    }
     infoRefList.forEach((infoRef) => {
       if (infoRef.current != null) {
         if (infoRef.current.name === name) {
-          infoRef.current.style.borderBottom = 'solid blue 1px'
+          infoRef.current.style.border = 'solid blue 2px'
           infoRef.current.parentElement.childNodes[1].style.color = 'blue'
           infoRef.current.parentElement.childNodes[1].innerHTML =
             infoRef.current.title
 
           if (infoRef.current.value === '' && infoRef.current.required) {
-            infoRef.current.style.borderBottom = 'solid red 1px'
+            infoRef.current.style.border = 'solid red 2px'
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
             infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.title}`
           }
@@ -855,63 +941,268 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           }}
         >
           <p className='over' style={{ padding: '13px' }}>
-            <input
-              ref={matricNoRef}
-              className='input'
-              type='text'
-              name='matricNo'
-              placeholder='Enter Your Matric No'
-              value={schoolInfo.matricNo}
-              required
-              title='Enter Your Matric No'
-            />
-            <p className='inputStyle'></p>
-          </p>
-          <p className='over' style={{ padding: '13px' }}>
             <select
-              ref={levelRef}
+              ref={educationQualificationRef}
               className='input black'
               type='text'
-              name='level'
-              placeholder='Choose Your Level'
-              value={schoolInfo.level}
-              required
-              title='Choose Your Level'
+              name='educationQualification'
+              placeholder='Educational Qualification'
+              value={schoolInfo.educationQualification}
+              title='Educational Qualification'
             >
-              <option value=''>Level</option>
-              <option value='100'>100</option>
-              <option value='200'>200</option>
-              <option value='300'>300</option>
-              <option value='400'>400</option>
+              <option value=''>
+                {'Select Your Educational Qualification'}
+              </option>
+              <option value='High School Diploma'>
+                {'High School Diploma'}
+              </option>
+              <option value="Bachelor's Degree">{"Bachelor's Degree"}</option>
+              <option value="Master's Degree">{"Master's Degree"}</option>
+              <option value='Doctorate (PhD)'>{'Doctorate (PhD)'}</option>
+              <option value='Associate Degree'>{'Associate Degree'}</option>
+              <option value='Certificate Programs'>
+                {'Certificate Programs'}
+              </option>
+              <option value='Diploma'>{'Diploma'}</option>
+              <option value='GED (General Educational Development)'>
+                {'GED (General Educational Development)'}
+              </option>
+              <option value='Vocational or Trade School Qualifications'>
+                {'Vocational or Trade School Qualifications'}
+              </option>
+              <option value='Professional Certifications'>
+                {'Professional Certifications'}
+              </option>
             </select>
             <p className='inputStyle'></p>
           </p>
-          <div style={{ display: 'flex', margin: '20px' }}>
-            <label>Add School Email?</label>
-            <input
-              type='checkbox'
-              checked={addSchoolEmail}
-              onChange={() => {
-                setAddSchoolEmail(!addSchoolEmail)
-              }}
-              style={{ marginLeft: '20px', cursor: 'pointer' }}
-            />
+          <div style={{ margin: '10px auto' }}>
+            <label style={{ fontSize: '.9rem' }}>
+              Are you currently a student of an Institution (University)?
+            </label>
+            <div style={{ display: 'flex', width: '100%', margin: '7px auto' }}>
+              <div
+                className='yesno'
+                style={{
+                  backgroundColor: schoolInfo.student
+                    ? 'blue'
+                    : 'rgba(230,230,230)',
+                  color: schoolInfo.student ? 'white' : 'black',
+                  border: 'solid blue 2px',
+                }}
+                onClick={() => {
+                  setSchoolInfo((schoolInfo) => {
+                    return { ...schoolInfo, student: true }
+                  })
+                }}
+              >
+                Yes
+              </div>
+              <div
+                className='yesno'
+                style={{
+                  backgroundColor: schoolInfo.student
+                    ? 'rgba(230,230,230)'
+                    : 'blue',
+                  color: schoolInfo.student ? 'black' : 'white',
+                  border: 'solid blue 2px',
+                }}
+                onClick={() => {
+                  setSchoolInfo((schoolInfo) => {
+                    return { ...schoolInfo, student: false }
+                  })
+                }}
+              >
+                No
+              </div>
+            </div>
+
+            {schoolInfo.student && (
+              <div>
+                <div
+                  style={{
+                    textAlign: 'left',
+                    margin: '10px',
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  <label>Institute Info</label>
+                </div>
+                <p className='over' style={{ padding: '13px' }}>
+                  <select
+                    ref={instituteCountryNameRef}
+                    className='input'
+                    name='instituteCountryName'
+                    required={schoolInfo.student}
+                    value={schoolInfo.instituteCountryName}
+                    placeholder='Country'
+                    title='Country'
+                  >
+                    <option index='' value=''>
+                      {'Select Institute Region'}
+                    </option>
+                    <option index='' value='Others'>
+                      Others
+                    </option>
+                    {countries.length
+                      ? countries.sort().map((country, i) => {
+                          if (country.name !== undefined) {
+                            return (
+                              <option num={i} value={country.name} key={i}>
+                                {country.name}
+                              </option>
+                            )
+                          }
+                        })
+                      : undefined}
+                  </select>
+                  <p className='inputStyle'></p>
+                </p>
+                <div>
+                  <div className='over' style={{ padding: '13px' }}>
+                    <input
+                      ref={instituteNameRef}
+                      className='input'
+                      type='text'
+                      name='instituteName'
+                      placeholder='Enter Institute Name'
+                      value={schoolInfo.instituteName}
+                      required={schoolInfo.student}
+                      title='Enter Institute Name'
+                    />
+                    <p className='inputStyle'></p>
+                  </div>
+                  {schoolInfo.instituteName &&
+                    institutes.length > 0 &&
+                    !institutes
+                      .filter((institute) => {
+                        return institute.name.toLowerCase().trim()
+                      })
+                      .includes(
+                        schoolInfo.instituteName.toLowerCase().trim()
+                      ) && (
+                      <div
+                        style={{
+                          textAlign: 'left',
+                          backgroundColor: 'white',
+                          listStyle: 'none',
+                          padding: '10px',
+                        }}
+                      >
+                        {institutes.map((institute, i) => {
+                          return (
+                            <div
+                              key={i}
+                              style={{
+                                cursor: 'pointer',
+                                padding: '50px auto',
+                                margin: '10px auto',
+                                borderBottom: 'solid black 1px',
+                              }}
+                              value={institute.name}
+                              onClick={() => {
+                                setSchoolInfo((schoolInfo) => {
+                                  return {
+                                    ...schoolInfo,
+                                    instituteName: institute.name,
+                                  }
+                                })
+                                setInstitutes([])
+                              }}
+                            >
+                              {institute.name}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )}
+                </div>
+                <p className='over' style={{ padding: '13px' }}>
+                  <input
+                    ref={matricNoRef}
+                    className='input'
+                    type='text'
+                    name='matricNo'
+                    placeholder='Enter Your Matric No'
+                    value={schoolInfo.matricNo}
+                    required={schoolInfo.student}
+                    title='Enter Your Matric No'
+                  />
+                  <p className='inputStyle'></p>
+                </p>
+                <p className='over' style={{ padding: '13px' }}>
+                  <select
+                    ref={levelRef}
+                    className='input black'
+                    type='text'
+                    name='level'
+                    placeholder='Choose Your Level'
+                    value={schoolInfo.level}
+                    required={schoolInfo.student}
+                    title='Choose Your Level'
+                  >
+                    <option value=''>Level</option>
+                    <option value='100'>100</option>
+                    <option value='200'>200</option>
+                    <option value='300'>300</option>
+                    <option value='400'>400</option>
+                  </select>
+                  <p className='inputStyle'></p>
+                </p>
+                <div
+                  style={{
+                    margin: '10px',
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    display: 'flex',
+                  }}
+                >
+                  <div
+                    style={{ width: 'fit-content', marginRight: '20px' }}
+                    onClick={() => {
+                      setAddSchoolEmail(!addSchoolEmail)
+                    }}
+                  >
+                    {addSchoolEmail ? (
+                      <FaCheckSquare
+                        style={{
+                          cursor: 'pointer',
+                          color: 'green',
+                        }}
+                      />
+                    ) : (
+                      <input
+                        type='checkbox'
+                        checked={false}
+                        style={{
+                          cursor: 'pointer',
+                          fontSize: '1.2rem',
+                        }}
+                      />
+                    )}
+                  </div>
+
+                  <label>Add School Email?</label>
+                </div>
+                {addSchoolEmail && (
+                  <p className='over' style={{ padding: '13px' }}>
+                    <input
+                      ref={schoolEmailRef}
+                      className='input'
+                      type='email'
+                      name='schoolEmail'
+                      placeholder='Enter Your School Email'
+                      value={schoolInfo.schoolEmail}
+                      required={schoolInfo.student && addSchoolEmail}
+                      title='Enter Your School Email'
+                    />
+                    <p className='inputStyle'></p>
+                  </p>
+                )}
+              </div>
+            )}
           </div>
-          {addSchoolEmail && (
-            <p className='over' style={{ padding: '13px' }}>
-              <input
-                ref={schoolEmailRef}
-                className='input'
-                type='email'
-                name='schoolEmail'
-                placeholder='Enter Your School Email'
-                value={schoolInfo.schoolEmail}
-                required
-                title='Enter Your School Email'
-              />
-              <p className='inputStyle'></p>
-            </p>
-          )}
           <p className='over' style={{ padding: '13px' }}>
             <input
               ref={otherEmailRef}
