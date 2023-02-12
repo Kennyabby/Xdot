@@ -314,9 +314,13 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
         return []
       }
     } catch (TypeError) {
-      return nigeria_universities.filter((university) => {
-        return university.includes(search)
-      })
+      if (search && country) {
+        return nigeria_universities.filter((university) => {
+          return university.includes(search)
+        })
+      } else {
+        return []
+      }
     }
   }
   useEffect(async () => {
