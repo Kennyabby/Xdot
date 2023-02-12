@@ -122,6 +122,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     } catch (TypeError) {
       console.log('There was an error: ', TypeError)
       console.log('search filter:', search, 'country filter:', country)
+      return []
     }
   }
   useEffect(async () => {
