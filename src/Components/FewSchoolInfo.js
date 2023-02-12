@@ -84,6 +84,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     departmentRef,
     matricNoRef,
     otherEmailRef,
+    schoolEmailRef,
     levelRef,
   ])
   var matricValidated = false
@@ -929,7 +930,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           } catch (TypeError) {}
           setShowModal(false)
           if (validateInputs()) {
-            history.push('./signInfo')
+            history.push('./signupInfo')
           }
         } catch (TypeError) {
           setShowModal(true)
@@ -985,6 +986,36 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           }
         } catch (TypeError) {
           setShowModal(true)
+        }
+      } else {
+        setShowValidatingStatus(true)
+        setTimeout(() => {
+          validatorRef.current.scrollIntoView({ behavior: 'smooth' })
+        }, [500])
+        try {
+          const opts = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              otherEmail: otherEmailRef.current.value,
+            }),
+          }
+          const resp = await fetch(server + '/isEmailPresent', opts)
+          const response = await resp.json()
+          const isPresent = response.isPresent
+          if (isPresent) {
+            setOtherEmailExist(true)
+          } else {
+            setOtherEmailExist(false)
+          }
+          setShowModal(false)
+          if (validateInputs()) {
+            history.push('./signupInfo')
+          }
+        } catch (TypeError) {
+          setShowModal(false)
         }
       }
     }
