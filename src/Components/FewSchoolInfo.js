@@ -96,6 +96,200 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
   const [codeStatus, setCodeStatus] = useState('Send Code')
   const [countries, setCountries] = useState([])
   const [institutes, setInstitutes] = useState([])
+  const nigeria_universities = [
+    'University of Uyo',
+    'University of Uyo',
+    "Umaru Musa Yar'Adua University",
+    'Usmanu Danfodiyo University Sokoto',
+    'Enugu State University of Science and Technology',
+    'Ekiti State University',
+    'Bayero University Kano',
+    'Bowen University',
+    'Benson Idahosa University',
+    'Benue State University',
+    'Bingham University',
+    'Caritas University',
+    'Baze University Abuja',
+    'Bells University of Technology',
+    'Caleb University',
+    'Gombe State University',
+    'Godfrey Okoye University',
+    'Ibrahim Babangida University',
+    'Federal University of Technology, Yola',
+    'Igbinedion University',
+    'Imo State University',
+    'Federal University of Technology, Akure',
+    'Federal University of Technology, Owerri',
+    'Federal University of Petroleum Resources',
+    'Fountain University',
+    'Federal University of Technology, Minna',
+    'Covenant University',
+    'Crescent University',
+    'Crawford University',
+    'Ebonyi State University',
+    'Cross River University of Science and Technology',
+    'African University of Science and Technology',
+    'ABTI American University of Nigeria',
+    'Babcock University',
+    'Abubakar Tafawa Balewa University',
+    'Ahmadu Bello University',
+    'Abia State University',
+    'Afe Babalola University',
+    'Ajayi Crowther University',
+    'The Achievers University',
+    'Ambrose Alli University',
+    'Adekunle Ajasin University',
+    'Adamawa State University',
+    'Akwa Ibom State University of Technology',
+    'Adeleke University',
+    'Anambra State University of Science and Technology',
+    'Al-hikmah University',
+    'Western Delta University',
+    'Wellspring University',
+    'Rivers State University of Science and Technology',
+    'Wesley University of Science and Technology',
+    'Veritas University',
+    'Nnamdi Azikiwe University',
+    'Osun State University',
+    'Niger Delta University',
+    'Landmark University',
+    'National Open University of Nigeria',
+    'Michael Okpara University of Agriculture',
+    'Madonna University',
+    'Joseph Ayo Babalola University',
+    'Lagos State University',
+    'Lead City University of Ibadan',
+    'Ladoke Akintola University of Technology',
+    'Kwara State University',
+    'Kwararafa University',
+    "Umaru Musa Yar'Adua University",
+    'Tai Solarin University of Education',
+    'Usmanu Danfodiyo University Sokoto',
+    'Tansian University',
+    'Taraba State University',
+    'Renaissance University',
+    'Pan-African University',
+    'Sokoto State University',
+    'Paul University',
+    'Salem University',
+    'Redeemers University',
+    'Oduduwa University',
+    'Obafemi Awolowo University Ile-Ife',
+    'Nigerian Turkish Nile University',
+    'Obong University',
+    'Ondo State University of Science and Technology',
+    'Novena University',
+    'Nasarawa State University Keffi',
+    'Olabisi Onabanjo University',
+    'Kano State University of Technology Wudil',
+    'Kogi State University',
+    'Kaduna State University',
+    'Kebbi State University of Science and Technology',
+    'Katsina University',
+    'Federal University of Petroleum Resources',
+    'Federal University of Technology, Akure',
+    'Fountain University',
+    'Bowen University',
+    'Caleb University',
+    'Benue State University',
+    'Benson Idahosa University',
+    'Bayero University Kano',
+    'Caritas University',
+    'Covenant University',
+    'Gombe State University',
+    'Igbinedion University',
+    'Godfrey Okoye University',
+    'Ibrahim Babangida University',
+    'Imo State University',
+    'Federal University of Technology, Yola',
+    'Federal University of Technology, Owerri',
+    'Federal University of Technology, Minna',
+    'Ekiti State University',
+    'Cross River University of Science and Technology',
+    'Crescent University',
+    'Enugu State University of Science and Technology',
+    'Crawford University',
+    'Ebonyi State University',
+    'Ahmadu Bello University',
+    'The Achievers University',
+    'Adeleke University',
+    'Akwa Ibom State University of Technology',
+    'Afe Babalola University',
+    'Adamawa State University',
+    'Ajayi Crowther University',
+    'Abia State University',
+    'Ambrose Alli University',
+    'Adekunle Ajasin University',
+    'Al-hikmah University',
+    'ABTI American University of Nigeria',
+    'Anambra State University of Science and Technology',
+    'Abubakar Tafawa Balewa University',
+    'Bingham University',
+    'Bells University of Technology',
+    'Babcock University',
+    'Baze University Abuja',
+    'African University of Science and Technology',
+    'Novena University',
+    'Nigerian Turkish Nile University',
+    'Nasarawa State University Keffi',
+    'Obafemi Awolowo University Ile-Ife',
+    'Olabisi Onabanjo University',
+    'Oduduwa University',
+    'Obong University',
+    'Kaduna State University',
+    'Katsina University',
+    'Kogi State University',
+    'Kebbi State University of Science and Technology',
+    'Kano State University of Technology Wudil',
+    'Joseph Ayo Babalola University',
+    'Landmark University',
+    'National Open University of Nigeria',
+    'Niger Delta University',
+    'Madonna University',
+    'Michael Okpara University of Agriculture',
+    'Osun State University',
+    'Nnamdi Azikiwe University',
+    "Umaru Musa Yar'Adua University",
+    'Tansian University',
+    'Taraba State University',
+    'Usmanu Danfodiyo University Sokoto',
+    'Tai Solarin University of Education',
+    'Sokoto State University',
+    'Paul University',
+    'Redeemers University',
+    'Pan-African University',
+    'Ondo State University of Science and Technology',
+    'Salem University',
+    'Renaissance University',
+    'Ladoke Akintola University of Technology',
+    'Kwara State University',
+    'Lead City University of Ibadan',
+    'Kwararafa University',
+    'Lagos State University',
+    'Rivers State University of Science and Technology',
+    'Wesley University of Science and Technology',
+    'Western Delta University',
+    'Wellspring University',
+    'Veritas University',
+    'University of Jos',
+    'University of Benin',
+    'University of Mkar',
+    'University of Maiduguri',
+    'University of Portharcourt',
+    'University of Abuja',
+    'University of Agriculture Makurdi',
+    'University of Agriculture Abeokuta',
+    'University of Ibadan',
+    'University of Ilorin',
+    'University of Nigeria',
+    'University of Lagos',
+    'University of Calabar',
+    'University of Uyo',
+    'Bauchi State University, Gadau',
+    'Bauchi State University, Gadau',
+    'Akanu Ibiam Federal Polytechnic, Unwana',
+    'Akanu Ibiam Federal Polytechnic, Unwana',
+  ]
   useEffect(() => {
     fetch('https://restcountries.com/v2/all?')
       .then((response) => {
@@ -120,17 +314,31 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
         return []
       }
     } catch (TypeError) {
-      console.log('There was an error: ', TypeError)
-      console.log('search filter:', search, 'country filter:', country)
-      return []
+      return nigeria_universities.filter((university) => {
+        return university.includes(search)
+      })
     }
   }
   useEffect(async () => {
-    const colleges = await getCollegesInCountry(
-      schoolInfo.instituteName,
-      schoolInfo.instituteCountryName
-    )
-    setInstitutes(colleges)
+    if (!institutes.includes(schoolInfo.instituteName)) {
+      const colleges = await getCollegesInCountry(
+        schoolInfo.instituteName,
+        schoolInfo.instituteCountryName
+      )
+      setInstitutes(colleges)
+      // setInstitutes(() => {
+      //   var list = []
+      //   colleges.forEach((college, i) => {
+      //     if (i !== college.length - 1) {
+      //       list += ['"' + college.name + '",']
+      //     } else {
+      //       list += ['"' + college.name + '"']
+      //     }
+      //   })
+      //   console.log(list)
+      //   return [...list]
+      // })
+    }
   }, [schoolInfo.instituteName, schoolInfo.instituteCountryName])
   useEffect(() => {
     if (addSchoolEmail) {
@@ -1082,7 +1290,11 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                     institutes.length > 0 &&
                     !institutes
                       .filter((institute) => {
-                        return institute.name.toLowerCase().trim()
+                        if (institute.name !== undefined) {
+                          return institute.name.toLowerCase().trim()
+                        } else {
+                          return institute.toLowerCase().trim()
+                        }
                       })
                       .includes(
                         schoolInfo.instituteName.toLowerCase().trim()
@@ -1105,18 +1317,27 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                                 margin: '10px auto',
                                 borderBottom: 'solid black 1px',
                               }}
-                              value={institute.name}
+                              value={
+                                institute.name !== undefined
+                                  ? institute.name
+                                  : institute
+                              }
                               onClick={() => {
                                 setSchoolInfo((schoolInfo) => {
                                   return {
                                     ...schoolInfo,
-                                    instituteName: institute.name,
+                                    instituteName:
+                                      institute.name !== undefined
+                                        ? institute.name
+                                        : institute,
                                   }
                                 })
                                 setInstitutes([])
                               }}
                             >
-                              {institute.name}
+                              {institute.name !== undefined
+                                ? institute.name
+                                : institute}
                             </div>
                           )
                         })}
