@@ -21,8 +21,8 @@ const ConnectionModal = ({
           left: '0px',
           width: '100vw',
           height: '100vh',
-          backgroundColor: 'rgba(0,0,0,0.95)',
-          zIndex: '1',
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          zIndex: '4',
         }}
       >
         <div

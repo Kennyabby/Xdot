@@ -1279,7 +1279,18 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           func2={() => {
             setConfirmStudentStatus(false)
             setSchoolInfo((schoolInfo) => {
-              return { ...schoolInfo, student: false }
+              return {
+                ...schoolInfo,
+                student: false,
+                instituteCountryName: '',
+                instituteCountry: '',
+                instituteName: '',
+                institute: '',
+                department: '',
+                matricNo: '',
+                schoolEmail: '',
+                level: '',
+              }
             })
           }}
         />
