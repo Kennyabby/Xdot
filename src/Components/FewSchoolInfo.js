@@ -109,14 +109,19 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
       })
   }, [])
   const getCollegesInCountry = async (search, country) => {
-    const response = await fetch(
-      `http://universities.hipolabs.com/search?name=${search}&country=${country}`
-    )
-    const data = await response.json()
-    if (search && country) {
-      return data
-    } else {
-      return []
+    try {
+      const response = await fetch(
+        `http://universities.hipolabs.com/search?name=${search}&country=${country}`
+      )
+      const data = await response.json()
+      if (search && country) {
+        return data
+      } else {
+        return []
+      }
+    } catch (TypeError) {
+      console.log('There was an error: ', TypeError)
+      console.log('search filter:', search, 'country filter:', country)
     }
   }
   useEffect(async () => {
