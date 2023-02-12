@@ -1325,7 +1325,7 @@ const Post = ({
                         width: winSize <= 700 ? '100vw' : '42%',
                         background: darkMode
                           ? 'rgba(10,10,15,1)'
-                          : 'rgba(247,247,250,1)',
+                          : 'rgba(253,253,253,1)',
                         zIndex: '0',
                         height: '100%',
                         overflowY: 'auto',

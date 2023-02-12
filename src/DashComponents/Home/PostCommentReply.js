@@ -191,7 +191,7 @@ const PostCommentReply = ({
         <div
           style={{
             position: 'relative',
-            backgroundColor: darkMode ? 'rgba(0,0,0,1)' : 'rgba(255,255,255,1)',
+            backgroundColor: darkMode ? 'rgba(29,29,30,0.8)' : 'whitesmoke',
             fontSize: '.9rem',
             textAlign: 'left',
             width: '70%',
