@@ -56,7 +56,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
     {
       title: 'Space Walk 4',
       info: 'This term is reffered to as the event of being present in a region where the gravitaional force has no effect 4.',
-      src: evolve,
+      src: neural,
       button: 'Button 4',
       buttonPath: '',
       show: false,
@@ -64,7 +64,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
     {
       title: 'Space Walk 5',
       info: 'This term is reffered to as the event of being present in a region where the gravitaional force has no effect 5.',
-      src: neural,
+      src: evolve,
       button: 'Button 5',
       buttonPath: '',
       show: false,
