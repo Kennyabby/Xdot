@@ -932,8 +932,7 @@ const Post = ({
               <div
                 style={{
                   width: '90%',
-                  margin: '5px',
-                  marginLeft: 'auto',
+                  margin: '5px auto',
                   display: 'flex',
                 }}
               >
