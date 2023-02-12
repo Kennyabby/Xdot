@@ -88,6 +88,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     levelRef,
   ])
   var matricValidated = false
+  const [confirmStudentStatus, setConfirmStudentStatus] = useState(false)
   const [schoolEmailExist, setSchoolEmailExist] = useState(false)
   const [otherEmailExist, setOtherEmailExist] = useState(false)
   const [emailVerified, setEmailVerified] = useState(false)
@@ -1260,6 +1261,29 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
           }}
         />
       ) : undefined}
+      {confirmStudentStatus ? (
+        <ConnectionModal
+          title='Please Confirm!'
+          message={
+            'The details entered for your Institute will be deleted. Be sure to confirm before proceeding.'
+          }
+          multiple={true}
+          button1='Cancel'
+          button2='Continue'
+          func1={() => {
+            setConfirmStudentStatus(false)
+            setSchoolInfo((schoolInfo) => {
+              return { ...schoolInfo, student: true }
+            })
+          }}
+          func2={() => {
+            setConfirmStudentStatus(false)
+            setSchoolInfo((schoolInfo) => {
+              return { ...schoolInfo, student: false }
+            })
+          }}
+        />
+      ) : undefined}
       <motion.div
         variants={headerVariants}
         className='infotag'
@@ -1374,9 +1398,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
                   border: 'solid blue 2px',
                 }}
                 onClick={() => {
-                  setSchoolInfo((schoolInfo) => {
-                    return { ...schoolInfo, student: false }
-                  })
+                  setConfirmStudentStatus(true)
                 }}
               >
                 No
