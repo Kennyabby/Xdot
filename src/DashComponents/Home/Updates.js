@@ -99,17 +99,8 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   }, [user])
   useEffect(() => {
     setNewPostShow(currentPostShow)
-    console.log('current Post Show dependency: ', currentPostShow)
-    if (currentPostShow !== null) {
-      // stackPos = 1
-      console.log('stack pos:', 1)
-    } else {
-      // stackPos = 0
-      // console.log('stack pos:', 0)
-    }
   }, [currentPostShow])
   const handlePopState = () => {
-    console.log('stack pos:', stackPos, 'current Post:', currentPostShow)
     if (currentPostShow === null) {
       // stackPos = 1
       setHighlightedPost(null)
@@ -120,7 +111,6 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
     // }
   }
   useEffect(() => {
-    console.log('curr stack pos:', stackPos)
     const unlisten = history.listen((location, action) => {
       if (action === 'POP') {
         handlePopState()
@@ -591,7 +581,6 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                             return done
                           }}
                           currentPostShow={(post) => {
-                            console.log('update: ', post)
                             setCurrentPostShow(post)
                           }}
                           setHighlightedPost={(post) => {
@@ -657,7 +646,6 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                           }}
                           goBack={() => {}}
                           currentPostShow={(post) => {
-                            console.log('update modal: ', post)
                             setCurrentPostShow(post)
                           }}
                           setHighlightedPost={(post) => {

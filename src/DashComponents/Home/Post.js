@@ -83,14 +83,6 @@ const Post = ({
     { name: 'sad', src: sad },
     { name: 'angry', src: angry },
   ]
-  // useEffect(() => {
-  //   return history.listen(() => {
-  //     if (history.action === 'POP') {
-  //       console.log('back pressed')
-  //       history.go(1)
-  //     }
-  //   })
-  // }, [history])
   useEffect(() => {
     if (window.innerWidth <= 700) {
       setLeftOffset(String(-((window.innerWidth - 300) / 2 + 100)) + 'px')
@@ -1282,7 +1274,6 @@ const Post = ({
                               pathname: history.location.pathname,
                               state: { modal: true },
                             })
-                            console.log('post js: ', req.post)
                             setShowPost(req.show)
                             setPostShow(req.post)
                             currentPostShow(req.post)
