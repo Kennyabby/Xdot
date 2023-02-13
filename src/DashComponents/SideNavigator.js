@@ -167,7 +167,7 @@ const SideNavigator = ({
           style={{
             left: String(xOffset) + 'px',
             backgroundColor: darkMode
-              ? 'rgba(0,0,0,0.95)'
+              ? 'rgba(5,5,30,0.9)'
               : 'rgba(255,255,255,0.9)',
           }}
         >

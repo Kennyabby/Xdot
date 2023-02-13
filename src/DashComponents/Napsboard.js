@@ -916,7 +916,11 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                         className='hometogglegroup1'
                         style={{
                           backgroundColor: darkMode
-                            ? 'rgba(0,0,0,0.8)'
+                            ? winSize <= 700
+                              ? 'rgba(0,0,0,0)'
+                              : 'rgba(5,5,30,0.9)'
+                            : winSize <= 700
+                            ? 'rgba(0,0,0,0)'
                             : 'rgba(255,255,255,0.8)',
                           borderRadius: '10px',
                         }}
