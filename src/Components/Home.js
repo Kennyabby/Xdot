@@ -78,7 +78,16 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
   const currentRef = useRef(null)
   const aboutRef = useRef(null)
   const history = useHistory()
-  const { darkMode } = useContext(ContextProvider)
+  const {
+    darkMode,
+    MontserratRegular,
+    MontserratBold,
+    MontserratItalic,
+    CodeProRegular,
+    CodeProBold,
+    CodeProLight,
+    CodeProItalic,
+  } = useContext(ContextProvider)
   const minSwipeDistance = 50
   const refAbout = (ref) => {
     const dimension = ref.current.getBoundingClientRect()
@@ -282,7 +291,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
           <div
             style={{
               fontSize: '.8rem',
-              fontFamily: 'monospace',
+              fontFamily: MontserratBold,
               fontWeight: 'bold',
               borderRadius: '10px',
               padding: '10px',
@@ -360,8 +369,9 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                         </motion.h2>
                         <div
                           style={{
-                            fontFamily: 'Courier New',
-                            fontStyle: 'italic',
+                            // fontFamily: 'Trebuchet MS, sans-serif',
+                            fontFamily: MontserratBold,
+                            // fontStyle: 'italic',
                             fontSize: winSize < 700 ? '' : '1rem',
                             backgroundColor: darkMode
                               ? 'rgba(10,10,10,1)'
@@ -535,7 +545,11 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
 
           <motion.div
             className='info'
-            style={{ marginTop: '10px', color: darkMode ? 'white' : 'black' }}
+            style={{
+              marginTop: '10px',
+              color: darkMode ? 'white' : 'black',
+              fontFamily: 'Calibri',
+            }}
             variants={infoVariants}
             initial='hidden'
             animate='visible'
@@ -575,7 +589,10 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
           >
             <motion.div
               className='info'
-              style={{ color: darkMode ? 'white' : 'black' }}
+              style={{
+                color: darkMode ? 'white' : 'black',
+                fontFamily: 'Calibri',
+              }}
               variants={infoVariants}
               initial='hidden'
               animate='visible'
@@ -621,7 +638,11 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
             </div>
             <motion.div
               className='info'
-              style={{ marginTop: '10px', color: darkMode ? 'white' : 'black' }}
+              style={{
+                marginTop: '10px',
+                color: darkMode ? 'white' : 'black',
+                fontFamily: 'Calibri',
+              }}
               variants={infoVariants}
               initial='hidden'
               animate='visible'
@@ -658,7 +679,10 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
             <motion.div
               className='info'
               variants={infoVariants}
-              style={{ color: darkMode ? 'white' : 'black' }}
+              style={{
+                color: darkMode ? 'white' : 'black',
+                fontFamily: 'Calibri',
+              }}
               initial='hidden'
               animate='visible'
             >
@@ -703,7 +727,11 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
             </div>
             <motion.div
               className='info'
-              style={{ marginTop: '10px', color: darkMode ? 'white' : 'black' }}
+              style={{
+                marginTop: '10px',
+                color: darkMode ? 'white' : 'black',
+                fontFamily: 'Calibri',
+              }}
               variants={infoVariants}
               initial='hidden'
               animate='visible'
@@ -734,18 +762,8 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
             </motion.div>
           </div>
         </div>
-        <Events
-          // setRef={(ref) => {
-          //   setEventDimension(ref.current.getBoundingClientRect())
-          // }}
-          eventRef={eventRef}
-        />
-        <Current
-          // setRef={(ref) => {
-          //   setCurrentDimension(ref.current.getBoundingClientRect())
-          // }}
-          currentRef={currentRef}
-        />
+        <Events eventRef={eventRef} />
+        <Current currentRef={currentRef} />
         <About aboutRef={aboutRef} />
       </div>
     </>

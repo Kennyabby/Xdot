@@ -22,7 +22,7 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
         }}
       >
         <div className='infos'>
-          <h2>WelCome</h2>
+          <h2 style={{ fontFamily: 'Calibri' }}>WelCome (Sign up intro)</h2>
           <section style={{ fontFamily: 'Calibri', fontSize: '1rem' }}>
             <div>
               We are glad to see you take your first step towards contributing

@@ -220,7 +220,13 @@ const PostComment = ({
             {userName.slice(0, 1).toUpperCase() + userName.slice(1)}
           </label>
           <p>
-            <label style={{ fontSize: '.8rem', whiteSpace: 'pre-wrap' }}>
+            <label
+              style={{
+                fontSize: '.9rem',
+                whiteSpace: 'pre-wrap',
+                fontFamily: 'Calibri',
+              }}
+            >
               {statement !== undefined &&
                 (statement.split(' ').length <= 60 ? (
                   <label>
@@ -229,7 +235,7 @@ const PostComment = ({
                         return (
                           <label
                             style={{
-                              color: darkMode ? 'darkorange' : 'orange',
+                              color: darkMode ? 'darkorange' : 'blue',
                               fontWeight: 'bold',
                               cursor: 'pointer',
                             }}
@@ -279,7 +285,7 @@ const PostComment = ({
                         }}
                         style={{
                           cursor: 'pointer',
-                          color: darkMode ? 'orange' : 'darkorange',
+                          color: darkMode ? 'darkorange' : 'blue',
                         }}
                       >
                         {allowedLength <= statement.split(' ').length

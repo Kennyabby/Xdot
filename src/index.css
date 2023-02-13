@@ -159,14 +159,15 @@ code {
 .introLabel {
   list-style: none;
   margin: 20px;
-  font-family: monospace;
+  font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
   font-size: 0.9rem;
   line-height: 1rem;
+  font-style: italic;
   margin: 10px;
   margin-bottom: 20px;
   background-color: white;
   padding: 10px;
-  box-shadow: -7px -7px 10px rgba(0, 0, 0, 0.1), 7px 7px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: -7px -7px 10px rgba(0, 0, 0, 0.1), 7px 7px 10px rgba(0, 0, 0, 0.1); */
   border-radius: 10px;
 }
 .events {

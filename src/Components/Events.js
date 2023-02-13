@@ -21,7 +21,7 @@ const Acts = ({ title, content, clickVar, id }) => {
           style={{
             margin: '10px',
             fontWeight: 'bold',
-            fontFamily: 'monospace',
+            fontFamily: 'Calibri',
             borderBottom: 'solid rgba(49,49,50,1) 2px',
           }}
         >
@@ -32,7 +32,7 @@ const Acts = ({ title, content, clickVar, id }) => {
         style={{
           margin: '10px',
           marginTop: '30px',
-          fontFamily: 'Courier New',
+          fontFamily: 'Calibri',
           border: 'solid rgba(49,49,50,1) 2px',
           padding: '10px',
           borderRadius: '10px',
@@ -77,13 +77,13 @@ const Events = ({ eventRef }) => {
   const [touchEnd, setTouchEnd] = useState(null)
   const [lastTouch, setLastTouch] = useState(0)
   const minSwipeDistance = 100
-  const handleWheel = (event) => {
-    event.preentDefault()
-    console.log('delta value:', event.deltaX)
-    setScrollLeft((scrollLeft) => {
-      return scrollLeft + event.deltaX
-    })
-  }
+  // const handleWheel = (event) => {
+  //   event.preentDefault()
+  //   console.log('delta value:', event.deltaX)
+  //   setScrollLeft((scrollLeft) => {
+  //     return scrollLeft + event.deltaX
+  //   })
+  // }
 
   useEffect(() => {
     eventsRef.current.scrollLeft = scrollLeft
@@ -123,15 +123,17 @@ const Events = ({ eventRef }) => {
     var currentTouch = e.targetTouches[0].clientX
     var distance = currentTouch - touchStart
     setScrollLeft((scrollLeft) => {
+      console.log('last touch:', lastTouch, 'scroll left:', scrollLeft)
       if (scrollLeft < 0) {
         return 0
       } else if (scrollLeft > lastTouch) {
         return lastTouch + 290
       } else if (scrollLeft < lastTouch) {
         return lastTouch - 290
-      } else {
-        return scrollLeft - distance
+      } else if (scrollLeft > 580) {
+        return 580
       }
+      return scrollLeft - distance
     })
     setTouchEnd(currentTouch)
   }
@@ -139,8 +141,9 @@ const Events = ({ eventRef }) => {
     if (!touchStart || !touchEnd) {
       return
     } else {
-      setLastTouch(scrollLeft)
       const distance = touchStart - touchEnd
+      console.log('scroll left at last touch is:', scrollLeft)
+      setLastTouch(scrollLeft)
       const isRightSwipe = distance < -minSwipeDistance
       if (isRightSwipe && touchStart < 50) {
       }
@@ -162,7 +165,7 @@ const Events = ({ eventRef }) => {
             backgroundColor: 'rgba(0,0,0,0)',
             fontWeight: 'bold',
             fontSize: '1.2rem',
-            fontFamily: 'Courier New',
+            fontFamily: 'Calibri',
             padding: '20px',
             paddingBottom: '20px',
           }}
@@ -176,7 +179,6 @@ const Events = ({ eventRef }) => {
             backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
             color: darkMode ? 'white' : 'black',
           }}
-          onWheel={handleWheel}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
           onTouchMove={onTouchMove}

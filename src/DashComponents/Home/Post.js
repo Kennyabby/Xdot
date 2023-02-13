@@ -719,8 +719,8 @@ const Post = ({
                     <label
                       style={{
                         fontWeight: 'bold',
-                        fontFamily: 'verdana',
-                        fontSize: '.73rem',
+                        fontFamily: 'Calibri',
+                        fontSize: '.9rem',
                       }}
                     >
                       {postUser.userName}
@@ -751,15 +751,12 @@ const Post = ({
                       textAlign: 'left',
                       padding: '10px',
                       margin: '15px',
-                      fontFamily: 'Courier New',
+                      fontFamily: 'Calibri',
                       borderRadius: '10px',
                       whiteSpace: 'pre-wrap',
                       backgroundColor: darkMode
                         ? 'rgba(29,29,30,0.8)'
                         : 'whitesmoke',
-                      // boxShadow: darkMode
-                      //   ? '-4px -4px 10px rgba(2,2,2,0.1), 4px 4px 10px rgba(2,2,2,0.1)'
-                      //   : '-4px -4px 10px rgba(100,100,100,0.1), 4px 4px 10px rgba(100,100,100,0.1)',
                     }}
                   >
                     {update.postComment !== undefined &&
@@ -770,7 +767,7 @@ const Post = ({
                               return (
                                 <label
                                   style={{
-                                    color: darkMode ? 'darkorange' : 'orange',
+                                    color: darkMode ? 'darkorange' : 'blue',
                                     fontWeight: 'bold',
                                     cursor: 'pointer',
                                   }}
@@ -800,7 +797,7 @@ const Post = ({
                                 return (
                                   <label
                                     style={{
-                                      color: darkMode ? 'darkorange' : 'orange',
+                                      color: darkMode ? 'darkorange' : 'blue',
                                       fontWeight: 'bold',
                                       cursor: 'pointer',
                                     }}
@@ -828,7 +825,7 @@ const Post = ({
                               }}
                               style={{
                                 cursor: 'pointer',
-                                color: darkMode ? 'orange' : 'darkorange',
+                                color: darkMode ? 'darkorange' : 'blue',
                               }}
                             >
                               {allowedLength <=
