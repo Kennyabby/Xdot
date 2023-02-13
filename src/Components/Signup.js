@@ -337,10 +337,19 @@ const Signup = ({ showNavbar, showNavOpt, server }) => {
       } else {
         setContent(
           <FewSignupInfo
+            basicConfirmed={basicConfirmed}
+            schoolConfirmed={schoolConfirmed}
+            credentials={confidentials}
+            setValidate={(validate) => {
+              setIsStartValidating(validate)
+            }}
             setSignupConfirmed={(isConfirmed) => {
               setSignupConfirmed((setConfirmed) => {
                 return { ...setConfirmed, check: isConfirmed }
               })
+            }}
+            sendConfidentialDetails={(confidentials) => {
+              setConfidentials(confidentials)
             }}
           />
         )
