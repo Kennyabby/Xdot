@@ -534,7 +534,7 @@ const Post = ({
           padding: '0px',
           paddingTop: status === undefined ? '6px' : '60px',
           paddingBottom: '6px',
-          backgroundColor: darkMode ? 'rgba(5,5,30,1)' : 'rgba(255,255,255,1)',
+          backgroundColor: darkMode ? 'rgba(10,5,70,1)' : 'rgba(255,255,255,1)',
           borderTopRightRadius: '30px',
           borderTopLeftRadius: '30px',
           borderBottom: darkMode
