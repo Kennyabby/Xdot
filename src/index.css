@@ -170,24 +170,23 @@ code {
   border-radius: 10px;
 }
 .events {
-  overflow-x: auto;
+  overflow: auto;
   background-color: rgba(31, 29, 29, 1);
-  height: 300px;
-  flex-wrap: wrap;
+}
+.scroll-events {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 .acts {
   position: relative;
   color: white;
   box-shadow: -7px -7px 20px rgba(0, 0, 0, 0.1), 7px 7px 20px rgba(0, 0, 0, 0.1);
-  margin: auto 20px;
+  margin: 5px 20px;
   padding: 13px;
   border-radius: 20px;
   flex-wrap: wrap;
   width: 250px;
   height: 250px;
+  line-height: fit-content;
   background-color: rgba(0, 0, 0, 1);
 }
 .current {
@@ -481,6 +480,9 @@ code {
     height: 200px;
     right: 6px;
     justify-content: center;
+  }
+  .events {
+    overflow: hidden;
   }
   .opt-navbar {
     /* width: 100vw; */

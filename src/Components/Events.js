@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 
 import ContextProvider from '../ContextProvider'
 
@@ -71,6 +71,23 @@ const Acts = ({ title, content, clickVar, id }) => {
 }
 const Events = ({ eventRef }) => {
   const { darkMode } = useContext(ContextProvider)
+  const eventsRef = useRef(null)
+  const [scrollLeft, setScrollLeft] = useState(0)
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
+  const [lastTouch, setLastTouch] = useState(0)
+  const minSwipeDistance = 100
+  const handleWheel = (event) => {
+    event.preentDefault()
+    console.log('delta value:', event.deltaX)
+    setScrollLeft((scrollLeft) => {
+      return scrollLeft + event.deltaX
+    })
+  }
+
+  useEffect(() => {
+    eventsRef.current.scrollLeft = scrollLeft
+  }, [scrollLeft])
   const eventsList = [
     {
       title: 'CGPA CALCULATOR',
@@ -97,6 +114,38 @@ const Events = ({ eventRef }) => {
     //   path: '',
     // },
   ]
+  const onTouchStart = (e) => {
+    setTouchEnd(null)
+    const firstTouch = e.targetTouches[0].clientX
+    setTouchStart(firstTouch)
+  }
+  const onTouchMove = (e) => {
+    var currentTouch = e.targetTouches[0].clientX
+    var distance = currentTouch - touchStart
+    setScrollLeft((scrollLeft) => {
+      if (scrollLeft < 0) {
+        return 0
+      } else if (scrollLeft > lastTouch) {
+        return lastTouch + 290
+      } else if (scrollLeft < lastTouch) {
+        return lastTouch - 290
+      } else {
+        return scrollLeft - distance
+      }
+    })
+    setTouchEnd(currentTouch)
+  }
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) {
+      return
+    } else {
+      setLastTouch(scrollLeft)
+      const distance = touchStart - touchEnd
+      const isRightSwipe = distance < -minSwipeDistance
+      if (isRightSwipe && touchStart < 50) {
+      }
+    }
+  }
   return (
     <>
       <div
@@ -121,24 +170,31 @@ const Events = ({ eventRef }) => {
           Check Out Offers Available To You
         </div>
         <div
+          ref={eventsRef}
           className='events'
           style={{
             backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
             color: darkMode ? 'white' : 'black',
           }}
+          onWheel={handleWheel}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          onTouchMove={onTouchMove}
         >
-          {eventsList.map((event, id) => {
-            return (
-              <div key={id}>
-                <Acts
-                  id={id}
-                  title={event.title}
-                  content={event.content}
-                  clickVar={event.clickVar}
-                />
-              </div>
-            )
-          })}
+          <div className='scroll-events'>
+            {eventsList.map((event, id) => {
+              return (
+                <div key={id}>
+                  <Acts
+                    id={id}
+                    title={event.title}
+                    content={event.content}
+                    clickVar={event.clickVar}
+                  />
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </>
