@@ -215,8 +215,6 @@ const FewSignupInfo = ({
         if (infoRef.current.getAttribute('name') === name) {
           infoRef.current.style.border = 'solid blue 2px'
           infoRef.current.parentElement.childNodes[1].style.display = 'block'
-          // infoRef.current.childNodes[1].placeholder = ''
-          infoRef.current.parentElement.scrollIntoView()
           if (infoRef.current.required) {
             infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.chldNodes[1].title}`
           } else {
@@ -347,7 +345,7 @@ const FewSignupInfo = ({
                 outline: 'none',
                 border: 'solid black 0px',
               }}
-              type={showPassword ? 'password' : 'text'}
+              type={!showPassword ? 'password' : 'text'}
               name='password'
               placeholder='Enter Your Password'
               value={signupInfo.password}
@@ -364,7 +362,7 @@ const FewSignupInfo = ({
                 setShowPassword(!showPassword)
               }}
             >
-              {showPassword ? <FaEye /> : <FaEyeSlash />}
+              {!showPassword ? <FaEye /> : <FaEyeSlash />}
             </div>
           </div>
           <p className='inputStyle'></p>
@@ -387,7 +385,7 @@ const FewSignupInfo = ({
                 outline: 'none',
                 border: 'solid black 0px',
               }}
-              type={showConfirmPassword ? 'password' : 'text'}
+              type={!showConfirmPassword ? 'password' : 'text'}
               name='confirmPassword'
               placeholder='Confirm Password'
               value={signupInfo.confirmPassword}
@@ -410,7 +408,7 @@ const FewSignupInfo = ({
                 setShowConfirmPassword(!showConfirmPassword)
               }}
             >
-              {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
+              {!showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
             </div>
           </div>
           <p className='inputStyle'></p>
