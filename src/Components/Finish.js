@@ -3,13 +3,7 @@ import Resizer from 'react-image-file-resizer'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ConnectionModal from './ConnectionModal'
-import {
-  FaUserCircle,
-  FaAngleLeft,
-  FaUserAlt,
-  FaEye,
-  FaEyeSlash,
-} from 'react-icons/fa'
+import { FaAngleLeft } from 'react-icons/fa'
 
 const containerVariants = {
   hidden: {
@@ -67,23 +61,13 @@ const headerVariants = {
     },
   },
 }
-const Finish = ({
-  server,
-  confidentials,
-  setShowView,
-  setViewSessionLabel,
-}) => {
+const Finish = ({ server, confidentials }) => {
   const history = useHistory()
   const [showModal, setShowModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
-  const [viewNext, setViewNext] = useState(true)
   const finishCoverRef = useRef(null)
   const summaryLabelRef = useRef(null)
-  const uploadLabelRef = useRef(null)
   const [submitStatus, setSubmitStatus] = useState('Submit')
-  const [file, setFile] = useState(null)
-  const [convertedFile, setConvertedFile] = useState(null)
-  const [show, setShow] = useState(true)
   const [isSuccess, setIsSuccess] = useState(false)
 
   const basicInfo = [
@@ -103,7 +87,6 @@ const Finish = ({
     localStorage.getItem('identity'),
     localStorage.getItem('nationality'),
     localStorage.getItem('contactNo'),
-    localStorage.getItem('countryInfo'),
   ]
   const schoolInfo = [
     'Highest Qualification',
@@ -132,8 +115,6 @@ const Finish = ({
     localStorage.getItem('schoolEmail'),
     localStorage.getItem('otherEmail'),
     localStorage.getItem('level'),
-    localStorage.getItem('institute'),
-    localStorage.getItem('instituteCountry'),
   ]
 
   const signupInfo = ['Username']
@@ -155,7 +136,6 @@ const Finish = ({
     contactNo: localStorage.getItem('contactNo'),
     identity: localStorage.getItem('identity'),
     nationality: localStorage.getItem('nationality'),
-    countryInfo: localStorage.getItem('countryInfo'),
     userName: setCamelCase(localStorage.getItem('userName')),
     img: '',
     password: confidentials.password,
@@ -177,14 +157,10 @@ const Finish = ({
               localStorage.getItem('instituteName') !== null
                 ? localStorage.getItem('instituteName')
                 : '',
-
             department:
               localStorage.getItem('department') !== null
                 ? localStorage.getItem('department')
                 : '',
-
-            institute: localStorage.getItem('institute'),
-            instituteCountry: localStorage.getItem('instituteCountry'),
           }
         : { check: false },
     courseDetails: [],
@@ -310,7 +286,10 @@ const Finish = ({
       setSubmitStatus('Submit')
       if (feedBack.isDelivered === true) {
         notifyUserMail([studentInfo.otherEmail])
-        history.push('/signin')
+        setIsSuccess(true)
+        setTimeout(() => {
+          history.push('/signin')
+        }, 3000)
       } else {
         setErrorMessage(
           'An Error Occured. Could not submit your details. Kindly check that your device is connected to a stable internet.'
@@ -327,11 +306,22 @@ const Finish = ({
   const prevNext = (
     <div className='np' onClick={getButtonEvent}>
       {<FaAngleLeft className='prv' value='Prev' />}
-      {
-        <button className='nxt' type='submit' name='button' value='Next'>
+      {isSuccess ? (
+        <div
+          style={{
+            color: 'green',
+            fontWeight: 'bold',
+            fontSize: '1rem',
+            textAlign: 'center',
+          }}
+        >
+          {'Your Account Was Created Successfully!'}
+        </div>
+      ) : (
+        <button className='nxt' type='submit' name='button' value='Submit'>
           {submitStatus}
         </button>
-      }
+      )}
     </div>
   )
   return (
