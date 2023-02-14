@@ -77,6 +77,7 @@ const Events = ({ eventRef }) => {
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
   const [lastTouch, setLastTouch] = useState(0)
+  const [scrollDirection, setScrollDirection] = useState('Right')
   const minSwipeDistance = 130
   // const handleWheel = (event) => {
   //   event.preentDefault()
@@ -120,7 +121,12 @@ const Events = ({ eventRef }) => {
       } else if (scrollLeft < 0) {
         setScrollLeft(0)
       } else {
-        eventsRef.current.scrollLeft = scrollLeft
+        if (scrollDirection === 'Left') {
+          scrollToRight(scrollLeft, 30)
+        } else {
+          scrollToLeft(scrollLeft, 30)
+        }
+        // eventsRef.current.scrollLeft = scrollLeft
       }
     }
   }, [scrollLeft])
@@ -154,18 +160,43 @@ const Events = ({ eventRef }) => {
       var newCurrentPos = 290 * Math.round(currentPos / 290)
       if (distance < 0) {
         if (distance < -minSwipeDistance) {
+          setScrollDirection('Right')
           setScrollLeft(scrollLeft - 290)
         } else {
-          eventsRef.current.scrollLeft = newCurrentPos
+          scrollToRight(newCurrentPos, 30)
+          // eventsRef.current.scrollLeft = newCurrentPos
         }
       } else {
         if (distance > minSwipeDistance) {
+          setScrollDirection('Left')
           setScrollLeft(scrollLeft + 290)
         } else {
-          eventsRef.current.scrollLeft = newCurrentPos
+          scrollToLeft(newCurrentPos, 30)
+          // eventsRef.current.scrollLeft = newCurrentPos
         }
       }
     }
+  }
+  const scrollToRight = (target, interval) => {
+    const intervalId = setInterval(() => {
+      if (
+        eventsRef.current.scrollLeft >= target ||
+        eventsRef.current.scrollLeft >= 558
+      ) {
+        clearInterval(intervalId)
+      } else {
+        eventsRef.current.scrollLeft += 10
+      }
+    }, interval)
+  }
+  const scrollToLeft = (target, interval) => {
+    const intervalId = setInterval(() => {
+      if (eventsRef.current.scrollLeft <= target) {
+        clearInterval(intervalId)
+      } else {
+        eventsRef.current.scrollLeft -= 10
+      }
+    }, interval)
   }
   return (
     <>
