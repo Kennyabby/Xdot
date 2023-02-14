@@ -1605,11 +1605,15 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
                     required={schoolInfo.student}
                     title='Choose Your Level'
                   >
-                    <option value=''>Level</option>
+                    <option value=''>Choose Your Level</option>
                     <option value='100'>100</option>
                     <option value='200'>200</option>
                     <option value='300'>300</option>
                     <option value='400'>400</option>
+                    <option value='500'>500</option>
+                    <option value='600'>600</option>
+                    <option value='700'>700</option>
+                    <option value='Post Graduate'>Post Gradaute</option>
                   </select>
                   <p className='inputStyle'></p>
                 </p>
