@@ -35,7 +35,7 @@ const headerVariants = {
     },
   },
 }
-const FewSchoolInfo = ({ setSchoolConfirmed }) => {
+const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
   const { darkMode, server } = useContext(ContextProvider)
   const history = useHistory()
   const schoolCoverRef = useRef(null)
@@ -408,15 +408,6 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     }
   }
   useEffect(() => {
-    // department_list
-    //   .filter((institute) => {
-    //     if (institute.name !== undefined) {
-    //       return institute.name.toLowerCase().trim()
-    //     } else {
-    //       return institute.toLowerCase().trim()
-    //     }
-    //   })
-    //   .includes(schoolInfo.instituteName.toLowerCase().trim())
     const filteredDepartment = departments.filter((department) => {
       return department.toLowerCase().trim()
     })
@@ -820,7 +811,11 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
     })
   }
   useEffect(() => {
-    if (window.localStorage.getItem('matricNo') != null) {
+    if (
+      window.localStorage.getItem('student') !== null ||
+      window.localStorage.getItem('otherEmail') !== null ||
+      window.localStorage.getItem('educationQualification') !== null
+    ) {
       setSchoolInfo({
         ...schoolInfo,
         educationQualification: localStorage.getItem('educationQualification'),
@@ -1180,6 +1175,13 @@ const FewSchoolInfo = ({ setSchoolConfirmed }) => {
       clearInterval(countDownId)
     }
   }, [spanLeft])
+  useEffect(() => {
+    if (schoolConfirmed.check) {
+      setEmailVerified(true)
+    } else {
+      setEmailVerified(false)
+    }
+  }, [schoolConfirmed])
   const generateCode = () => {
     let number = '0123456789987654321001234567899876543210'
     var list = number.split('')

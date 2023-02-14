@@ -3,8 +3,13 @@ import Resizer from 'react-image-file-resizer'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ConnectionModal from './ConnectionModal'
-
-import logo from './user.png'
+import {
+  FaUserCircle,
+  FaAngleLeft,
+  FaUserAlt,
+  FaEye,
+  FaEyeSlash,
+} from 'react-icons/fa'
 
 const containerVariants = {
   hidden: {
@@ -64,9 +69,7 @@ const headerVariants = {
 }
 const Finish = ({
   server,
-  getCoverList,
   confidentials,
-  getCoverPos,
   setShowView,
   setViewSessionLabel,
 }) => {
@@ -77,14 +80,9 @@ const Finish = ({
   const finishCoverRef = useRef(null)
   const summaryLabelRef = useRef(null)
   const uploadLabelRef = useRef(null)
-  const imgRef = useRef(null)
-  const [imgUrl, setImgUrl] = useState(logo)
   const [submitStatus, setSubmitStatus] = useState('Submit')
-  const [warnImage, setWarnImage] = useState(false)
-  const [userImg, setUserImg] = useState('')
   const [file, setFile] = useState(null)
   const [convertedFile, setConvertedFile] = useState(null)
-  const [pos, setPos] = useState(0)
   const [show, setShow] = useState(true)
   const [isSuccess, setIsSuccess] = useState(false)
 
@@ -93,175 +91,159 @@ const Finish = ({
     'Middle Name',
     'Last Name',
     'Gender',
-    'Guardian Name',
-    'Date of Birth',
+    'Identity',
+    'Nationality',
+    'Contact No',
+  ]
+  const basicInfoValues = [
+    localStorage.getItem('firstName'),
+    localStorage.getItem('middleName'),
+    localStorage.getItem('lastName'),
+    localStorage.getItem('gender'),
+    localStorage.getItem('identity'),
+    localStorage.getItem('nationality'),
+    localStorage.getItem('contactNo'),
+    localStorage.getItem('countryInfo'),
   ]
   const schoolInfo = [
+    'Highest Qualification',
+    'Student',
+    'Institute Country Name',
+    'Institute Name',
+    'Department',
     'Matric No',
     'School Email',
     'Personal Email',
     'Level',
-    'Hall of Residence Allocated',
-    'Admission Mode of Entry',
-    'Session Admitted',
   ]
-  const contactInfo = [
-    'Contact Number',
-    'Other Contact Number',
-    'Current Address',
-    "Guardian's Contact Number",
-    "Other Guardian's Contact Number",
-    "Guardian's Current Address",
+  const schoolInfoValues = [
+    localStorage.getItem('educationQualification'),
+    localStorage.getItem('student') === String(true) ? 'yes' : 'no',
+    localStorage.getItem('instituteContryName'),
+
+    localStorage.getItem('instituteName') !== null
+      ? localStorage.getItem('instituteName')
+      : '',
+
+    localStorage.getItem('department') !== null
+      ? localStorage.getItem('department')
+      : '',
+    localStorage.getItem('matricNo'),
+    localStorage.getItem('schoolEmail'),
+    localStorage.getItem('otherEmail'),
+    localStorage.getItem('level'),
+    localStorage.getItem('institute'),
+    localStorage.getItem('instituteCountry'),
   ]
 
   const signupInfo = ['Username']
+  const signupInfoValues = [localStorage.getItem('userName')]
+
   const setCamelCase = (text) => {
     var first = text.slice(0, 1).toUpperCase()
     var others = text.slice(1).toLowerCase()
     return first + others
   }
 
-  const basicInfoValues = [
-    localStorage.getItem('firstName'),
-    localStorage.getItem('middleName'),
-    localStorage.getItem('lastName'),
-    localStorage.getItem('gender'),
-    localStorage.getItem('guardianName'),
-    localStorage.getItem('dateOfBirth'),
-  ]
-
-  const schoolInfoValues = [
-    localStorage.getItem('matricNo'),
-    localStorage.getItem('schoolEmail'),
-    localStorage.getItem('otherEmail'),
-    localStorage.getItem('level'),
-    localStorage.getItem('hallOfResidence'),
-    localStorage.getItem('modeOfEntry'),
-    localStorage.getItem('yearOfAdmission'),
-  ]
-
-  const contactInfoValues = [
-    localStorage.getItem('contactNo'),
-    localStorage.getItem('otherContactNo'),
-    localStorage.getItem('currentAddress'),
-    localStorage.getItem('guardianContactNo'),
-    localStorage.getItem('otherGuardianContactNo'),
-    localStorage.getItem('guardianCurrentAddress'),
-  ]
-  const signupInfoValues = [localStorage.getItem('userName')]
-
   const studentInfo = {
     firstName: setCamelCase(localStorage.getItem('firstName')),
     middleName: setCamelCase(localStorage.getItem('middleName')),
     lastName: setCamelCase(localStorage.getItem('lastName')),
     gender: localStorage.getItem('gender'),
-    guardianName: localStorage.getItem('guardianName'),
-    dateOfBirth: localStorage.getItem('dateOfBirth'),
-    matricNo: localStorage.getItem('matricNo'),
-    schoolEmail: localStorage.getItem('schoolEmail'),
+    dateOfBirth: '',
     otherEmail: localStorage.getItem('otherEmail'),
-    level: localStorage.getItem('level'),
-    hallOfResidence: localStorage.getItem('hallOfResidence'),
-    modeOfEntry: localStorage.getItem('modeOfEntry'),
-    yearOfAdmission: localStorage.getItem('yearOfAdmission'),
     contactNo: localStorage.getItem('contactNo'),
-    otherContactNo: localStorage.getItem('otherContactNo'),
-    currentAddress: localStorage.getItem('currentAddress'),
-    guardianContactNo: localStorage.getItem('guardianContactNo'),
-    otherGuardianContactNo: localStorage.getItem('otherGuardianContactNo'),
-    guardianCurrentAddress: localStorage.getItem('guardianCurrentAddress'),
+    identity: localStorage.getItem('identity'),
+    nationality: localStorage.getItem('nationality'),
+    countryInfo: localStorage.getItem('countryInfo'),
     userName: setCamelCase(localStorage.getItem('userName')),
     img: '',
     password: confidentials.password,
     access: 'User',
-    isEditable: 'false',
+    isEditable: 'true',
     createdAt: Date.now(),
+    educationQualification: localStorage.getItem('educationQualification'),
+    student:
+      localStorage.getItem('student') === String(true)
+        ? {
+            check: true,
+            matricNo: localStorage.getItem('matricNo'),
+            schoolEmail: localStorage.getItem('schoolEmail'),
+            level: localStorage.getItem('level'),
+
+            instituteCountryName: localStorage.getItem('instituteContryName'),
+
+            instituteName:
+              localStorage.getItem('instituteName') !== null
+                ? localStorage.getItem('instituteName')
+                : '',
+
+            department:
+              localStorage.getItem('department') !== null
+                ? localStorage.getItem('department')
+                : '',
+
+            institute: localStorage.getItem('institute'),
+            instituteCountry: localStorage.getItem('instituteCountry'),
+          }
+        : { check: false },
     courseDetails: [],
     createQuiz: [],
   }
   useEffect(() => {
-    getCoverList(finishList)
     if (confidentials.password === '') {
       history.push('./signupInfo')
     }
   }, [])
-  useEffect(() => {
-    getCoverPos(pos)
-  }, [pos])
   const getButtonEvent = (e) => {
-    if (e.target.value === 'Next') {
-      if (pos === 1) {
-        setPos(0)
-      } else {
-        setViewNext(false)
-        setPos((pos) => {
-          return pos + 1
-        })
-      }
+    if (e.target.value === 'Submit') {
+      handleSubmit()
     }
-    if (e.target.value === 'Prev') {
-      if (pos === 0) {
-        history.push('./signupInfo')
-        setPos(0)
-      } else {
-        setViewNext(true)
-        setPos((pos) => {
-          return pos - 1
-        })
-      }
+    if (
+      e.target.value === 'Prev' ||
+      e.target.getAttribute('value') === 'Prev'
+    ) {
+      history.push('./signupInfo')
     }
   }
-  const resizeFile = (file) => {
-    return new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        500,
-        600,
-        'JPEG',
-        80,
-        0,
-        (uri) => {
-          resolve(uri)
-        },
-        'byte'
-      )
-    })
-  }
-  const convertToBase64 = (file) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => {
-        resolve(reader.result)
-      }
-    })
-  }
-  useEffect(() => {
-    if (pos) {
-      uploadLabelRef.current.scrollIntoView()
-    } else {
-      summaryLabelRef.current.scrollIntoView()
-    }
-  }, [pos])
+  // const resizeFile = (file) => {
+  //   return new Promise((resolve) => {
+  //     Resizer.imageFileResizer(
+  //       file,
+  //       500,
+  //       600,
+  //       'JPEG',
+  //       80,
+  //       0,
+  //       (uri) => {
+  //         resolve(uri)
+  //       },
+  //       'byte'
+  //     )
+  //   })
+  // }
+  // const convertToBase64 = (file) => {
+  //   return new Promise((resolve) => {
+  //     const reader = new FileReader()
+  //     reader.readAsDataURL(file)
+  //     reader.onload = () => {
+  //       resolve(reader.result)
+  //     }
+  //   })
+  // }
+
   // useEffect(async () => {
   //   if (file !== null) {
   //     const newFile = await convertToBase64(file)
   //     setConvertedFile(newFile)
   //   }
   // }, [file])
-  useEffect(() => {
-    if (userImg === '') {
-    } else {
-      setWarnImage(false)
-    }
-  }, [userImg])
   const notifyUserMail = async (mailList) => {
     const message =
       "<h2>Napsite Account Created Successfully</h2><p style='font-family:monospace; font-size: 1rem;'>Hi, <b>" +
       studentInfo.firstName +
-      "</b>.</p><p style='font-family:monospace; font-size: 1rem;'>You are getting this email to confirm that you have just created an account with <b>Encartoo</b>, using the Matric No: <b>" +
-      studentInfo.matricNo +
-      "</b>.</p> <h2>What Do I Need To Do?</h2><p style='font-family:monospace; font-size: 1rem;'>If this is you, you don't need to do anything. If this was not you, kindly <a href='https://xdot.vercel.app/help'>click here</a>. </p><p style='margin-top: 50px; font-family:monospace;'>Regards. <b>The XDot Team</b> in partnership with <b>Zerox</b>.</p><p style='margin-top: 150px; font-family:monospace'>If you do no want to get future notifications through this email, kindly <a href='https://xdot.vercel.app/help'>stop it here</a>.</p>"
+      "</b>.</p><p style='font-family:monospace; font-size: 1rem;'>You are getting this email to confirm that you have just created an account with <b>Encart Oo</b>" +
+      ".</p> <h2>What Do I Need To Do?</h2><p style='font-family:Calibri; font-size: 1rem;'>If this is you, you don't need to do anything. If this was not you, kindly <a href='https://xdot.vercel.app/help'>click here</a>. </p><p style='margin-top: 50px; font-family:Calibri;'>Regards. <b>The XDot Team</b> in partnership with <b>Zerox</b>.</p><p style='margin-top: 150px; font-family:Calibri'>If you do no want to get future notifications through this email, kindly <a href='https://xdot.vercel.app/help'>stop it here</a>.</p>"
     const opts = {
       method: 'POST',
       headers: {
@@ -277,284 +259,84 @@ const Finish = ({
     const resp = await fetch(server + '/mailUser', opts)
   }
 
-  const fileHandler = async (e) => {
-    var file = e.target.files[0]
-    var resize_width = 400
-    var reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.name = file.name //get the image's name
-    reader.size = file.size //get the image's size
-    reader.onload = function (event) {
-      var img = new Image() //create a image
-      img.src = event.target.result //result is base64-encoded Data URI
-      img.name = event.target.name //set name (optional)
-      img.size = event.target.size //set size (optional)
-      img.onload = function (el) {
-        var elem = document.createElement('canvas')
+  // const fileHandler = async (e) => {
+  //   var file = e.target.files[0]
+  //   var resize_width = 400
+  //   var reader = new FileReader()
+  //   reader.readAsDataURL(file)
+  //   reader.name = file.name //get the image's name
+  //   reader.size = file.size //get the image's size
+  //   reader.onload = function (event) {
+  //     var img = new Image() //create a image
+  //     img.src = event.target.result //result is base64-encoded Data URI
+  //     img.name = event.target.name //set name (optional)
+  //     img.size = event.target.size //set size (optional)
+  //     img.onload = function (el) {
+  //       var elem = document.createElement('canvas')
 
-        var scaleFactor = resize_width / el.target.width
-        var ctx = elem.getContext('2d')
-        elem.width = resize_width
-        elem.height = el.target.height * scaleFactor
+  //       var scaleFactor = resize_width / el.target.width
+  //       var ctx = elem.getContext('2d')
+  //       elem.width = resize_width
+  //       elem.height = el.target.height * scaleFactor
 
-        ctx.drawImage(el.target, 0, 0, elem.width, elem.height)
+  //       ctx.drawImage(el.target, 0, 0, elem.width, elem.height)
 
-        var srcEncoded = elem.toDataURL('image/jpeg')
-        setFile(file)
-        setImgUrl(srcEncoded)
-        setUserImg(srcEncoded)
-        setConvertedFile(srcEncoded)
-      }
-    }
-  }
-  const uploadImg = () => {
-    imgRef.current.click()
-  }
+  //       var srcEncoded = elem.toDataURL('image/jpeg')
+  //       setFile(file)
+  //       setImgUrl(srcEncoded)
+  //       setUserImg(srcEncoded)
+  //       setConvertedFile(srcEncoded)
+  //     }
+  //   }
+  // }
+  // const uploadImg = () => {
+  //   imgRef.current.click()
+  // }
   const handleSubmit = async () => {
-    if (userImg === '') {
-      setWarnImage(true)
-    } else {
-      setSubmitStatus('Please wait...')
-      const imgSrc = studentInfo.matricNo + '_' + studentInfo.firstName
-      setUserImg(imgSrc)
-      studentInfo.img = imgSrc
-      const imageInfo = {
-        image: convertedFile,
-        imageName: imgSrc,
-        imageType: file.type,
+    setSubmitStatus('Please wait...')
+    const studentBody = {
+      studentInfo: studentInfo,
+    }
+    try {
+      const opts = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(studentBody),
       }
-      const studentBody = {
-        studentInfo: studentInfo,
-        imageInfo: imageInfo,
-      }
-      try {
-        const opts = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(studentBody),
-        }
-        const resp = await fetch(server + '/postUserDetails', opts)
-        const feedBack = await resp.json()
-        setSubmitStatus('Submit')
-        if (feedBack.isDelivered === true) {
-          setShow(false)
-          setIsSuccess(true)
-          setViewSessionLabel(false)
-          setShowView(false)
-          notifyUserMail([studentInfo.otherEmail, studentInfo.schoolEmail])
-        } else {
-          setErrorMessage(
-            'An Error Occured, Could not submit your details. Kindly check that your device is connected to a stable internet.'
-          )
-          setShowModal(true)
-        }
-      } catch (TypeError) {
+      const resp = await fetch(server + '/postUserDetails', opts)
+      const feedBack = await resp.json()
+      setSubmitStatus('Submit')
+      if (feedBack.isDelivered === true) {
+        setShow(false)
+        setIsSuccess(true)
+        setViewSessionLabel(false)
+        setShowView(false)
+        notifyUserMail([studentInfo.otherEmail])
+      } else {
         setErrorMessage(
-          'An Error Occured, Could not submit your details. Kindly check that your device is connected to a stable internet.'
+          'An Error Occured. Could not submit your details. Kindly check that your device is connected to a stable internet.'
         )
         setShowModal(true)
       }
+    } catch (TypeError) {
+      setErrorMessage(
+        'An Error Occured. Could not submit your details. Kindly check that your device is connected to a stable internet.'
+      )
+      setShowModal(true)
     }
   }
   const prevNext = (
-    <div className='np' style={{ margin: '0px' }} onClick={getButtonEvent}>
+    <div className='np' onClick={getButtonEvent}>
+      {<FaAngleLeft className='prv' value='Prev' />}
       {
-        <button className='nxt' type='submit' name='button' value='Prev'>
-          {'<< Prev'}
+        <button className='nxt' type='submit' name='button' value='Next'>
+          {submitStatus}
         </button>
       }
-      {viewNext && (
-        <button className='nxt' type='submit' name='button' value='Next'>
-          {'Next >>'}
-        </button>
-      )}
     </div>
   )
-  const finishList = [
-    <div className='container'>
-      <h2
-        style={{ fontFamily: 'fantasy', letterSpacing: '.2rem' }}
-        ref={summaryLabelRef}
-      >
-        Info Summary
-      </h2>
-      <div className='regInfo'>
-        <h3
-          style={{
-            marginLeft: '15px',
-            fontFamily: 'Courier New',
-            fontWeight: 'bold',
-          }}
-        >
-          Basic Info
-        </h3>
-        {basicInfo.map((info, i) => {
-          return (
-            <div
-              style={{
-                textAlign: 'left',
-                padding: '20px',
-                backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
-              }}
-              key={i}
-            >
-              <label style={{ fontWeight: 'bold' }}>{info}: </label>
-              <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
-                {basicInfoValues[i]}
-              </label>
-            </div>
-          )
-        })}
-      </div>
-      <div className='regInfo'>
-        <h3
-          style={{
-            marginLeft: '15px',
-            fontFamily: 'Courier New',
-            fontWeight: 'bold',
-          }}
-        >
-          School Info
-        </h3>
-        {schoolInfo.map((info, i) => {
-          return (
-            <div
-              style={{
-                textAlign: 'left',
-                padding: '20px',
-                backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
-              }}
-              key={i}
-            >
-              <label style={{ fontWeight: 'bold' }}>{info}: </label>
-              <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
-                {schoolInfoValues[i]}
-              </label>
-            </div>
-          )
-        })}
-      </div>
-      <div className='regInfo'>
-        <h3
-          style={{
-            marginLeft: '15px',
-            fontFamily: 'Courier New',
-            fontWeight: 'bold',
-          }}
-        >
-          Contact Info
-        </h3>
-        {contactInfo.map((info, i) => {
-          return (
-            <div
-              style={{
-                textAlign: 'left',
-                padding: '20px',
-                backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
-              }}
-              key={i}
-            >
-              <label style={{ fontWeight: 'bold' }}>{info}: </label>
-              <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
-                {contactInfoValues[i]}
-              </label>
-            </div>
-          )
-        })}
-      </div>
-      <div className='regInfo'>
-        <h3
-          style={{
-            marginLeft: '15px',
-            fontFamily: 'Courier New',
-            fontWeight: 'bold',
-          }}
-        >
-          Signup Info
-        </h3>
-        {signupInfo.map((info, i) => {
-          return (
-            <div
-              style={{
-                textAlign: 'left',
-                padding: '20px',
-                backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
-              }}
-              key={i}
-            >
-              <label style={{ fontWeight: 'bold' }}>{info}: </label>
-              <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
-                {signupInfoValues[i]}
-              </label>
-            </div>
-          )
-        })}
-      </div>
-
-      {prevNext}
-    </div>,
-    <motion.div variants={submitVariants} className='container'>
-      <motion.div
-        variants={headerVariants}
-        className='infotag'
-        ref={uploadLabelRef}
-      >
-        Upload Profile Picture
-      </motion.div>
-      <img
-        className='usr'
-        src={imgUrl}
-        alt='user'
-        height='100px'
-        width='100px'
-      />
-      <input
-        ref={imgRef}
-        type='file'
-        accept='image/*'
-        style={{ display: 'none' }}
-        onChange={fileHandler}
-      />
-      {warnImage && <p style={{ color: 'red' }}>please choose an image</p>}
-      <p>
-        <button
-          className='nxt'
-          style={{ backgroundColor: 'blue', color: 'white' }}
-          title='Upload Image'
-          type='submit'
-          name='button'
-          value='Upload'
-          onClick={uploadImg}
-        >
-          Upload Here
-        </button>
-      </p>
-      {prevNext}
-      <p>
-        <motion.button
-          variants={buttonVariants}
-          className='nxt'
-          style={{
-            backgroundColor: 'green',
-            color: 'white',
-            paddingLeft: '80px',
-            paddingRight: '80px',
-            marginTop: '30px',
-          }}
-          title='Submit'
-          type='submit'
-          name='button'
-          value='Submit'
-          onClick={handleSubmit}
-        >
-          {submitStatus}
-        </motion.button>
-      </p>
-    </motion.div>,
-  ]
-
   return (
     <motion.div
       variants={containerVariants}
@@ -580,7 +362,131 @@ const Finish = ({
           }}
         />
       )}
-      {show && finishList[pos]}
+      {
+        <div className='container'>
+          <h2
+            style={{ fontFamily: 'fantasy', letterSpacing: '.2rem' }}
+            ref={summaryLabelRef}
+          >
+            Info Summary
+          </h2>
+          <div className='regInfo'>
+            <h3
+              style={{
+                marginLeft: '15px',
+                fontFamily: 'Courier New',
+                fontWeight: 'bold',
+                position: 'relative',
+              }}
+            >
+              {
+                <FaAngleLeft
+                  className='prv'
+                  style={{ position: 'absolute', top: '0px' }}
+                  onClick={() => {
+                    history.push('./basicInfo')
+                  }}
+                />
+              }
+              <label>Basic Info</label>
+            </h3>
+            {basicInfo.map((info, i) => {
+              return (
+                <div
+                  style={{
+                    textAlign: 'left',
+                    padding: '20px',
+                    backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
+                  }}
+                  key={i}
+                >
+                  <label style={{ fontWeight: 'bold' }}>{info}: </label>
+                  <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
+                    {basicInfoValues[i]}
+                  </label>
+                </div>
+              )
+            })}
+          </div>
+          <div className='regInfo'>
+            <h3
+              style={{
+                marginLeft: '15px',
+                fontFamily: 'Courier New',
+                fontWeight: 'bold',
+                position: 'relative',
+              }}
+            >
+              {
+                <FaAngleLeft
+                  className='prv'
+                  style={{ position: 'absolute', top: '0px' }}
+                  onClick={() => {
+                    history.push('./schoolInfo')
+                  }}
+                />
+              }
+              <label>School Info</label>
+            </h3>
+            {schoolInfo.map((info, i) => {
+              return (
+                <div
+                  style={{
+                    textAlign: 'left',
+                    padding: '20px',
+                    backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
+                  }}
+                  key={i}
+                >
+                  <label style={{ fontWeight: 'bold' }}>{info}: </label>
+                  <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
+                    {schoolInfoValues[i]}
+                  </label>
+                </div>
+              )
+            })}
+          </div>
+          <div className='regInfo'>
+            <h3
+              style={{
+                marginLeft: '15px',
+                fontFamily: 'Courier New',
+                fontWeight: 'bold',
+                position: 'relative',
+              }}
+            >
+              {
+                <FaAngleLeft
+                  className='prv'
+                  style={{ position: 'absolute', top: '0px' }}
+                  onClick={() => {
+                    history.push('./signupInfo')
+                  }}
+                />
+              }
+              <label>Signup Info</label>
+            </h3>
+            {signupInfo.map((info, i) => {
+              return (
+                <div
+                  style={{
+                    textAlign: 'left',
+                    padding: '20px',
+                    backgroundColor: i % 2 ? 'white' : 'rgba(220,220,220,1)',
+                  }}
+                  key={i}
+                >
+                  <label style={{ fontWeight: 'bold' }}>{info}: </label>
+                  <label style={{ fontWeight: 'light', fontStyle: 'italic' }}>
+                    {signupInfoValues[i]}
+                  </label>
+                </div>
+              )
+            })}
+          </div>
+          {prevNext}
+        </div>
+      }
       {isSuccess && (
         <motion.div variants={submitVariants}>
           <p style={{ color: 'black', marginTop: '100px', margin: '50px' }}>

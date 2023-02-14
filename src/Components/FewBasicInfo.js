@@ -102,6 +102,7 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
         gender: localStorage.getItem('gender'),
         identity: localStorage.getItem('identity'),
         nationality: localStorage.getItem('nationality'),
+        countryInfo: localStorage.getItem('countryInfo'),
       })
     }
   }, [])
@@ -113,6 +114,7 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
     window.localStorage.setItem('gender', basicInfo.gender)
     window.localStorage.setItem('identity', basicInfo.identity)
     window.localStorage.setItem('nationality', basicInfo.nationality)
+    window.localStorage.setItem('countryInfo', basicInfo.countryInfo)
     validateInput()
   }, [basicInfo])
   const validateInputs = () => {

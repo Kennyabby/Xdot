@@ -78,7 +78,7 @@ const Events = ({ eventRef }) => {
   const [touchEnd, setTouchEnd] = useState(null)
   const [lastTouch, setLastTouch] = useState(0)
   const [scrollDirection, setScrollDirection] = useState('Right')
-  const minSwipeDistance = 130
+  const minSwipeDistance = 100
   // const handleWheel = (event) => {
   //   event.preentDefault()
   //   console.log('delta value:', event.deltaX)

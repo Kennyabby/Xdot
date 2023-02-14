@@ -66,7 +66,7 @@ const FewSignupInfo = ({
     var count = 0
     var infos = infoRefList.filter((infoRef) => {
       if (infoRef.current != null) {
-        return infoRef.current.required
+        return infoRef.current.childNodes[1].required
       }
     })
     infoRefList.forEach((infoRef) => {
@@ -89,7 +89,8 @@ const FewSignupInfo = ({
 
     if (
       infos.length === count &&
-      passwordRef.current.value === confirmPasswordRef.current.value
+      passwordRef.current.childNodes[1].value ===
+        confirmPasswordRef.current.childNodes[1].value
     ) {
       setSignupConfirmed(true)
       return true
@@ -189,7 +190,15 @@ const FewSignupInfo = ({
       if (validateInputs()) {
         sendConfidentialDetails(confidentials)
         if (basicConfirmed.check === true && schoolConfirmed.check === true) {
-          // history.push('./finish')
+          history.push('./finish')
+        } else {
+          if (basicConfirmed.check === false) {
+            history.push('./basicInfo')
+          } else if (schoolConfirmed === false) {
+            history.push('./schoolInfo')
+          } else {
+            history.push('./basicInfo')
+          }
         }
       }
     }
@@ -270,7 +279,7 @@ const FewSignupInfo = ({
       {<FaAngleLeft className='prv' value='Prev' />}
       {
         <button className='nxt' type='submit' name='button' value='Next'>
-          {'Submit'}
+          {'Confirm'}
         </button>
       }
     </div>

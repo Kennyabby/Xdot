@@ -289,6 +289,7 @@ const Signup = ({ showNavbar, showNavOpt, server }) => {
       } else {
         setContent(
           <FewSchoolInfo
+            schoolConfirmed={schoolConfirmed}
             setSchoolConfirmed={(isConfirmed) => {
               setSchoolConfirmed((setConfirmed) => {
                 return { ...setConfirmed, check: isConfirmed }
