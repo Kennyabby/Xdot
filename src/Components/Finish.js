@@ -309,11 +309,8 @@ const Finish = ({
       const feedBack = await resp.json()
       setSubmitStatus('Submit')
       if (feedBack.isDelivered === true) {
-        setShow(false)
-        setIsSuccess(true)
-        setViewSessionLabel(false)
-        setShowView(false)
         notifyUserMail([studentInfo.otherEmail])
+        history.push('/signin')
       } else {
         setErrorMessage(
           'An Error Occured. Could not submit your details. Kindly check that your device is connected to a stable internet.'
