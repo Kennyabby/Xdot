@@ -73,10 +73,11 @@ const Events = ({ eventRef }) => {
   const { darkMode } = useContext(ContextProvider)
   const eventsRef = useRef(null)
   const [scrollLeft, setScrollLeft] = useState(0)
+  const [count, setCount] = useState(0)
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
   const [lastTouch, setLastTouch] = useState(0)
-  const minSwipeDistance = 100
+  const minSwipeDistance = 130
   // const handleWheel = (event) => {
   //   event.preentDefault()
   //   console.log('delta value:', event.deltaX)
@@ -85,9 +86,6 @@ const Events = ({ eventRef }) => {
   //   })
   // }
 
-  useEffect(() => {
-    eventsRef.current.scrollLeft = scrollLeft
-  }, [scrollLeft])
   const eventsList = [
     {
       title: 'CGPA CALCULATOR',
@@ -114,27 +112,35 @@ const Events = ({ eventRef }) => {
     //   path: '',
     // },
   ]
+  useEffect(() => {
+    if (eventsRef.current) {
+      const maxScrollLength = 290 * (eventsList.length - 1)
+      if (scrollLeft > maxScrollLength) {
+        setScrollLeft(maxScrollLength)
+      } else if (scrollLeft < 0) {
+        setScrollLeft(0)
+      } else {
+        eventsRef.current.scrollLeft = scrollLeft
+      }
+    }
+  }, [scrollLeft])
   const onTouchStart = (e) => {
     setTouchEnd(null)
     const firstTouch = e.targetTouches[0].clientX
     setTouchStart(firstTouch)
   }
   const onTouchMove = (e) => {
-    var currentTouch = e.targetTouches[0].clientX
+    if (count === 0) {
+      var currentTouch = 0
+    } else {
+      var currentTouch = e.targetTouches[0].clientX
+    }
     var distance = currentTouch - touchStart
-    setScrollLeft((scrollLeft) => {
-      console.log('last touch:', lastTouch, 'scroll left:', scrollLeft)
-      if (scrollLeft < 0) {
-        return 0
-      } else if (scrollLeft > lastTouch) {
-        return lastTouch + 290
-      } else if (scrollLeft < lastTouch) {
-        return lastTouch - 290
-      } else if (scrollLeft > 580) {
-        return 580
-      }
-      return scrollLeft - distance
-    })
+    if (eventsRef.current) {
+      eventsRef.current.scrollLeft -= currentTouch - lastTouch
+    }
+    setCount(count + 1)
+    setLastTouch(e.targetTouches[0].clientX)
     setTouchEnd(currentTouch)
   }
   const onTouchEnd = () => {
@@ -142,10 +148,22 @@ const Events = ({ eventRef }) => {
       return
     } else {
       const distance = touchStart - touchEnd
-      console.log('scroll left at last touch is:', scrollLeft)
-      setLastTouch(scrollLeft)
-      const isRightSwipe = distance < -minSwipeDistance
-      if (isRightSwipe && touchStart < 50) {
+      setLastTouch(0)
+      setCount(0)
+      var currentPos = eventsRef.current.scrollLeft
+      var newCurrentPos = 290 * Math.round(currentPos / 290)
+      if (distance < 0) {
+        if (distance < -minSwipeDistance) {
+          setScrollLeft(scrollLeft - 290)
+        } else {
+          eventsRef.current.scrollLeft = newCurrentPos
+        }
+      } else {
+        if (distance > minSwipeDistance) {
+          setScrollLeft(scrollLeft + 290)
+        } else {
+          eventsRef.current.scrollLeft = newCurrentPos
+        }
       }
     }
   }
