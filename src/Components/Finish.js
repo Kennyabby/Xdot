@@ -136,7 +136,7 @@ const Finish = ({ server, confidentials }) => {
     contactNo: localStorage.getItem('contactNo'),
     identity: localStorage.getItem('identity'),
     nationality: localStorage.getItem('nationality'),
-    userName: setCamelCase(localStorage.getItem('userName')),
+    userName: localStorage.getItem('userName').toLowerCase(),
     img: '',
     password: confidentials.password,
     access: 'User',

@@ -222,7 +222,8 @@ const FewSignupInfo = ({
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      userName: infoRef.current.childNodes[1].value,
+                      userName:
+                        infoRef.current.childNodes[1].value.toLowerCase(),
                     }),
                   }
 
