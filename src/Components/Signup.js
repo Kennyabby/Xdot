@@ -22,6 +22,7 @@ const Signup = ({ showNavbar, showNavOpt, server }) => {
     password: '',
     confirmPassword: '',
   })
+  const [verifiedMail, setVerifiedMail] = useState('')
   const [fillAllFields, setFillAllFields] = useState(false)
   const [isStartValidating, setIsStartValidating] = useState(false)
   const [basicConfirmed, setBasicConfirmed] = useState({
@@ -289,6 +290,10 @@ const Signup = ({ showNavbar, showNavOpt, server }) => {
       } else {
         setContent(
           <FewSchoolInfo
+            verifiedMail={verifiedMail}
+            setVerifiedMail={(email) => {
+              setVerifiedMail(email)
+            }}
             schoolConfirmed={schoolConfirmed}
             setSchoolConfirmed={(isConfirmed) => {
               setSchoolConfirmed((setConfirmed) => {
@@ -338,6 +343,7 @@ const Signup = ({ showNavbar, showNavOpt, server }) => {
       } else {
         setContent(
           <FewSignupInfo
+            sever={server}
             basicConfirmed={basicConfirmed}
             schoolConfirmed={schoolConfirmed}
             credentials={confidentials}

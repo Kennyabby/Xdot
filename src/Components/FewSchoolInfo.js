@@ -35,7 +35,12 @@ const headerVariants = {
     },
   },
 }
-const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
+const FewSchoolInfo = ({
+  setSchoolConfirmed,
+  schoolConfirmed,
+  verifiedMail,
+  setVerifiedMail,
+}) => {
   const { darkMode, server } = useContext(ContextProvider)
   const history = useHistory()
   const schoolCoverRef = useRef(null)
@@ -508,16 +513,6 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
             }
             if (infoRef.current.name === 'schoolEmail') {
               if (matchEmail(infoRef.current.value)) {
-                if (schoolEmailExist) {
-                  infoRef.current.style.border = 'solid red 2px'
-                  infoRef.current.parentElement.childNodes[1].style.display =
-                    'block'
-                  infoRef.current.parentElement.childNodes[1].style.color =
-                    'red'
-                  infoRef.current.parentElement.childNodes[1].innerHTML =
-                    'This Email Has Been Registered!'
-                  count--
-                }
               } else {
                 infoRef.current.style.border = 'solid red 2px'
                 infoRef.current.parentElement.childNodes[1].style.display =
@@ -539,6 +534,14 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
                   infoRef.current.parentElement.childNodes[1].innerHTML =
                     'This Email Has Been Registered!'
                   count--
+                } else {
+                  infoRef.current.style.border = 'solid darkorange 2px'
+                  infoRef.current.parentElement.childNodes[1].style.display =
+                    'block'
+                  infoRef.current.parentElement.childNodes[1].style.color =
+                    'darkorange'
+                  infoRef.current.parentElement.childNodes[1].innerHTML =
+                    'Email Accepted!'
                 }
               } else {
                 infoRef.current.style.border = 'solid red 2px'
@@ -645,71 +648,6 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
             }
             if (infoRef.current.name === 'schoolEmail') {
               if (matchEmail(infoRef.current.value)) {
-                if (all) {
-                  try {
-                    const opts = {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify({
-                        schoolEmail: infoRef.current.value,
-                      }),
-                    }
-                    const resp = await fetch(server + '/isEmailPresent', opts)
-                    const response = await resp.json()
-                    const isPresent = response.isPresent
-                    if (isPresent) {
-                      setSchoolEmailExist(true)
-                      infoRef.current.style.border = 'solid red 2px'
-                      infoRef.current.parentElement.childNodes[1].style.display =
-                        'block'
-                      infoRef.current.parentElement.childNodes[1].style.color =
-                        'red'
-                      infoRef.current.parentElement.childNodes[1].innerHTML =
-                        'This Email Has Been Registered!'
-                      count--
-                      setShowModal(false)
-                    } else {
-                      setSchoolEmailExist(false)
-                    }
-                  } catch (TypeError) {
-                    setShowModal(true)
-                  }
-                } else {
-                  if (name === 'schoolEmail') {
-                    try {
-                      const opts = {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                          schoolEmail: infoRef.current.value,
-                        }),
-                      }
-                      const resp = await fetch(server + '/isEmailPresent', opts)
-                      const response = await resp.json()
-                      const isPresent = response.isPresent
-                      if (isPresent) {
-                        setSchoolEmailExist(true)
-                        infoRef.current.style.border = 'solid red 2px'
-                        infoRef.current.parentElement.childNodes[1].style.display =
-                          'block'
-                        infoRef.current.parentElement.childNodes[1].style.color =
-                          'red'
-                        infoRef.current.parentElement.childNodes[1].innerHTML =
-                          'This Email Has Been Registered!'
-                        count--
-                        setShowModal(false)
-                      } else {
-                        setSchoolEmailExist(false)
-                      }
-                    } catch (TypeError) {
-                      setShowModal(true)
-                    }
-                  }
-                }
               } else {
                 infoRef.current.style.border = 'solid red 2px'
                 infoRef.current.parentElement.childNodes[1].style.display =
@@ -749,6 +687,13 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
                       setShowModal(false)
                     } else {
                       setOtherEmailExist(false)
+                      infoRef.current.style.border = 'solid darkorange 2px'
+                      infoRef.current.parentElement.childNodes[1].style.display =
+                        'block'
+                      infoRef.current.parentElement.childNodes[1].style.color =
+                        'darkorange'
+                      infoRef.current.parentElement.childNodes[1].innerHTML =
+                        'Email Accepted!'
                     }
                   } catch (TypeError) {
                     setShowModal(true)
@@ -781,6 +726,13 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
                         setShowModal(false)
                       } else {
                         setOtherEmailExist(false)
+                        infoRef.current.style.border = 'solid darkorange 2px'
+                        infoRef.current.parentElement.childNodes[1].style.display =
+                          'block'
+                        infoRef.current.parentElement.childNodes[1].style.color =
+                          'darkorange'
+                        infoRef.current.parentElement.childNodes[1].innerHTML =
+                          'Email Accepted!'
                       }
                     } catch (TypeError) {
                       setShowModal(true)
@@ -810,6 +762,14 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
       }
     })
   }
+  useEffect(() => {
+    if (schoolInfo.otherEmail && verifiedMail === schoolInfo.otherEmail) {
+      setEmailVerified(true)
+    } else {
+      setEmailVerified(false)
+    }
+    // validateInput({ all: false, name: 'otherEmail' })
+  }, [schoolInfo.otherEmail])
   useEffect(() => {
     if (
       window.localStorage.getItem('student') !== null ||
@@ -905,25 +865,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
               setOtherEmailExist(false)
             }
           } catch (TypeError) {}
-          try {
-            const opts = {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                schoolEmail: schoolEmailRef.current.value,
-              }),
-            }
-            const resp = await fetch(server + '/isEmailPresent', opts)
-            const response = await resp.json()
-            const isPresent = response.isPresent
-            if (isPresent) {
-              setSchoolEmailExist(true)
-            } else {
-              setSchoolEmailExist(false)
-            }
-          } catch (TypeError) {}
+
           setShowModal(false)
           if (validateInputs()) {
             history.push('./signupInfo')
@@ -1104,12 +1046,14 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
     if (validateCode && codes.length === 4) {
       if (verificationCode === codes) {
         setEmailVerified(true)
+        setVerifiedMail(schoolInfo.otherEmail)
       } else {
         setInCorrectCode(true)
       }
     }
   }, [validateCode, validatingCode])
   const handleCodeInput = (e) => {
+    setInCorrectCode(false)
     const name = e.target.getAttribute('name')
     const value = e.target.value
     setValidatingCode((validatingCode) => {
@@ -1176,7 +1120,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
     }
   }, [spanLeft])
   useEffect(() => {
-    if (schoolConfirmed.check) {
+    if (schoolInfo.otherEmail && verifiedMail === schoolInfo.otherEmail) {
       setEmailVerified(true)
     } else {
       setEmailVerified(false)
@@ -1587,10 +1531,9 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
                     className='input'
                     type='text'
                     name='matricNo'
-                    placeholder='Enter Your Matric No'
+                    placeholder='Enter Matric/Student Id'
                     value={schoolInfo.matricNo}
-                    required={schoolInfo.student}
-                    title='Enter Your Matric No'
+                    title='Enter Matric/Student Id'
                   />
                   <p className='inputStyle'></p>
                 </p>
@@ -1629,6 +1572,11 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
                     style={{ width: 'fit-content', marginRight: '20px' }}
                     onClick={() => {
                       setAddSchoolEmail(!addSchoolEmail)
+                      if (!addSchoolEmail) {
+                        setSchoolInfo((schoolInfo) => {
+                          return { ...schoolInfo, schoolEmail: '' }
+                        })
+                      }
                     }}
                   >
                     {addSchoolEmail ? (
@@ -1661,7 +1609,7 @@ const FewSchoolInfo = ({ setSchoolConfirmed, schoolConfirmed }) => {
                       name='schoolEmail'
                       placeholder='Enter Your School Email'
                       value={schoolInfo.schoolEmail}
-                      required={schoolInfo.student && addSchoolEmail}
+                      required={addSchoolEmail && schoolInfo.student}
                       title='Enter Your School Email'
                     />
                     <p className='inputStyle'></p>

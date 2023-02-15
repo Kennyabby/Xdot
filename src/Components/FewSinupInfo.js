@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   FaUserCircle,
   FaAngleLeft,
@@ -8,7 +8,7 @@ import {
   FaEye,
   FaEyeSlash,
 } from 'react-icons/fa'
-
+import ContextProvider from '../ContextProvider'
 const containerVariants = {
   hidden: {
     opacity: 0,
@@ -51,6 +51,7 @@ const FewSignupInfo = ({
     password: '',
     confirmPassword: '',
   })
+  const { server } = useContext(ContextProvider)
   const userNameRef = useRef(null)
   const passwordRef = useRef(null)
   const confirmPasswordRef = useRef(null)
@@ -60,8 +61,50 @@ const FewSignupInfo = ({
     password: signupInfo.password,
     confirmPassword: signupInfo.confirmPassword,
   }
+  const [userNameError, setUserNameError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [userValidated, setUserValidated] = useState(false)
+
+  const validateUserName = (name) => {
+    var nameList = name.split('')
+    const hasSpace = name.split(' ').length > 1
+    const unWantedCharacters = [
+      '@',
+      '/',
+      '\\',
+      ',',
+      '+',
+      '=',
+      '`',
+      '?',
+      '<',
+      '>',
+      '.',
+      '|',
+      '(',
+      ')',
+      '^',
+      '*',
+      '%',
+      '!',
+    ]
+    var hasUnwantedCharacter = false
+    const lessThanMinimum = name.length < 6
+    unWantedCharacters.forEach((char) => {
+      if (nameList.includes(char)) {
+        hasUnwantedCharacter = true
+      }
+    })
+    if (hasSpace || hasUnwantedCharacter || lessThanMinimum) {
+      return {
+        check: false,
+        message:
+          'Username cannot contain space. Your combinations must be a minimum of any 6 charachters of ("-","_","~","#","$" numbers and alphabets)',
+      }
+    }
+    return { check: true }
+  }
   const validateInputs = () => {
     var count = 0
     var infos = infoRefList.filter((infoRef) => {
@@ -77,10 +120,40 @@ const FewSignupInfo = ({
             infoRef.current.style.border = 'solid red 2px'
             infoRef.current.parentElement.childNodes[1].style.display = 'block'
             infoRef.current.parentElement.childNodes[1].style.color = 'red'
+            count--
           } else {
             infoRef.current.style.border = 'solid black 1px'
             infoRef.current.parentElement.childNodes[1].style.display = 'none'
             infoRef.current.parentElement.childNodes[1].style.color = 'blue'
+            if (infoRef.current.getAttribute('name') === 'userName') {
+              const isValid = validateUserName(
+                infoRef.current.childNodes[1].value
+              )
+              if (isValid.check) {
+                if (!userValidated) {
+                  infoRef.current.style.border = 'solid red 2px'
+                  infoRef.current.parentElement.childNodes[1].style.display =
+                    'block'
+                  infoRef.current.parentElement.childNodes[1].style.color =
+                    'red'
+                  infoRef.current.parentElement.childNodes[1].innerHTML =
+                    'This Username is taken!'
+                  count--
+                } else {
+                  infoRef.current.style.border = 'solid darkorange 2px'
+                  infoRef.current.parentElement.childNodes[1].style.display =
+                    'block'
+                  infoRef.current.parentElement.childNodes[1].style.color =
+                    'darkorange'
+                  infoRef.current.parentElement.childNodes[1].innerHTML =
+                    'Username Accepted!'
+                }
+              } else {
+                setUserNameError(isValid.message)
+                setUserValidated(false)
+                count--
+              }
+            }
             count++
           }
         }
@@ -98,23 +171,28 @@ const FewSignupInfo = ({
     setSignupConfirmed(false)
     return false
   }
-  const validateInput = () => {
+  const validateInput = async () => {
     var count = 0
     var infos = infoRefList.filter((infoRef) => {
       if (infoRef.current != null) {
-        return infoRef.current.required
+        return infoRef.current.childNodes[1].required
       }
     })
-    infoRefList.forEach((infoRef) => {
+    infoRefList.forEach(async (infoRef) => {
       if (infoRef.current !== null) {
         if (infoRef.current.childNodes[1].required) {
           infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.childNodes[1].title}`
-          if (infoRef.current.value === '') {
+          if (infoRef.current.childNodes[1].value === '') {
+            if (infoRef.current.getAttribute('name') === 'userName') {
+              infoRef.current.style.border = 'solid red 2px'
+              infoRef.current.parentElement.childNodes[1].style.display =
+                'block'
+              infoRef.current.parentElement.childNodes[1].style.color = 'red'
+              setUserValidated(false)
+            }
+            count--
           } else {
-            if (
-              infoRef.current.getAttribute('name') === 'confirmPassword' &&
-              infoRef.current.childNodes[1].value !== ''
-            ) {
+            if (infoRef.current.getAttribute('name') === 'confirmPassword') {
               if (
                 passwordRef.current.childNodes[1].value ===
                 confirmPasswordRef.current.childNodes[1].value
@@ -129,6 +207,53 @@ const FewSignupInfo = ({
                 confirmPasswordRef.current.style.border = 'solid red 2px'
                 confirmPasswordRef.current.parentElement.childNodes[1].innerHTML =
                   'Passwords Do Not Match!'
+              }
+            }
+            if (infoRef.current.getAttribute('name') === 'userName') {
+              const isValid = validateUserName(
+                infoRef.current.childNodes[1].value
+              )
+              if (isValid.check) {
+                setUserNameError('')
+                try {
+                  const opts = {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      userName: infoRef.current.childNodes[1].value,
+                    }),
+                  }
+
+                  const resp = await fetch(server + '/isUserPresent', opts)
+                  const response = await resp.json()
+                  const isPresent = response.isPresent
+                  if (isPresent) {
+                    setUserValidated(false)
+                    infoRef.current.style.border = 'solid red 2px'
+                    infoRef.current.parentElement.childNodes[1].style.display =
+                      'block'
+                    infoRef.current.parentElement.childNodes[1].style.color =
+                      'red'
+                    infoRef.current.parentElement.childNodes[1].innerHTML =
+                      'This Username is taken!'
+                    count--
+                  } else {
+                    setUserValidated(true)
+                    infoRef.current.style.border = 'solid darkorange 2px'
+                    infoRef.current.parentElement.childNodes[1].style.display =
+                      'block'
+                    infoRef.current.parentElement.childNodes[1].style.color =
+                      'darkorange'
+                    infoRef.current.parentElement.childNodes[1].innerHTML =
+                      'Username Accepted!'
+                  }
+                } catch (TypeError) {}
+              } else {
+                setUserNameError(isValid.message)
+                setUserValidated(false)
+                count--
               }
             }
             count++
@@ -335,6 +460,29 @@ const FewSignupInfo = ({
             />
           </div>
           <p className='inputStyle'></p>
+          <AnimatePresence>
+            {userNameError && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.85, ease: 'easeOut' }}
+                exit={{ opacity: 0 }}
+                style={{
+                  padding: '5px',
+                  margin: '5px auto',
+                  borderRadius: '8px',
+                  backgroundColor: 'rgba(22,22,220,0.7)',
+                  fontSize: '.8rem',
+                  color: 'white',
+                  textAlign: 'left',
+                  fontWeight: 'bold',
+                  width: '270px',
+                }}
+              >
+                {userNameError}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
         <div className='over' style={{ padding: '13px' }}>
           <div
