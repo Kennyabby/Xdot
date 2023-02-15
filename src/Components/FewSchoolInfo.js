@@ -684,7 +684,6 @@ const FewSchoolInfo = ({
                       infoRef.current.parentElement.childNodes[1].innerHTML =
                         'This Email Has Been Registered!'
                       count--
-                      setShowModal(false)
                     } else {
                       setOtherEmailExist(false)
                       infoRef.current.style.border = 'solid darkorange 2px'
@@ -695,6 +694,7 @@ const FewSchoolInfo = ({
                       infoRef.current.parentElement.childNodes[1].innerHTML =
                         'Email Accepted!'
                     }
+                    setShowModal(false)
                   } catch (TypeError) {
                     setShowModal(true)
                   }
@@ -723,7 +723,6 @@ const FewSchoolInfo = ({
                         infoRef.current.parentElement.childNodes[1].innerHTML =
                           'This Email Has Been Registered!'
                         count--
-                        setShowModal(false)
                       } else {
                         setOtherEmailExist(false)
                         infoRef.current.style.border = 'solid darkorange 2px'
@@ -734,6 +733,7 @@ const FewSchoolInfo = ({
                         infoRef.current.parentElement.childNodes[1].innerHTML =
                           'Email Accepted!'
                       }
+                      setShowModal(false)
                     } catch (TypeError) {
                       setShowModal(true)
                     }
@@ -768,7 +768,7 @@ const FewSchoolInfo = ({
     } else {
       setEmailVerified(false)
     }
-    // validateInput({ all: false, name: 'otherEmail' })
+    validateInput({ all: false, name: 'otherEmail' })
   }, [schoolInfo.otherEmail])
   useEffect(() => {
     if (
