@@ -26,8 +26,8 @@ import CodeProBold from './fonts/SourceCodePro/Bold.ttf'
 import CodeProLight from './fonts/SourceCodePro/Light.ttf'
 import CodeProItalic from './fonts/SourceCodePro/Italic.ttf'
 const App = () => {
-  // const SERVER = 'https://encarto-server.vercel.app'
-  const SERVER = 'http://localhost:3001'
+  const SERVER = 'https://encarto-server.vercel.app'
+  // const SERVER = 'http://localhost:3001'
   // const { id } = useParams()
   const history = useHistory()
   const [intervalId, setIntervalId] = useState(null)
