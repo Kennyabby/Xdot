@@ -78,16 +78,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
   const currentRef = useRef(null)
   const aboutRef = useRef(null)
   const history = useHistory()
-  const {
-    darkMode,
-    MontserratRegular,
-    MontserratBold,
-    MontserratItalic,
-    CodeProRegular,
-    CodeProBold,
-    CodeProLight,
-    CodeProItalic,
-  } = useContext(ContextProvider)
+  const { darkMode } = useContext(ContextProvider)
   const minSwipeDistance = 50
   const refAbout = (ref) => {
     const dimension = ref.current.getBoundingClientRect()
@@ -252,7 +243,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
           className='home'
           ref={refHome}
           style={{
-            backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
+            backgroundColor: darkMode ? 'rgba(5,5,25,1)' : 'rgba(240,240,255)',
           }}
         >
           <AnimatePresence>
@@ -290,8 +281,8 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
           </AnimatePresence>
           <div
             style={{
-              fontSize: '.8rem',
-              fontFamily: MontserratBold,
+              fontSize: '1.1rem',
+              fontFamily: 'MonteserratBold',
               fontWeight: 'bold',
               borderRadius: '10px',
               padding: '10px',
@@ -299,7 +290,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                 ? 'rgba(29,29,30,0.8)'
                 : 'rgba(240,240,241,0.8)',
               color: darkMode ? 'white' : 'black',
-              margin: winSize <= 700 ? '30px' : '30px auto',
+              margin: winSize <= 700 ? '25px' : '25px auto',
               marginTop: winSize <= 700 ? '75px' : '145px',
             }}
           >
@@ -364,13 +355,14 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                             duration: 1,
                             ease: 'easeOut',
                           }}
+                          style={{ fontFamily: 'MonteserratBold' }}
                         >
                           {csl.title}
                         </motion.h2>
                         <div
                           style={{
                             // fontFamily: 'Trebuchet MS, sans-serif',
-                            fontFamily: MontserratBold,
+                            fontFamily: 'SourceCodeProItalic',
                             // fontStyle: 'italic',
                             fontSize: winSize < 700 ? '' : '1rem',
                             backgroundColor: darkMode
@@ -548,7 +540,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
             style={{
               marginTop: '10px',
               color: darkMode ? 'white' : 'black',
-              fontFamily: 'Calibri',
+              fontFamily: 'MonteserratRegular',
             }}
             variants={infoVariants}
             initial='hidden'
@@ -585,13 +577,13 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
 
           <div
             className='homep'
-            style={{ backgroundColor: darkMode ? 'black' : 'white' }}
+            style={{ backgroundColor: darkMode ? 'rgba(8,8,8,1)' : 'white' }}
           >
             <motion.div
               className='info'
               style={{
                 color: darkMode ? 'white' : 'black',
-                fontFamily: 'Calibri',
+                fontFamily: 'MonteserratRegular',
               }}
               variants={infoVariants}
               initial='hidden'
@@ -641,7 +633,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
               style={{
                 marginTop: '10px',
                 color: darkMode ? 'white' : 'black',
-                fontFamily: 'Calibri',
+                fontFamily: 'MonteserratRegular',
               }}
               variants={infoVariants}
               initial='hidden'
@@ -674,14 +666,14 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
           </div>
           <div
             className='homep'
-            style={{ backgroundColor: darkMode ? 'black' : 'white' }}
+            style={{ backgroundColor: darkMode ? 'rgba(8,8,8,1)' : 'white' }}
           >
             <motion.div
               className='info'
               variants={infoVariants}
               style={{
                 color: darkMode ? 'white' : 'black',
-                fontFamily: 'Calibri',
+                fontFamily: 'MonteserratRegular',
               }}
               initial='hidden'
               animate='visible'
@@ -730,7 +722,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
               style={{
                 marginTop: '10px',
                 color: darkMode ? 'white' : 'black',
-                fontFamily: 'Calibri',
+                fontFamily: 'MonteserratRegular',
               }}
               variants={infoVariants}
               initial='hidden'

@@ -22,6 +22,48 @@ code {
   opacity: 1;
   color: rgb(200, 200, 200);
 }
+
+@font-face {
+  font-family: 'MonteserratLight';
+  src: local('Monteserrat-Alternates'),
+    url('./fonts/Monteserrat-Alternates/Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'MonteserratBold';
+  src: local('Monteserrat-Alternates'),
+    url('./fonts/Monteserrat-Alternates/Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'MonteserratRegular';
+  src: local('Monteserrat-Alternates'),
+    url('./fonts/Monteserrat-Alternates/Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'MonteserratItalic';
+  src: local('Monteserrat-Alternates'),
+    url('./fonts/Monteserrat-Alternates/Italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SourceCodeProLight';
+  src: local('SourceCodePro'),
+    url('./fonts/SourceCodePro/Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SourceCodeProBold';
+  src: local('SourceCodePro'),
+    url('./fonts/SourceCodePro/Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SourceCodeProRegular';
+  src: local('SourceCodePro'),
+    url('./fonts/SourceCodePro/Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'SourceCodeProItalic';
+  src: local('SourceCodePro'),
+    url('./fonts/SourceCodePro/Italic.ttf') format('truetype');
+}
+
 .navbar {
   width: 100vw;
   position: fixed;
@@ -159,13 +201,15 @@ code {
 .introLabel {
   list-style: none;
   margin: 20px;
-  font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+  font-family: 'SourceCodeProRegular';
   font-size: 0.9rem;
   line-height: 1rem;
   font-style: italic;
+  font-weight: bold;
   margin: 10px;
   margin-bottom: 20px;
-  background-color: white;
+  color: white;
+  background-color: rgba(100, 100, 250);
   padding: 10px;
   /* box-shadow: -7px -7px 10px rgba(0, 0, 0, 0.1), 7px 7px 10px rgba(0, 0, 0, 0.1); */
   border-radius: 10px;

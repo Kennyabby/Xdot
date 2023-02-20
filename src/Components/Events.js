@@ -9,7 +9,7 @@ const Acts = ({ title, content, clickVar, id }) => {
       key={id}
       className='acts'
       style={{
-        backgroundColor: darkMode ? 'black' : 'white',
+        backgroundColor: darkMode ? 'rgba(8,8,8,1)' : 'white',
         color: darkMode ? 'white' : 'black',
         boxShadow: darkMode
           ? '-7px -7px 15px rgba(0, 0, 0, 0.1), 7px 7px 15px rgba(0, 0, 0, 0.1)'
@@ -21,7 +21,7 @@ const Acts = ({ title, content, clickVar, id }) => {
           style={{
             margin: '10px',
             fontWeight: 'bold',
-            fontFamily: 'Calibri',
+            fontFamily: 'SourceCodeProLight',
             borderBottom: 'solid rgba(49,49,50,1) 2px',
           }}
         >
@@ -32,7 +32,7 @@ const Acts = ({ title, content, clickVar, id }) => {
         style={{
           margin: '10px',
           marginTop: '30px',
-          fontFamily: 'Calibri',
+          fontFamily: 'SourceCodeProLight',
           border: 'solid rgba(49,49,50,1) 2px',
           padding: '10px',
           borderRadius: '10px',
@@ -205,7 +205,7 @@ const Events = ({ eventRef }) => {
         style={{
           color: darkMode ? 'white' : 'black',
           padding: '50px auto',
-          backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
+          backgroundColor: darkMode ? 'rgba(5,5,25,1)' : 'rgba(240,240,255)',
           display: 'block',
         }}
       >
@@ -214,7 +214,7 @@ const Events = ({ eventRef }) => {
             backgroundColor: 'rgba(0,0,0,0)',
             fontWeight: 'bold',
             fontSize: '1.2rem',
-            fontFamily: 'Calibri',
+            fontFamily: 'MonteserratBold',
             padding: '20px',
             paddingBottom: '20px',
           }}
@@ -225,7 +225,7 @@ const Events = ({ eventRef }) => {
           ref={eventsRef}
           className='events'
           style={{
-            backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
+            backgroundColor: darkMode ? 'rgba(5,5,25,1)' : 'rgba(240,240,255)',
             color: darkMode ? 'white' : 'black',
           }}
           onTouchStart={onTouchStart}

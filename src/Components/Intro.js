@@ -22,8 +22,10 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
         }}
       >
         <div className='infos'>
-          <h2 style={{ fontFamily: 'Calibri' }}>WelCome (Sign up intro)</h2>
-          <section style={{ fontFamily: 'Calibri', fontSize: '1rem' }}>
+          <h2 style={{ fontFamily: 'MonteserratBold' }}>WelCome (Intro)</h2>
+          <section
+            style={{ fontFamily: 'SourceCodeProRegular', fontSize: '1rem' }}
+          >
             <div>
               We are glad to see you take your first step towards contributing
               to the network.
@@ -83,7 +85,9 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
               )}
             </div>
 
-            <label>Fill in all required fields</label>
+            <label style={{ fontFamily: 'SourceCodeProRegular' }}>
+              Fill in all required fields
+            </label>
           </div>
         </div>
         <Link to='/signup/basicInfo'>
@@ -107,7 +111,9 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
             {'Continue'}
           </motion.button>
         </Link>
-        <div style={{ color: 'black' }}>
+        <div
+          style={{ color: 'black', fontFamily: 'monospace', fontSize: '1rem' }}
+        >
           <label>Already have an account?{'  '}</label>
           <Link to='/signin' style={{ color: 'blue' }}>
             <label style={{ cursor: 'pointer' }}>{'Sign in'}</label>

@@ -159,7 +159,10 @@ const Navbar = ({ getTopBar }) => {
           <div className='bar' style={{ color: darkMode ? 'white' : 'black' }}>
             <li
               className='top-left'
-              style={{ color: darkMode ? 'white' : 'black' }}
+              style={{
+                color: darkMode ? 'white' : 'black',
+                fontFamily: 'SourceCodeProBold',
+              }}
             >
               <div
                 style={{

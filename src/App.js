@@ -17,14 +17,7 @@ import {
   useHistory,
 } from 'react-router-dom'
 import ContextProvider from './ContextProvider'
-import MontserratRegular from './fonts/Monteserrat Alternates/Regular.ttf'
-import MontserratBold from './fonts/Monteserrat Alternates/Bold.ttf'
-import MontserratLight from './fonts/Monteserrat Alternates/Light.ttf'
-import MontserratItalic from './fonts/Monteserrat Alternates/Italic.ttf'
-import CodeProRegular from './fonts/SourceCodePro/Regular.ttf'
-import CodeProBold from './fonts/SourceCodePro/Bold.ttf'
-import CodeProLight from './fonts/SourceCodePro/Light.ttf'
-import CodeProItalic from './fonts/SourceCodePro/Italic.ttf'
+
 const App = () => {
   const SERVER = 'https://encarto-server.vercel.app'
   // const SERVER = 'http://localhost:3001'
@@ -108,14 +101,6 @@ const App = () => {
         setDarkMode,
         server: SERVER,
         winSize: size,
-        MontserratRegular,
-        MontserratBold,
-        MontserratLight,
-        MontserratItalic,
-        CodeProRegular,
-        CodeProBold,
-        CodeProLight,
-        CodeProItalic,
       }}
     >
       <Router>

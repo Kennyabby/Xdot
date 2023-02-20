@@ -258,7 +258,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                 </div>
                 <label
                   style={{
-                    fontFamily: 'Courier New',
+                    fontFamily: 'SourceCodeProBold',
                     fontSize: '1.5rem',
                     color: darkMode ? 'white' : 'black',
                     fontWeight: 'bold',
