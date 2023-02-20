@@ -8,6 +8,7 @@ import SideNavigator from './SideNavigator'
 import Home from './Home/Home'
 import Chats from './Chats/Chats'
 import Profile from './Profile/Profile'
+import InterestPage from './InterestPage/InterestPage'
 import Settings from './Settings/Settings'
 import Events from './Events/Events'
 import Tasks from './Tasks/Tasks'
@@ -204,6 +205,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           />
         )
       }
+    } else if (id === 'interests') {
+      setView(
+        <InterestPage
+          user={user}
+          viewRef={viewRef}
+          setShowNav={setShowNav(false)}
+        />
+      )
     } else if (id === 'tasks') {
       setView(
         <Tasks

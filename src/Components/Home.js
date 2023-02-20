@@ -281,7 +281,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
           </AnimatePresence>
           <div
             style={{
-              fontSize: '1.1rem',
+              fontSize: '.9rem',
               fontFamily: 'MonteserratBold',
               fontWeight: 'bold',
               borderRadius: '10px',
@@ -547,16 +547,18 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
             animate='visible'
           >
             <motion.h2 variants={noticeVariants}>For You</motion.h2>
-            <p>
-              {
-                'Evolvle and Grow with Encart oO Tech. Categorize your Chain of Thoughts, Learn at your Pace, Meet like Minds, Build your Vision and Own your Future.'
-              }
-            </p>
-            <p>
-              {
-                'Contribute to the network by joining and profiling your worth and talents for the world to see.'
-              }
-            </p>
+            <div>
+              <p>
+                {
+                  'Evolvle and Grow with Encart oO Tech. Categorize your Chain of Thoughts, Learn at your Pace, Meet like Minds, Build your Vision and Own your Future.'
+                }
+              </p>
+              <p>
+                {
+                  'Contribute to the network by joining and profiling your worth and talents for the world to see.'
+                }
+              </p>
+            </div>
             <div
               style={{
                 justifyContent: 'center',
@@ -603,19 +605,21 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                   }}
                 ></div>
               </div>
-              <p>
-                {
-                  'Meet and interact with like minds by choosing your preffered Clusters.'
-                }
-              </p>
-              <p>
-                {
-                  'Engage in life changing challenges and meet new people. Create a Network.'
-                }
-              </p>
-              <p>
-                Key Words: <b>Clusters</b>, <b>Network</b>
-              </p>
+              <div style={{ fontSize: '1rem' }}>
+                <p>
+                  {
+                    'Meet and interact with like minds by choosing your preffered Clusters.'
+                  }
+                </p>
+                <p>
+                  {
+                    'Engage in life changing challenges and meet new people. Create a Network.'
+                  }
+                </p>
+                <p>
+                  Key Words: <b>Clusters</b>, <b>Network</b>
+                </p>
+              </div>
             </motion.div>
             <div className='sitewall'>
               <LazyLoadImage src={neural} effect='blur' className='homepimg' />
@@ -653,15 +657,19 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                   }}
                 ></div>
               </div>
-              <p>
-                {
-                  'Profile your worth and talents, Learn at your own pace and Build a Vision.'
-                }
-              </p>
-              <p>{'Unlock Your Pace Racks as you build on your abilities.'}</p>
-              <p>
-                Key Words: <b>Profile</b>, <b>Pace Racks</b>
-              </p>
+              <div style={{ fontSize: '1rem' }}>
+                <p>
+                  {
+                    'Profile your worth and talents, Learn at your own pace and Build a Vision.'
+                  }
+                </p>
+                <p>
+                  {'Unlock Your Pace Racks as you build on your abilities.'}
+                </p>
+                <p>
+                  Key Words: <b>Profile</b>, <b>Pace Racks</b>
+                </p>
+              </div>
             </motion.div>
           </div>
           <div
@@ -692,19 +700,21 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                   }}
                 ></div>
               </div>
-              <p>
-                {
-                  'Interactive, AI improved personal assistant and chat bot available just for you.'
-                }
-              </p>
-              <p>
-                {
-                  'Get Comfortable as you sit back and watch Kabby make your schedules and provide personal and experienced suggestions based on your activities and needs.'
-                }
-              </p>
-              <p>
-                Key Words: <b>Kabby</b>
-              </p>
+              <div style={{ fontSize: '1rem' }}>
+                <p>
+                  {
+                    'Interactive, AI improved personal assistant and chat bot available just for you.'
+                  }
+                </p>
+                <p>
+                  {
+                    'Get Comfortable as you sit back and watch Kabby make your schedules and provide personal and experienced suggestions based on your activities and needs.'
+                  }
+                </p>
+                <p>
+                  Key Words: <b>Kabby</b>
+                </p>
+              </div>
             </motion.div>
             <div className='sitewall'>
               <LazyLoadImage src={roboai} effect='blur' className='homepimg' />
@@ -742,15 +752,17 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                   }}
                 ></div>
               </div>
-              <p>
-                {
-                  'Set Goals inline with your passion, complete the Graded Challenges and showcase your talents.'
-                }
-              </p>
-              <p>{'Evolve as you learn at your own pace.'}</p>
-              <p>
-                Key Words: <b>Graded Challenges</b>
-              </p>
+              <div style={{ fontSize: '1rem' }}>
+                <p>
+                  {
+                    'Set Goals inline with your passion, complete the Graded Challenges and showcase your talents.'
+                  }
+                </p>
+                <p>{'Evolve as you learn at your own pace.'}</p>
+                <p>
+                  Key Words: <b>Graded Challenges</b>
+                </p>
+              </div>
             </motion.div>
           </div>
         </div>
