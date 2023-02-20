@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { useGoogleLogin } from 'react-google-login'
 import { GoogleLogin } from 'react-google-login'
+import { FaUserCircle, FaUserAlt, FaEye, FaEyeSlash } from 'react-icons/fa'
 
 import ContextProvider from '../ContextProvider'
 import ConnectionModal from '../Components/ConnectionModal'
@@ -17,7 +18,7 @@ import google from './google.png'
 const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   const { darkMode } = useContext(ContextProvider)
   const [fields, setFields] = useState({
-    matricNo: '',
+    userName: '',
     password: '',
     id: '',
   })
@@ -31,7 +32,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   const [passType, setPassType] = useState('password')
   const [signView, setSignView] = useState('Sign in')
   const [error, setError] = useState('')
-  const matricNoRef = useRef(null)
+  const userNameRef = useRef(null)
   const passwordRef = useRef(null)
   const submitRef = useRef(null)
   useEffect(() => {
@@ -66,7 +67,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       sendId(idVal)
       var now = Date.now()
       setFields((fields) => {
-        return { ...fields, matricNo: '', password: '', id: '' }
+        return { ...fields, userName: '', password: '', id: '' }
       })
       var sess = 0
       idVal.split('').forEach((elem) => {
@@ -92,26 +93,26 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
   }
   const handleFocus = (e) => {
     const name = e.target.getAttribute('name')
-    matricNoRef.current.style.borderBottom = darkMode
+    userNameRef.current.style.border = darkMode
       ? 'solid rgba(200,200,200,1) 1px'
       : 'solid black 1px'
-    passwordRef.current.style.borderBottom = darkMode
+    passwordRef.current.style.border = darkMode
       ? 'solid rgba(200,200,200,1) 1px'
       : 'solid black 1px'
-    matricNoRef.current.parentElement.childNodes[1].style.color = 'lightgreen'
-    passwordRef.current.parentElement.childNodes[1].style.color = 'lightgreen'
+    userNameRef.current.parentElement.childNodes[1].style.color = 'blue'
+    passwordRef.current.parentElement.childNodes[1].style.color = 'blue'
     passwordRef.current.parentElement.childNodes[1].style.display = 'none'
-    matricNoRef.current.parentElement.childNodes[1].style.display = 'none'
+    userNameRef.current.parentElement.childNodes[1].style.display = 'none'
     if (name === 'password') {
-      passwordRef.current.style.borderBottom = 'solid lightgreen 2px'
+      passwordRef.current.style.border = 'solid blue 2px'
       passwordRef.current.parentElement.childNodes[1].style.display = 'block'
       passwordRef.current.parentElement.childNodes[1].innerHTML =
-        passwordRef.current.title
-    } else if (name === 'matricNo') {
-      matricNoRef.current.style.borderBottom = 'solid lightgreen 2px'
-      matricNoRef.current.parentElement.childNodes[1].style.display = 'block'
-      matricNoRef.current.parentElement.childNodes[1].innerHTML =
-        matricNoRef.current.title
+        passwordRef.current.childNodes[0].title
+    } else if (name === 'userName') {
+      userNameRef.current.style.border = 'solid blue 2px'
+      userNameRef.current.parentElement.childNodes[1].style.display = 'block'
+      userNameRef.current.parentElement.childNodes[1].innerHTML =
+        userNameRef.current.childNodes[1].title
     }
   }
   const handleView = (e) => {
@@ -133,7 +134,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        prop: { matricNo: fields.matricNo },
+        prop: { userName: fields.userName },
         pass: fields.password,
       }),
     }
@@ -151,7 +152,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
         setPassValidated(true)
       } else {
         setPassValidated(false)
-        setError('Unrecognized Matric No or Invalid Password!')
+        setError('Unrecognized Username or Invalid Password!')
         setSignView('Sign in')
       }
     } catch (error) {
@@ -165,31 +166,31 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
     setSignView('hold on...')
     submitRef.current.focus()
     setError('')
-    matricNoRef.current.parentElement.childNodes[1].style.display = 'none'
+    userNameRef.current.parentElement.childNodes[1].style.display = 'none'
     passwordRef.current.parentElement.childNodes[1].style.display = 'none'
-    matricNoRef.current.style.borderBottom = darkMode
+    userNameRef.current.style.border = darkMode
       ? 'solid rgba(200,200,200,1) 1px'
       : 'solid black 1px'
-    passwordRef.current.style.borderBottom = darkMode
+    passwordRef.current.style.border = darkMode
       ? 'solid rgba(200,200,200,1) 1px'
       : 'solid black 1px'
     if (fields.password === '') {
-      passwordRef.current.style.borderBottom = 'solid red 2px'
+      passwordRef.current.style.border = 'solid red 2px'
       passwordRef.current.parentElement.childNodes[1].style.color = 'red'
       passwordRef.current.parentElement.childNodes[1].style.display = 'block'
       passwordRef.current.parentElement.childNodes[1].innerHTML =
         'Please Enter This Field!'
       setSignView('Sign in')
     }
-    if (fields.matricNo === '') {
-      matricNoRef.current.style.borderBottom = 'solid red 2px'
-      matricNoRef.current.parentElement.childNodes[1].style.color = 'red'
-      matricNoRef.current.parentElement.childNodes[1].style.display = 'block'
-      matricNoRef.current.parentElement.childNodes[1].innerHTML =
+    if (fields.userName === '') {
+      userNameRef.current.style.border = 'solid red 2px'
+      userNameRef.current.parentElement.childNodes[1].style.color = 'red'
+      userNameRef.current.parentElement.childNodes[1].style.display = 'block'
+      userNameRef.current.parentElement.childNodes[1].innerHTML =
         'Please Enter This Field!'
       setSignView('Sign in')
     }
-    if (fields.matricNo !== '' && fields.password !== '') {
+    if (fields.userName !== '' && fields.password !== '') {
       validateInput()
     }
   }
@@ -260,7 +261,9 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       <div
         className='signin'
         style={{
-          backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
+          backgroundColor: darkMode
+            ? 'rgba(10,10,10,1)'
+            : 'rgba(240,240,255,1)',
           color: darkMode ? 'white' : 'black',
           height: '100vh',
         }}
@@ -285,7 +288,9 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
         <div
           className='signinregion'
           style={{
-            backgroundColor: darkMode ? 'rgba(10,10,10,1)' : 'whitesmoke',
+            backgroundColor: darkMode
+              ? 'rgba(10,10,10,1)'
+              : 'rgba(240,240,255,1)',
             color: darkMode ? 'white' : 'black',
           }}
         >
@@ -311,13 +316,13 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
               >
                 Encart oO
               </motion.p>
-              <img
-                className='usr'
-                src={usrImg}
-                alt='profImg'
-                height='120px'
-                width='120px'
+              <FaUserCircle
+                style={{
+                  fontSize: '6rem',
+                  color: darkMode ? 'blue' : 'darkblue',
+                }}
               />
+
               <div>
                 <button
                   onClick={signIn}
@@ -340,76 +345,125 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                   <label style={{ margin: '5px' }}>Sign in with Google</label>
                 </button>
               </div>
+              {error && (
+                <p
+                  style={{
+                    color: 'white',
+                    // fontStyle: 'italic',
+                    padding: '10px',
+                    borderRadius: '8px',
+                    backgroundColor: 'rgba(186,23,23,1)',
+                  }}
+                >
+                  {error}
+                </p>
+              )}
               <div className='signover' style={{ padding: '13px' }}>
-                <input
-                  ref={matricNoRef}
+                <div
+                  ref={userNameRef}
                   className='signinfield'
+                  name='userName'
                   style={{
                     borderBottom: darkMode
                       ? 'solid rgba(200,200,200,1) 1px'
                       : 'solid black 1px',
                     color: darkMode ? 'white' : 'black',
+                    display: 'inline-flex',
                   }}
-                  type='number'
-                  name='matricNo'
-                  placeholder='Enter Your Matric No'
-                  title='Enter Your Matric No'
-                  defaultValue={fields.matricNo}
-                  required
-                />
-                <p className='inputStyle'></p>
-                <img
-                  style={{ marginLeft: '10px' }}
-                  src={usrImg}
-                  name='userMatric'
-                  alt='user matric'
-                  height='25px'
-                />
+                >
+                  <FaUserAlt
+                    style={{ fontSize: '1.3rem', marginRight: '13px' }}
+                  />
+                  <input
+                    type='text'
+                    name='userName'
+                    style={{
+                      backgroundColor: 'rgba(0,0,0,0)',
+                      outline: 'none',
+                      border: 'solid black 0px',
+                      color: darkMode ? 'white' : 'black',
+                    }}
+                    placeholder='Enter Your Username'
+                    title='Enter Your Username'
+                    defaultValue={fields.userName}
+                    required
+                  />
+                </div>
+                <p
+                  className='inputStyle'
+                  style={{
+                    backgroundColor: darkMode
+                      ? 'rgba(10,10,10,1)'
+                      : 'rgba(240,240,255,1)',
+                    top: '28px',
+                    left: '28px',
+                  }}
+                ></p>
               </div>
               <div className='signover' style={{ padding: '13px' }}>
-                <input
+                <div
                   ref={passwordRef}
                   className='signinfield'
+                  name='password'
                   style={{
                     borderBottom: darkMode
                       ? 'solid rgba(200,200,200,1) 1px'
                       : 'solid black 1px',
                     color: darkMode ? 'white' : 'black',
+                    display: 'inline-flex',
                   }}
-                  type={passType}
-                  name='password'
-                  placeholder='Enter Password'
-                  title='Enter Password'
-                  defaultValue={fields.password}
-                  onKeyUp={handleKeyPress}
-                  required
-                />
-                <p className='inputStyle'></p>
-                {view && (
-                  <img
-                    style={{ cursor: 'pointer', marginLeft: '10px' }}
-                    title='show password'
-                    src={viewImg}
-                    name='view'
-                    alt='view'
-                    height='25px'
-                    onClick={handleView}
+                >
+                  <input
+                    type={passType}
+                    style={{
+                      backgroundColor: 'rgba(0,0,0,0)',
+                      outline: 'none',
+                      border: 'solid black 0px',
+                      marginLeft: '5px',
+                      color: darkMode ? 'white' : 'black',
+                    }}
+                    name='password'
+                    placeholder='Enter Password'
+                    title='Enter Password'
+                    defaultValue={fields.password}
+                    onKeyUp={handleKeyPress}
+                    required
                   />
-                )}
-                {noView && (
-                  <img
-                    style={{ cursor: 'pointer', marginLeft: '10px' }}
-                    title='hide password'
-                    src={noViewImg}
-                    name='noView'
-                    alt='no view'
-                    height='25px'
-                    onClick={handleView}
-                  />
-                )}
+                  {view && (
+                    <FaEye
+                      style={{
+                        cursor: 'pointer',
+                        marginLeft: 'auto',
+                        fontSize: '1.3rem',
+                      }}
+                      onClick={handleView}
+                      name='view'
+                    />
+                  )}
+                  {noView && (
+                    <FaEyeSlash
+                      style={{
+                        cursor: 'pointer',
+                        marginLeft: 'auto',
+                        fontSize: '1.3rem',
+                      }}
+                      onClick={handleView}
+                      name='noView'
+                    />
+                  )}
+                </div>
+                <p
+                  className='inputStyle'
+                  style={{
+                    backgroundColor: darkMode
+                      ? 'rgba(10,10,10,1)'
+                      : 'rgba(240,240,255,1)',
+                    top: '28px',
+                    left: '28px',
+                  }}
+                ></p>
               </div>
             </div>
-            <p style={{ color: 'red', fontStyle: 'italic' }}>{error}</p>
             <p
               style={{
                 marginLeft: 'auto',
@@ -419,7 +473,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
             >
               <Link
                 style={{
-                  color: darkMode ? 'white' : 'black',
+                  color: 'blue',
                   fontSize: '0.9rem',
                 }}
                 to='/help'
@@ -427,7 +481,6 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 Forgot Password?
               </Link>
             </p>
-
             <p>
               <button
                 ref={submitRef}
@@ -446,6 +499,24 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
               >
                 {signView}
               </button>
+            </p>
+            <p
+              style={{
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                fontStyle: 'italic',
+              }}
+            >
+              <label>Don't have an account? </label>
+              <Link
+                style={{
+                  color: darkMode ? 'white' : 'black',
+                  fontSize: '0.9rem',
+                }}
+                to='/signup'
+              >
+                Signup
+              </Link>
             </p>
           </div>
           <div className='signinside'>
