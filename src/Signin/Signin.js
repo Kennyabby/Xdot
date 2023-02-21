@@ -76,7 +76,8 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
       window.localStorage.setItem('sess-recg-id', now * sess)
       window.localStorage.setItem('idt-curr-usr', now)
       window.localStorage.setItem('user-id', idVal)
-      history.push('./dashboard/interests')
+
+      history.push('./dashboard')
       setPassValidated(false)
     }
   }, [passValidated])

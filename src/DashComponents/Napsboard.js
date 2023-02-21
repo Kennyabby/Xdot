@@ -69,6 +69,16 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       width: user.userName ? '' : width,
     }
   }
+  useEffect(() => {
+    if (user.firstName !== null && user.firstName !== undefined) {
+      if (
+        user.interestCategories == null ||
+        user.interestCategories == undefined
+      ) {
+        history.push('/dasboard/interests')
+      }
+    }
+  }, [user])
   const fetchUserAPI = async ({ data, req }) => {
     try {
       const opts = {
