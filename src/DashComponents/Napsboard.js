@@ -75,7 +75,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         user.interestCategories == null ||
         user.interestCategories == undefined
       ) {
-        history.push('/dasboard/interests')
+        history.push('./dasboard/interests')
       }
     }
   }, [user])
