@@ -411,9 +411,8 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                           : 'rgba(100,110,115)',
                       }}
                     >
-                      {user.student.schoolEmail !== undefined
-                        ? user.student.schoolEmail.slice(0, 1) +
-                          user.student.schoolEmail.slice(1)
+                      {user.otherEmail !== undefined
+                        ? user.otherEmail.slice(0, 1) + user.otherEmail.slice(1)
                         : 'You are always welcome to subscribe to our newsletter'}
                     </div>
                   </div>
