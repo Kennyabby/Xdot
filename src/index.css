@@ -43,6 +43,7 @@ code {
   src: local('Monteserrat-Alternates'),
     url('./fonts/Monteserrat-Alternates/Italic.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'SourceCodeProLight';
   src: local('SourceCodePro'),
@@ -53,6 +54,7 @@ code {
   src: local('SourceCodePro'),
     url('./fonts/SourceCodePro/Bold.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'SourceCodeProRegular';
   src: local('SourceCodePro'),
@@ -64,6 +66,87 @@ code {
     url('./fonts/SourceCodePro/Italic.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'EBGaramondRegular';
+  src: local('EBGaramond'),
+    url('./fonts/EBGaramond/Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'InterRegular';
+  src: local('Inter'), url('./fonts/Inter/Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'InterBold';
+  src: local('Inter'), url('./fonts/Inter/Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'InterLight';
+  src: local('Inter'), url('./fonts/Inter/Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'InterThin';
+  src: local('Inter'), url('./fonts/Inter/Thin.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'JuliusSansRegular';
+  src: local('JuliusSans'),
+    url('./fonts/JuliusSans/Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'MetrophobicRegular';
+  src: local('Metrophobic'),
+    url('./fonts/Metrophobic/Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'PoppinsRegular';
+  src: local('Poppins'), url('./fonts/Poppins/Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'PoppinsBold';
+  src: local('Poppins'), url('./fonts/Poppins/Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'PoppinsLight';
+  src: local('Poppins'), url('./fonts/Poppins/Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'PoppinsItalic';
+  src: local('Poppins'), url('./fonts/Poppins/Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'PTSansRegular';
+  src: local('PTSans'), url('./fonts/PTSans/Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'PTSansBold';
+  src: local('PTSans'), url('./fonts/PTSans/Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'PTSansItalic';
+  src: local('PTSans'), url('./fonts/PTSans/Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'RobotoRegular';
+  src: local('Roboto'), url('./fonts/Roboto/Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RobotoBold';
+  src: local('Roboto'), url('./fonts/Roboto/Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RobotoLight';
+  src: local('Roboto'), url('./fonts/Roboto/Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RobotoThin';
+  src: local('Roboto'), url('./fonts/Roboto/Thin.ttf') format('truetype');
+}
 .navbar {
   width: 100vw;
   position: fixed;
@@ -491,6 +574,19 @@ code {
   width: 40%;
   padding: 10px;
   cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 20px;
+  border: 3px solid grey;
 }
 @media screen and (max-width: 700px) {
   .sitewall {

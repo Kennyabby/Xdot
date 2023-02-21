@@ -429,28 +429,29 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                     onKeyUp={handleKeyPress}
                     required
                   />
-                  {view && (
-                    <FaEye
-                      style={{
-                        cursor: 'pointer',
-                        marginLeft: 'auto',
-                        fontSize: '1.3rem',
-                      }}
-                      onClick={handleView}
-                      name='view'
-                    />
-                  )}
-                  {noView && (
-                    <FaEyeSlash
-                      style={{
-                        cursor: 'pointer',
-                        marginLeft: 'auto',
-                        fontSize: '1.3rem',
-                      }}
-                      onClick={handleView}
-                      name='noView'
-                    />
-                  )}
+                  <div
+                    onClick={handleView}
+                    style={{
+                      width: 'fit-content',
+                      cursor: 'pointer',
+                      marginLeft: 'auto',
+                      fontSize: '1.3rem',
+                    }}
+                  >
+                    {view && (
+                      <div name='view' style={{ cursor: 'pointer' }}>
+                        <FaEye name='view' style={{ cursor: 'pointer' }} />
+                      </div>
+                    )}
+                    {noView && (
+                      <div name='noView' style={{ cursor: 'pointer' }}>
+                        <FaEyeSlash
+                          name='noView'
+                          style={{ cursor: 'pointer' }}
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <p
                   className='inputStyle'
