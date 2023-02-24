@@ -362,7 +362,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                         <div
                           style={{
                             // fontFamily: 'Trebuchet MS, sans-serif',
-                            fontFamily: 'SourceCodeProItalic',
+                            fontFamily: 'InterRegular',
                             // fontStyle: 'italic',
                             fontSize: winSize < 700 ? '' : '1rem',
                             backgroundColor: darkMode

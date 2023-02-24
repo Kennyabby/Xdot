@@ -388,6 +388,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                           : 'solid rgba(200,200,200,1) 2px',
                         borderRadius: '50%',
                         color: 'white',
+                        lineHeight: '60px',
                       }}
                     >
                       {user.firstName !== undefined

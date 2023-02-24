@@ -1,6 +1,19 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { MdNotificationsActive, MdTaskAlt } from 'react-icons/md'
+import { RiSettings2Line, RiMessage3Fill } from 'react-icons/ri'
+import { SiEventstore } from 'react-icons/si'
+import {
+  FaTimes,
+  FaSearch,
+  FaBars,
+  FaChevronUp,
+  FaChevronDown,
+  FaMoon,
+  FaSun,
+  FaUser,
+} from 'react-icons/fa'
 
 import ContextProvider from '../ContextProvider'
 
@@ -33,9 +46,6 @@ const SideNavigator = ({
   const [showEventDrop, setShowEventDrop] = useState(false)
   const [showTaskDrop, setShowTaskDrop] = useState(false)
   const [showEvotingDrop, setShowEvotingDrop] = useState(false)
-  const [eventsToggleStatus, setEventsToggleStatus] = useState(downarrow)
-  const [tasksToggleStatus, setTasksToggleStatus] = useState(downarrow)
-  const [eVotingToggleStatus, setEVotingToggleStatus] = useState(downarrow)
   const [xOffset, setXOffset] = useState(0)
   const [showBorder, setShowBorder] = useState(false)
   const [touchStart, setTouchStart] = useState(null)
@@ -52,7 +62,7 @@ const SideNavigator = ({
   const applyRef = useRef(null)
   const voteRef = useRef(null)
 
-  const { darkMode } = useContext(ContextProvider)
+  const { darkMode, setDarkMode } = useContext(ContextProvider)
 
   const tasksLabelRefs = [cgpacalcRef, todolistRef, quizappRef]
   const eventsLabelRefs = [grandquizRef, dailypuzzleRef, studytableRef]
@@ -78,31 +88,25 @@ const SideNavigator = ({
     const name = e.target.getAttribute('name')
     if (name === 'eventdrop') {
       if (showEventDrop) {
-        setEventsToggleStatus(downarrow)
         getEventsLabelRefs([])
         setShowEventDrop(false)
       } else {
-        setEventsToggleStatus(uparrow)
         getEventsLabelRefs(eventsLabelRefs)
         setShowEventDrop(true)
       }
     } else if (name === 'taskdrop') {
       if (showTaskDrop) {
-        setTasksToggleStatus(downarrow)
         getTasksLabelRefs([])
         setShowTaskDrop(false)
       } else {
-        setTasksToggleStatus(uparrow)
         getTasksLabelRefs(tasksLabelRefs)
         setShowTaskDrop(true)
       }
     } else if (name === 'e-votingdrop') {
       if (showEvotingDrop) {
-        setEVotingToggleStatus(downarrow)
         getEvotingLabelRefs([])
         setShowEvotingDrop(false)
       } else {
-        setEVotingToggleStatus(uparrow)
         getEvotingLabelRefs(eVotingLabelRefs)
         setShowEvotingDrop(true)
       }
@@ -167,7 +171,7 @@ const SideNavigator = ({
           style={{
             left: String(xOffset) + 'px',
             backgroundColor: darkMode
-              ? 'rgba(5,5,30,0.9)'
+              ? 'rgba(5,5,30,0.8)'
               : 'rgba(255,255,255,0.9)',
           }}
         >
@@ -177,12 +181,13 @@ const SideNavigator = ({
           <li name='profile' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/profile'>
               <div className='userleftitem' name='profile' ref={profileLabel}>
-                <img
+                <FaUser
                   className='sideicons'
                   name='profile'
-                  src={profile}
-                  height='20px'
-                  width='20px'
+                  style={{
+                    color: darkMode ? 'white' : 'black',
+                    fontSize: '1.5rem',
+                  }}
                 />{' '}
                 <span style={{ marginLeft: '25px' }}>Profile</span>
               </div>
@@ -198,12 +203,13 @@ const SideNavigator = ({
                 name='notifications'
                 ref={notificationsLabel}
               >
-                <img
+                <MdNotificationsActive
                   className='sideicons'
                   name='events'
-                  src={notifications}
-                  height='20px'
-                  width='20px'
+                  style={{
+                    color: darkMode ? 'white' : 'black',
+                    fontSize: '1.5rem',
+                  }}
                 />{' '}
                 <span style={{ marginLeft: '25px' }}>Updates</span>
               </div>
@@ -216,24 +222,34 @@ const SideNavigator = ({
               to='/dashboard/events'
             >
               <div className='userleftitem' name='events' ref={eventsLabel}>
-                <img
+                <SiEventstore
                   className='sideicons'
                   name='events'
-                  src={events}
-                  height='20px'
-                  width='20px'
+                  style={{
+                    color: darkMode ? 'white' : 'black',
+                    fontSize: '1.5rem',
+                  }}
                 />{' '}
                 <span style={{ marginLeft: '25px' }}>Events </span>
               </div>
             </Link>
-            <img
-              src={eventsToggleStatus}
-              alt='events donwdrop toggle'
-              onClick={handleDrop}
-              name='eventdrop'
-              className='taskdrop'
-              height='7px'
-            />
+            {!showEventDrop ? (
+              <FaChevronDown
+                style={{ color: darkMode ? 'white' : 'black' }}
+                alt='events donwdrop toggle'
+                onClick={handleDrop}
+                name='eventdrop'
+                className='taskdrop'
+              />
+            ) : (
+              <FaChevronUp
+                style={{ color: darkMode ? 'white' : 'black' }}
+                alt='events donwdrop toggle'
+                onClick={handleDrop}
+                name='eventdrop'
+                className='taskdrop'
+              />
+            )}
             {showEventDrop && (
               <ul className='drop'>
                 <Link
@@ -276,24 +292,34 @@ const SideNavigator = ({
           <li name='tasks' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/tasks'>
               <div className='userleftitem' name='tasks' ref={tasksLabel}>
-                <img
+                <MdTaskAlt
                   className='sideicons'
                   name='tasks'
-                  src={tasks}
-                  height='20px'
-                  width='20px'
+                  style={{
+                    color: darkMode ? 'white' : 'black',
+                    fontSize: '1.5rem',
+                  }}
                 />{' '}
                 <span style={{ marginLeft: '25px' }}>Tasks</span>
               </div>
             </Link>
-            <img
-              src={tasksToggleStatus}
-              alt='tasks downdrop toggle'
-              onClick={handleDrop}
-              name='taskdrop'
-              className='taskdrop'
-              height='7px'
-            />
+            {!showTaskDrop ? (
+              <FaChevronDown
+                style={{ color: darkMode ? 'white' : 'black' }}
+                alt='tasks donwdrop toggle'
+                onClick={handleDrop}
+                name='taskdrop'
+                className='taskdrop'
+              />
+            ) : (
+              <FaChevronUp
+                style={{ color: darkMode ? 'white' : 'black' }}
+                alt='tasks donwdrop toggle'
+                onClick={handleDrop}
+                name='taskdrop'
+                className='taskdrop'
+              />
+            )}
             {showTaskDrop && (
               <ul className='drop'>
                 <Link
@@ -339,14 +365,23 @@ const SideNavigator = ({
                 <span style={{ marginLeft: '25px' }}>Evoting</span>
               </div>
             </Link>
-            <img
-              alt='e-voting donwdrop toggle'
-              onClick={handleDrop}
-              src={eVotingToggleStatus}
-              name='e-votingdrop'
-              className='taskdrop'
-              height='7px'
-            />
+            {!showEvotingDrop ? (
+              <FaChevronDown
+                style={{ color: darkMode ? 'white' : 'black' }}
+                alt='e-voting donwdrop toggle'
+                onClick={handleDrop}
+                name='e-votingdrop'
+                className='taskdrop'
+              />
+            ) : (
+              <FaChevronUp
+                style={{ color: darkMode ? 'white' : 'black' }}
+                alt='e-voting donwdrop toggle'
+                onClick={handleDrop}
+                name='e-votingdrop'
+                className='taskdrop'
+              />
+            )}
             {showEvotingDrop && (
               <ul className='drop'>
                 <Link
@@ -373,16 +408,39 @@ const SideNavigator = ({
           <li name='settings' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/settings'>
               <div className='userleftitem' name='settings' ref={settingsLabel}>
-                <img
+                <RiSettings2Line
                   className='sideicons'
                   name='settings'
-                  src={settings}
-                  height='20px'
-                  width='20px'
+                  style={{
+                    color: darkMode ? 'white' : 'black',
+                    fontSize: '1.5rem',
+                  }}
                 />{' '}
                 <span style={{ marginLeft: '25px' }}>Settings</span>
               </div>
             </Link>
+          </li>
+          <li name='mode'>
+            <div
+              className='userleftitem'
+              name='settings'
+              ref={settingsLabel}
+              style={{
+                color: darkMode ? 'white' : 'black',
+              }}
+              onClick={() => {
+                setDarkMode(!darkMode)
+              }}
+            >
+              {darkMode ? (
+                <FaSun style={{ fontSize: '1.5rem' }} />
+              ) : (
+                <FaMoon style={{ fontSize: '1.5rem' }} />
+              )}{' '}
+              <span style={{ marginLeft: '25px', fontWeight: 'bold' }}>
+                {darkMode ? 'Light Mode' : 'Dark Mode'}
+              </span>
+            </div>
           </li>
           <div
             className='userleftitem'

@@ -25,7 +25,7 @@ const App = () => {
   const history = useHistory()
   const [intervalId, setIntervalId] = useState(null)
   const [bars, setBars] = useState([])
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(true)
   const [size, setSize] = useState(window.innerWidth)
   const getTopBar = (bars) => {
     setBars(bars)

@@ -149,6 +149,7 @@ code {
 }
 .navbar {
   width: 100vw;
+  flex-wrap: wrap;
   position: fixed;
   top: 0px;
   z-index: 1;
@@ -237,7 +238,6 @@ code {
   font-family: 'Courier New', Courier, monospace;
   border-radius: 50px;
   word-spacing: 5px;
-  font-style: italic;
   font-size: 1.2rem;
 }
 .top-left-opt {
@@ -674,7 +674,6 @@ code {
     margin: 0px;
     margin-top: -70px;
     font-family: 'Courier New', Courier, monospace;
-    font-style: italic;
     font-size: 1.1rem;
   }
   .infos {

@@ -1,6 +1,11 @@
 import { React, useState, useEffect, useRef, useContext } from 'react'
 import { useParams, useHistory, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { FaTimes, FaBars } from 'react-icons/fa'
+import { BiHomeCircle } from 'react-icons/bi'
+import { MdNotificationsActive, MdTaskAlt } from 'react-icons/md'
+import { RiMessage3Fill } from 'react-icons/ri'
+
 import './Napsboard.css'
 
 import ContextProvider from '../ContextProvider'
@@ -882,8 +887,8 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                       className='hometoggle'
                       style={{
                         backgroundColor: darkMode
-                          ? 'rgba(0,0,0,0.95)'
-                          : 'rgba(255,255,255,0.9)',
+                          ? 'rgba(0,0,0,0.75)'
+                          : 'rgba(255,255,255,0.75)',
                         borderTop: darkMode
                           ? 'solid black 2px'
                           : 'solid white 2px',
@@ -905,21 +910,26 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             }
                           }}
                         >
-                          <img
-                            style={{
-                              cursor: 'pointer',
-                            }}
-                            name='menu'
-                            alt='menu'
-                            src={
-                              showNav
-                                ? close
-                                : darkMode
-                                ? wnavigatormenu
-                                : navigatormenu
-                            }
-                            height='18px'
-                          />{' '}
+                          {!showNav ? (
+                            <FaBars
+                              style={{
+                                cursor: 'pointer',
+                                color: darkMode ? 'white' : 'black',
+                                fontSize: '1.4rem',
+                              }}
+                              name='menu'
+                              alt='menu'
+                            />
+                          ) : (
+                            <FaTimes
+                              style={{
+                                cursor: 'pointer',
+                                color: darkMode ? 'white' : 'black',
+                              }}
+                              name='close'
+                              alt='close'
+                            />
+                          )}{' '}
                           <div
                             style={{
                               fontSize: '.7rem',
@@ -958,16 +968,16 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             name='home'
                             title='Clck to go to Home Page'
                           >
-                            <img
+                            <BiHomeCircle
                               style={{
-                                borderRadius: '50%',
                                 cursor: 'pointer',
+                                color: darkMode ? 'white' : 'black',
+                                fontSize: '1.6rem',
                               }}
                               name='home'
-                              src={darkMode ? whome : home}
                               alt='home'
-                              height='20px'
                             />
+
                             <div
                               style={{
                                 fontSize: '.7rem',
@@ -994,15 +1004,16 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             name='chats'
                             title='Clck to go to Chats'
                           >
-                            <img
+                            <RiMessage3Fill
                               style={{
                                 cursor: 'pointer',
+                                color: darkMode ? 'white' : 'black',
+                                fontSize: '1.5rem',
                               }}
                               name='chats'
-                              src={darkMode ? wchats : chats}
                               alt='chats'
-                              height='20px'
                             />
+
                             <div
                               style={{
                                 fontSize: '.7rem',
@@ -1030,15 +1041,14 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             name='notifications'
                             title='Clck to go to Notifications'
                           >
-                            <img
+                            <MdNotificationsActive
                               style={{
-                                borderRadius: '50%',
                                 cursor: 'pointer',
+                                color: darkMode ? 'white' : 'black',
+                                fontSize: '1.5rem',
                               }}
                               name='notifications'
-                              src={notifications}
                               alt='notifcations'
-                              height='20px'
                             />
                             <div
                               style={{
