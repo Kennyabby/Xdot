@@ -3,7 +3,7 @@ import { FaCheck } from 'react-icons/fa'
 import { useHistory, Link } from 'react-router-dom'
 import ContextProvider from '../../ContextProvider'
 
-const InterestPage = ({ user }) => {
+const InterestPage = ({ user, setShowHomeToggle }) => {
   const history = useHistory()
   const { server, darkMode } = useContext(ContextProvider)
   const [categories, setCategories] = useState([
@@ -27,10 +27,13 @@ const InterestPage = ({ user }) => {
       user.interestCategories !== null &&
       user.interestCategories !== undefined
     ) {
+      setShowHomeToggle(true)
       setIsEditting(true)
       setSelectedClusters((selectedClusters) => {
         return [...selectedClusters, ...user.interestCategories]
       })
+    } else {
+      setShowHomeToggle(false)
     }
   }, [user])
   const addInterests = async () => {
@@ -63,8 +66,8 @@ const InterestPage = ({ user }) => {
       <div style={{ padding: '10px', paddingBottom: '70px' }}>
         <h1 style={{ fontFamily: 'MonteserratBold', marginTop: '30px' }}>
           {!isEditting
-            ? 'Welcome ' + user.firstName.trim() + ". Let's Get You Started"
-            : 'Edit Your Interests'}
+            ? 'Welcome ' + user.firstName.trim() + ". Let's Get You Started."
+            : 'Edit Your Interests.'}
         </h1>
         <div
           style={{

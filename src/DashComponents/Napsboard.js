@@ -230,6 +230,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           user={user}
           viewRef={viewRef}
           setShowNav={setShowNav(false)}
+          setShowHomeToggle={(show) => {
+            setShowHomeToggle(show)
+          }}
         />
       )
     } else if (id === 'tasks') {
@@ -1061,6 +1064,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                   {id === 'chats' ||
                   id === undefined ||
                   id === 'settings' ||
+                  id === 'interests' ||
                   id === 'profile' ? undefined : (
                     <div className='coverDetail'>
                       <Link to='/dashboard/profile'>
