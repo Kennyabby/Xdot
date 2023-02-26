@@ -897,9 +897,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                         backgroundColor: darkMode
                           ? 'rgba(10,10,27,0.75)'
                           : 'rgba(247,247,250,0.75)',
-                        borderTop: darkMode
-                          ? 'solid black 2px'
-                          : 'solid white 2px',
                         fontFamily: 'MonteserratRegular',
                       }}
                     >
