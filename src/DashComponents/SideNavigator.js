@@ -13,6 +13,7 @@ import {
   FaMoon,
   FaSun,
   FaUser,
+  FaAngleRight,
 } from 'react-icons/fa'
 import { FiLogOut } from 'react-icons/fi'
 import { GiVote } from 'react-icons/gi'
@@ -146,6 +147,10 @@ const SideNavigator = ({
     color: darkMode ? 'rgba(190,190,200)' : 'rgba(16,16,16)',
     fontFamily: 'MonteserratRegular',
   }
+  const dropItemStyle = {
+    color: darkMode ? 'rgba(190,190,200)' : 'rgba(16,16,16)',
+    fontFamily: 'MonteserratRegular',
+  }
   return (
     <>
       <motion.div
@@ -249,7 +254,7 @@ const SideNavigator = ({
                     fontSize: '1.5rem',
                   }}
                 />{' '}
-                <span style={{ marginLeft: '25px' }}>Events </span>
+                <span style={{ marginLeft: '25px' }}>Events Apps </span>
               </div>
             </Link>
             {!showEventDrop ? (
@@ -275,8 +280,13 @@ const SideNavigator = ({
                   style={{ color: 'white', textDecoration: 'none' }}
                   to='/dashboard/events/grandquiz'
                 >
-                  <li ref={grandquizRef} className='dropitem' name='grandquiz'>
-                    {'> Grand Quiz'}
+                  <li
+                    ref={grandquizRef}
+                    className='dropitem'
+                    name='grandquiz'
+                    style={{ ...dropItemStyle }}
+                  >
+                    <FaAngleRight /> {'  Grand Quiz'}
                   </li>
                 </Link>
                 <Link
@@ -287,9 +297,9 @@ const SideNavigator = ({
                     ref={dailypuzzleRef}
                     className='dropitem'
                     name='dailypuzzles'
+                    style={{ ...dropItemStyle }}
                   >
-                    {' '}
-                    {'>'} Daily Puzzles{' '}
+                    <FaAngleRight /> {'  Daily Puzzles'}
                   </li>
                 </Link>
                 <Link
@@ -300,9 +310,9 @@ const SideNavigator = ({
                     ref={studytableRef}
                     className='dropitem'
                     name='studytable'
+                    style={{ ...dropItemStyle }}
                   >
-                    {' '}
-                    {'>'} Study Table{' '}
+                    <FaAngleRight /> Study Table
                   </li>
                 </Link>
               </ul>
@@ -323,7 +333,7 @@ const SideNavigator = ({
                     fontSize: '1.5rem',
                   }}
                 />{' '}
-                <span style={{ marginLeft: '25px' }}>Tasks</span>
+                <span style={{ marginLeft: '25px' }}>Tasks Apps</span>
               </div>
             </Link>
             {!showTaskDrop ? (
@@ -349,27 +359,39 @@ const SideNavigator = ({
                   style={{ color: 'white', textDecoration: 'none' }}
                   to='/dashboard/tasks/cgpa'
                 >
-                  <li ref={cgpacalcRef} className='dropitem' name='cgpa'>
-                    {' '}
-                    {'>'} CGPA CALC{' '}
+                  <li
+                    ref={cgpacalcRef}
+                    className='dropitem'
+                    name='cgpa'
+                    style={{ ...dropItemStyle }}
+                  >
+                    <FaAngleRight /> CGPA CALC
                   </li>
                 </Link>
                 <Link
                   style={{ color: 'white', textDecoration: 'none' }}
                   to='/dashboard/tasks/todolist'
                 >
-                  <li ref={todolistRef} className='dropitem' name='todolist'>
-                    {' '}
-                    {'>'} To Do List{' '}
+                  <li
+                    ref={todolistRef}
+                    className='dropitem'
+                    name='todolist'
+                    style={{ ...dropItemStyle }}
+                  >
+                    <FaAngleRight /> To Do List
                   </li>
                 </Link>
                 <Link
                   style={{ color: 'white', textDecoration: 'none' }}
                   to='/dashboard/tasks/quizapp'
                 >
-                  <li ref={quizappRef} className='dropitem' name='quizapp'>
-                    {' '}
-                    {'>'} Quiz App{' '}
+                  <li
+                    ref={quizappRef}
+                    className='dropitem'
+                    name='quizapp'
+                    style={{ ...dropItemStyle }}
+                  >
+                    <FaAngleRight /> Quiz App
                   </li>
                 </Link>
               </ul>
@@ -390,7 +412,7 @@ const SideNavigator = ({
                     fontSize: '1.5rem',
                   }}
                 />{' '}
-                <span style={{ marginLeft: '25px' }}>Evoting</span>
+                <span style={{ marginLeft: '25px' }}>Evoting App</span>
               </div>
             </Link>
             {!showEvotingDrop ? (
@@ -416,18 +438,26 @@ const SideNavigator = ({
                   style={{ color: 'white', textDecoration: 'none' }}
                   to='/dashboard/e-voting/apply'
                 >
-                  <li ref={applyRef} className='dropitem' name='apply'>
-                    {' '}
-                    {'>'} Apply{' '}
+                  <li
+                    ref={applyRef}
+                    className='dropitem'
+                    name='apply'
+                    style={{ ...dropItemStyle }}
+                  >
+                    <FaAngleRight /> Apply
                   </li>
                 </Link>
                 <Link
                   style={{ color: 'white', textDecoration: 'none' }}
                   to='/dashboard/e-voting/vote'
                 >
-                  <li ref={voteRef} className='dropitem' name='vote'>
-                    {' '}
-                    {'>'} Vote{' '}
+                  <li
+                    ref={voteRef}
+                    className='dropitem'
+                    name='vote'
+                    style={{ ...dropItemStyle }}
+                  >
+                    <FaAngleRight /> Vote
                   </li>
                 </Link>
               </ul>

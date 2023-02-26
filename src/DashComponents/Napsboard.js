@@ -78,6 +78,10 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     default: darkMode ? 'rgba(190,190,230)' : 'rgba(16,16,66)',
     color: darkMode ? 'white' : 'black',
   }
+  const dropItemStyle = {
+    default: darkMode ? 'rgba(190,190,230)' : 'rgba(16,16,66)',
+    color: darkMode ? 'white' : 'black',
+  }
   useEffect(() => {
     if (user.firstName !== null && user.firstName !== undefined) {
       if (
@@ -146,14 +150,13 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     eventsLabelRefs.map((dropitem) => {
       if (dropitem.current !== null) {
         if (dropitem.current.getAttribute('name') === id) {
-          dropitem.current.style.borderLeft = 'solid darkorange 2px'
-          dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
+          dropitem.current.style.color = dropItemStyle.color
+          dropitem.current.style.fontWeight = 'bold'
           dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
-            'solid white 3px'
-          dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
-            'black'
+            'solid blue 3px'
         } else {
-          dropitem.current.style.borderLeft = 'solid darkorange 0px'
+          dropitem.current.style.color = dropItemStyle.default
+          dropitem.current.style.fontWeight = 'lighter'
           dropitem.current.style.boxShadow = '0px 0px 9px white'
         }
       }
@@ -161,14 +164,13 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     tasksLabelRefs.map((dropitem) => {
       if (dropitem.current !== null) {
         if (dropitem.current.getAttribute('name') === id) {
-          dropitem.current.style.borderLeft = 'solid darkorange 2px'
-          dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
+          dropitem.current.style.color = dropItemStyle.color
+          dropitem.current.style.fontWeight = 'bold'
           dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
-            'solid white 3px'
-          dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
-            'black'
+            'solid blue 3px'
         } else {
-          dropitem.current.style.borderLeft = 'solid darkorange 0px'
+          dropitem.current.style.color = dropItemStyle.default
+          dropitem.current.style.fontWeight = 'lighter'
           dropitem.current.style.boxShadow = '0px 0px 9px white'
         }
       }
@@ -176,14 +178,13 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
     eVotingLabelRefs.map((dropitem) => {
       if (dropitem.current !== null) {
         if (dropitem.current.getAttribute('name') === id) {
-          dropitem.current.style.borderLeft = 'solid darkorange 2px'
-          dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
+          dropitem.current.style.color = dropItemStyle.color
+          dropitem.current.style.fontWeight = 'bold'
           dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
-            'solid white 3px'
-          dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
-            'black'
+            'solid blue 3px'
         } else {
-          dropitem.current.style.borderLeft = 'solid darkorange 0px'
+          dropitem.current.style.color = dropItemStyle.default
+          dropitem.current.style.fontWeight = 'lighter'
           dropitem.current.style.boxShadow = '0px 0px 9px white'
         }
       }
@@ -580,14 +581,13 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       eventsLabelRefs.map((dropitem) => {
         if (dropitem.current !== null) {
           if (dropitem.current.getAttribute('name') === id) {
-            dropitem.current.style.borderLeft = 'solid darkorange 2px'
-            dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
+            dropitem.current.style.color = dropItemStyle.color
+            dropitem.current.style.fontWeight = 'bold'
             dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
-              'solid white 3px'
-            dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
-              'black'
+              'solid blue 3px'
           } else {
-            dropitem.current.style.borderLeft = 'solid darkorange 0px'
+            dropitem.current.style.color = dropItemStyle.default
+            dropitem.current.style.fontWeight = 'lighter'
             dropitem.current.style.boxShadow = '0px 0px 9px white'
           }
         }
@@ -599,14 +599,13 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       tasksLabelRefs.map((dropitem) => {
         if (dropitem.current !== null) {
           if (dropitem.current.getAttribute('name') === id) {
-            dropitem.current.style.borderLeft = 'solid darkorange 2px'
-            dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
+            dropitem.current.style.color = dropItemStyle.color
+            dropitem.current.style.fontWeight = 'bold'
             dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
-              'solid white 3px'
-            dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
-              'black'
+              'solid blue 3px'
           } else {
-            dropitem.current.style.borderLeft = 'solid darkorange 0px'
+            dropitem.current.style.color = dropItemStyle.default
+            dropitem.current.style.fontWeight = 'lighter'
             dropitem.current.style.boxShadow = '0px 0px 9px white'
           }
         }
@@ -618,14 +617,13 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       eVotingLabelRefs.map((dropitem) => {
         if (dropitem.current !== null) {
           if (dropitem.current.getAttribute('name') === id) {
-            dropitem.current.style.borderLeft = 'solid darkorange 2px'
-            dropitem.current.style.boxShadow = '0px 0px 9px darkorange'
+            dropitem.current.style.color = dropItemStyle.color
+            dropitem.current.style.fontWeight = 'bold'
             dropitem.current.parentElement.parentElement.parentElement.style.borderLeft =
-              'solid white 3px'
-            dropitem.current.parentElement.parentElement.parentElement.style.backgroundColor =
-              'black'
+              'solid blue 3px'
           } else {
-            dropitem.current.style.borderLeft = 'solid darkorange 0px'
+            dropitem.current.style.color = dropItemStyle.default
+            dropitem.current.style.fontWeight = 'lighter'
             dropitem.current.style.boxShadow = '0px 0px 9px white'
           }
         }
@@ -815,7 +813,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                       : 'rgba(247,247,250,1)',
                     height: winSize > 700 ? '100vh' : 'auto',
                     overflowY: winSize > 700 ? 'auto' : 'none',
-                    // margin: '0px auto',
                     justifyContent: 'center',
                     width:
                       winSize <= 700
