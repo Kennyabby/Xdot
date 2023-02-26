@@ -14,6 +14,8 @@ import {
   FaSun,
   FaUser,
 } from 'react-icons/fa'
+import { FiLogOut } from 'react-icons/fi'
+import { GiVote } from 'react-icons/gi'
 
 import ContextProvider from '../ContextProvider'
 
@@ -140,6 +142,10 @@ const SideNavigator = ({
       }
     }
   }
+  const itemStyle = {
+    color: darkMode ? 'rgba(190,190,200)' : 'rgba(16,16,16)',
+    fontFamily: 'MonteserratRegular',
+  }
   return (
     <>
       <motion.div
@@ -157,6 +163,11 @@ const SideNavigator = ({
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
+        style={{
+          backgroundColor: darkMode
+            ? 'rgba(5,5,30,0.8)'
+            : 'rgba(255,255,255,0.9)',
+        }}
       >
         <motion.ul
           initial={{ x: '-100vw' }}
@@ -180,12 +191,16 @@ const SideNavigator = ({
           </Link>
           <li name='profile' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/profile'>
-              <div className='userleftitem' name='profile' ref={profileLabel}>
+              <div
+                className='userleftitem'
+                name='profile'
+                ref={profileLabel}
+                style={{ ...itemStyle }}
+              >
                 <FaUser
                   className='sideicons'
                   name='profile'
                   style={{
-                    color: darkMode ? 'white' : 'black',
                     fontSize: '1.5rem',
                   }}
                 />{' '}
@@ -202,12 +217,12 @@ const SideNavigator = ({
                 className='userleftitem'
                 name='notifications'
                 ref={notificationsLabel}
+                style={{ ...itemStyle }}
               >
                 <MdNotificationsActive
                   className='sideicons'
                   name='events'
                   style={{
-                    color: darkMode ? 'white' : 'black',
                     fontSize: '1.5rem',
                   }}
                 />{' '}
@@ -221,12 +236,16 @@ const SideNavigator = ({
               style={{ textDecoration: 'none' }}
               to='/dashboard/events'
             >
-              <div className='userleftitem' name='events' ref={eventsLabel}>
+              <div
+                className='userleftitem'
+                name='events'
+                ref={eventsLabel}
+                style={{ ...itemStyle }}
+              >
                 <SiEventstore
                   className='sideicons'
                   name='events'
                   style={{
-                    color: darkMode ? 'white' : 'black',
                     fontSize: '1.5rem',
                   }}
                 />{' '}
@@ -291,12 +310,16 @@ const SideNavigator = ({
           </li>
           <li name='tasks' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/tasks'>
-              <div className='userleftitem' name='tasks' ref={tasksLabel}>
+              <div
+                className='userleftitem'
+                name='tasks'
+                ref={tasksLabel}
+                style={{ ...itemStyle }}
+              >
                 <MdTaskAlt
                   className='sideicons'
                   name='tasks'
                   style={{
-                    color: darkMode ? 'white' : 'black',
                     fontSize: '1.5rem',
                   }}
                 />{' '}
@@ -354,13 +377,18 @@ const SideNavigator = ({
           </li>
           <li name='e-voting' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/e-voting'>
-              <div className='userleftitem' name='e-voting' ref={eVotingLabel}>
-                <img
+              <div
+                className='userleftitem'
+                name='e-voting'
+                ref={eVotingLabel}
+                style={{ ...itemStyle }}
+              >
+                <GiVote
                   className='sideicons'
                   name='e-voting'
-                  src={events}
-                  height='20px'
-                  width='20px'
+                  style={{
+                    fontSize: '1.5rem',
+                  }}
                 />{' '}
                 <span style={{ marginLeft: '25px' }}>Evoting</span>
               </div>
@@ -407,12 +435,16 @@ const SideNavigator = ({
           </li>
           <li name='settings' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/settings'>
-              <div className='userleftitem' name='settings' ref={settingsLabel}>
+              <div
+                className='userleftitem'
+                name='settings'
+                ref={settingsLabel}
+                style={{ ...itemStyle }}
+              >
                 <RiSettings2Line
                   className='sideicons'
                   name='settings'
                   style={{
-                    color: darkMode ? 'white' : 'black',
                     fontSize: '1.5rem',
                   }}
                 />{' '}
@@ -424,9 +456,9 @@ const SideNavigator = ({
             <div
               className='userleftitem'
               name='settings'
-              ref={settingsLabel}
               style={{
                 color: darkMode ? 'white' : 'black',
+                fontFamily: 'MonteserratBold',
               }}
               onClick={() => {
                 setDarkMode(!darkMode)
@@ -445,35 +477,29 @@ const SideNavigator = ({
           <div
             className='userleftitem'
             style={{
-              display: 'block',
-              fontSize: '.8rem',
+              display: 'inline-flex',
+              fontSize: '.9rem',
+              fontFamily: 'MonteserratBold',
               width: 'fit-content',
               marginLeft: '10px',
               marginTop: '50px',
               marginBottom: '20px',
               padding: '10px',
-              backgroundColor: 'black',
-              border: 'solid rgba(49,49,50,1) 2px',
-              boxShadow: '0px 0px 7px black',
+              color: darkMode ? 'white' : 'black',
+              border: 'solid rgba(10, 105, 214) 2px',
               borderRadius: '15px',
               cursor: 'pointer',
             }}
             onClick={logout}
           >
-            <label style={{ cursor: 'pointer' }}>
-              <label
-                style={{
-                  fontFamily: 'monospace',
-                  fontSize: '1rem',
-                  marginRight: '20px',
-                  cursor: 'pointer',
-                  color: 'orange',
-                }}
-              >
-                {' [->'}
-              </label>
-              {logoutStatus}
-            </label>
+            <FiLogOut
+              style={{
+                fontSize: '1.2rem',
+                marginRight: '20px',
+                cursor: 'pointer',
+              }}
+            />
+            <label style={{ cursor: 'pointer' }}>{logoutStatus}</label>
           </div>
         </motion.ul>
         <div

@@ -60,7 +60,7 @@ const InterestPage = ({ user }) => {
   }
   return (
     <>
-      <div style={{ paddingBottom: '60px' }}>
+      <div style={{ padding: '10px', paddingBottom: '60px' }}>
         <h1 style={{ fontFamily: 'MonteserratBold', marginTop: '30px' }}>
           {!isEditting
             ? 'Welcome ' + user.firstName + ". Let's Get You Started"
@@ -87,9 +87,11 @@ const InterestPage = ({ user }) => {
                   cursor: 'pointer',
                   padding: '8px 15px',
                   borderRadius: '10px',
-                  color: 'blue',
+                  color: 'rgba(10, 105, 214)',
                   fontFamily: 'SourceCodeProBold',
-                  background: 'white',
+                  boxShadow: darkMode
+                    ? '0px 0px 10px white'
+                    : '0px 0px 10px black',
                 }}
                 onClick={() => {
                   history.push('./')
@@ -167,8 +169,11 @@ const InterestPage = ({ user }) => {
                 borderRadius: '15px',
                 cursor: 'pointer',
                 fontSize: '1.3rem',
-                color: 'blue',
-                background: 'white',
+                color: 'rgba(10, 105, 214)',
+                boxShadow: darkMode
+                  ? '0px 0px 10px white'
+                  : '0px 0px 10px black',
+                // background: 'white',
               }}
               onClick={addInterests}
             >

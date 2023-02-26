@@ -74,6 +74,10 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       width: user.userName ? '' : width,
     }
   }
+  const itemStyle = {
+    default: darkMode ? 'rgba(190,190,230)' : 'rgba(16,16,66)',
+    color: darkMode ? 'white' : 'black',
+  }
   useEffect(() => {
     if (user.firstName !== null && user.firstName !== undefined) {
       if (
@@ -121,17 +125,19 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   useEffect(() => {
     labelRefs.map((elem) => {
       if (elem !== null && elem.current !== null) {
+        elem.current.parentElement.parentElement.style.backgroundColor =
+          'rgba(0,0,0,0)'
         if (
           elem.current.getAttribute('name') === id ||
           elem.current.getAttribute('name') === rootView
         ) {
-          elem.current.parentElement.parentElement.style.backgroundColor =
-            'black'
+          elem.current.style.color = itemStyle.color
+          elem.current.style.fontWeight = 'bold'
           elem.current.parentElement.parentElement.style.borderLeft =
-            'solid white 3px'
+            'solid blue 3px'
         } else {
-          elem.current.parentElement.parentElement.style.backgroundColor =
-            'rgba(0,0,0,0)'
+          elem.current.style.color = itemStyle.default
+          elem.current.style.fontWeight = 'lighter'
           elem.current.parentElement.parentElement.style.borderLeft =
             'solid white 0px'
         }
@@ -550,17 +556,19 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   useEffect(() => {
     labelRefs.map((elem) => {
       if (elem !== null && elem.current !== null) {
+        elem.current.parentElement.parentElement.style.backgroundColor =
+          'rgba(0,0,0,0)'
         if (
           elem.current.getAttribute('name') === id ||
           elem.current.getAttribute('name') === rootView
         ) {
-          elem.current.parentElement.parentElement.style.backgroundColor =
-            'black'
+          elem.current.style.color = itemStyle.color
+          elem.current.style.fontWeight = 'bold'
           elem.current.parentElement.parentElement.style.borderLeft =
-            'solid white 3px'
+            'solid blue 3px'
         } else {
-          elem.current.parentElement.parentElement.style.backgroundColor =
-            'rgba(0,0,0,0)'
+          elem.current.style.color = itemStyle.default
+          elem.current.style.fontWeight = 'lighter'
           elem.current.parentElement.parentElement.style.borderLeft =
             'solid white 0px'
         }
@@ -892,6 +900,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                         borderTop: darkMode
                           ? 'solid black 2px'
                           : 'solid white 2px',
+                        fontFamily: 'MonteserratRegular',
                       }}
                     >
                       {winSize <= 700 && showNavigator && (
@@ -933,7 +942,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           <div
                             style={{
                               fontSize: '.7rem',
-                              fontFamily: 'monospace',
                               color: darkMode ? 'white' : 'black',
                             }}
                           >
@@ -981,7 +989,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <div
                               style={{
                                 fontSize: '.7rem',
-                                fontFamily: 'monospace',
                                 color: darkMode ? 'white' : 'black',
                               }}
                             >
@@ -1017,7 +1024,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <div
                               style={{
                                 fontSize: '.7rem',
-                                fontFamily: 'monospace',
                                 color: darkMode ? 'white' : 'black',
                               }}
                             >
@@ -1053,7 +1059,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <div
                               style={{
                                 fontSize: '.7rem',
-                                fontFamily: 'monospace',
                                 color: darkMode ? 'white' : 'black',
                               }}
                             >

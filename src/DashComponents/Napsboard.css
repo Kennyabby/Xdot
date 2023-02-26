@@ -97,7 +97,7 @@
   flex-wrap: wrap;
   display: flex;
   padding: 10px;
-  color: darkorange;
+  color: rgba(205, 205, 205);
   padding-top: 20px;
   float: left;
   text-decoration: none;
@@ -131,11 +131,6 @@
 }
 .sideicons {
   margin-right: auto;
-  /* padding: 5px; */
-  /* background-color: white; */
-  /* border-radius: 50%; */
-  /* border: solid orange 1px; */
-  /* box-shadow: orange 0px 0px 7px; */
 }
 .taskdrop {
   position: absolute;
