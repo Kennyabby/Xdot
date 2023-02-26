@@ -454,10 +454,10 @@
     font-size: 1.2rem;
     margin-bottom: 70px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(10, 10, 10);
     padding: 7px;
     border-radius: 20px;
-    box-shadow: orange 0px 0px 7px;
+    box-shadow: rgba(10, 105, 214) 0px 0px 7px;
   }
   .userbar {
     position: fixed;

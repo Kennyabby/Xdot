@@ -192,7 +192,9 @@ const SideNavigator = ({
           }}
         >
           <Link to='/dashboard' className='userlefttop'>
-            <label style={{ cursor: 'pointer' }}>{'< SECTIONS />'}</label>
+            <label style={{ cursor: 'pointer', fontFamily: 'MonteserratBold' }}>
+              {'< SECTIONS />'}
+            </label>
           </Link>
           <li name='profile' className='userleft'>
             <Link style={{ textDecoration: 'none' }} to='/dashboard/profile'>
