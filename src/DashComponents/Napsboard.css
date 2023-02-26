@@ -502,7 +502,7 @@
     z-index: 1;
     display: inline-flex;
     overflow-x: auto;
-    padding: 5px 5px;
+    padding: 2px 5px;
   }
   .hometoggleitem {
     margin: auto;

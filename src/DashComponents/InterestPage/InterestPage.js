@@ -60,10 +60,10 @@ const InterestPage = ({ user }) => {
   }
   return (
     <>
-      <div style={{ padding: '10px', paddingBottom: '60px' }}>
+      <div style={{ padding: '10px', paddingBottom: '70px' }}>
         <h1 style={{ fontFamily: 'MonteserratBold', marginTop: '30px' }}>
           {!isEditting
-            ? 'Welcome ' + user.firstName + ". Let's Get You Started"
+            ? 'Welcome ' + user.firstName.trim() + ". Let's Get You Started"
             : 'Edit Your Interests'}
         </h1>
         <div
