@@ -157,7 +157,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         } else {
           dropitem.current.style.color = dropItemStyle.default
           dropitem.current.style.fontWeight = 'lighter'
-          dropitem.current.style.boxShadow = '0px 0px 9px white'
         }
       }
     })
@@ -171,7 +170,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         } else {
           dropitem.current.style.color = dropItemStyle.default
           dropitem.current.style.fontWeight = 'lighter'
-          dropitem.current.style.boxShadow = '0px 0px 9px white'
         }
       }
     })
@@ -185,7 +183,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         } else {
           dropitem.current.style.color = dropItemStyle.default
           dropitem.current.style.fontWeight = 'lighter'
-          dropitem.current.style.boxShadow = '0px 0px 9px white'
         }
       }
     })
@@ -588,7 +585,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           } else {
             dropitem.current.style.color = dropItemStyle.default
             dropitem.current.style.fontWeight = 'lighter'
-            dropitem.current.style.boxShadow = '0px 0px 9px white'
           }
         }
       })
@@ -606,7 +602,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           } else {
             dropitem.current.style.color = dropItemStyle.default
             dropitem.current.style.fontWeight = 'lighter'
-            dropitem.current.style.boxShadow = '0px 0px 9px white'
           }
         }
       })
@@ -624,7 +619,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           } else {
             dropitem.current.style.color = dropItemStyle.default
             dropitem.current.style.fontWeight = 'lighter'
-            dropitem.current.style.boxShadow = '0px 0px 9px white'
           }
         }
       })
