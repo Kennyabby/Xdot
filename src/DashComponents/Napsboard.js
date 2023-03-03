@@ -84,11 +84,12 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
   }
   useEffect(() => {
     if (user.firstName !== null && user.firstName !== undefined) {
-      if (
-        user.interestCategories == null ||
-        user.interestCategories == undefined
-      ) {
+      if (user.skippedInterest === undefined) {
         history.push('/dashboard/interests')
+      } else {
+        if (user.skippedProfileUpload === undefined) {
+          history.push('/dashboard/interests')
+        }
       }
     }
   }, [user])

@@ -53,42 +53,44 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
               challenges finishing up if you do not.
             </li>
           </div>
-          <div
-            style={{
-              margin: '10px',
-              fontSize: '1.1rem',
-              display: 'flex',
-            }}
-          >
+          {false && (
             <div
-              style={{ width: 'fit-content', marginRight: '20px' }}
-              onClick={() => {
-                setFillAllFields(!fillAllFields)
+              style={{
+                margin: '10px',
+                fontSize: '1.1rem',
+                display: 'flex',
               }}
             >
-              {fillAllFields ? (
-                <FaCheckSquare
-                  style={{
-                    cursor: 'pointer',
-                    color: 'green',
-                  }}
-                />
-              ) : (
-                <input
-                  type='checkbox'
-                  checked={false}
-                  style={{
-                    cursor: 'pointer',
-                    fontSize: '1.2rem',
-                  }}
-                />
-              )}
-            </div>
+              <div
+                style={{ width: 'fit-content', marginRight: '20px' }}
+                onClick={() => {
+                  setFillAllFields(!fillAllFields)
+                }}
+              >
+                {fillAllFields ? (
+                  <FaCheckSquare
+                    style={{
+                      cursor: 'pointer',
+                      color: 'green',
+                    }}
+                  />
+                ) : (
+                  <input
+                    type='checkbox'
+                    checked={false}
+                    style={{
+                      cursor: 'pointer',
+                      fontSize: '1.2rem',
+                    }}
+                  />
+                )}
+              </div>
 
-            <label style={{ fontFamily: 'SourceCodeProRegular' }}>
-              Fill in all required fields
-            </label>
-          </div>
+              <label style={{ fontFamily: 'SourceCodeProRegular' }}>
+                Fill in all required fields
+              </label>
+            </div>
+          )}
         </div>
         <Link to='/signup/basicInfo'>
           <motion.button

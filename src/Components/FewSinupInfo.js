@@ -125,6 +125,24 @@ const FewSignupInfo = ({
             infoRef.current.style.border = 'solid black 1px'
             infoRef.current.parentElement.childNodes[1].style.display = 'none'
             infoRef.current.parentElement.childNodes[1].style.color = 'blue'
+            if (infoRef.current.getAttribute('name') === 'confirmPassword') {
+              if (
+                passwordRef.current.childNodes[1].value ===
+                confirmPasswordRef.current.childNodes[1].value
+              ) {
+                confirmPasswordRef.current.parentElement.childNodes[1].style.color =
+                  'green'
+                confirmPasswordRef.current.parentElement.childNodes[1].innerHTML =
+                  'Password Confirmed!'
+              } else {
+                confirmPasswordRef.current.parentElement.childNodes[1].style.color =
+                  'red'
+                confirmPasswordRef.current.style.border = 'solid red 2px'
+                infoRef.current.parentElement.childNodes[1].innerHTML =
+                  'Passwords Do Not Match!'
+                count--
+              }
+            }
             if (infoRef.current.getAttribute('name') === 'userName') {
               const isValid = validateUserName(
                 infoRef.current.childNodes[1].value
@@ -171,7 +189,7 @@ const FewSignupInfo = ({
     setSignupConfirmed(false)
     return false
   }
-  const validateInput = async () => {
+  const validateInput = async (name) => {
     var count = 0
     var infos = infoRefList.filter((infoRef) => {
       if (infoRef.current != null) {
@@ -183,7 +201,10 @@ const FewSignupInfo = ({
         if (infoRef.current.childNodes[1].required) {
           infoRef.current.parentElement.childNodes[1].innerHTML = `* ${infoRef.current.childNodes[1].title}`
           if (infoRef.current.childNodes[1].value === '') {
-            if (infoRef.current.getAttribute('name') === 'userName') {
+            if (
+              infoRef.current.getAttribute('name') === 'userName' &&
+              infoRef.current.getAttribute('name') === name
+            ) {
               infoRef.current.style.border = 'solid red 2px'
               infoRef.current.parentElement.childNodes[1].style.display =
                 'block'
@@ -192,7 +213,11 @@ const FewSignupInfo = ({
             }
             count--
           } else {
-            if (infoRef.current.getAttribute('name') === 'confirmPassword') {
+            console.log(name)
+            if (
+              infoRef.current.getAttribute('name') === 'confirmPassword' &&
+              infoRef.current.getAttribute('name') === name
+            ) {
               if (
                 passwordRef.current.childNodes[1].value ===
                 confirmPasswordRef.current.childNodes[1].value
@@ -209,7 +234,10 @@ const FewSignupInfo = ({
                   'Passwords Do Not Match!'
               }
             }
-            if (infoRef.current.getAttribute('name') === 'userName') {
+            if (
+              infoRef.current.getAttribute('name') === 'userName' &&
+              infoRef.current.getAttribute('name') === name
+            ) {
               const isValid = validateUserName(
                 infoRef.current.childNodes[1].value
               )
@@ -398,7 +426,7 @@ const FewSignupInfo = ({
         }
       }
     })
-    validateInput()
+    validateInput(name)
   }
   const prevNext = (
     <div className='np' onClick={getButtonEvent}>

@@ -373,7 +373,7 @@ const Profile = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
+        body: JSON.stringify({ imgUrl: user.img, userName: user.userName }),
       }
       const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
@@ -387,7 +387,7 @@ const Profile = ({
           },
           body: JSON.stringify({
             imgUrl: user.imgcover,
-            matricNo: user.matricNo,
+            userName: user.userName,
           }),
         }
         const resp2 = await fetch(server + '/getImgUrl', opts2)
@@ -473,6 +473,8 @@ const Profile = ({
         ? user.imgcover === undefined
           ? user.userName + '_cover-' + user.matricNo
           : user.imgcover
+        : user.img === undefined || user.img === ''
+        ? user.userName + '_img'
         : user.img
     const imageInfo = {
       image: convertedFile,
@@ -496,7 +498,7 @@ const Profile = ({
         },
         body: JSON.stringify({
           prop: [
-            { matricNo: user.matricNo },
+            { userName: user.userName },
             { [studentInfo.tag]: studentInfo.img },
           ],
           ...studentBody,
@@ -2106,28 +2108,30 @@ const Profile = ({
               }}
             >
               Contacts{' '}
-              {!isSearched && user.isEditable === 'true' && !editContactInfo && (
-                <div
-                  style={{
-                    width: 'fit-content',
-                    marginLeft: 'auto',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => {
-                    setEditContactInfo(!editContactInfo)
-                  }}
-                >
-                  <img
-                    src={edit}
+              {!isSearched &&
+                user.isEditable === 'true' &&
+                !editContactInfo && (
+                  <div
                     style={{
-                      color: 'red',
-                      fontSize: '1rem',
+                      width: 'fit-content',
+                      marginLeft: 'auto',
                       cursor: 'pointer',
                     }}
-                    height='15px'
-                  />
-                </div>
-              )}
+                    onClick={() => {
+                      setEditContactInfo(!editContactInfo)
+                    }}
+                  >
+                    <img
+                      src={edit}
+                      style={{
+                        color: 'red',
+                        fontSize: '1rem',
+                        cursor: 'pointer',
+                      }}
+                      height='15px'
+                    />
+                  </div>
+                )}
             </label>
             <div className='profiledetails'>
               <div
