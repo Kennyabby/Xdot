@@ -216,7 +216,7 @@ const Finish = ({ server, confidentials }) => {
   // }, [file])
   const notifyUserMail = async (mailList) => {
     const message =
-      "<h2>Napsite Account Created Successfully</h2><p style='font-family:monospace; font-size: 1rem;'>Hi, <b>" +
+      "<h2>Account Created Successfully</h2><p style='font-family:monospace; font-size: 1rem;'>Hi, <b>" +
       studentInfo.firstName +
       "</b>.</p><p style='font-family:monospace; font-size: 1rem;'>You are getting this email to confirm that you have just created an account with <b>Encart Oo</b>" +
       ".</p> <h2>What Do I Need To Do?</h2><p style='font-family:Calibri; font-size: 1rem;'>If this is you, you don't need to do anything. If this was not you, kindly <a href='https://xdot.vercel.app/help'>click here</a>. </p><p style='margin-top: 50px; font-family:Calibri;'>Regards. <b>The XDot Team</b> in partnership with <b>Zerox</b>.</p><p style='margin-top: 150px; font-family:Calibri'>If you do no want to get future notifications through this email, kindly <a href='https://xdot.vercel.app/help'>stop it here</a>.</p>"
