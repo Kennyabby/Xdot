@@ -81,14 +81,14 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
     }
   }, [winSize])
   useEffect(async () => {
-    if (user.matricNo !== undefined) {
+    if (user.userName !== undefined) {
       try {
         const opts1 = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
+          body: JSON.stringify({ imgUrl: user.img, userName: user.userName }),
         }
         const resp1 = await fetch(server + '/getImgUrl', opts1)
         const response1 = await resp1.json()

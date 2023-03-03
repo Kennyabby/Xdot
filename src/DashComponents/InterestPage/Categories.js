@@ -29,7 +29,8 @@ const Categories = ({ user, setShowHomeToggle, viewProfileUpload }) => {
   useEffect(() => {
     if (
       user.interestCategories !== null &&
-      user.interestCategories !== undefined
+      user.interestCategories !== undefined &&
+      user.skippedProfileUpload !== undefined
     ) {
       setShowHomeToggle(true)
       setIsEditting(true)

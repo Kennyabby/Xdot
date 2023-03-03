@@ -185,7 +185,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
           setUserImgUrl(convertedFile)
           setShowCoverUpload(true)
         } else {
-          user.img = user.userName + '_cover'
+          user.imgcover = user.userName + '_cover'
           setUserImgCoverUrl(convertedFile)
         }
       } else {
@@ -290,7 +290,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
                 borderRadius: '50%',
                 backgroundImage: userImgUrl.length > 0 && `url(${userImgUrl})`,
                 backgroundSize: 'cover',
-                background: 'grey',
+                backgroundColor: 'grey',
                 width: '150px',
                 height: '150px',
                 lineHeight: '150px',
