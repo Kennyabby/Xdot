@@ -213,7 +213,6 @@ const FewSignupInfo = ({
             }
             count--
           } else {
-            console.log(name)
             if (
               infoRef.current.getAttribute('name') === 'confirmPassword' &&
               infoRef.current.getAttribute('name') === name
