@@ -68,32 +68,27 @@ const Profile = ({
     firstName: user.firstName,
     middleName: user.middleName,
     lastName: user.lastName,
-    level: user.level,
+    level: user.student.level,
     hallOfResidence: user.hallOfResidence,
     access: user.access,
   })
   const [viewMainSave, setViewMainSave] = useState(false)
   const [mainUpdateStatus, setMainUpdateStatus] = useState('Save')
   const [otherField, setOtherField] = useState({
-    matricNo: user.matricNo,
+    matricNo: user.student.matricNo,
     gender: user.gender,
     dateOfBirth: user.dateOfBirth,
-    modeOfEntry: user.modeOfEntry,
-    yearOfAdmission: user.yearOfAdmission,
-    guardianName: user.guardianName,
+    nationality: user.nationality,
+    educationQualification: user.educationQualification,
+    instituteCountryName: user.student.instituteCountryName,
   })
   const [editOtherInfo, setEditOtherInfo] = useState(false)
   const [otherProfileUpdateStatus, setOtherProfileUpdateStatus] =
     useState('Save')
   const [contactField, setContactField] = useState({
-    schoolEmail: user.schoolEmail,
+    schoolEmail: user.student.schoolEmail,
     otherEmail: user.otherEmail,
     contactNo: user.contactNo,
-    otherContactNo: user.otherContactNo,
-    guardianContactNo: user.guardianContactNo,
-    otherGuardianContactNo: user.otherGuardianContactNo,
-    currentAddress: user.currentAddress,
-    guardianCurrentAddress: user.guardianCurrentAddress,
   })
   const [editContactInfo, setEditContactInfo] = useState(false)
   const [contactProfileUpdateStatus, setContactProfileUpdateStatus] =
@@ -325,30 +320,19 @@ const Profile = ({
     'Matric No',
     'Gender',
     'Date Of Birth',
-    'Mode Of Entry',
-    'Year Of Admission',
-    'Guardian Name',
+    'Nationality',
+    'Institute Origin',
+    'Education Qualification',
   ]
   const allUserDetailValue = [
     'matricNo',
     'gender',
     'dateOfBirth',
-    'modeOfEntry',
-    'yearOfAdmission',
-    'guardianName',
+    'nationality',
+    'instituteCountryName',
+    'educationQualification',
   ]
-  const fewUserDetailName = [
-    'Matric No',
-    'Gender',
-    'Year Of Admission',
-    'Mode Of Entry',
-  ]
-  const fewUserDetailValue = [
-    'matricNo',
-    'gender',
-    'yearOfAdmission',
-    'modeOfEntry',
-  ]
+
   useEffect(async () => {
     if (user !== null) {
       const opts1 = {
@@ -647,9 +631,21 @@ const Profile = ({
   }
   const updateContactProfile = async () => {
     setContactProfileUpdateStatus('Saving...')
+    console.log(!['', null, 'null', undefined].includes(mainField.level))
+    const body = {
+      student: {
+        ...user.student,
+        check: !['', null, 'null', undefined].includes(mainField.level)
+          ? true
+          : false,
+        schoolEmail: contactField.schoolEmail,
+      },
+      otherEmail: contactField.otherEmail,
+      contactNo: contactField.contactNo,
+    }
     const updated = await updateOneUser({
       findBy: { userName: user.userName },
-      update: contactField,
+      update: body,
     })
     if (updated) {
       setContactProfileUpdateStatus('Saved')
@@ -671,9 +667,23 @@ const Profile = ({
   }
   const updateOtherProfile = async () => {
     setOtherProfileUpdateStatus('Saving...')
+    const body = {
+      student: {
+        ...user.student,
+        check: !['', null, 'null', undefined].includes(mainField.level)
+          ? true
+          : false,
+        matricNo: otherField.matricNo,
+        instituteCountryName: otherField.instituteCountryName,
+      },
+      gender: otherField.gender,
+      dateOfBirth: otherField.dateOfBirth,
+      nationality: otherField.nationality,
+      educationQualification: otherField.educationQualification,
+    }
     const updated = await updateOneUser({
       findBy: { userName: user.userName },
-      update: otherField,
+      update: body,
     })
     if (updated) {
       setOtherProfileUpdateStatus('Saved')
@@ -1704,7 +1714,7 @@ const Profile = ({
                             >
                               <label>{detail}</label>
                             </div>
-                            {!['Matric No'].includes(detail) && (
+                            {!['Matric No'].includes(detail) ? (
                               <input
                                 type={detail === 'Date Of Birth' ? 'Date' : ''}
                                 style={{
@@ -1716,8 +1726,17 @@ const Profile = ({
                                 name={allUserDetailValue[i]}
                                 value={otherField[allUserDetailValue[i]]}
                               />
+                            ) : (
+                              <div style={{ fontFamily: 'MonteserratRegular' }}>
+                                <label>
+                                  {[undefined, 'null', null, ''].includes(
+                                    user[allUserDetailValue[i]]
+                                  )
+                                    ? user['student'][allUserDetailValue[i]]
+                                    : user[allUserDetailValue[i]]}
+                                </label>
+                              </div>
                             )}
-                            <label>{user[allUserDetailValue[i]]}</label>
                           </div>
                         )
                       })}
