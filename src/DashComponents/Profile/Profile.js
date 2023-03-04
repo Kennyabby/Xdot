@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { PaystackButton } from 'react-paystack'
+import { BsCameraFill } from 'react-icons/bs'
 
 import ContextProvider from '../../ContextProvider'
 
@@ -815,6 +816,7 @@ const Profile = ({
           flexWrap: 'wrap',
           height: isSearched ? '70vh' : 'auto',
           paddingBottom: '70px',
+          fontFamily: 'MonteserratRegular',
         }}
       >
         {showProfMenuDrop && (
@@ -1010,21 +1012,22 @@ const Profile = ({
                   setEditMain(false)
                 }}
               />
-              <div onChange={handleMainFieldUpdate}>
+              <div
+                onChange={handleMainFieldUpdate}
+                style={{ fontFamily: 'MonteserratRegular' }}
+              >
                 <div
                   style={{
                     margin: '15px auto',
                     marginBottom: '25px',
-                    fontFamily: 'Courier New',
+                    fontFamily: 'MonteserratBold',
                     fontWeight: 'bold',
                   }}
                 >
                   Edit Profile
                 </div>
                 <div style={mainLabelStyle}>
-                  <div style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
-                    First Name
-                  </div>
+                  <div style={{ fontWeight: 'bold' }}>First Name</div>
                   <input
                     name='firstName'
                     style={mainFieldStyle}
@@ -1033,9 +1036,7 @@ const Profile = ({
                   />
                 </div>
                 <div style={mainLabelStyle}>
-                  <div style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
-                    Middle Name
-                  </div>
+                  <div style={{ fontWeight: 'bold' }}>Middle Name</div>
                   <input
                     name='middleName'
                     style={mainFieldStyle}
@@ -1044,9 +1045,7 @@ const Profile = ({
                   />
                 </div>
                 <div style={mainLabelStyle}>
-                  <div style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
-                    Last Name
-                  </div>
+                  <div style={{ fontWeight: 'bold' }}>Last Name</div>
                   <input
                     name='lastName'
                     style={mainFieldStyle}
@@ -1055,9 +1054,7 @@ const Profile = ({
                   />
                 </div>
                 <div style={mainLabelStyle}>
-                  <div style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
-                    Level
-                  </div>
+                  <div style={{ fontWeight: 'bold' }}>Level</div>
                   <select
                     name='level'
                     style={mainFieldStyle}
@@ -1072,9 +1069,7 @@ const Profile = ({
                   </select>
                 </div>
                 <div style={mainLabelStyle}>
-                  <div style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
-                    Hall Of Residence
-                  </div>
+                  <div style={{ fontWeight: 'bold' }}>Hall Of Residence</div>
                   <select
                     name='hallOfResidence'
                     style={mainFieldStyle}
@@ -1106,7 +1101,7 @@ const Profile = ({
                         borderRadius: '25px',
                         fontWeight: 'bold',
                         fontSize: '1.1rem',
-                        fontFamily: 'monospace',
+                        fontFamily: 'SourceCodeProRegular',
                         background: 'blue',
                         color: 'white',
                         border: 'solid blue 2px',
@@ -1197,6 +1192,7 @@ const Profile = ({
                     width: 'fit-content',
                     marginLeft: 'auto',
                     cursor: 'pointer',
+                    fontFamily: 'MonteserratRegular',
                   }}
                 >
                   <img
@@ -1232,7 +1228,13 @@ const Profile = ({
                 />
               </div>
             )}
-            <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
+            <div
+              style={{
+                fontSize: '1.1rem',
+                fontWeight: 'bold',
+                fontFamily: 'MonteserratBold',
+              }}
+            >
               <label>
                 {(
                   user.lastName +
@@ -1246,9 +1248,8 @@ const Profile = ({
             <div style={{ display: 'flex', margin: '5px auto' }}>
               <label
                 style={{
-                  fontStyle: 'italic',
+                  fontFamily: 'MonteserratRegular',
                   fontSize: '1rem',
-                  fontFamily: 'monospace',
                 }}
               >
                 {user.userName}
@@ -1288,32 +1289,27 @@ const Profile = ({
                 fontSize: '.8rem',
                 border: 'solid rgba(210,210,210,1) 2px',
                 width: 'fit-content',
-                fontFamily: 'monospace',
+                fontFamily: 'MonteserratRegular',
                 margin: '10px 0px',
                 marginRight: '15px',
                 borderRadius: '10px',
               }}
             >
-              <div
-                style={{
-                  fontFamily: 'monospace',
-                  fontSize: '1rem',
-                  fontStyle: 'italic',
-                  margin: '10px auto',
-                }}
-              >
-                <label
-                  style={{
-                    fontWeight: 'bold',
-                    fontFamily: 'monospace',
-                    fontSize: '.9rem',
-                  }}
-                >
-                  {user.hallOfResidence + ' Hall'}
-                </label>
-              </div>
-              {user.level +
-                ' level student of the department of Physics, University of Ibadan.'}
+              {user.student
+                ? user.student.level +
+                  ' level student of the ' +
+                  (user.student.department
+                    .toLowerCase()
+                    .split(' ')
+                    .includes('department')
+                    ? user.student.department
+                    : 'Department of ' + user.student.department) +
+                  ', ' +
+                  user.student.instituteName +
+                  '.'
+                : user.educationQualification !== 'null'
+                ? user.educationQualification
+                : ''}
             </div>
           </div>
         </div>
@@ -1387,9 +1383,8 @@ const Profile = ({
                 style={{
                   fontWeight: 'bold',
                   fontSize: '1.1rem',
-                  fontFamily: 'Courier New',
+                  fontFamily: 'MonteserratRegular',
                   display: 'flex',
-                  borderBottom: 'solid rgba(210, 210, 210, 1) 2px',
                 }}
               >
                 <label>About </label>
@@ -1430,7 +1425,7 @@ const Profile = ({
                 style={{
                   margin: '15px auto',
                   padding: '10px',
-                  fontFamily: 'monospace',
+                  fontFamily: 'MonteserratRegular',
                   fontSize: '.8rem',
                   border: 'solid rgba(210, 210, 210, 1) 2px',
                   borderRadius: '10px',
@@ -1482,7 +1477,7 @@ const Profile = ({
                   ) : (
                     <label
                       style={{
-                        color: 'blue',
+                        color: 'rgba(10, 105, 214)',
                         cursor: 'pointer',
                         fontWeight: 'bold',
                       }}
@@ -1595,12 +1590,11 @@ const Profile = ({
               style={{
                 fontWeight: 'bold',
                 fontSize: '1.1rem',
-                fontFamily: 'Courier New',
+                fontFamily: 'MonteserratRegular',
                 display: 'flex',
-                borderBottom: 'solid rgba(210, 210, 210, 1) 2px',
               }}
             >
-              Other Info{' '}
+              Others
               {!isSearched && user.isEditable === 'true' && !editOtherInfo && (
                 <div
                   style={{
@@ -1639,8 +1633,15 @@ const Profile = ({
                   <div onChange={handleOtherFieldUpdate}>
                     {allUserDetailName.map((detail, i) => {
                       return (
-                        <div className='profiledetailsitem' key={i}>
-                          <div className='profiledetailsitemtitle'>
+                        <div
+                          className='profiledetailsitem'
+                          style={{ fontFamily: 'MonteserratRegular' }}
+                          key={i}
+                        >
+                          <div
+                            className='profiledetailsitemtitle'
+                            style={{ fontFamily: 'MonteserratRegular' }}
+                          >
                             <label>{detail}</label>
                           </div>
                           {!editOtherInfo ? (
@@ -1672,8 +1673,15 @@ const Profile = ({
                   <div>
                     {fewUserDetailName.map((detail, i) => {
                       return (
-                        <div className='profiledetailsitem' key={i}>
-                          <div className='profiledetailsitemtitle'>
+                        <div
+                          className='profiledetailsitem'
+                          key={i}
+                          style={{ fontFamily: 'MonteserratRegular' }}
+                        >
+                          <div
+                            className='profiledetailsitemtitle'
+                            style={{ fontFamily: 'MonteserratRegular' }}
+                          >
                             <label>{detail}</label>
                           </div>
                           <label>{user[fewUserDetailValue[i]]}</label>
@@ -1689,7 +1697,7 @@ const Profile = ({
                       width: 'fit-content',
                       margin: 'auto',
                       marginTop: '10px',
-                      fontFamily: 'monospace',
+                      fontFamily: 'MonteserratRegular',
                       fontWeight: 'bold',
                       fontSize: '.8rem',
                       color: darkMode ? 'lightgreen' : 'green',
@@ -1717,6 +1725,7 @@ const Profile = ({
                     </label>
                     <label
                       style={{
+                        fontFamily: 'MonteserratRegular',
                         color: darkMode ? 'lightgreen' : 'green',
                         cursor: 'pointer',
                       }}
@@ -2102,7 +2111,7 @@ const Profile = ({
               style={{
                 fontWeight: 'bold',
                 fontSize: '1.1rem',
-                fontFamily: 'Courier New',
+                fontFamily: 'MonteserratRagular',
                 display: 'flex',
                 borderBottom: 'solid rgba(210, 210, 210, 1) 2px',
               }}
@@ -2146,8 +2155,15 @@ const Profile = ({
                 <div onChange={handleContactFieldUpdate}>
                   {contactDetailsName.map((detail, i) => {
                     return (
-                      <div className='profiledetailsitem' key={i}>
-                        <div className='profiledetailsitemtitle'>
+                      <div
+                        className='profiledetailsitem'
+                        key={i}
+                        style={{ fontFamily: 'MonteserratRegular' }}
+                      >
+                        <div
+                          className='profiledetailsitemtitle'
+                          style={{ fontFamily: 'MonteserratRegular' }}
+                        >
                           <label>{detail}</label>
                         </div>
                         {!editContactInfo ? (
