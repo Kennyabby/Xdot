@@ -319,26 +319,8 @@ const Profile = ({
     onClose: handlePaymentClosed,
   }
 
-  const contactDetailsName = [
-    'School Email',
-    'Other Email',
-    'Contact No',
-    'Other Contact No',
-    'Guardian Contact No',
-    'Other Guardian Contact No',
-    'Current Address',
-    'Guardian Current Address',
-  ]
-  const contactDetailsValue = [
-    'schoolEmail',
-    'otherEmail',
-    'contactNo',
-    'otherContactNo',
-    'guardianContactNo',
-    'otherGuardianContactNo',
-    'currentAddress',
-    'guardianCurrentAddress',
-  ]
+  const contactDetailsName = ['School Email', 'Other Email', 'Contact No']
+  const contactDetailsValue = ['schoolEmail', 'otherEmail', 'contactNo']
   const allUserDetailName = [
     'Matric No',
     'Gender',
@@ -666,7 +648,7 @@ const Profile = ({
   const updateContactProfile = async () => {
     setContactProfileUpdateStatus('Saving...')
     const updated = await updateOneUser({
-      findBy: { matricNo: user.matricNo },
+      findBy: { userName: user.userName },
       update: contactField,
     })
     if (updated) {
@@ -690,7 +672,7 @@ const Profile = ({
   const updateOtherProfile = async () => {
     setOtherProfileUpdateStatus('Saving...')
     const updated = await updateOneUser({
-      findBy: { matricNo: user.matricNo },
+      findBy: { userName: user.userName },
       update: otherField,
     })
     if (updated) {
@@ -717,7 +699,7 @@ const Profile = ({
   const updateMainProfile = async () => {
     setMainUpdateStatus('Saving...')
     const updated = await updateOneUser({
-      findBy: { matricNo: user.matricNo },
+      findBy: { userName: user.userName },
       update: mainField,
     })
     if (updated) {
@@ -1295,7 +1277,7 @@ const Profile = ({
                 borderRadius: '10px',
               }}
             >
-              {user.student
+              {user.student.check
                 ? user.student.level +
                   ' level student of the ' +
                   (user.student.department
@@ -1560,7 +1542,7 @@ const Profile = ({
                           try {
                             setAboutSaveStatus('Saving...')
                             const updated = await updateOneUser({
-                              findBy: { matricNo: user.matricNo },
+                              findBy: { userName: user.userName },
                               update: { about: aboutField.trim() },
                             })
                             if (updated) {
@@ -1630,64 +1612,169 @@ const Profile = ({
                 }}
               >
                 {showAllDetails ? (
-                  <div onChange={handleOtherFieldUpdate}>
-                    {allUserDetailName.map((detail, i) => {
-                      return (
+                  !editOtherInfo ? (
+                    <div>
+                      <div
+                        className='profiledetailsitem'
+                        style={{ fontFamily: 'MonteserratRegular' }}
+                      >
+                        <div
+                          className='profiledetailsitemtitle'
+                          style={{ fontFamily: 'MonteserratRegular' }}
+                        >
+                          <label>{'Gender'}</label>
+                        </div>
+                        <label>{user.gender}</label>
+                      </div>
+                      {!['', 'null', null, undefined].includes(
+                        user.nationality
+                      ) && (
                         <div
                           className='profiledetailsitem'
                           style={{ fontFamily: 'MonteserratRegular' }}
-                          key={i}
                         >
-                          <div
-                            className='profiledetailsitemtitle'
-                            style={{ fontFamily: 'MonteserratRegular' }}
-                          >
-                            <label>{detail}</label>
-                          </div>
-                          {!editOtherInfo ? (
-                            <label>{user[allUserDetailValue[i]]}</label>
-                          ) : ![
-                              'Gender',
-                              'Matric No',
-                              'Mode Of Entry',
-                            ].includes(detail) ? (
-                            <input
-                              type={detail === 'Date Of Birth' ? 'Date' : ''}
-                              style={{
-                                padding: '10px',
-                                borderRadius: '10px',
-                                color: darkMode ? 'white' : 'black',
-                                backgroundColor: darkMode ? 'black' : 'white',
-                              }}
-                              name={allUserDetailValue[i]}
-                              value={otherField[allUserDetailValue[i]]}
-                            />
-                          ) : (
-                            <label>{user[allUserDetailValue[i]]}</label>
-                          )}
+                          <label>
+                            <b>{user.nationality}</b>
+                          </label>
                         </div>
-                      )
-                    })}
-                  </div>
+                      )}
+                      {!['', 'null', null, undefined].includes(
+                        user.educationQualification
+                      ) && (
+                        <div
+                          className='profiledetailsitem'
+                          style={{ fontFamily: 'MonteserratRegular' }}
+                        >
+                          <label>
+                            {'Current Education Qualification '}
+                            <b>{user.educationQualification}</b>
+                          </label>
+                        </div>
+                      )}
+                      {user.student.check && (
+                        <div
+                          className='profiledetailsitem'
+                          style={{ fontFamily: 'MonteserratRegular' }}
+                        >
+                          <label>
+                            {'Student of '}
+                            <b>{user.student.instituteName}</b>
+                            {' in '}
+                            <b>{user.student.instituteCountryName}</b>
+                          </label>
+                        </div>
+                      )}
+                      {user.student.check && (
+                        <div
+                          className='profiledetailsitem'
+                          style={{ fontFamily: 'MonteserratRegular' }}
+                        >
+                          <label>
+                            {'Matric No / Student ID '}
+                            <b>{user.student.matricNo}</b>
+                          </label>
+                        </div>
+                      )}
+                      {!['', 'null', null, undefined].includes(
+                        user.dateOfBirth
+                      ) && (
+                        <div
+                          className='profiledetailsitem'
+                          style={{ fontFamily: 'MonteserratRegular' }}
+                        >
+                          <label>
+                            {'Born on '}
+                            <b>{user.dateOfBirth}</b>
+                          </label>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div onChange={handleOtherFieldUpdate}>
+                      {allUserDetailName.map((detail, i) => {
+                        return (
+                          <div
+                            className='profiledetailsitem'
+                            style={{ fontFamily: 'MonteserratRegular' }}
+                            key={i}
+                          >
+                            <div
+                              className='profiledetailsitemtitle'
+                              style={{ fontFamily: 'MonteserratRegular' }}
+                            >
+                              <label>{detail}</label>
+                            </div>
+                            {!['Matric No'].includes(detail) && (
+                              <input
+                                type={detail === 'Date Of Birth' ? 'Date' : ''}
+                                style={{
+                                  padding: '10px',
+                                  borderRadius: '10px',
+                                  color: darkMode ? 'white' : 'black',
+                                  backgroundColor: darkMode ? 'black' : 'white',
+                                }}
+                                name={allUserDetailValue[i]}
+                                value={otherField[allUserDetailValue[i]]}
+                              />
+                            )}
+                            <label>{user[allUserDetailValue[i]]}</label>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )
                 ) : (
                   <div>
-                    {fewUserDetailName.map((detail, i) => {
-                      return (
-                        <div
-                          className='profiledetailsitem'
-                          key={i}
-                          style={{ fontFamily: 'MonteserratRegular' }}
-                        >
-                          <div
-                            className='profiledetailsitemtitle'
-                            style={{ fontFamily: 'MonteserratRegular' }}
-                          >
-                            <label>{detail}</label>
-                          </div>
-                          <label>{user[fewUserDetailValue[i]]}</label>
-                        </div>
-                      )
-                    })}
+                    <div
+                      className='profiledetailsitem'
+                      style={{ fontFamily: 'MonteserratRegular' }}
+                    >
+                      <div
+                        className='profiledetailsitemtitle'
+                        style={{ fontFamily: 'MonteserratRegular' }}
+                      >
+                        <label>{'Gender'}</label>
+                      </div>
+                      <label>{user.gender}</label>
+                    </div>
+                    {!['', 'null', null, undefined].includes(
+                      user.nationality
+                    ) && (
+                      <div
+                        className='profiledetailsitem'
+                        style={{ fontFamily: 'MonteserratRegular' }}
+                      >
+                        <label>
+                          <b>{user.nationality}</b>
+                        </label>
+                      </div>
+                    )}
+                    {!['', 'null', null, undefined].includes(
+                      user.educationQualification
+                    ) && (
+                      <div
+                        className='profiledetailsitem'
+                        style={{ fontFamily: 'MonteserratRegular' }}
+                      >
+                        <label>
+                          {'Current Education Qualification '}
+                          <b>{user.educationQualification}</b>
+                        </label>
+                      </div>
+                    )}
+                    {user.student.check && (
+                      <div
+                        className='profiledetailsitem'
+                        style={{ fontFamily: 'MonteserratRegular' }}
+                      >
+                        <label>
+                          {'Student of '}
+                          <b>{user.student.instituteName}</b>
+                          {' in '}
+                          <b>{user.student.instituteCountryName}</b>
+                        </label>
+                      </div>
+                    )}
                   </div>
                 )}
                 {!editOtherInfo ? (
@@ -2111,9 +2198,8 @@ const Profile = ({
               style={{
                 fontWeight: 'bold',
                 fontSize: '1.1rem',
-                fontFamily: 'MonteserratRagular',
+                fontFamily: 'MonteserratRegular',
                 display: 'flex',
-                borderBottom: 'solid rgba(210, 210, 210, 1) 2px',
               }}
             >
               Contacts{' '}
@@ -2155,34 +2241,47 @@ const Profile = ({
                 <div onChange={handleContactFieldUpdate}>
                   {contactDetailsName.map((detail, i) => {
                     return (
-                      <div
-                        className='profiledetailsitem'
-                        key={i}
-                        style={{ fontFamily: 'MonteserratRegular' }}
-                      >
+                      (![undefined, 'null', null, ''].includes(
+                        user[contactDetailsValue[i]]
+                      ) ||
+                        ![undefined, 'null', null, ''].includes(
+                          user['student'][contactDetailsValue[i]]
+                        )) && (
                         <div
-                          className='profiledetailsitemtitle'
+                          className='profiledetailsitem'
+                          key={i}
                           style={{ fontFamily: 'MonteserratRegular' }}
                         >
-                          <label>{detail}</label>
+                          <div
+                            className='profiledetailsitemtitle'
+                            style={{ fontFamily: 'MonteserratRegular' }}
+                          >
+                            <label>{detail}</label>
+                          </div>
+                          {!editContactInfo ? (
+                            <label>
+                              {[undefined, 'null', null, ''].includes(
+                                user[contactDetailsValue[i]]
+                              )
+                                ? user['student'][contactDetailsValue[i]]
+                                : user[contactDetailsValue[i]]}
+                            </label>
+                          ) : !['Other Email'].includes(detail) ? (
+                            <input
+                              style={{
+                                padding: '10px',
+                                borderRadius: '10px',
+                                color: darkMode ? 'white' : 'black',
+                                backgroundColor: darkMode ? 'black' : 'white',
+                              }}
+                              name={contactDetailsValue[i]}
+                              value={contactField[contactDetailsValue[i]]}
+                            />
+                          ) : (
+                            <label>{user[contactDetailsValue[i]]}</label>
+                          )}
                         </div>
-                        {!editContactInfo ? (
-                          <label>{user[contactDetailsValue[i]]}</label>
-                        ) : !['Other Email'].includes(detail) ? (
-                          <input
-                            style={{
-                              padding: '10px',
-                              borderRadius: '10px',
-                              color: darkMode ? 'white' : 'black',
-                              backgroundColor: darkMode ? 'black' : 'white',
-                            }}
-                            name={contactDetailsValue[i]}
-                            value={contactField[contactDetailsValue[i]]}
-                          />
-                        ) : (
-                          <label>{user[contactDetailsValue[i]]}</label>
-                        )}
-                      </div>
+                      )
                     )
                   })}
                   {editContactInfo && (
