@@ -3,6 +3,7 @@ import '../Events/Events.css'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import { motion, AnimatePresence, usePresence } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { FaSearch } from 'react-icons/fa'
 
 import profimg from '../Events/assets/profile.png'
 import Post from './Post'
@@ -445,17 +446,17 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                         backgroundColor: darkMode
                           ? 'rgba(255,255,255,0.1)'
                           : 'rgba(255,255,255,1)',
-                        borderRadius: '20px',
+                        borderRadius: '15px',
                         width: '100%',
                         display: 'flex',
                       }}
                     >
-                      <img
-                        src={darkMode ? wsearch : search}
-                        height={darkMode ? '15px' : '20px'}
+                      <FaSearch
                         style={{
-                          marginTop: '15px',
-                          marginLeft: '15px',
+                          color: darkMode ? 'white' : 'black',
+                          fontSize: '1.3rem',
+                          margin: 'auto 13px',
+                          marginTop: '12px',
                           cursor: 'pointer',
                         }}
                         onClick={() => {}}
@@ -464,6 +465,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                         type='search'
                         placeholder='Search Pages, Posts, Clusters...'
                         style={{
+                          fontFamily: 'MonteserratRegular',
                           backgroundColor: darkMode
                             ? 'rgba(255,255,255,0)'
                             : 'white',
@@ -495,11 +497,14 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                 }}
                 className='saysm'
                 style={{
-                  backgroundColor: darkMode ? 'black' : 'white',
+                  backgroundColor: darkMode
+                    ? 'rgba(255,255,255,0.1)'
+                    : 'rgba(255,255,255,1)',
                   boxShadow: darkMode
                     ? '-4px -4px 10px rgba(10,10,18,0.1), 4px 4px 10px rgba(10,10,18,0.1)'
                     : '-4px -4px 10px rgba(240,240,255,0.1), 4px 4px 10px rgba(240,240,255,0.1)',
                   color: darkMode ? 'white' : 'black',
+                  fontFamily: 'MonteserratRegular',
                 }}
               >
                 {'Something on your mind?'}
@@ -547,14 +552,14 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                 style={{
                   padding: '9px 25px',
                   borderRadius: '22px',
-                  backgroundColor: 'blue',
+                  backgroundColor: 'rgba(15,105,213)',
                   color: 'white',
                   boxShadow: darkMode
                     ? '-5px -5px 10px rgba(10,10,18,0.1),5px 5px 10px rgba(10,10,18,0.1)'
                     : '-5px -5px 10px rgba(243,243,255,0.1),5px 5px 10px rgba(243,243,255,0.1)',
-                  fontFamily: 'monospace',
+                  fontFamily: 'SourceCodeProRegular',
                   fontWeight: 'bold',
-                  border: 'solid rgba(0,0,255,1) 2px',
+                  border: 'solid rgba(15,105,213) 2px',
                   cursor: 'pointer',
                 }}
               >
@@ -688,20 +693,36 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.7 }}
                 style={{
-                  fontFamily: 'Courier New',
-                  fontWeight: 'bold',
-                  margin: '40px',
+                  fontFamily: 'MonteserratRegular',
+                  margin: '20px',
                   marginBottom: '60px',
                   borderRadius: '15px',
                   boxShadow: '0px 0px 7px rgba(20,20,20,1)',
                   padding: '20px',
+                  color: darkMode ? 'white' : 'black',
                 }}
               >
-                {gotUpdates
-                  ? 'Hi, ' +
-                    user.firstName +
-                    '. Welcome to XDot Updates.\nMark history in the department by being the first to make a post on this feed.'
-                  : 'Loading...'}
+                {gotUpdates ? (
+                  <div>
+                    {'Hi ' +
+                      user.firstName +
+                      ", Welcome. Only Posts based on Selected Categories, Algorithmic Suggested Categories and Your AI's Suggested Categories will appear in your Private Feed."}
+                    <div
+                      style={{
+                        fontFamily: 'SourceCodeProRegular',
+                        margin: '10px',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        fontSize: '1.1rem',
+                      }}
+                      onClick={() => {}}
+                    >
+                      Fetch Feeds
+                    </div>
+                  </div>
+                ) : (
+                  'Loading...'
+                )}
               </motion.div>
             )}
           </div>
