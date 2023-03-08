@@ -129,13 +129,14 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
     }
   }
   const validateInput = async () => {
+    const userName = fields.userName.trim()
     const opts1 = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        prop: { userName: fields.userName.trim() },
+        prop: { userName: userName },
         pass: fields.password,
       }),
     }
