@@ -136,7 +136,7 @@ const Finish = ({ server, confidentials }) => {
     contactNo: localStorage.getItem('contactNo'),
     identity: localStorage.getItem('identity'),
     nationality: localStorage.getItem('nationality'),
-    userName: localStorage.getItem('userName').toLowerCase(),
+    userName: localStorage.getItem('userName').trim(),
     img: '',
     password: confidentials.password,
     access: 'User',

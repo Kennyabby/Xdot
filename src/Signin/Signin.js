@@ -135,7 +135,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        prop: { userName: fields.userName },
+        prop: { userName: fields.userName.trim() },
         pass: fields.password,
       }),
     }
