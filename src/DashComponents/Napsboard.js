@@ -553,7 +553,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         }
       }
     }
-  }, [id, user])
+  }, [id, user, darkMode])
 
   useEffect(() => {
     labelRefs.map((elem) => {
@@ -576,7 +576,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         }
       }
     })
-  }, [labelRefs])
+  }, [labelRefs, darkMode])
   useEffect(() => {
     if (eventsLabelRefs) {
       eventsLabelRefs.map((dropitem) => {
@@ -593,7 +593,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         }
       })
     }
-  }, [eventsLabelRefs])
+  }, [eventsLabelRefs, darkMode])
   useEffect(() => {
     if (tasksLabelRefs) {
       tasksLabelRefs.map((dropitem) => {
@@ -610,7 +610,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         }
       })
     }
-  }, [tasksLabelRefs])
+  }, [tasksLabelRefs, darkMode])
   useEffect(() => {
     if (eVotingLabelRefs) {
       eVotingLabelRefs.map((dropitem) => {
@@ -627,7 +627,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
         }
       })
     }
-  }, [eVotingLabelRefs])
+  }, [eVotingLabelRefs, darkMode])
 
   useEffect(async () => {
     var uid = window.localStorage.getItem('user-id')
@@ -971,7 +971,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <BiHomeCircle
                               style={{
                                 cursor: 'pointer',
-                                color: darkMode ? 'white' : 'black',
+                                color: darkMode
+                                  ? 'rgba(190,190,230)'
+                                  : 'rgba(16,16,66)',
                                 fontSize: '1.6rem',
                               }}
                               name='home'
@@ -981,7 +983,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <div
                               style={{
                                 fontSize: '.7rem',
-                                color: darkMode ? 'white' : 'black',
+                                color: darkMode
+                                  ? 'rgba(190,190,230)'
+                                  : 'rgba(16,16,66)',
                               }}
                             >
                               <label>Home</label>
@@ -993,7 +997,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           ref={chatsRef}
                           style={{
                             textDecoration: 'none',
-                            color: darkMode ? 'white' : 'black',
+                            color: darkMode
+                              ? 'rgba(190,190,230)'
+                              : 'rgba(16,16,66)',
                             height: 'fit-content',
                           }}
                           to='/dashboard/chats'
@@ -1006,7 +1012,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <RiMessage3Fill
                               style={{
                                 cursor: 'pointer',
-                                color: darkMode ? 'white' : 'black',
+                                color: darkMode
+                                  ? 'rgba(190,190,230)'
+                                  : 'rgba(16,16,66)',
                                 fontSize: '1.5rem',
                               }}
                               name='chats'
@@ -1016,7 +1024,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <div
                               style={{
                                 fontSize: '.7rem',
-                                color: darkMode ? 'white' : 'black',
+                                color: darkMode
+                                  ? 'rgba(190,190,230)'
+                                  : 'rgba(16,16,66)',
                               }}
                             >
                               <label>Chats</label>
@@ -1042,7 +1052,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <MdNotificationsActive
                               style={{
                                 cursor: 'pointer',
-                                color: darkMode ? 'white' : 'black',
+                                color: darkMode
+                                  ? 'rgba(190,190,230)'
+                                  : 'rgba(16,16,66)',
                                 fontSize: '1.5rem',
                               }}
                               name='notifications'
@@ -1051,7 +1063,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <div
                               style={{
                                 fontSize: '.7rem',
-                                color: darkMode ? 'white' : 'black',
+                                color: darkMode
+                                  ? 'rgba(190,190,230)'
+                                  : 'rgba(16,16,66)',
                               }}
                             >
                               <label>Updates</label>

@@ -178,9 +178,8 @@
 .profmenu {
   position: absolute;
   bottom: 3px;
-  left: 155px;
-  width: 30px;
-  height: 30px;
+  left: 160px;
+  font-size: 2.2rem;
   background-size: cover;
   cursor: pointer;
 }

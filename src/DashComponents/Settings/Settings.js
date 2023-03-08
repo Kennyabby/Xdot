@@ -17,16 +17,29 @@ const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
     showHomeToggle(true)
     if (homerf !== undefined && chatrf !== undefined) {
       if (homerf.current !== null && chatrf.current !== null) {
-        homerf.current.childNodes[0].childNodes[0].src = darkMode ? whome : home
+        homerf.current.childNodes[0].childNodes[0].style.color = darkMode
+          ? 'rgba(190,190,230)'
+          : 'rgba(16,16,66)'
         homerf.current.childNodes[0].childNodes[1].style.color =
-          id === 'settings' ? (darkMode ? 'white' : 'black') : 'blue'
+          id === 'settings'
+            ? darkMode
+              ? 'white'
+              : 'black'
+            : darkMode
+            ? 'rgba(190,190,230)'
+            : 'rgba(16,16,66)'
+        homerf.current.childNodes[0].childNodes[1].style.fontWeight = 'bold'
       }
     }
     if (notificationsrf.current !== null) {
-      notificationsrf.current.childNodes[0].childNodes[0].src = notifications
+      notificationsrf.current.childNodes[0].childNodes[0].style.color = darkMode
+        ? 'rgba(190,190,230)'
+        : 'rgba(16,16,66)'
       notificationsrf.current.childNodes[0].childNodes[1].style.color = darkMode
-        ? 'white'
-        : 'black'
+        ? 'rgba(190,190,230)'
+        : 'rgba(16,16,66)'
+      notificationsrf.current.childNodes[0].childNodes[1].style.fontWeight =
+        'lighter'
     }
   }, [homerf, id])
   return (

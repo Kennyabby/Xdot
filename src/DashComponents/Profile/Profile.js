@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { PaystackButton } from 'react-paystack'
 import { BsCameraFill } from 'react-icons/bs'
+import { FiEdit3 } from 'react-icons/fi'
 
 import ContextProvider from '../../ContextProvider'
 
@@ -386,8 +387,13 @@ const Profile = ({
     }
     if (homerf !== undefined && chatrf !== undefined) {
       if (homerf.current !== null && chatrf.current !== null) {
-        homerf.current.childNodes[0].childNodes[0].src = darkMode ? whome : home
-        homerf.current.childNodes[0].childNodes[1].style.color = 'blue'
+        homerf.current.childNodes[0].childNodes[0].style.color = darkMode
+          ? 'rgba(190,190,230)'
+          : 'rgba(16,16,66)'
+        homerf.current.childNodes[0].childNodes[1].style.color = darkMode
+          ? 'white'
+          : 'black'
+        homerf.current.childNodes[0].childNodes[1].style.fontWeight = 'bold'
       }
     }
     if (notificationsrf !== undefined) {
@@ -395,12 +401,15 @@ const Profile = ({
         notificationsrf.current !== null &&
         notificationsrf.current !== undefined
       ) {
-        notificationsrf.current.childNodes[0].childNodes[0].src = notifications
+        notificationsrf.current.childNodes[0].childNodes[0].style.color =
+          darkMode ? 'rgba(190,190,230)' : 'rgba(16,16,66)'
         notificationsrf.current.childNodes[0].childNodes[1].style.color =
-          darkMode ? 'white' : 'black'
+          darkMode ? 'rgba(190,190,230)' : 'rgba(16,16,66)'
+        notificationsrf.current.childNodes[0].childNodes[1].style.fontWeight =
+          'lighter'
       }
     }
-  }, [homerf])
+  }, [homerf, darkMode])
   const handleProfMenuDrop = () => {
     if (showProfMenuDrop) {
       setShowProfMenuDrop(false)
@@ -1136,15 +1145,13 @@ const Profile = ({
                 })
               }}
             ></div>
-            <div
+            <BsCameraFill
               onClick={handleProfMenuDrop}
               className='profmenu'
               style={{
-                backgroundImage: `url(${
-                  darkMode ? userimgwmenu : userimgmenu
-                })`,
+                color: darkMode ? 'white' : 'black',
               }}
-            ></div>
+            />
             {showProfMenuDrop && (
               <ul className='profmenudrop' onClick={handleMenuItem}>
                 <li className='menuitem' name='viewprof'>
@@ -1211,12 +1218,13 @@ const Profile = ({
                   setEditMain(true)
                 }}
               >
-                <img
-                  src={edit}
+                <FiEdit3
                   style={{
                     cursor: 'pointer',
+                    fontWeight: 'lighter',
+                    fontSize: '1rem',
+                    color: darkMode ? 'white' : 'black',
                   }}
-                  height='15px'
                 />
               </div>
             )}
@@ -1403,12 +1411,13 @@ const Profile = ({
                       }
                     }}
                   >
-                    <img
-                      src={edit}
+                    <FiEdit3
                       style={{
                         cursor: 'pointer',
+                        fontWeight: 'lighter',
+                        fontSize: '1rem',
+                        color: darkMode ? 'white' : 'black',
                       }}
-                      height='15px'
                     />
                   </div>
                 )}
@@ -1599,14 +1608,13 @@ const Profile = ({
                     setEditOtherInfo(true)
                   }}
                 >
-                  <img
-                    src={edit}
+                  <FiEdit3
                     style={{
-                      color: 'red',
-                      fontSize: '1rem',
                       cursor: 'pointer',
+                      fontWeight: 'lighter',
+                      fontSize: '1rem',
+                      color: darkMode ? 'white' : 'black',
                     }}
-                    height='15px'
                   />
                 </div>
               )}
@@ -2235,14 +2243,13 @@ const Profile = ({
                       setEditContactInfo(!editContactInfo)
                     }}
                   >
-                    <img
-                      src={edit}
+                    <FiEdit3
                       style={{
-                        color: 'red',
-                        fontSize: '1rem',
                         cursor: 'pointer',
+                        fontWeight: 'lighter',
+                        fontSize: '1rem',
+                        color: darkMode ? 'white' : 'black',
                       }}
-                      height='15px'
                     />
                   </div>
                 )}
