@@ -158,8 +158,9 @@ code {
   border-bottom-right-radius: 30px;
 }
 .bar {
-  font-family: monospace;
-  width: 94%;
+  font-family: 'MonteserratRegular';
+  overflow-y: hidden;
+  width: 98%;
   overflow-x: auto;
   font-size: 1rem;
   gap: 90px;
@@ -175,11 +176,13 @@ code {
   color: rgb(187, 183, 183);
   text-decoration: none;
   cursor: pointer;
+  font-family: 'SourceCodeProRegular';
 }
 .top-left {
   display: flex;
   font-size: 1.3rem;
   width: max-content;
+  font-family: 'SourceCodeProRegular';
   gap: 10px;
   font-weight: bold;
   margin: 5px;
@@ -195,9 +198,8 @@ code {
   height: fit-content;
   margin-left: auto;
   color: white;
+  font-family: 'SourceCodeProRegular';
   text-decoration: none;
-  background-color: rgba(25, 25, 250);
-  border: solid rgba(25, 25, 250) 1px;
   box-shadow: -3px -3px 10px rgba(0, 0, 0, 0.1), 3px 3px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   cursor: pointer;
@@ -660,7 +662,7 @@ code {
   }
   .opt-left {
     display: inline-block;
-    border-bottom: solid rgba(50, 49, 49, 1) 2px;
+    font-family: 'SourceCodeProRegular';
     width: 70%;
     padding: 40px 25px;
     color: rgb(187, 183, 183);

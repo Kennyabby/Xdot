@@ -281,16 +281,16 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
           </AnimatePresence>
           <div
             style={{
-              fontSize: '.9rem',
+              fontSize: '1.1rem',
               fontFamily: 'MonteserratBold',
               fontWeight: 'bold',
               borderRadius: '10px',
               padding: '10px',
-              backgroundColor: darkMode
-                ? 'rgba(29,29,30,0.8)'
-                : 'rgba(240,240,241,0.8)',
+              // backgroundColor: darkMode
+              //   ? 'rgba(29,29,30,0.8)'
+              //   : 'rgba(240,240,241,0.8)',
               color: darkMode ? 'white' : 'black',
-              margin: winSize <= 700 ? '25px' : '25px auto',
+              margin: winSize <= 700 ? '25px 10px' : '25px auto',
               marginTop: winSize <= 700 ? '75px' : '145px',
             }}
           >
@@ -361,9 +361,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                         </motion.h2>
                         <div
                           style={{
-                            // fontFamily: 'Trebuchet MS, sans-serif',
                             fontFamily: 'InterRegular',
-                            // fontStyle: 'italic',
                             fontSize: winSize < 700 ? '' : '1rem',
                             backgroundColor: darkMode
                               ? 'rgba(10,10,10,1)'

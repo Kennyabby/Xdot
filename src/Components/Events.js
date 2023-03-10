@@ -9,7 +9,7 @@ const Acts = ({ title, content, clickVar, id }) => {
       key={id}
       className='acts'
       style={{
-        backgroundColor: darkMode ? 'rgba(8,8,8,1)' : 'white',
+        backgroundColor: darkMode ? 'rgba(250,250,250,0.1)' : 'white',
         color: darkMode ? 'white' : 'black',
         boxShadow: darkMode
           ? '-7px -7px 15px rgba(0, 0, 0, 0.1), 7px 7px 15px rgba(0, 0, 0, 0.1)'
@@ -78,7 +78,7 @@ const Events = ({ eventRef }) => {
   const [touchEnd, setTouchEnd] = useState(null)
   const [lastTouch, setLastTouch] = useState(0)
   const [scrollDirection, setScrollDirection] = useState('Right')
-  const minSwipeDistance = 100
+  const minSwipeDistance = 80
   // const handleWheel = (event) => {
   //   event.preentDefault()
   //   console.log('delta value:', event.deltaX)
@@ -122,9 +122,9 @@ const Events = ({ eventRef }) => {
         setScrollLeft(0)
       } else {
         if (scrollDirection === 'Left') {
-          scrollToRight(scrollLeft, 30)
+          scrollToRight(scrollLeft, 10)
         } else {
-          scrollToLeft(scrollLeft, 30)
+          scrollToLeft(scrollLeft, 10)
         }
         // eventsRef.current.scrollLeft = scrollLeft
       }
@@ -163,7 +163,7 @@ const Events = ({ eventRef }) => {
           setScrollDirection('Right')
           setScrollLeft(scrollLeft - 290)
         } else {
-          scrollToRight(newCurrentPos, 30)
+          scrollToRight(newCurrentPos, 10)
           // eventsRef.current.scrollLeft = newCurrentPos
         }
       } else {
@@ -171,7 +171,7 @@ const Events = ({ eventRef }) => {
           setScrollDirection('Left')
           setScrollLeft(scrollLeft + 290)
         } else {
-          scrollToLeft(newCurrentPos, 30)
+          scrollToLeft(newCurrentPos, 10)
           // eventsRef.current.scrollLeft = newCurrentPos
         }
       }

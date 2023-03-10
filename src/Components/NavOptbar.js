@@ -6,7 +6,7 @@ import { FaTimes, FaSearch, FaBars, FaMoon, FaSun } from 'react-icons/fa'
 import ContextProvider from '../ContextProvider'
 import userimg from './profile.png'
 import paceup from './paceup.png'
-const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
+const NavOptbar = ({ getTopBar, isShow, setBackShow, setShowNavOpt }) => {
   const homeRef = useRef(null)
   const currentRef = useRef(null)
   const eventRef = useRef(null)
@@ -85,7 +85,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
+          body: JSON.stringify({ imgUrl: user.img, userName: user.userName }),
         }
         const resp1 = await fetch(server + '/getImgUrl', opts1)
         const response1 = await resp1.json()
@@ -194,6 +194,13 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
       }
     }
   }
+  const handleBarClick = (e) => {
+    const name = e.target.getAttribute('name')
+
+    if (['home', 'services', 'offers', 'about'].includes(name)) {
+      setShowNavOpt(false)
+    }
+  }
   return (
     <>
       <AnimatePresence exitBeforeEnter>
@@ -290,6 +297,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
               animate='visible'
               exit='hidden'
               className='opt-bar'
+              onClick={handleBarClick}
               style={{
                 position: 'absolute',
                 left: String(xOffset) + 'px',
@@ -342,7 +350,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                           fontWeight: 'bold',
                           textAlign: 'left',
                           justifyContent: 'left',
-                          fontFamily: 'monospace',
+                          fontFamily: 'SourceCodeProRegular',
                           cursor: 'pointer',
                           margin: '10px',
                           marginTop: '7px',
@@ -360,7 +368,13 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                       </div>
                     </section>
                   </div>
-                  <div style={{ padding: '10px', marginTop: '-40px' }}>
+                  <div
+                    style={{
+                      padding: '10px',
+                      marginTop: '-40px',
+                      fontFamily: 'SourceCodeProRegular',
+                    }}
+                  >
                     <div
                       style={{
                         backgroundColor: 'darkorange',
@@ -407,6 +421,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                       textAlign: 'left',
                       padding: '10px',
                       fontSize: '.8rem',
+                      fontFamily: 'SourceCodeProRegular',
                       borderTop: darkMode
                         ? 'solid rgba(15,15,15,1) 1px'
                         : 'solid rgba(200,200,200,1) 1px',
@@ -419,7 +434,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                           padding: '6px 12px',
                           color: 'darkorange',
                           outline: 'none',
-                          fontFamily: 'monospace',
+                          fontFamily: 'SourceCodePro',
                           backgroundColor: 'rgba(0,0,0,0)',
                           margin: '10px',
                           border: 'solid rgba(39,39,40,1) 2px',
@@ -477,6 +492,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                     placeholder='Search For Services, Offers, Applications...'
                     style={{
                       color: darkMode ? 'white' : 'black',
+                      fontFamily: 'SourceCodeProRegular',
                       width: '80%',
                       padding: '20px 10px',
                       borderRadius: '20px',
@@ -522,9 +538,6 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                       color: darkMode
                         ? 'rgb(187, 183, 183)'
                         : 'rgba(120, 125, 125)',
-                      borderBottom: darkMode
-                        ? 'solid rgba(40,39,39) 2px'
-                        : 'solid rgba(200,200,200) 2px',
                     }}
                   >
                     Home
@@ -541,9 +554,6 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                       color: darkMode
                         ? 'rgb(187, 183, 183)'
                         : 'rgba(120, 125, 125)',
-                      borderBottom: darkMode
-                        ? 'solid rgba(40,39,39) 2px'
-                        : 'solid rgba(200,200,200) 2px',
                     }}
                   >
                     Services
@@ -560,9 +570,6 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                       color: darkMode
                         ? 'rgb(187, 183, 183)'
                         : 'rgba(120, 125, 125)',
-                      borderBottom: darkMode
-                        ? 'solid rgba(40,39,39) 2px'
-                        : 'solid rgba(200,200,200) 2px',
                     }}
                   >
                     Offers
@@ -579,9 +586,6 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                       color: darkMode
                         ? 'rgb(187, 183, 183)'
                         : 'rgba(120, 125, 125)',
-                      borderBottom: darkMode
-                        ? 'solid rgba(40,39,39) 2px'
-                        : 'solid rgba(200,200,200) 2px',
                     }}
                   >
                     About
@@ -592,24 +596,26 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                 <Link
                   className='opt-left'
                   to='/signin'
-                  style={{ borderBottom: 'solid black 0px' }}
+                  style={{
+                    textDecoration: 'none',
+                    fontFamily: 'SourceCodeProRegular',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    height: 'fit-content',
+                    backgroundColor: 'rgba(15,105,213)',
+                    border: 'solid rgba(15,105,213) 2px',
+                    padding: '10px 15px',
+                    borderRadius: '15px',
+                    width: 'fit-content',
+                    margin: '20px auto',
+                    cursor: 'pointer',
+                  }}
                 >
-                  <div className='top'>
-                    <button
-                      className='top'
-                      style={{
-                        backgroundColor: 'blue',
-                        border: 'solid blue 2px',
-                        color: 'white',
-                        fontSize: '1rem',
-                        fontWeight: 'bold',
-                        padding: '10px 20px',
-                        borderRadius: '20px',
-                      }}
-                      name='signin'
-                    >
-                      sign in
-                    </button>
+                  <div
+                    name='signin'
+                    style={{ color: 'white', cursor: 'pointer' }}
+                  >
+                    sign in
                   </div>
                 </Link>
               </li>
@@ -617,22 +623,26 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                 <Link
                   className='opt-left'
                   to='/signup'
-                  style={{ borderBottom: 'solid black 0px' }}
+                  style={{
+                    fontFamily: 'SourceCodeProRegular',
+                    textDecoration: 'none',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    height: 'fit-content',
+                    backgroundColor: 'red',
+                    border: 'solid red 2px',
+                    padding: '10px 15px',
+                    borderRadius: '15px',
+                    width: 'fit-content',
+                    margin: '20px auto',
+                    cursor: 'pointer',
+                  }}
                 >
-                  <div className='top'>
-                    <label
-                      className='top'
-                      style={{
-                        backgroundColor: 'red',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        padding: '15px 20px',
-                        borderRadius: '18px',
-                      }}
-                      name='signin'
-                    >
-                      Get Started
-                    </label>
+                  <div
+                    name='signup'
+                    style={{ color: 'white', cursor: 'pointer' }}
+                  >
+                    Get Started
                   </div>
                 </Link>
               </li>

@@ -127,6 +127,11 @@ const App = () => {
             setBackShow={(show) => {
               setIsShow(show)
             }}
+            setShowNavOpt={(show) => {
+              setShowNavOpt(() => {
+                return show
+              })
+            }}
           />
         )}
         <Switch>

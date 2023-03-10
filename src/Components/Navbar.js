@@ -69,7 +69,7 @@ const Navbar = ({ getTopBar }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
+          body: JSON.stringify({ imgUrl: user.img, userName: user.userName }),
         }
         const resp1 = await fetch(server + '/getImgUrl', opts1)
         const response1 = await resp1.json()
@@ -239,28 +239,48 @@ const Navbar = ({ getTopBar }) => {
                 </label>
               </Link>
             </li>
-            <Link className='top-right' to='/signin'>
+            <Link
+              to='/signin'
+              style={{
+                textDecoration: 'none',
+                color: 'white',
+                fontWeight: 'bold',
+                height: 'fit-content',
+                backgroundColor: 'rgba(15,105,213)',
+                border: 'solid rgba(15,105,213) 2px',
+                padding: '5px 15px',
+                borderRadius: '15px',
+                cursor: 'pointer',
+              }}
+            >
               <label
-                className='top'
                 name='signin'
-                style={{ color: 'white', fontWeight: 'bold' }}
+                style={{ color: 'white', cursor: 'pointer' }}
               >
                 sign in
               </label>
             </Link>
             <Link
-              className='top-right'
               to='/signup'
               style={{
-                backgroundColor: 'red',
+                textDecoration: 'none',
                 color: 'white',
+                fontWeight: 'bold',
+                height: 'fit-content',
+                backgroundColor: 'red',
                 border: 'solid red 2px',
+                padding: '5px 15px',
+                borderRadius: '15px',
+                cursor: 'pointer',
               }}
             >
               <label
                 className='top'
                 name='signup'
-                style={{ color: 'white', fontWeight: 'bold' }}
+                style={{
+                  color: 'white',
+                  cursor: 'pointer',
+                }}
               >
                 Get Started
               </label>
@@ -298,6 +318,7 @@ const Navbar = ({ getTopBar }) => {
                   color: darkMode ? 'white' : 'black',
                   width: '85%',
                   padding: '15px 10px',
+                  fontFamily: 'MonteserratRegular',
                   borderRadius: '20px',
                   backgroundColor: 'rgba(255,255,255,0)',
                   outline: 'none',
