@@ -13,6 +13,7 @@ import {
 import ContextProvider from '../ContextProvider'
 
 import userImg from './profile.png'
+import paceup from './paceup.png'
 
 const Navbar = ({ getTopBar }) => {
   const [showBorder, setShowBorder] = useState(false)
@@ -166,29 +167,13 @@ const Navbar = ({ getTopBar }) => {
             >
               <div
                 style={{
-                  backgroundColor: darkMode
-                    ? 'rgba(255,255,255,0.3)'
-                    : 'rgba(0,0,0,0.7)',
-                  width: '90px',
+                  height: '30px',
                   borderRadius: '7px',
-                  padding: '0px 2px',
                 }}
               >
-                {['', '', ''].map((csl, i) => {
-                  return (
-                    <div
-                      key={i}
-                      style={{
-                        padding: '5px',
-                        borderRadius: '50%',
-                        backgroundColor: darkMode ? 'black' : 'white',
-                        margin: 'auto',
-                      }}
-                    ></div>
-                  )
-                })}
+                <img src={paceup} height='100%' />
               </div>
-              <div>Encart oO</div>
+              <div>Pace Up</div>
             </li>
             <li>
               <Link to='/' className='top'>

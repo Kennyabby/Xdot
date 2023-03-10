@@ -316,7 +316,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                   history.push('/')
                 }}
               >
-                Encart oO
+                Pace Up
               </motion.p>
               <FaUserCircle
                 style={{

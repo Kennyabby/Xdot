@@ -26,6 +26,7 @@ const App = () => {
   const [intervalId, setIntervalId] = useState(null)
   const [bars, setBars] = useState([])
   const [darkMode, setDarkMode] = useState(true)
+  const [openAIKey, setOpenAIKey] = useState('')
   const [size, setSize] = useState(window.innerWidth)
   const getTopBar = (bars) => {
     setBars(bars)
@@ -56,6 +57,19 @@ const App = () => {
       }
     } catch (TypeError) {}
   }
+  useEffect(async () => {
+    try {
+      const opts = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+      const resp = await fetch(SERVER + '/getOpenAI', opts)
+      const response = await resp.json()
+      setOpenAIKey(response.key)
+    } catch (TypeError) {}
+  }, [])
   useEffect(() => {
     if (intervalId !== null) {
       clearInterval(intervalId)
@@ -101,6 +115,7 @@ const App = () => {
         setDarkMode,
         server: SERVER,
         winSize: size,
+        openAIKey,
       }}
     >
       <Router>

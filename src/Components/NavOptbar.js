@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { FaTimes, FaSearch, FaBars, FaMoon, FaSun } from 'react-icons/fa'
 import ContextProvider from '../ContextProvider'
 import userimg from './profile.png'
+import paceup from './paceup.png'
 const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
   const homeRef = useRef(null)
   const currentRef = useRef(null)
@@ -234,27 +235,11 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
               <div style={{ display: 'flex', gap: '20px' }}>
                 <div
                   style={{
-                    backgroundColor: darkMode
-                      ? 'rgba(255,255,255,0.3)'
-                      : 'rgba(0,0,0,0.3)',
-                    width: '40px',
+                    height: '40px',
                     borderRadius: '7px',
-                    padding: '2px',
                   }}
                 >
-                  {['', '', ''].map((csl, i) => {
-                    return (
-                      <div
-                        key={i}
-                        style={{
-                          padding: '5px',
-                          borderRadius: '50%',
-                          backgroundColor: darkMode ? 'white' : 'black',
-                          margin: 'auto',
-                        }}
-                      ></div>
-                    )
-                  })}
+                  <img src={paceup} height='100%' />
                 </div>
                 <label
                   style={{
@@ -264,7 +249,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow }) => {
                     fontWeight: 'bold',
                   }}
                 >
-                  Encart oO
+                  Pace Up
                 </label>
               </div>
 

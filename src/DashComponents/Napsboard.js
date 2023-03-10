@@ -915,8 +915,10 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <FaBars
                               style={{
                                 cursor: 'pointer',
-                                color: darkMode ? 'white' : 'black',
                                 fontSize: '1.4rem',
+                                color: darkMode
+                                  ? 'rgba(190,190,230)'
+                                  : 'rgba(16,16,66)',
                               }}
                               name='menu'
                               alt='menu'
@@ -925,7 +927,9 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                             <FaTimes
                               style={{
                                 cursor: 'pointer',
-                                color: darkMode ? 'white' : 'black',
+                                color: darkMode
+                                  ? 'rgba(190,190,230)'
+                                  : 'rgba(16,16,66)',
                               }}
                               name='close'
                               alt='close'
@@ -934,7 +938,10 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                           <div
                             style={{
                               fontSize: '.7rem',
-                              color: darkMode ? 'white' : 'black',
+                              color: darkMode
+                                ? 'rgba(190,190,230)'
+                                : 'rgba(16,16,66)',
+                              fontWeight: 'lighter',
                             }}
                           >
                             <label>Menu</label>
@@ -986,6 +993,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                                 color: darkMode
                                   ? 'rgba(190,190,230)'
                                   : 'rgba(16,16,66)',
+                                fontWeight: 'lighter',
                               }}
                             >
                               <label>Home</label>
@@ -1027,6 +1035,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                                 color: darkMode
                                   ? 'rgba(190,190,230)'
                                   : 'rgba(16,16,66)',
+                                fontWeight: 'lighter',
                               }}
                             >
                               <label>Chats</label>
@@ -1066,6 +1075,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                                 color: darkMode
                                   ? 'rgba(190,190,230)'
                                   : 'rgba(16,16,66)',
+                                fontWeight: 'lighter',
                               }}
                             >
                               <label>Updates</label>

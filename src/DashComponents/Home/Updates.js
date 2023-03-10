@@ -4,22 +4,13 @@ import { Link, useHistory, useParams } from 'react-router-dom'
 import { motion, AnimatePresence, usePresence } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { FaSearch } from 'react-icons/fa'
+import axios from 'axios'
+import { Configuration, OpenAIApi } from 'openai'
 
 import profimg from '../Events/assets/profile.png'
 import Post from './Post'
 import PostPageModal from './PostPageModal'
 import ContextProvider from '../../ContextProvider'
-
-import events from './assets/events.png'
-import tasks from './assets/tasks.png'
-import voting from './assets/events.png'
-import chat from './assets/chat.png'
-import wchat from './assets/wchat.png'
-import notifications from './assets/notifications.png'
-import settings from './assets/settings.jpg'
-import search from './assets/search.png'
-import wsearch from './assets/wsearch.png'
-import xdotlogo from './assets/xdotlogo.png'
 
 const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [updates, setUpdates] = useState([])
@@ -45,7 +36,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [highlightedPost, setHighlightedPost] = useState(null)
   const [currentPostShow, setCurrentPostShow] = useState(null)
   const [newPostShow, setNewPostShow] = useState(null)
-  const { darkMode } = useContext(ContextProvider)
+  const { darkMode, openAIKey } = useContext(ContextProvider)
   const minSwipeDistance = 20
   const maxNumberOfRequest = 4
   var stackPos = 0
@@ -69,9 +60,39 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
       array[randomIndex] = temporaryValue
     }
   }
+  const config = new Configuration({ apiKey: openAIKey })
   useEffect(() => {
     showHomeToggle(true)
   }, [])
+  useEffect(() => {
+    const getAnswers = async () => {
+      const openai = new OpenAIApi(config)
+      const prompt = 'science'
+      try {
+        const response = await openai.createCompletion({
+          model: 'text-davinci-003',
+          prompt,
+          max_tokens: 100,
+          n: 5,
+          stop: '.',
+        })
+
+        const answerList = response.choices.map(async (choice) => {
+          return { answer: choice.text.trim(), photos: [] }
+        })
+        const list = await answerList
+        console.log(list)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    if (openAIKey) {
+      console.log(openAIKey)
+      getAnswers()
+    }
+  }, [openAIKey])
+
   const checkSize = () => {
     setWinSize(window.innerWidth)
   }
