@@ -12,13 +12,13 @@ import wcancel from './assets/close.png'
 
 const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
   const history = useHistory()
-  const postLabel = ['public', 'cluster', 'personal']
+  const postLabel = ['public', 'cluster']
   const [showUpdateStatus, setShowUpdateStatus] = useState(false)
   const { darkMode } = useContext(ContextProvider)
   const label = {
-    napsite: { collection: 'PersonalFeed', value: 'Personal' },
+    personal: { collection: 'PersonalFeed', value: 'Personal' },
     public: { collection: 'Public', value: 'Public' },
-    group: { collection: 'Cluster', value: 'Cluster' },
+    cluster: { collection: 'Cluster', value: 'Cluster' },
   }
   const [fields, setFields] = useState({
     postComment: '',
@@ -49,7 +49,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
     var imagesInfo = []
     var imagesName = []
     convertedFiles.forEach((file, i) => {
-      var imgSrc = user.matricNo + '_' + String(Date.now() + i)
+      var imgSrc = user.userName + '_' + String(Date.now() + i)
       var imageInfo = {
         image: file,
         imageName: imgSrc,
@@ -68,7 +68,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
         body: JSON.stringify({
           collection: collection,
           update: {
-            matricNo: user.matricNo,
+            userName: user.userName,
             postComment: fields.postComment,
             createdAt: Date.now(),
             postPicture: imagesName,
