@@ -2,23 +2,23 @@ import { React, useState, useEffect, useRef, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import './Home.css'
+import { FaGlobeAfrica, FaTimes } from 'react-icons/fa'
+import { BsCameraFill } from 'react-icons/bs'
 
 import ContextProvider from '../../ContextProvider'
 
 import cancel from '../Events/assets/close.png'
 import wcancel from './assets/close.png'
-import camera from './assets/camera.png'
-import wcamera from './assets/wcamera.png'
 
 const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
   const history = useHistory()
-  const postLabel = ['public', 'group', 'napsite']
+  const postLabel = ['public', 'cluster', 'personal']
   const [showUpdateStatus, setShowUpdateStatus] = useState(false)
   const { darkMode } = useContext(ContextProvider)
   const label = {
-    napsite: { collection: 'NapsitesFeed', value: 'Napsites' },
-    public: { collection: 'NapsPublic', value: 'Public' },
-    group: { collection: 'NapsGroup', value: 'Group' },
+    napsite: { collection: 'PersonalFeed', value: 'Personal' },
+    public: { collection: 'Public', value: 'Public' },
+    group: { collection: 'Cluster', value: 'Cluster' },
   }
   const [fields, setFields] = useState({
     postComment: '',
@@ -40,7 +40,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
   const handlePost = async () => {
     setShowUpdateStatus(true)
     var postTo = fields.postTo
-    var collection = 'NapsPublic'
+    var collection = user.userName + '_' + 'Public'
     Object.values(label).forEach((labl) => {
       if (labl.value === fields.shareQuizTo) {
         collection = labl.collection
@@ -187,27 +187,27 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
         }}
         className='postmodalpage'
         style={{
+          borderRadius: '20px',
           backgroundColor: darkMode
-            ? 'rgba(10,10,18,1)'
-            : 'rgba(247,247,255,1)',
+            ? 'rgba(10,10,38,1)'
+            : 'rgba(230,230,250,1)',
         }}
       >
-        <img
+        <FaTimes
           onClick={() => {
             closeModal()
           }}
           style={{
             position: 'absolute',
-            top: '5px',
-            left: '5px',
+            top: '10px',
+            left: '10px',
             zIndex: '1',
-            borderRadius: '50%',
+            fontSize: '1.2rem',
+            color: darkMode ? 'white' : 'black',
             cursor: 'pointer',
           }}
-          src={darkMode ? wcancel : cancel}
-          alt='close post page'
-          height='20px'
         />
+
         <div
           style={{
             margin: 'auto',
@@ -224,7 +224,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
               padding: '5px 10px',
               borderRadius: '10px',
               fontSize: '1rem',
-              fontFamily: 'Courier New',
+              fontFamily: 'MonteserratRegular',
               fontWeight: 'bold',
             }}
           >
@@ -243,34 +243,53 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
           >
             <div
               style={{
-                margin: '10px',
+                padding: 'auto 20px',
                 marginBottom: '20px',
-                width: 'fit-content',
+                width: '90%',
                 display: 'flex',
               }}
             >
-              <select
-                className='updateinput'
+              <div style={{ display: 'inline-flex', width: 'fit-content' }}>
+                <FaGlobeAfrica
+                  style={{
+                    fontSize: '1.5rem',
+                    color: darkMode ? 'white' : 'black',
+                    margin: 'auto 5px',
+                  }}
+                />
+                <select
+                  className='updateinput'
+                  style={{
+                    border: 'solid lightgreen 0px',
+                    fontFamily: 'MonteserratRegular',
+                    outline: 'none',
+                    cursor: 'pointer',
+                    color: darkMode ? 'white' : 'black',
+                    padding: '5px 10px',
+                  }}
+                  name='postTo'
+                  value={fields.postTo}
+                >
+                  {postLabel.map((labl) => {
+                    return (
+                      <option style={{ color: 'black' }}>
+                        {label[labl].value}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div
                 style={{
-                  border: 'solid lightgreen 2px',
-                  outline: 'none',
-                  cursor: 'pointer',
-                  color: darkMode ? 'white' : 'black',
-                  padding: '5px 10px',
+                  // margin: 'auto 50px',
+                  marginLeft: 'auto',
+                  width: 'fit-content',
+                  fontFamily: 'MonteserratRegular',
+                  display: 'inline-flex',
+                  fontWeight: 'lighter',
+                  fontSize: '.9rem',
                 }}
-                name='postTo'
-                value={fields.postTo}
               >
-                {postLabel.map((labl) => {
-                  return (
-                    <option style={{ color: 'black' }}>
-                      {label[labl].value}
-                    </option>
-                  )
-                })}
-              </select>
-              <div style={{ margin: 'auto 20px', fontFamily: 'monospace' }}>
-                <label>Add pictures</label>
                 <input
                   ref={imgRef}
                   type='file'
@@ -279,16 +298,20 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                   style={{ display: 'none' }}
                   onChange={fileHandler}
                 />
-                <img
-                  src={darkMode ? wcamera : camera}
-                  height='20px'
-                  style={{ margin: 'auto 10px', cursor: 'pointer' }}
+                <BsCameraFill
+                  style={{
+                    fontSize: '1.5rem',
+                    color: darkMode ? 'white' : 'black',
+                    cursor: 'pointer',
+                    margin: 'auto 10px',
+                  }}
                   onClick={() => {
                     imgRef.current.click()
                   }}
                 />
               </div>
             </div>
+            <div></div>
             <div
               ref={postFieldRef}
               contentEditable='true'
@@ -326,11 +349,13 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
               style={{
                 margin: 'auto',
                 textAlign: 'left',
-                backgroundColor: darkMode ? 'black' : 'white',
+                backgroundColor: darkMode
+                  ? 'rgba(250,250,250,0.1)'
+                  : 'rgba(255,255,255,0.7)',
                 padding: '10px',
                 color: darkMode ? 'white' : 'black',
                 fontSize: '1rem',
-                fontFamily: 'calibri',
+                fontFamily: 'MonteserratRegular',
                 fontWeight: 'normal',
                 whiteSpace: 'pre-wrap',
                 borderRadius: '10px',
@@ -397,7 +422,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                         </div>
                       )}
                       {i <= 4 && (
-                        <img
+                        <FaTimes
                           onClick={() => {
                             setConvertedFiles((convertedFiles) => {
                               return convertedFiles.filter(
@@ -412,6 +437,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                             padding: '3px',
                             borderRadius: '50%',
                             border: 'solid black 1px',
+                            color: darkMode ? 'white' : 'black',
                             background: darkMode ? 'rgba(10,10,10,1)' : 'white',
                             bottom: '-5px',
                             right: '-5px',
@@ -419,9 +445,6 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                             borderRadius: '50%',
                             cursor: 'pointer',
                           }}
-                          src={darkMode ? wcancel : cancel}
-                          alt='remove post picture'
-                          height='10px'
                         />
                       )}
                     </div>

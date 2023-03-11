@@ -454,7 +454,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                       backgroundColor: darkMode
                         ? 'rgba(255,255,255,0.1)'
                         : 'rgba(255,255,255,1)',
-                      width: winSize <= 700 ? '75%' : '80%',
+                      width: winSize <= 700 ? '78%' : '80%',
                       margin: 'auto',
                       boxShadow: darkMode
                         ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
@@ -476,7 +476,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                         style={{
                           color: darkMode ? 'white' : 'black',
                           fontSize: '1.3rem',
-                          margin: 'auto 13px',
+                          margin: 'auto 9px',
                           marginTop: '12px',
                           cursor: 'pointer',
                         }}
@@ -495,7 +495,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                           outline: 'none',
                           border: 'solid black 0px',
                           borderRadius: '20px',
-                          width: '90%',
+                          width: '93%',
                         }}
                       />
                     </div>
