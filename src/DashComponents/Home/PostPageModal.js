@@ -2,7 +2,7 @@ import { React, useState, useEffect, useRef, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import './Home.css'
-import { FaGlobeAfrica, FaTimes } from 'react-icons/fa'
+import { FaGlobeAfrica, FaTimes, FaCheck } from 'react-icons/fa'
 import { BsCameraFill } from 'react-icons/bs'
 import { MdGroups } from 'react-icons/md'
 
@@ -15,7 +15,22 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
   const history = useHistory()
   const postLabel = ['public', 'cluster']
   const [showUpdateStatus, setShowUpdateStatus] = useState(false)
-  const { darkMode } = useContext(ContextProvider)
+  const { darkMode, winSize } = useContext(ContextProvider)
+  const [selectedClusters, setSelectedClusters] = useState([])
+  const [categories, setCategories] = useState([
+    'Science',
+    'Arts',
+    'Social Sciences',
+    'Agricultural Science',
+    'Engineering',
+    'Technology',
+    'Medicine',
+    'Computer Science',
+    'Data Science',
+    'Data Analysis',
+    'Data Analytics',
+    'Sports',
+  ])
   const label = {
     personal: { collection: 'PersonalFeed', value: 'Personal' },
     public: { collection: 'Public', value: 'Public' },
@@ -323,7 +338,69 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                 />
               </div>
             </div>
-            <div></div>
+            <div style={{ textAlign: 'left' }}>
+              <label
+                style={{
+                  fontFamily: 'MonteserratBold',
+                  color: 'rgba(15,105,213)',
+                  margin: '10px',
+                }}
+              >
+                #tag:
+              </label>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  margin: 'auto',
+                  overflowX: 'auto',
+                  overflowX: 'hidden',
+                }}
+              >
+                {categories.map((category, i) => {
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        margin: '10px',
+                        color: 'white',
+                        cursor: 'pointer',
+                        fontSize: '.9rem',
+                        padding: '10px 15px',
+                        borderRadius: '15px',
+                        background: 'rgba(15,105,213)',
+                        fontFamily: 'SourceCodeProRegular',
+                        display: 'inline-flex',
+                      }}
+                      onClick={() => {
+                        if (selectedClusters.includes(category)) {
+                          setSelectedClusters((selectedClusters) => {
+                            return selectedClusters.filter((cluster) => {
+                              return cluster !== category
+                            })
+                          })
+                        } else {
+                          setSelectedClusters((selectedClusters) => {
+                            return [...selectedClusters, category]
+                          })
+                        }
+                      }}
+                    >
+                      <label style={{ width: 'max-content' }}>{category}</label>
+                      {selectedClusters.includes(category) && (
+                        <FaCheck
+                          style={{
+                            marginLeft: '15px',
+                            marginTop: '4px',
+                            color: 'lightgreen',
+                          }}
+                        />
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
             <div
               ref={postFieldRef}
               contentEditable='true'
