@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import './Home.css'
 import { FaGlobeAfrica, FaTimes } from 'react-icons/fa'
 import { BsCameraFill } from 'react-icons/bs'
+import { MdGroups } from 'react-icons/md'
 
 import ContextProvider from '../../ContextProvider'
 
@@ -243,20 +244,31 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
           >
             <div
               style={{
-                padding: 'auto 20px',
-                marginBottom: '20px',
-                width: '90%',
+                padding: 'auto',
+                margin: 'auto',
+                marginBottom: '21px',
+                width: '98%',
                 display: 'flex',
               }}
             >
               <div style={{ display: 'inline-flex', width: 'fit-content' }}>
-                <FaGlobeAfrica
-                  style={{
-                    fontSize: '1.5rem',
-                    color: darkMode ? 'white' : 'black',
-                    margin: 'auto 5px',
-                  }}
-                />
+                {fields.postTo === 'Public' ? (
+                  <FaGlobeAfrica
+                    style={{
+                      fontSize: '1.5rem',
+                      color: darkMode ? 'white' : 'black',
+                      margin: 'auto 5px',
+                    }}
+                  />
+                ) : (
+                  <MdGroups
+                    style={{
+                      fontSize: '1.7rem',
+                      color: darkMode ? 'white' : 'black',
+                      margin: 'auto 5px',
+                    }}
+                  />
+                )}
                 <select
                   className='updateinput'
                   style={{
