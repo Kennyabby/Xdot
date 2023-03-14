@@ -13,10 +13,16 @@ import wcancel from './assets/close.png'
 
 const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
   const history = useHistory()
+  const tagRef = useRef(null)
   const postLabel = ['public', 'cluster']
   const [showUpdateStatus, setShowUpdateStatus] = useState(false)
   const { darkMode, winSize } = useContext(ContextProvider)
+  const [scrollPosition, setScrollPosition] = useState(0)
   const [selectedClusters, setSelectedClusters] = useState([])
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
+  const [lastTouch, setLastTouch] = useState(0)
+  const [count, setCount] = useState(0)
   const [categories, setCategories] = useState([
     'Science',
     'Arts',
@@ -186,6 +192,36 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
       }
     }
   }, [fields.postComment])
+  useEffect(() => {
+    // if (tagRef.current) {
+    //   console.log('yes:', scrollPosition)
+    //   tagRef.current.scrollLeft -= scrollPosition
+    // }
+  }, [scrollPosition, tagRef])
+  const onTouchStart = (e) => {
+    const firstTouch = e.targetTouches[0].clientX
+    setTouchStart(firstTouch)
+  }
+  const onTouchMove = (e) => {
+    const currentTouch = e.targetTouches[0].clientX
+    if (tagRef.current) {
+      if (count === 0) {
+        tagRef.current.scrollLeft -= currentTouch - touchStart
+      } else {
+        tagRef.current.scrollLeft -= currentTouch - lastTouch
+      }
+    }
+    setCount(count + 1)
+    setLastTouch(currentTouch)
+    setTouchEnd(currentTouch)
+  }
+  const onTouchEnd = (e) => {
+    if (!touchStart || !touchEnd) {
+    } else {
+      setLastTouch(0)
+      setCount(0)
+    }
+  }
   return (
     <>
       <motion.div
@@ -349,13 +385,16 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                 #tag:
               </label>
               <div
+                ref={tagRef}
                 style={{
-                  display: 'flex',
+                  display: winSize < 700 ? 'flex' : 'block',
                   width: '100%',
                   margin: 'auto',
-                  overflowX: 'auto',
                   overflowX: 'hidden',
                 }}
+                onTouchStart={onTouchStart}
+                onTouchEnd={onTouchEnd}
+                onTouchMove={onTouchMove}
               >
                 {categories.map((category, i) => {
                   return (
@@ -436,7 +475,6 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                 })
               }}
               style={{
-                margin: 'auto',
                 textAlign: 'left',
                 backgroundColor: darkMode
                   ? 'rgba(250,250,250,0.1)'
@@ -451,7 +489,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                 maxHeight: '300px',
                 height: '200px',
                 overflowY: 'auto',
-                margin: 'auto',
+                margin: '20px auto',
                 outline: 'none',
                 width: '90%',
               }}
