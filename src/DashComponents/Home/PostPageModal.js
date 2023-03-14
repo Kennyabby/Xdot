@@ -14,7 +14,8 @@ import wcancel from './assets/close.png'
 const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
   const history = useHistory()
   const tagRef = useRef(null)
-  const postLabel = ['public', 'cluster']
+  // const postLabel = ['public', 'cluster']
+  const postLabel = ['public']
   const [showUpdateStatus, setShowUpdateStatus] = useState(false)
   const { darkMode, winSize } = useContext(ContextProvider)
   const [scrollPosition, setScrollPosition] = useState(0)
@@ -82,29 +83,120 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
     })
 
     try {
-      const opts = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          collection: collection,
-          update: {
-            userName: user.userName,
-            postComment: fields.postComment,
-            createdAt: Date.now(),
-            postPicture: imagesName,
-          },
-          imagesInfo: imagesInfo,
-        }),
-      }
-      const resp = await fetch(server + '/postQuiz', opts)
-      const response = await resp.json()
-      const isDelivered = response.isDelivered
-      if (isDelivered) {
-        closeModal()
-        notifyUpdate('Posted to ' + postTo + ' Successfully')
-        closeModal()
+      var database = 'Categories'
+      if (postTo === 'Public') {
+        database = 'Categories'
+        var count = 0
+        selectedClusters.forEach(async (category) => {
+          const opts = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              database: database,
+              collection: category,
+              update: {
+                userName: user.userName,
+                postComment: fields.postComment,
+                tags: selectedClusters,
+                createdAt: Date.now(),
+                postPicture: imagesName,
+              },
+              imagesInfo: imagesInfo,
+            }),
+          }
+          const resp = await fetch(server + '/createPost', opts)
+          const response = await resp.json()
+          const isDelivered = response.isDelivered
+          if (isDelivered) {
+            count += 1
+            if (count === selectedClusters.length) {
+              database = 'User_' + user.userName
+              category = 'personal'
+              const opts = {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  database: database,
+                  collection: category,
+                  update: {
+                    userName: user.userName,
+                    postComment: fields.postComment,
+                    tags: selectedClusters,
+                    createdAt: Date.now(),
+                    postPicture: imagesName,
+                  },
+                  imagesInfo: imagesInfo,
+                }),
+              }
+              const resp = await fetch(server + '/createPost', opts)
+              const response = await resp.json()
+              const isDelivered = response.isDelivered
+              if (isDelivered) {
+                notifyUpdate('Posted to ' + postTo + ' Successfully')
+                closeModal()
+              }
+            }
+          }
+        })
+        if (selectedClusters.length === 0) {
+          collection = 'general'
+          const opts = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              database: database,
+              collection: collection,
+              update: {
+                userName: user.userName,
+                postComment: fields.postComment,
+                tags: selectedClusters,
+                createdAt: Date.now(),
+                postPicture: imagesName,
+              },
+              imagesInfo: imagesInfo,
+            }),
+          }
+          const resp = await fetch(server + '/createPost', opts)
+          const response = await resp.json()
+          const isDelivered = response.isDelivered
+          if (isDelivered) {
+            database = 'User_' + user.userName
+            const collection = 'personal'
+            const opts = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                database: database,
+                collection: collection,
+                update: {
+                  userName: user.userName,
+                  postComment: fields.postComment,
+                  tags: selectedClusters,
+                  createdAt: Date.now(),
+                  postPicture: imagesName,
+                },
+                imagesInfo: imagesInfo,
+              }),
+            }
+            const resp = await fetch(server + '/createPost', opts)
+            const response = await resp.json()
+            const isDelivered = response.isDelivered
+            if (isDelivered) {
+              notifyUpdate('Posted to ' + postTo + ' Successfully')
+              closeModal()
+            }
+          }
+        }
+      } else if (postTo === 'Cluster') {
+        database = 'Cluster'
       }
     } catch (TypeError) {}
   }
@@ -382,7 +474,10 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                   margin: '10px',
                 }}
               >
-                #tag:
+                {'#tag: ' +
+                  (selectedClusters.length > 0
+                    ? '( ' + selectedClusters.length + ' )'
+                    : '')}
               </label>
               <div
                 ref={tagRef}
@@ -593,17 +688,22 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
                 onClick={handlePost}
                 style={{
                   marginRight: 'auto',
-                  fontFamily: 'monospace',
+                  fontFamily: 'SourceCodeProRegular',
+                  fontWeight: 'bold',
                   fontSize: '1rem',
-                  padding: '10px',
-                  borderRadius: '10px',
-                  backgroundColor: darkMode ? 'rgba(255,255,255,0.1)' : 'white',
-                  color: darkMode ? 'lightgreen' : 'green',
-                  border: darkMode ? 'solid lightgreen 2px' : 'solid green 2px',
+                  padding: '10px 20px',
+                  borderRadius: '15px',
+                  backgroundColor: darkMode
+                    ? 'rgba(0,0,0,0.3)'
+                    : 'rgba(255,255,255,0.3)',
+                  color: 'rgba(15, 105, 213)',
+                  border: darkMode
+                    ? 'solid rgba(15, 105, 213) 2px'
+                    : 'solid rgba(15, 105, 213) 2px',
                   cursor: 'pointer',
                 }}
               >
-                {'Post >>'}
+                {'Post'}
               </button>
             </div>
           )}
@@ -612,14 +712,15 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
             <p>
               <label
                 style={{
-                  color: 'green',
-                  backgroundColor: 'lightgreen',
+                  color: 'rgba(15, 105 , 213)',
+                  backgroundColor: 'lightblue',
                   borderRadius: '10px',
                   padding: '10px',
+                  fontFamily: 'SourceCodeProRegular',
                   marginBottom: '50px',
                   fontStyle: 'italic',
-                  fontSize: '.8rem',
-                  border: 'solid green 2px',
+                  fontSize: '.9rem',
+                  border: 'solid rgba(15, 105, 213) 2px',
                 }}
               >
                 {'Posting. Please Wait...'}

@@ -718,7 +718,9 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                   margin: '20px',
                   marginBottom: '60px',
                   borderRadius: '15px',
-                  boxShadow: '0px 0px 7px rgba(20,20,20,1)',
+                  boxShadow: darkMode
+                    ? '0px 0px 7px rgba(120,120,120,1)'
+                    : '0px 0px 7px rgba(20,20,20,1)',
                   padding: '20px',
                   color: darkMode ? 'white' : 'black',
                 }}
@@ -731,7 +733,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                     <div
                       style={{
                         fontFamily: 'SourceCodeProRegular',
-                        margin: '10px',
+                        margin: '30px 10px',
                         fontWeight: 'bold',
                         cursor: 'pointer',
                         fontSize: '1.1rem',
