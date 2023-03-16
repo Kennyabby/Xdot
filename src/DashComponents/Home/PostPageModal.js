@@ -62,13 +62,13 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
   useEffect(() => {}, [fields])
   const handlePost = async () => {
     setShowUpdateStatus(true)
+    // var collection = 'general'
     var postTo = fields.postTo
-    var collection = user.userName + '_' + 'Public'
-    Object.values(label).forEach((labl) => {
-      if (labl.value === fields.shareQuizTo) {
-        collection = labl.collection
-      }
-    })
+    // Object.values(label).forEach((labl) => {
+    //   if (labl.value === fields.shareQuizTo) {
+    //     collection = labl.collection
+    //   }
+    // })
     var imagesInfo = []
     var imagesName = []
     convertedFiles.forEach((file, i) => {
@@ -83,67 +83,33 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
     })
 
     try {
-      var database = 'Categories'
+      const createdAt = Date.now()
       if (postTo === 'Public') {
-        database = 'Categories'
-        var count = 0
-        selectedClusters.forEach(async (category) => {
-          const opts = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
+        const database = 'Public'
+        const opts = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            database: database,
+            collection: 'general',
+            update: {
+              userName: user.userName,
+              postComment: fields.postComment,
+              tags: selectedClusters,
+              createdAt: createdAt,
+              postPicture: imagesName,
             },
-            body: JSON.stringify({
-              database: database,
-              collection: category,
-              update: {
-                userName: user.userName,
-                postComment: fields.postComment,
-                tags: selectedClusters,
-                createdAt: Date.now(),
-                postPicture: imagesName,
-              },
-              imagesInfo: imagesInfo,
-            }),
-          }
-          const resp = await fetch(server + '/createPost', opts)
-          const response = await resp.json()
-          const isDelivered = response.isDelivered
-          if (isDelivered) {
-            count += 1
-            if (count === selectedClusters.length) {
-              database = 'User_' + user.userName
-              category = 'personal'
-              const opts = {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  database: database,
-                  collection: category,
-                  update: {
-                    userName: user.userName,
-                    postComment: fields.postComment,
-                    tags: selectedClusters,
-                    createdAt: Date.now(),
-                    postPicture: imagesName,
-                  },
-                  imagesInfo: imagesInfo,
-                }),
-              }
-              const resp = await fetch(server + '/createPost', opts)
-              const response = await resp.json()
-              const isDelivered = response.isDelivered
-              if (isDelivered) {
-                notifyUpdate('Posted to ' + postTo + ' Successfully')
-                closeModal()
-              }
-            }
-          }
-        })
-        if (selectedClusters.length === 0) {
-          collection = 'general'
+            imagesInfo: imagesInfo,
+          }),
+        }
+        const resp = await fetch(server + '/createPost', opts)
+        const response = await resp.json()
+        const isDelivered = response.isDelivered
+        if (isDelivered) {
+          const database = 'User_' + user.userName
+          const collection = 'personal'
           const opts = {
             method: 'POST',
             headers: {
@@ -154,49 +120,20 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
               collection: collection,
               update: {
                 userName: user.userName,
-                postComment: fields.postComment,
-                tags: selectedClusters,
-                createdAt: Date.now(),
-                postPicture: imagesName,
+                createdAt: createdAt,
               },
-              imagesInfo: imagesInfo,
             }),
           }
           const resp = await fetch(server + '/createPost', opts)
           const response = await resp.json()
           const isDelivered = response.isDelivered
           if (isDelivered) {
-            database = 'User_' + user.userName
-            const collection = 'personal'
-            const opts = {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                database: database,
-                collection: collection,
-                update: {
-                  userName: user.userName,
-                  postComment: fields.postComment,
-                  tags: selectedClusters,
-                  createdAt: Date.now(),
-                  postPicture: imagesName,
-                },
-                imagesInfo: imagesInfo,
-              }),
-            }
-            const resp = await fetch(server + '/createPost', opts)
-            const response = await resp.json()
-            const isDelivered = response.isDelivered
-            if (isDelivered) {
-              notifyUpdate('Posted to ' + postTo + ' Successfully')
-              closeModal()
-            }
+            notifyUpdate('Posted to ' + postTo + ' Successfully')
+            closeModal()
           }
         }
       } else if (postTo === 'Cluster') {
-        database = 'Cluster'
+        const database = 'Cluster'
       }
     } catch (TypeError) {}
   }

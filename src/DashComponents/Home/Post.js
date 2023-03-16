@@ -83,6 +83,7 @@ const Post = ({
     { name: 'sad', src: sad },
     { name: 'angry', src: angry },
   ]
+
   useEffect(() => {
     if (window.innerWidth <= 700) {
       setLeftOffset(String(-((window.innerWidth - 300) / 2 + 100)) + 'px')
@@ -127,7 +128,11 @@ const Post = ({
     }
   }, [topOffset])
   useEffect(async () => {
-    if (postUser.matricNo !== undefined && !imgLoaded) {
+    if (
+      postUser.userName !== undefined &&
+      postUser.userName !== 'Creator' &&
+      !imgLoaded
+    ) {
       const opts1 = {
         method: 'POST',
         headers: {
@@ -135,7 +140,7 @@ const Post = ({
         },
         body: JSON.stringify({
           imgUrl: postUser.img,
-          matricNo: postUser.matricNo,
+          userName: postUser.userName,
         }),
       }
       const resp1 = await fetch(server + '/getImgUrl', opts1)
@@ -154,7 +159,7 @@ const Post = ({
               },
               body: JSON.stringify({
                 imgUrl: picture,
-                matricNo: postUser.matricNo,
+                userName: postUser.userName,
                 imagePath: 'postImages',
               }),
             }
@@ -181,7 +186,7 @@ const Post = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ matricNo: updt.matricNo }),
+        body: JSON.stringify({ userName: updt.userName }),
       }
       const resp = await fetch(server + '/getUserDetails', opts)
       const response = await resp.json()
@@ -714,7 +719,9 @@ const Post = ({
                   textAlign: 'left',
                 }}
               >
-                {postUser.lastName !== undefined ? (
+                {postUser !== null &&
+                postUser.userName !== undefined &&
+                postUser.userName !== 'Creator' ? (
                   <div>
                     <label
                       style={{

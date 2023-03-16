@@ -36,6 +36,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [highlightedPost, setHighlightedPost] = useState(null)
   const [currentPostShow, setCurrentPostShow] = useState(null)
   const [newPostShow, setNewPostShow] = useState(null)
+  const [postCategories, setPostCategories] = useState([])
   const { darkMode, openAIKey } = useContext(ContextProvider)
   const minSwipeDistance = 20
   const maxNumberOfRequest = 4
@@ -146,6 +147,9 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
     setLastPostDimension(lastPostRef.current.getBoundingClientRect().y)
   }
   const getNewUpdates = async (lastPostUpdate) => {
+    const categories = user.interestCategories
+    const database = 'Public'
+    const collection = 'general'
     var updateFrom = lastPostUpdate
     if (updateFrom === undefined) {
       updateFrom = Date.now()
@@ -157,7 +161,9 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          collection: 'NapsPublic',
+          database: database,
+          collection: collection,
+          tags: categories,
           data: { createdAt: { $lt: updateFrom } },
           limit: maxNumberOfRequest,
         }),
@@ -165,12 +171,12 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
       const resp = await fetch(server + '/getUpdates', opts)
       const response = await resp.json()
       const updates = response.updates
+
       setLastUpdatedPost(updates[updates.length - 1])
       shufflePosts(updates)
       setUpdates(() => {
         return updates
       })
-      setPrevUpdates(updates)
       setGotUpdates(true)
     } catch (TypeError) {}
   }
@@ -215,7 +221,9 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              collection: 'NapsPublic',
+              database: 'Public',
+              tags: user.interestCategories,
+              collection: 'general',
               data: { createdAt: { $lt: updateFrom } },
               limit: maxNumberOfRequest,
             }),
