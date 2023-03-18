@@ -104,28 +104,30 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
       }
       const resp = await fetch(server + '/' + req, opts)
       const response = await resp.json()
+      const user = response.user
+      setUser(user)
       if (response.user === null) {
         window.localStorage.removeItem('sess-recg-id')
         window.localStorage.removeItem('idt-curr-usr')
         window.localStorage.removeItem('user-id')
         history.push('/signin')
       } else {
-        const user = response.user
-        setUser(user)
-        const opts1 = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            imgUrl: user.img.url,
-            matricNo: user.matricNo,
-          }),
+        if (user.img !== undefined && user.img !== null && user.img !== '') {
+          const opts1 = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              imgUrl: user.img.url,
+              userName: user.userName,
+            }),
+          }
+          const resp1 = await fetch(server + '/getImgUrl', opts1)
+          const response1 = await resp1.json()
+          const url = response1.url
+          setUserImgUrl(url)
         }
-        const resp1 = await fetch(server + '/getImgUrl', opts1)
-        const response1 = await resp1.json()
-        const url = response1.url
-        setUserImgUrl(url)
         setIsNewSession(true)
       }
     } catch (TypeError) {}

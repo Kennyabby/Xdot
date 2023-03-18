@@ -32,7 +32,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
   const [postUpdatesStatus, setPostUpdatesStatus] = useState('')
-  const [userImgUrl, setUserImgUrl] = useState(profimg)
+  const [userImgUrl, setUserImgUrl] = useState('')
   const [highlightedPost, setHighlightedPost] = useState(null)
   const [currentPostShow, setCurrentPostShow] = useState(null)
   const [newPostShow, setNewPostShow] = useState(null)
@@ -447,9 +447,6 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                           boxShadow: darkMode
                             ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
                             : '-5px -5px 10px rgba(250,250,250,0.1),5px 5px 10px rgba(250,250,250,0.1)',
-                          backgroundColor: darkMode
-                            ? 'rgba(255,255,255,0.2)'
-                            : 'rgba(240,240,240,1)',
                           backgroundSize: 'cover',
                           borderRadius: '50%',
                           border: 'solid rgba(220,220,220,1) 1px',

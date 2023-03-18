@@ -54,7 +54,7 @@ const Post = ({
   const [postUser, setPostUser] = useState({ userName: 'Creator' })
   const [leftOffset, setLeftOffset] = useState('')
   const [topOffset, setTopOffset] = useState('')
-  const [userImgUrl, setUserImgUrl] = useState(profimg)
+  const [userImgUrl, setUserImgUrl] = useState('')
   const [postPictures, setPostPictures] = useState([])
   const [imgLoaded, setImgLoaded] = useState(false)
   const [isReacted, setIsReacted] = useState(false)
@@ -723,9 +723,6 @@ const Post = ({
                       borderRadius: '50%',
                       border: 'solid rgba(220,220,220,1) 1px',
                       backgroundSize: 'cover',
-                      backgroundColor: darkMode
-                        ? 'rgba(255,255,255,0.2)'
-                        : 'white',
                       margin: '5px auto',
                     }}
                     PlaceholderSrc={profimg}
