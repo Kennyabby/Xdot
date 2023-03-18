@@ -445,7 +445,7 @@ const Profile = ({
     var imgSrc =
       imgUpdateName === 'Cover Photo'
         ? user.imgcover === undefined
-          ? user.userName + '_cover-' + user.matricNo
+          ? user.userName + '_cover'
           : user.imgcover.url
         : user.img === undefined || user.img === ''
         ? user.userName + '_img'
