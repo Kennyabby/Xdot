@@ -139,7 +139,7 @@ const Post = ({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          imgUrl: postUser.img,
+          imgUrl: postUser.img.url,
           userName: postUser.userName,
         }),
       }
@@ -158,7 +158,7 @@ const Post = ({
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                imgUrl: picture,
+                imgUrl: picture.url,
                 userName: postUser.userName,
                 imagePath: 'postImages',
               }),
@@ -167,7 +167,15 @@ const Post = ({
             const response2 = await resp2.json()
             const url1 = response2.url
             setPostPictures((postPictures) => {
-              return [...postPictures, url1]
+              return [
+                ...postPictures,
+                {
+                  url: url1,
+                  dominantColor: picture.dominantColor,
+                  width: picture.width,
+                  height: picture.height,
+                },
+              ]
             })
           })
         }
@@ -176,6 +184,18 @@ const Post = ({
   }, [postUser])
   useEffect(async () => {
     setUpdate(updt)
+    setPostPictures(() => {
+      const pictures = updt.postPicture.map((picture) => {
+        return {
+          url: '',
+          dominantColor: picture.dominantColor,
+          width: picture.width,
+          height: picture.height,
+        }
+      })
+      return [...pictures]
+    })
+
     if (!imgLoaded) {
       setUserImgUrl(profimg)
       setPostPictures([])
@@ -863,22 +883,28 @@ const Post = ({
                             cursor: 'pointer',
                             margin: '0px',
                             width: '100%',
+                            height: postPicture.height,
+                            backgroundColor: postPicture.dominantColor,
                           }}
                           onClick={() => {
                             setShowImage((showImage) => {
                               return {
                                 ...showImage,
                                 show: true,
-                                src: postPicture,
+                                src: postPicture.url,
                               }
                             })
                           }}
                         >
                           <LazyLoadImage
-                            src={postPicture}
+                            src={postPicture.url}
                             width='100%'
+                            height={postPicture.height}
                             effect='blur'
-                            style={{ cursor: 'pointer' }}
+                            style={{
+                              cursor: 'pointer',
+                              backgroundColor: postPicture.dominantColor,
+                            }}
                           />
                           {i === 4 && postPictures.length > 5 && (
                             <div
@@ -898,6 +924,7 @@ const Post = ({
                                     color: 'white',
                                     marginTop: '20px',
                                     fontSize: '2rem',
+                                    lineHeight: '100%',
                                     fontWeight: 'bold',
                                     flexWrap: 'wrap',
                                   }}

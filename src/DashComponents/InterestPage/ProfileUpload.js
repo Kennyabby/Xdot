@@ -23,7 +23,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
   const [skipStats, setSkipStats] = useState('Skip')
   const [contStats, setContStats] = useState('Continue')
   useEffect(async () => {
-    if (user !== null && user.img !== undefined && user.img !== '') {
+    if (user !== null && user.img.url !== undefined && user.img.url !== '') {
       setShowPhotoUpload(true)
       setShowCoverUpload(true)
       const opts1 = {
@@ -31,14 +31,18 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ imgUrl: user.img, userName: user.userName }),
+        body: JSON.stringify({ imgUrl: user.img.url, userName: user.userName }),
       }
       const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
     }
-    if (user !== null && user.imgcover !== undefined && user.imgcover !== '') {
+    if (
+      user !== null &&
+      user.imgcover.url !== undefined &&
+      user.imgcover.url !== ''
+    ) {
       setShowCoverUpload(true)
       const opts2 = {
         method: 'POST',
@@ -46,7 +50,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          imgUrl: user.imgcover,
+          imgUrl: user.imgcover.url,
           userName: user.userName,
         }),
       }
@@ -131,7 +135,13 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
     setImgTag('imgcover')
     imgcoverRef.current.click()
   }
-  const uploadImage = async ({ convertedFile, file }) => {
+  const uploadImage = async ({
+    convertedFile,
+    file,
+    dominantColor,
+    width,
+    height,
+  }) => {
     if (imgUpdateName === 'Cover Photo') {
       setViewImgcoverStatus(true)
     } else {
@@ -140,12 +150,12 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
     setImgStatus('Uploading Please Wait...')
     var imgSrc =
       imgUpdateName === 'Cover Photo'
-        ? user.imgcover === undefined || user.imgcover === ''
+        ? user.imgcover.url === undefined || user.imgcover.url === ''
           ? user.userName + '_cover'
           : user.imgcover
-        : user.img === undefined || user.img === ''
+        : user.img.url === undefined || user.img.url === ''
         ? user.userName + '_img'
-        : user.img
+        : user.img.url
     const imageInfo = {
       image: convertedFile,
       imageName: imgSrc,
@@ -168,7 +178,15 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
         body: JSON.stringify({
           prop: [
             { userName: user.userName },
-            { [studentInfo.tag]: studentInfo.img, skippedProfileUpload: false },
+            {
+              [studentInfo.tag]: {
+                url: studentInfo.img,
+                dominantColor: dominantColor,
+                width: width,
+                height: height,
+              },
+              skippedProfileUpload: false,
+            },
           ],
           ...studentBody,
         }),
@@ -224,9 +242,40 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
         elem.height = el.target.height * scaleFactor
 
         ctx.drawImage(el.target, 0, 0, elem.width, elem.height)
+        const imageData = ctx.getImageData(0, 0, elem.width, elem.height).data
 
+        const pixelColors = []
+        for (let i = 0; i < imageData.length; i += 4) {
+          const r = imageData[i]
+          const g = imageData[i + 1]
+          const b = imageData[i + 2]
+          const a = imageData[i + 3]
+          pixelColors.push(`rgba(${r}, ${g}, ${b}, ${a})`)
+        }
+
+        const uniqueColors = new Set(pixelColors)
+
+        const colorPalette = Array.from(uniqueColors)
+
+        const colorCounts = {}
+        let maxCount = 0
+        let dominantColor = ''
+        for (let i = 0; i < colorPalette.length; i++) {
+          const color = colorPalette[i]
+          colorCounts[color] = (colorCounts[color] || 0) + 1
+          if (colorCounts[color] > maxCount) {
+            maxCount = colorCounts[color]
+            dominantColor = color
+          }
+        }
         var srcEncoded = elem.toDataURL('image/jpeg')
-        uploadImage({ convertedFile: srcEncoded, file: file })
+        uploadImage({
+          convertedFile: srcEncoded,
+          file: file,
+          dominantColor: dominantColor,
+          width: elem.width,
+          height: elem.height,
+        })
       }
     }
   }

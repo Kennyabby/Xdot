@@ -117,7 +117,10 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ imgUrl: user.img, matricNo: user.matricNo }),
+          body: JSON.stringify({
+            imgUrl: user.img.url,
+            matricNo: user.matricNo,
+          }),
         }
         const resp1 = await fetch(server + '/getImgUrl', opts1)
         const response1 = await resp1.json()

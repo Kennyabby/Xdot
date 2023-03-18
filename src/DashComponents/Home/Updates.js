@@ -111,7 +111,10 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ imgUrl: user.img, userName: user.userName }),
+          body: JSON.stringify({
+            imgUrl: user.img.url,
+            userName: user.userName,
+          }),
         }
         const resp1 = await fetch(server + '/getImgUrl', opts1)
         const response1 = await resp1.json()

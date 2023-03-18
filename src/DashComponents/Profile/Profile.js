@@ -10,19 +10,11 @@ import ContextProvider from '../../ContextProvider'
 
 import imgcover from '../assets/userimgcover.jpg'
 import profimg from '../assets/user.png'
-import userimgmenu from '../assets/userimgmenu.png'
-import userimgwmenu from '../assets/wcamera.png'
 import usercontrolopt from '../assets/usercontrolopt.png'
-import edit from '../assets/edit1.png'
 import settings from '../assets/settings.jpg'
-import home from '../assets/home.png'
-import whome from '../assets/whome.png'
-import notifications from '../assets/notifications.png'
 import close from '../assets/close.png'
 import cancel from '../assets/cancel.png'
 import sblike from '../assets/sblike.png'
-import blhome from '../assets/blhome.png'
-import blbell from '../assets/blbell.png'
 
 import AdminBoard from './AdminBoard'
 
@@ -341,20 +333,20 @@ const Profile = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ imgUrl: user.img, userName: user.userName }),
+        body: JSON.stringify({ imgUrl: user.img.url, userName: user.userName }),
       }
       const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
       setUserImgUrl(url)
-      if (user.imgcover !== undefined && user.imgcover !== null) {
+      if (user.imgcover.url !== undefined && user.imgcover.url !== null) {
         const opts2 = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            imgUrl: user.imgcover,
+            imgUrl: user.imgcover.url,
             userName: user.userName,
           }),
         }
@@ -441,17 +433,23 @@ const Profile = ({
   const updateUserImage = () => {
     imgRef.current.click()
   }
-  const uploadImage = async ({ convertedFile, file }) => {
+  const uploadImage = async ({
+    convertedFile,
+    file,
+    dominantColor,
+    width,
+    height,
+  }) => {
     setViewImgStatus(true)
     setImgUpdateStatus('Uploading Image Please Wait...')
     var imgSrc =
       imgUpdateName === 'Cover Photo'
-        ? user.imgcover === undefined
+        ? user.imgcover.url === undefined
           ? user.userName + '_cover-' + user.matricNo
           : user.imgcover
-        : user.img === undefined || user.img === ''
+        : user.img.url === undefined || user.img.url === ''
         ? user.userName + '_img'
-        : user.img
+        : user.img.url
     const imageInfo = {
       image: convertedFile,
       imageName: imgSrc,
@@ -475,7 +473,14 @@ const Profile = ({
         body: JSON.stringify({
           prop: [
             { userName: user.userName },
-            { [studentInfo.tag]: studentInfo.img },
+            {
+              [studentInfo.tag]: {
+                url: studentInfo.img,
+                dominantColor: dominantColor,
+                width: width,
+                height: height,
+              },
+            },
           ],
           ...studentBody,
         }),
@@ -528,11 +533,43 @@ const Profile = ({
         elem.height = el.target.height * scaleFactor
 
         ctx.drawImage(el.target, 0, 0, elem.width, elem.height)
+        const imageData = ctx.getImageData(0, 0, elem.width, elem.height).data
+
+        const pixelColors = []
+        for (let i = 0; i < imageData.length; i += 4) {
+          const r = imageData[i]
+          const g = imageData[i + 1]
+          const b = imageData[i + 2]
+          const a = imageData[i + 3]
+          pixelColors.push(`rgba(${r}, ${g}, ${b}, ${a})`)
+        }
+
+        const uniqueColors = new Set(pixelColors)
+
+        const colorPalette = Array.from(uniqueColors)
+
+        const colorCounts = {}
+        let maxCount = 0
+        let dominantColor = ''
+        for (let i = 0; i < colorPalette.length; i++) {
+          const color = colorPalette[i]
+          colorCounts[color] = (colorCounts[color] || 0) + 1
+          if (colorCounts[color] > maxCount) {
+            maxCount = colorCounts[color]
+            dominantColor = color
+          }
+        }
 
         var srcEncoded = elem.toDataURL('image/jpeg')
         setDisplayImg(srcEncoded)
         setConvertedFile(srcEncoded)
-        uploadImage({ convertedFile: srcEncoded, file: file })
+        uploadImage({
+          convertedFile: srcEncoded,
+          file: file,
+          dominantColor: dominantColor,
+          width: elem.width,
+          height: elem.height,
+        })
       }
     }
   }
@@ -894,7 +931,7 @@ const Profile = ({
                 style={{
                   borderRadius: imgUpdateName === 'Cover Photo' ? '0px' : '50%',
                   width: imgUpdateName === 'Cover Photo' ? '90%' : '150px',
-                  height: imgUpdateName === 'Cover Photo' ? '70vh' : '150px',
+                  height: imgUpdateName === 'Cover Photo' ? '70vh' : '100px',
                   margin: 'auto',
                 }}
               />
@@ -906,6 +943,7 @@ const Profile = ({
                 onChange={fileHandler}
               />
               {viewImgStatus && <div>{imgUpdateStatus}</div>}
+
               {!viewImgStatus && (
                 <div>
                   <button
@@ -1067,6 +1105,10 @@ const Profile = ({
                     <option value='200'>200</option>
                     <option value='300'>300</option>
                     <option value='400'>400</option>
+                    <option value='500'>500</option>
+                    <option value='600'>600</option>
+                    <option value='700'>700</option>
+                    <option value='Post Graduate'>Post Graduate</option>
                   </select>
                 </div>
                 <div style={mainLabelStyle}>
@@ -1123,6 +1165,7 @@ const Profile = ({
             className='imgcover'
             style={{
               backgroundImage: `url(${userImgCoverUrl})`,
+              backgroundColor: user.imgcover.dominantColor,
               backgroundSize: 'cover',
             }}
             onClick={() => {
@@ -1137,6 +1180,7 @@ const Profile = ({
               style={{
                 backgroundImage: `url(${userImgUrl})`,
                 backgroundSize: 'cover',
+                backgroundColor: user.img.dominantColor,
                 border: 'solid white 2px',
               }}
               onClick={() => {

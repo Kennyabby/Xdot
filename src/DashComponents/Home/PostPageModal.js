@@ -20,6 +20,7 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
   const { darkMode, winSize } = useContext(ContextProvider)
   const [scrollPosition, setScrollPosition] = useState(0)
   const [selectedClusters, setSelectedClusters] = useState([])
+  const [imagesData, setImagesData] = useState([])
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
   const [lastTouch, setLastTouch] = useState(0)
@@ -71,15 +72,20 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
     // })
     var imagesInfo = []
     var imagesName = []
-    convertedFiles.forEach((file, i) => {
+    imagesData.forEach((data, i) => {
       var imgSrc = user.userName + '_' + String(Date.now() + i)
       var imageInfo = {
-        image: file,
+        image: convertedFiles[i],
         imageName: imgSrc,
-        imageType: file.type,
+        imageType: convertedFiles[i]['type'],
       }
       imagesInfo = imagesInfo.concat(imageInfo)
-      imagesName = imagesName.concat(imgSrc)
+      imagesName = imagesName.concat({
+        url: imgSrc,
+        dominantColor: data.dominantColor,
+        width: data.width,
+        height: data.height,
+      })
     })
 
     try {
@@ -162,9 +168,44 @@ const PostPageModal = ({ closeModal, notifyUpdate, user, server }) => {
           elem.height = el.target.height * scaleFactor
 
           ctx.drawImage(el.target, 0, 0, elem.width, elem.height)
+          const imageData = ctx.getImageData(0, 0, elem.width, elem.height).data
 
+          const pixelColors = []
+          for (let i = 0; i < imageData.length; i += 4) {
+            const r = imageData[i]
+            const g = imageData[i + 1]
+            const b = imageData[i + 2]
+            const a = imageData[i + 3]
+            pixelColors.push(`rgba(${r}, ${g}, ${b}, ${a})`)
+          }
+
+          const uniqueColors = new Set(pixelColors)
+
+          const colorPalette = Array.from(uniqueColors)
+
+          const colorCounts = {}
+          let maxCount = 0
+          let dominantColor = ''
+          for (let i = 0; i < colorPalette.length; i++) {
+            const color = colorPalette[i]
+            colorCounts[color] = (colorCounts[color] || 0) + 1
+            if (colorCounts[color] > maxCount) {
+              maxCount = colorCounts[color]
+              dominantColor = color
+            }
+          }
           var srcEncoded = elem.toDataURL('image/jpeg')
           // setDisplayImg(srcEncoded)
+          setImagesData((imagesData) => {
+            return [
+              ...imagesData,
+              {
+                dominantColor: dominantColor,
+                width: elem.width,
+                height: elem.height,
+              },
+            ]
+          })
           setConvertedFiles((convertedFiles) => {
             return [...convertedFiles, srcEncoded]
           })
