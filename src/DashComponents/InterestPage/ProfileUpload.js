@@ -23,7 +23,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
   const [skipStats, setSkipStats] = useState('Skip')
   const [contStats, setContStats] = useState('Continue')
   useEffect(async () => {
-    if (user !== null && user.img.url !== undefined && user.img.url !== '') {
+    if (user !== null && user.img == undefined && user.img !== '') {
       setShowPhotoUpload(true)
       setShowCoverUpload(true)
       const opts1 = {
@@ -38,11 +38,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
       const url = response1.url
       setUserImgUrl(url)
     }
-    if (
-      user !== null &&
-      user.imgcover.url !== undefined &&
-      user.imgcover.url !== ''
-    ) {
+    if (user !== null && user.imgcover !== undefined && user.imgcover !== '') {
       setShowCoverUpload(true)
       const opts2 = {
         method: 'POST',
