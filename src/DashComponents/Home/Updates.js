@@ -443,6 +443,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                         width={40}
                         height={40}
                         style={{
+                          backgroundColor: user.img.dominantColor,
                           boxShadow: darkMode
                             ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
                             : '-5px -5px 10px rgba(250,250,250,0.1),5px 5px 10px rgba(250,250,250,0.1)',
