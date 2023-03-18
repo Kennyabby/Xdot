@@ -54,7 +54,7 @@ const Post = ({
   const [postUser, setPostUser] = useState({ userName: 'Creator' })
   const [leftOffset, setLeftOffset] = useState('')
   const [topOffset, setTopOffset] = useState('')
-  const [userImgUrl, setUserImgUrl] = useState('')
+  const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [postPictures, setPostPictures] = useState([])
   const [imgLoaded, setImgLoaded] = useState(false)
   const [isReacted, setIsReacted] = useState(false)
@@ -184,17 +184,19 @@ const Post = ({
   }, [postUser])
   useEffect(async () => {
     setUpdate(updt)
-    setPostPictures(() => {
-      const pictures = updt.postPicture.map((picture) => {
-        return {
-          url: '',
-          dominantColor: picture.dominantColor,
-          width: picture.width,
-          height: picture.height,
-        }
+    if (updt.pictures !== undefined) {
+      setPostPictures(() => {
+        const pictures = updt.postPicture.map((picture) => {
+          return {
+            url: '',
+            dominantColor: picture.dominantColor,
+            width: picture.width,
+            height: picture.height,
+          }
+        })
+        return [...pictures]
       })
-      return [...pictures]
-    })
+    }
 
     if (!imgLoaded) {
       setUserImgUrl(profimg)

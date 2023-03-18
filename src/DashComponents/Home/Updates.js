@@ -32,7 +32,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
   const [postUpdatesStatus, setPostUpdatesStatus] = useState('')
-  const [userImgUrl, setUserImgUrl] = useState('')
+  const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [highlightedPost, setHighlightedPost] = useState(null)
   const [currentPostShow, setCurrentPostShow] = useState(null)
   const [newPostShow, setNewPostShow] = useState(null)
@@ -103,6 +103,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
     }
   }, [winSize])
   useEffect(async () => {
+    console.log(user)
     if (user.userName !== undefined && user.img !== '') {
       try {
         const opts1 = {

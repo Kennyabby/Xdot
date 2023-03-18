@@ -79,6 +79,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
       const updated = response.updated
       if (updated) {
         history.push('./')
+        window.location.reload()
         setShowMessage(false)
       } else {
         setShowMessage(true)
