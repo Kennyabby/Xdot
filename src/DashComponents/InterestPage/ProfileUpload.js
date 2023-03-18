@@ -53,7 +53,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
       const resp2 = await fetch(server + '/getImgUrl', opts2)
       const response2 = await resp2.json()
       const url = response2.url
-      setUserImgUrl(url)
+      setUserImgCoverUrl(url)
       // setUserImgCoverUrl(user.imgCover)
     }
   }, [user])
@@ -146,10 +146,10 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
     setImgStatus('Uploading Please Wait...')
     var imgSrc =
       imgUpdateName === 'Cover Photo'
-        ? user.imgcover.url === undefined || user.imgcover.url === ''
+        ? user.imgcover === undefined || user.imgcover === ''
           ? user.userName + '_cover'
-          : user.imgcover
-        : user.img.url === undefined || user.img.url === ''
+          : user.imgcover.url
+        : user.img === undefined || user.img === ''
         ? user.userName + '_img'
         : user.img.url
     const imageInfo = {
@@ -189,17 +189,14 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
       }
       const resp = await fetch(server + '/updateUserImg', opts)
       const feedBack = await resp.json()
-      // setSubmitStatus('Submit')
       if (feedBack.isDelivered === true) {
         setViewImgStatus(false)
         setViewImgcoverStatus(false)
         setImgStatus('')
         if (imgTag === 'img') {
-          user.img = user.userName + '_img'
           setUserImgUrl(convertedFile)
           setShowCoverUpload(true)
         } else {
-          user.imgcover = user.userName + '_cover'
           setUserImgCoverUrl(convertedFile)
         }
       } else {
@@ -302,29 +299,33 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
         <div style={{ fontFamily: 'MonteserratBold' }}>
           <h2>Let People Know It's You.</h2>
         </div>
-        <div
-          style={{
-            margin: '10px',
-            marginTop: '30px',
-            marginBottom: '30px',
-            marginLeft: 'auto',
-            width: 'fit-content',
-          }}
-        >
-          <label
+        {!showCoverUpload && (
+          <div
             style={{
-              cursor: 'pointer',
-              padding: '8px 15px',
-              borderRadius: '10px',
-              color: 'rgba(10, 105, 214)',
-              fontFamily: 'SourceCodeProBold',
-              boxShadow: darkMode ? '0px 0px 10px white' : '0px 0px 10px black',
+              margin: '10px',
+              marginTop: '30px',
+              marginBottom: '30px',
+              marginLeft: 'auto',
+              width: 'fit-content',
             }}
-            onClick={handleSkipped}
           >
-            {skipStats}
-          </label>
-        </div>
+            <label
+              style={{
+                cursor: 'pointer',
+                padding: '8px 15px',
+                borderRadius: '10px',
+                color: 'rgba(10, 105, 214)',
+                fontFamily: 'SourceCodeProBold',
+                boxShadow: darkMode
+                  ? '0px 0px 10px white'
+                  : '0px 0px 10px black',
+              }}
+              onClick={handleSkipped}
+            >
+              {skipStats}
+            </label>
+          </div>
+        )}
         {showPhotoUpload && (
           <div>
             <div style={{ fontFamily: 'MonteserratRegular' }}>
@@ -449,9 +450,9 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
           <div
             style={{
               width: 'fit-content',
-              margin: '10px',
+              margin: '20px',
+              marginTop: '50px',
               marginRight: 'auto',
-              marginTop: '70px',
             }}
           >
             <label

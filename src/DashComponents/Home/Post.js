@@ -717,7 +717,9 @@ const Post = ({
                     height={50}
                     style={{
                       backgroundColor:
-                        postUser !== null && postUser.img !== undefined
+                        postUser !== null &&
+                        postUser.img !== undefined &&
+                        postUser.img !== ''
                           ? postUser.img.dominantColor
                           : '',
                       borderRadius: '50%',

@@ -89,7 +89,6 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
     }
 
     if (openAIKey) {
-      console.log(openAIKey)
       getAnswers()
     }
   }, [openAIKey])
@@ -104,7 +103,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
     }
   }, [winSize])
   useEffect(async () => {
-    if (user.userName !== undefined) {
+    if (user.userName !== undefined && user.img !== '') {
       try {
         const opts1 = {
           method: 'POST',
@@ -443,7 +442,8 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                         width={40}
                         height={40}
                         style={{
-                          backgroundColor: user.img.dominantColor,
+                          backgroundColor:
+                            user.img !== '' ? user.img.dominantColor : '',
                           boxShadow: darkMode
                             ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
                             : '-5px -5px 10px rgba(250,250,250,0.1),5px 5px 10px rgba(250,250,250,0.1)',

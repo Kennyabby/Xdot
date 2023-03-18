@@ -1165,7 +1165,8 @@ const Profile = ({
             className='imgcover'
             style={{
               backgroundImage: `url(${userImgCoverUrl})`,
-              backgroundColor: user.imgcover.dominantColor,
+              backgroundColor:
+                user.imgcover !== undefined ? user.imgcover.dominantColor : '',
               backgroundSize: 'cover',
             }}
             onClick={() => {
@@ -1180,7 +1181,7 @@ const Profile = ({
               style={{
                 backgroundImage: `url(${userImgUrl})`,
                 backgroundSize: 'cover',
-                backgroundColor: user.img.dominantColor,
+                backgroundColor: user.img !== '' ? user.img.dominantColor : '',
                 border: 'solid white 2px',
               }}
               onClick={() => {
