@@ -80,17 +80,22 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow, setShowNavOpt }) => {
       } else {
         const user = response.user
         setUser(user)
-        const opts1 = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ imgUrl: user.img, userName: user.userName }),
+        if (![undefined, null, ''].includes(user.img)) {
+          const opts1 = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              imgUrl: user.img.url,
+              userName: user.userName,
+            }),
+          }
+          const resp1 = await fetch(server + '/getImgUrl', opts1)
+          const response1 = await resp1.json()
+          const url = response1.url
+          setUserImgUrl(url)
         }
-        const resp1 = await fetch(server + '/getImgUrl', opts1)
-        const response1 = await resp1.json()
-        const url = response1.url
-        setUserImgUrl(url)
       }
     } catch (TypeError) {}
   }
