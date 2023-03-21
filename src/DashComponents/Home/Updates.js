@@ -32,7 +32,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
   const [postUpdatesStatus, setPostUpdatesStatus] = useState('')
-  const [userImgUrl, setUserImgUrl] = useState('')
+  const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [highlightedPost, setHighlightedPost] = useState(null)
   const [currentPostShow, setCurrentPostShow] = useState(null)
   const [newPostShow, setNewPostShow] = useState(null)
@@ -89,7 +89,6 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
     }
 
     if (openAIKey) {
-      console.log(openAIKey)
       getAnswers()
     }
   }, [openAIKey])
@@ -104,7 +103,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
     }
   }, [winSize])
   useEffect(async () => {
-    if (user.userName !== undefined) {
+    if (user.userName !== undefined && user.img !== '') {
       try {
         const opts1 = {
           method: 'POST',
@@ -174,12 +173,12 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
       const resp = await fetch(server + '/getUpdates', opts)
       const response = await resp.json()
       const updates = response.updates
-
       setLastUpdatedPost(updates[updates.length - 1])
       shufflePosts(updates)
       setUpdates(() => {
         return updates
       })
+      setPrevUpdates(updates)
       setGotUpdates(true)
     } catch (TypeError) {}
   }
@@ -214,6 +213,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
       highlightedPost === null
     ) {
       var updateFrom = lastUpdatedPost.createdAt
+      console.log('prev Updates:', prevUpdates.length)
       if (prevUpdates.length === maxNumberOfRequest) {
         setShowPostUpdatesStatus(true)
         setPostUpdatesStatus('More Updates...')
@@ -443,7 +443,8 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                         width={40}
                         height={40}
                         style={{
-                          backgroundColor: user.img.dominantColor,
+                          backgroundColor:
+                            user.img !== '' ? user.img.dominantColor : '',
                           boxShadow: darkMode
                             ? '-5px -5px 10px rgba(0,0,0,0.1),5px 5px 10px rgba(0,0,0,0.1)'
                             : '-5px -5px 10px rgba(250,250,250,0.1),5px 5px 10px rgba(250,250,250,0.1)',

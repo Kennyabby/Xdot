@@ -1,4 +1,11 @@
-import { React, useState, useEffect, useRef, useContext } from 'react'
+import {
+  React,
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useContext,
+} from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { useParams, useHistory } from 'react-router-dom'
@@ -51,10 +58,11 @@ const Post = ({
   const commentInputRef = useRef(null)
   const reactActionRef = useRef(null)
   const reactionsRef = useRef(null)
+  const pstRef = useRef(null)
   const [postUser, setPostUser] = useState({ userName: 'Creator' })
   const [leftOffset, setLeftOffset] = useState('')
   const [topOffset, setTopOffset] = useState('')
-  const [userImgUrl, setUserImgUrl] = useState('')
+  const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [postPictures, setPostPictures] = useState([])
   const [imgLoaded, setImgLoaded] = useState(false)
   const [isReacted, setIsReacted] = useState(false)
@@ -65,6 +73,7 @@ const Post = ({
   const [showPost, setShowPost] = useState(true)
   const [showImage, setShowImage] = useState({ show: false })
   const [postShow, setPostShow] = useState(null)
+  const [pstWidth, setPstWidth] = useState(pstRef.current?.offsetWidth)
   const [update, setUpdate] = useState({})
   const [postReaction, setPostReaction] = useState({
     name: 'react',
@@ -83,7 +92,11 @@ const Post = ({
     { name: 'sad', src: sad },
     { name: 'angry', src: angry },
   ]
-
+  useLayoutEffect(() => {
+    if (pstRef.current) {
+      setPstWidth(pstRef.current.offsetWidth)
+    }
+  }, [pstRef])
   useEffect(() => {
     if (window.innerWidth <= 700) {
       setLeftOffset(String(-((window.innerWidth - 300) / 2 + 100)) + 'px')
@@ -184,17 +197,19 @@ const Post = ({
   }, [postUser])
   useEffect(async () => {
     setUpdate(updt)
-    setPostPictures(() => {
-      const pictures = updt.postPicture.map((picture) => {
-        return {
-          url: '',
-          dominantColor: picture.dominantColor,
-          width: picture.width,
-          height: picture.height,
-        }
+    if (updt.pictures !== undefined) {
+      setPostPictures(() => {
+        const pictures = updt.postPicture.map((picture) => {
+          return {
+            url: '',
+            dominantColor: picture.dominantColor,
+            width: picture.width,
+            height: picture.height,
+          }
+        })
+        return [...pictures]
       })
-      return [...pictures]
-    })
+    }
 
     if (!imgLoaded) {
       setUserImgUrl(profimg)
@@ -672,7 +687,7 @@ const Post = ({
           </div>
         ) : undefined}
         {postShow === null ? (
-          <div style={{ position: 'relative' }}>
+          <div ref={pstRef} style={{ position: 'relative' }}>
             <div
               style={{
                 width: 'fit-content',
@@ -717,7 +732,9 @@ const Post = ({
                     height={50}
                     style={{
                       backgroundColor:
-                        postUser !== null && postUser.img !== undefined
+                        postUser !== null &&
+                        postUser.img !== undefined &&
+                        postUser.img !== ''
                           ? postUser.img.dominantColor
                           : '',
                       borderRadius: '50%',
@@ -735,7 +752,7 @@ const Post = ({
                 style={{
                   marginTop: '20px',
                   marginLeft: '5px',
-                  fontStyle: 'italic',
+                  // fontStyle: 'italic',
                   fontSize: '.7rem',
                   textAlign: 'left',
                 }}
@@ -747,7 +764,7 @@ const Post = ({
                     <label
                       style={{
                         fontWeight: 'bold',
-                        fontFamily: 'Calibri',
+                        fontFamily: 'MonteserratRegular',
                         fontSize: '.9rem',
                       }}
                     >
@@ -779,12 +796,12 @@ const Post = ({
                       textAlign: 'left',
                       padding: '10px',
                       margin: '15px',
-                      fontFamily: 'Calibri',
+                      fontFamily: 'MonteserratRegular',
                       borderRadius: '10px',
                       whiteSpace: 'pre-wrap',
-                      backgroundColor: darkMode
-                        ? 'rgba(29,29,30,0.8)'
-                        : 'whitesmoke',
+                      // backgroundColor: darkMode
+                      //   ? 'rgba(29,29,30,0.8)'
+                      //   : 'whitesmoke',
                     }}
                   >
                     {update.postComment !== undefined &&
@@ -884,7 +901,10 @@ const Post = ({
                             cursor: 'pointer',
                             margin: '0px',
                             width: '100%',
-                            height: postPicture.height,
+                            height: Math.round(
+                              (postPicture.height / postPicture.width) *
+                                pstWidth
+                            ),
                             backgroundColor: postPicture.dominantColor,
                           }}
                           onClick={() => {
@@ -900,7 +920,10 @@ const Post = ({
                           <LazyLoadImage
                             src={postPicture.url}
                             width='100%'
-                            height={postPicture.height}
+                            height={Math.round(
+                              (postPicture.height / postPicture.width) *
+                                pstWidth
+                            )}
                             effect='blur'
                             style={{
                               cursor: 'pointer',
