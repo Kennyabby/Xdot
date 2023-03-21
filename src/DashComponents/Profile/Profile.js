@@ -444,10 +444,10 @@ const Profile = ({
     setImgUpdateStatus('Uploading Image Please Wait...')
     var imgSrc =
       imgUpdateName === 'Cover Photo'
-        ? user.imgcover.url === undefined
+        ? user.imgcover === undefined
           ? user.userName + '_cover-' + user.matricNo
-          : user.imgcover
-        : user.img.url === undefined || user.img.url === ''
+          : user.imgcover.url
+        : user.img === undefined || user.img === ''
         ? user.userName + '_img'
         : user.img.url
     const imageInfo = {
@@ -457,7 +457,7 @@ const Profile = ({
     }
     var studentInfo = {
       img: imgSrc,
-      tag: imgSrc === user.img ? 'img' : 'imgcover',
+      tag: imgUpdateName === 'Cover Photo' ? 'imgcover' : 'img',
     }
 
     const studentBody = {
