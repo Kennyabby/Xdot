@@ -42,7 +42,7 @@ const PostCommentReply = ({
   const { darkMode } = useContext(ContextProvider)
   useEffect(() => {
     rep.commentReply.reaction.forEach((rct) => {
-      if (rct.matricNo === user.matricNo) {
+      if (rct.userName === user.userName) {
         setIsCommentReacted(true)
       }
     })
@@ -57,7 +57,7 @@ const PostCommentReply = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ imgUrl: rep.img, matricNo: rep.matricNo }),
+        body: JSON.stringify({ imgUrl: rep.img.url, userName: rep.userName }),
       }
       const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
@@ -68,7 +68,7 @@ const PostCommentReply = ({
   }, [rep])
   useEffect(() => {
     rep.commentReply.reaction.forEach((rct) => {
-      if (rct.matricNo === user.matricNo) {
+      if (rct.userName === user.userName) {
         var commentReaction = emojis.filter((emoji) => {
           return emoji.name === rct.reaction
         })
@@ -177,10 +177,13 @@ const PostCommentReply = ({
             width={50}
             height={50}
             style={{
+              backgroundColor:
+                rep !== null && rep.img !== undefined && rep.img !== ''
+                  ? rep.img.dominantColor
+                  : '',
               borderRadius: '50%',
               border: 'solid rgba(220,220,220,1) 1px',
               backgroundSize: 'cover',
-              backgroundColor: darkMode ? 'black' : 'white',
               margin: '5px auto',
             }}
             PlaceholderSrc={profimg}
@@ -367,8 +370,8 @@ const PostCommentReply = ({
         </div>
         <label
           onClick={() => {
-            if (rep.matricNo !== user.matricNo) {
-              reply({ value: '@' + rep.userName + ' ', matricNo: rep.matricNo })
+            if (rep.userName !== user.userName) {
+              reply({ value: '@' + rep.userName + ' ', userName: rep.userName })
             }
           }}
           style={{

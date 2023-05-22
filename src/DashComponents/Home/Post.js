@@ -298,13 +298,12 @@ const Post = ({
         if (rct === 'react') {
           if (reacted) {
             rctBody = rctBody.filter((bdy) => {
-              if (bdy.matricNo !== user.matricNo) {
+              if (bdy.userName !== user.userName) {
                 return bdy
               }
             })
           } else {
             const body = {
-              matricNo: user.matricNo,
               userName: user.userName,
               img: user.img,
               createdAt: Date.now(),
@@ -319,19 +318,18 @@ const Post = ({
                 if (statorBody.action === 'react') {
                   var reacted = false
                   bdy.comment.reaction.forEach((bdycm) => {
-                    if (bdycm.matricNo === user.matricNo) {
+                    if (bdycm.userName === user.userName) {
                       reacted = true
 
                       bdy.comment.reaction = bdy.comment.reaction.filter(
                         (bd) => {
-                          return bd.matricNo !== user.matricNo
+                          return bd.userName !== user.userName
                         }
                       )
                     }
                   })
                   if (reacted === false) {
                     const body = {
-                      matricNo: user.matricNo,
                       userName: user.userName,
                       img: user.img,
                       createdAt: Date.now(),
@@ -348,17 +346,16 @@ const Post = ({
                         if (statorBody.statorReplyBody.action === 'react') {
                           var reacted = false
                           rpl.commentReply.reaction.forEach((rl) => {
-                            if (rl.matricNo === user.matricNo) {
+                            if (rl.userName === user.userName) {
                               reacted = true
                               rpl.commentReply.reaction =
                                 rpl.commentReply.reaction.filter((bd) => {
-                                  return bd.matricNo !== user.matricNo
+                                  return bd.userName !== user.userName
                                 })
                             }
                           })
                           if (reacted === false) {
                             const body = {
-                              matricNo: user.matricNo,
                               userName: user.userName,
                               img: user.img,
                               createdAt: Date.now(),
@@ -372,7 +369,6 @@ const Post = ({
                     })
                   } else {
                     const body = {
-                      matricNo: user.matricNo,
                       userName: user.userName,
                       img: user.img,
                       createdAt: Date.now(),
@@ -388,7 +384,6 @@ const Post = ({
             })
           } else {
             const body = {
-              matricNo: user.matricNo,
               userName: user.userName,
               img: user.img,
               createdAt: Date.now(),
@@ -398,7 +393,6 @@ const Post = ({
           }
         } else if (rct === 'share') {
           const body = {
-            matricNo: user.matricNo,
             userName: user.userName,
             img: user.img,
             createdAt: Date.now(),
@@ -412,7 +406,8 @@ const Post = ({
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              collection: 'NapsPublic',
+              database: 'Public',
+              collection: 'general',
               prop: [
                 { createdAt: update.createdAt },
                 {
@@ -1333,7 +1328,7 @@ const Post = ({
                             currentPostShow(req.post)
                           }}
                           postShow={null}
-                          setPostComment={({ value, matricNo }) => {
+                          setPostComment={({ value, userName }) => {
                             setPostComment(value)
                             commentInputRef.current.focus()
                             setTimeout(() => {
@@ -1391,7 +1386,7 @@ const Post = ({
                           currentPostShow(req.post)
                         }}
                         showPost={showPost}
-                        setPostComment={({ value, matricNo }) => {
+                        setPostComment={({ value, userName }) => {
                           setPostComment(value)
                           commentInputRef.current.focus()
                           setTimeout(() => {

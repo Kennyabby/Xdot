@@ -52,13 +52,13 @@ const PostComment = ({
     setCommentReactionList(elem.comment.reaction)
   }, [elem])
   useEffect(async () => {
-    if (elem.matricNo !== undefined && !imgLoaded) {
+    if (elem.userName !== undefined && !imgLoaded) {
       const opts1 = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ imgUrl: elem.img, userName: elem.userName }),
+        body: JSON.stringify({ imgUrl: elem.img.url, userName: elem.userName }),
       }
       const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
@@ -69,7 +69,7 @@ const PostComment = ({
   }, [elem])
   useEffect(() => {
     elem.comment.reaction.forEach((rct) => {
-      if (rct.matricNo === user.matricNo) {
+      if (rct.userName === user.userName) {
         setIsCommentReacted(true)
       }
     })
@@ -78,7 +78,7 @@ const PostComment = ({
 
   useEffect(() => {
     elem.comment.reaction.forEach((rct) => {
-      if (rct.matricNo === user.matricNo) {
+      if (rct.userName === user.userName) {
         var commentReaction = emojis.filter((emoji) => {
           return emoji.name === rct.reaction
         })
@@ -184,10 +184,13 @@ const PostComment = ({
             width={50}
             height={50}
             style={{
+              backgroundColor:
+                elem !== null && elem.img !== undefined && elem.img !== ''
+                  ? elem.img.dominantColor
+                  : '',
               borderRadius: '50%',
               border: 'solid rgba(220,220,220,1) 1px',
               backgroundSize: 'cover',
-              backgroundColor: darkMode ? 'black' : 'white',
               margin: '5px auto',
             }}
             PlaceholderSrc={profimg}
@@ -415,7 +418,7 @@ const PostComment = ({
                   rct: 'comment',
                   statorBody: {
                     action: 'react',
-                    matricNo: elem.matricNo,
+                    userName: elem.userName,
                     createdAt: elem.createdAt,
                   },
                 })
@@ -481,8 +484,8 @@ const PostComment = ({
                     user={user}
                     rep={rep}
                     postShow={postShow}
-                    reply={({ value, matricNo }) => {
-                      setPostComment({ value: value, matricNo: matricNo })
+                    reply={({ value, userName }) => {
+                      setPostComment({ value: value, userName: userName })
                     }}
                     updateReactions={(value) => {
                       updateReactions(value)
