@@ -146,10 +146,10 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
     setImgStatus('Uploading Please Wait...')
     var imgSrc =
       imgUpdateName === 'Cover Photo'
-        ? user.imgcover.url === undefined || user.imgcover.url === ''
+        ? user.imgcover === undefined || user.imgcover === ''
           ? user.userName + '_cover'
-          : user.imgcover
-        : user.img.url === undefined || user.img.url === ''
+          : user.imgcover.url
+        : user.img === undefined || user.img === ''
         ? user.userName + '_img'
         : user.img.url
     const imageInfo = {
@@ -195,11 +195,11 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
         setViewImgcoverStatus(false)
         setImgStatus('')
         if (imgTag === 'img') {
-          user.img = user.userName + '_img'
+          user.img = { url: user.userName + '_img' }
           setUserImgUrl(convertedFile)
           setShowCoverUpload(true)
         } else {
-          user.imgcover = user.userName + '_cover'
+          user.imgcover = { url: user.userName + '_cover' }
           setUserImgCoverUrl(convertedFile)
         }
       } else {
