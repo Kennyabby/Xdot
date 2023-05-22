@@ -58,7 +58,7 @@ const PostComment = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ imgUrl: elem.img, matricNo: elem.matricNo }),
+        body: JSON.stringify({ imgUrl: elem.img, userName: elem.userName }),
       }
       const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()

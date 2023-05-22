@@ -270,7 +270,8 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          collection: 'NapsPublic',
+          database: 'Public',
+          collection: 'general',
           data: { createdAt: createdAt },
         }),
       }
