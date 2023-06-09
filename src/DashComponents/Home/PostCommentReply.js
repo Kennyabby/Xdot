@@ -51,7 +51,7 @@ const PostCommentReply = ({
   const statement = rep.commentReply.statement
   const commentReactionList = rep.commentReply.reaction
   useEffect(async () => {
-    if (rep.matricNo !== undefined && !imgLoaded) {
+    if (rep.userName !== undefined && !imgLoaded) {
       const opts1 = {
         method: 'POST',
         headers: {
