@@ -687,8 +687,8 @@ const Post = ({
               style={{
                 width: 'fit-content',
                 position: 'absolute',
-                right: '10px',
-                top: '20px',
+                right: '20px',
+                top: '23px',
                 cursor: 'pointer',
               }}
               onClick={() => {}}
