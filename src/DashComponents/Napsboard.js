@@ -13,6 +13,7 @@ import SideNavigator from './SideNavigator'
 import Home from './Home/Home'
 import Chats from './Chats/Chats'
 import Profile from './Profile/Profile'
+import ProfView from './Profile/ProfView'
 import InterestPage from './InterestPage/InterestPage'
 import Settings from './Settings/Settings'
 import Events from './Events/Events'
@@ -269,6 +270,25 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
           }}
         />
       )
+    } else if (id === 'profile-view') {
+      setView(
+        <Profile
+          server={server}
+          chatrf={chatsRef}
+          homerf={homeRef}
+          notificationsrf={notificationsRef}
+          user={user}
+          setShowNavigator={setShowNavigator(true)}
+          setShowNav={setShowNav(false)}
+          padding={'0px'}
+          margin={'0px'}
+          clickAdmin={true}
+          isSearched={false}
+          showHomeToggle={(show) => {
+            setShowHomeToggle(show)
+          }}
+        />
+      )
     } else if (id === 'e-voting') {
       setView(
         <EVoting
@@ -433,6 +453,21 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
             />
           )
         }
+      } else if (rootView === 'profile-view') {
+        setView(
+          <ProfView
+            server={server}
+            chatrf={chatsRef}
+            homerf={homeRef}
+            notificationsrf={notificationsRef}
+            user={user}
+            setShowNav={setShowNav(false)}
+            setShowNavigator={setShowNavigator(true)}
+            setShowHomeToggle={(show) => {
+              setShowHomeToggle(show)
+            }}
+          />
+        )
       } else if (rootView === 'e-voting') {
         setShowHomeToggle(true)
         if (id === 'apply') {

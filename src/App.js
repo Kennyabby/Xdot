@@ -219,6 +219,14 @@ const App = () => {
               winSize={size}
             />
           </Route>
+          <Route path={'/dashboard/profile-view/:id'}>
+            <Napsboard
+              rootView='profile-view'
+              server={SERVER}
+              userId={userId}
+              winSize={size}
+            />
+          </Route>
           <Route
             path={'/dashboard/:' + 'id'}
             children={

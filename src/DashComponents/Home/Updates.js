@@ -3,13 +3,14 @@ import '../Events/Events.css'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import { motion, AnimatePresence, usePresence } from 'framer-motion'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { FaSearch } from 'react-icons/fa'
+import { FaSearch, FaTimes } from 'react-icons/fa'
 import axios from 'axios'
 import { Configuration, OpenAIApi } from 'openai'
 
 import profimg from '../Events/assets/profile.png'
 import Post from './Post'
 import PostPageModal from './PostPageModal'
+import SResult from './SResult'
 import ContextProvider from '../../ContextProvider'
 
 const Updates = ({ user, server, showHomeToggle, viewRef }) => {
@@ -26,9 +27,13 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   const [lastUpdatedPost, setLastUpdatedPost] = useState('')
   const [scrollCompleted, setScrollCompleted] = useState(true)
   const [showPostUpdatesStatus, setShowPostUpdatesStatus] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [showPostPage, setShowPostPage] = useState(false)
   const [gotUpdates, setGotUpdates] = useState(false)
   const [showSearch, setShowSearch] = useState(true)
+  const [viewSearch, setViewSearch] = useState(false)
+  const [search, setSearch] = useState('')
+  const [searchResult, setSearchResult] = useState([])
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
   const [postUpdatesStatus, setPostUpdatesStatus] = useState('')
@@ -65,6 +70,34 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
   useEffect(() => {
     showHomeToggle(true)
   }, [])
+  useEffect(async () => {
+    if (search) {
+      setViewSearch(true)
+      setIsLoading(true)
+      try {
+        const opts = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({}),
+        }
+        const resp = await fetch(server + '/getUsersDetails', opts)
+        const response = await resp.json()
+        const results = response.users
+        const searchResult = results.filter((result) => {
+          return (
+            result.userName.toLowerCase().includes(search.toLowerCase()) ||
+            (result.firstName + ' ' + result.middleName + ' ' + result.lastName)
+              .toLowerCase()
+              .includes(search.toLowerCase())
+          )
+        })
+        setSearchResult(searchResult)
+        setIsLoading(false)
+      } catch (TypeError) {}
+    }
+  }, [search])
   useEffect(() => {
     const getAnswers = async () => {
       const openai = new OpenAIApi(config)
@@ -491,11 +524,17 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                           marginTop: '12px',
                           cursor: 'pointer',
                         }}
-                        onClick={() => {}}
+                        onClick={() => {
+                          setViewSearch(true)
+                        }}
                       />
                       <input
                         type='search'
                         placeholder='Search Pages, Posts, Clusters...'
+                        value={search}
+                        onChange={(e) => {
+                          setSearch(e.target.value)
+                        }}
                         style={{
                           fontFamily: 'MonteserratRegular',
                           backgroundColor: darkMode
@@ -514,6 +553,73 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                 </motion.div>
               )}
             </AnimatePresence>
+            {viewSearch && (
+              <div
+                style={{
+                  position: 'relative',
+                  fontFamily: 'MonteserratRegular',
+                  height: '80vh',
+                  overflowY: 'auto',
+                  margin: winSize > 700 ? '20px' : '20px auto',
+                  backgroundColor: darkMode ? 'black' : 'white',
+                }}
+              >
+                <FaTimes
+                  style={{
+                    position: 'absolute',
+                    top: '10px',
+                    color: darkMode ? 'white' : 'black',
+                    right: '23px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    setViewSearch(false)
+                  }}
+                />
+
+                {!search ? (
+                  <div>
+                    <label
+                      style={{
+                        position: 'absolute',
+                        top: '20px',
+                        color: darkMode
+                          ? 'rgba(190,190,200)'
+                          : 'rgba(16,16,16)',
+                        fontWeight: 'bold',
+                        left: '15px',
+                      }}
+                    >
+                      Recent
+                    </label>
+                    <div style={{ margin: '60px auto', fontSize: '.8rem' }}>
+                      You Have No Recent Searches
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ margin: '60px auto' }}>
+                    <label
+                      style={{
+                        position: 'absolute',
+                        top: '20px',
+                        color: darkMode
+                          ? 'rgba(190,190,200)'
+                          : 'rgba(16,16,16)',
+                        fontWeight: 'bold',
+                        left: '15px',
+                      }}
+                    >
+                      Search Results
+                    </label>
+                    <div style={{ margin: '60px 15px', fontSize: '.8rem' }}>
+                      {searchResult.map((result) => {
+                        return <SResult user={result} currentUser={user} />
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
             <div
               style={{
                 display: 'flex',

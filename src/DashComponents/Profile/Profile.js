@@ -848,11 +848,9 @@ const Profile = ({
           padding: padding,
           backgroundColor: backgroundColor,
           overflowY: overflow,
-          boxShadow: isSearched ? '0px 0px 5px white' : 'none',
-          borderTopLeftRadius: isSearched ? '50px' : '0px',
-          borderTopRightRadius: isSearched ? '50px' : '0px',
+          boxShadow: 'none',
           flexWrap: 'wrap',
-          height: isSearched ? '70vh' : 'auto',
+          height: 'auto',
           paddingBottom: '70px',
           fontFamily: 'MonteserratRegular',
         }}
@@ -1356,70 +1354,43 @@ const Profile = ({
                 : ''}
             </div>
           </div>
-        </div>
-        <div style={{ textAlign: 'left' }}>
           {isSearched && (
-            <div style={{ textAlign: 'right' }}>
-              <div
-                onClick={handleUserControlOpt}
-                name='usercontrolopt'
-                style={{
-                  display: 'inline-block',
-                  width: 'fit-content',
-                  margin: '10px',
-                  backgroundColor: 'white',
-                  borderRadius: '5px',
-                  marginLeft: 'auto',
-                  position: 'relative',
-                  cursor: 'pointer',
-                }}
-              >
-                <img
-                  name='usercontrolopt'
-                  src={usercontrolopt}
-                  alt='user control menu'
-                  width='40px'
-                />
-                {showControlOpt && (
-                  <ul className='usercontrolopts'>
-                    {user.access !== 'Admin' && showAdminOpt && (
-                      <li className='usercontrolitem'>
-                        <label
-                          style={{ cursor: 'pointer' }}
-                          onClick={updateAdminStatus}
-                        >
-                          Set As Admin
-                        </label>
-                      </li>
-                    )}
-                    <li onClick={updateEditStatus} className='usercontrolitem'>
-                      <label
-                        style={{
-                          cursor: 'pointer',
-                          color:
-                            editStatus === 'Enable Edit Access'
-                              ? 'lightgreen'
-                              : 'red',
-                        }}
-                      >
-                        {editStatus}
-                      </label>
-                    </li>
-                    {user.access !== 'Admin' && (
-                      <li className='usercontrolitem'>
-                        <label
-                          style={{ cursor: 'pointer', color: 'red' }}
-                          onClick={suspendUser}
-                        >
-                          Suspend User
-                        </label>
-                      </li>
-                    )}
-                  </ul>
-                )}
+            <div
+              style={{ display: 'flex', textAlign: 'left', marginTop: '30px' }}
+            >
+              <div style={{ marginLeft: '10px', marginRight: '5px' }}>
+                <label
+                  style={{
+                    padding: '10px 20px',
+                    color: 'white',
+                    fontSize: '.9rem',
+                    borderRadius: '15px',
+                    border: 'solid rgba(15,105,213) 1px',
+                    background: 'rgba(15,105,213)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Follow
+                </label>
+              </div>
+              <div style={{ marginLeft: '5px' }}>
+                <label
+                  style={{
+                    padding: '10px 20px',
+                    fontSize: '.9rem',
+                    color: 'rgba(15,105,213)',
+                    borderRadius: '15px',
+                    border: 'solid rgba(15,105,213) 1px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Message
+                </label>
               </div>
             </div>
           )}
+        </div>
+        <div style={{ textAlign: 'left' }}>
           {isSearched &&
           (user.about === undefined || user.about === '') ? undefined : (
             <div className='userabout'>
