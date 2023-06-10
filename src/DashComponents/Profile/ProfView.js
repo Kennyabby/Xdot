@@ -50,6 +50,7 @@ const ProfView = ({
             chatrf={chatrf}
             homerf={homerf}
             notificationsrf={notificationsrf}
+            accountUser={user}
             user={userResult}
             padding={'0px'}
             margin={'0px'}

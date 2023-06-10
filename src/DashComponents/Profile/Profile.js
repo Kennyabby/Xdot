@@ -24,6 +24,7 @@ const Profile = ({
   homerf,
   notificationsrf,
   user,
+  accountUser,
   margin,
   backgroundColor,
   overflow,
@@ -45,6 +46,7 @@ const Profile = ({
   const [showAdminBoard, setShowAdminBoard] = useState(false)
   const [showControlOpt, setShowControlOpt] = useState(false)
   const [showUpdateCover, setShowUpdateCover] = useState(false)
+  const [followStatus, setFollowStatus] = useState('')
   const [userImgUrl, setUserImgUrl] = useState(profimg)
   const [userImgCoverUrl, setUserImgCoverUrl] = useState(imgcover)
   const [displayImg, setDisplayImg] = useState(profimg)
@@ -151,6 +153,14 @@ const Profile = ({
   const [currentSession, setCurrentSession] = useState('2021/2022')
   const [paymentLabelStatus, setPaymentLabelStatus] = useState('View')
   const [showAdminOpt, setShowAdminOpt] = useState(true)
+  const [followers, setFollowers] = useState([])
+  const [following, setFollowing] = useState([])
+  const [personal, setPersonal] = useState([])
+  const [followRequests, setFollowRequests] = useState([])
+  const [gotPersonal, setGotPersonal] = useState(false)
+  const [gotFollowers, setGotFollowers] = useState(false)
+  const [gotFollowing, setGotFollowing] = useState(false)
+  const [userNotifications, setUserNotifications] = useState([])
   useEffect(() => {
     var amt = 0
     setSelectedDues([])
@@ -325,7 +335,6 @@ const Profile = ({
     'instituteCountryName',
     'educationQualification',
   ]
-
   useEffect(async () => {
     if (user !== null) {
       const opts1 = {
@@ -357,6 +366,130 @@ const Profile = ({
       }
     }
   }, [user])
+  useEffect(async () => {
+    try {
+      const opts = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          database: 'User_' + user.userName,
+          collection: 'followers',
+          data: {},
+        }),
+      }
+
+      const resp = await fetch(server + '/getManyUpdates', opts)
+      const response = await resp.json()
+      const updates = await response.updates
+      setGotFollowers(true)
+      setFollowers(updates)
+    } catch (TypeError) {}
+    try {
+      const opts1 = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          database: 'User_' + user.userName,
+          collection: 'following',
+          data: {},
+        }),
+      }
+
+      const resp1 = await fetch(server + '/getManyUpdates', opts1)
+      const response1 = await resp1.json()
+      const updates1 = await response1.updates
+      setGotFollowing(true)
+      setFollowing(updates1)
+    } catch (TypeError) {}
+    try {
+      const opts2 = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          database: 'User_' + user.userName,
+          collection: 'followRequests',
+          data: {},
+        }),
+      }
+
+      const resp2 = await fetch(server + '/getManyUpdates', opts2)
+      const response2 = await resp2.json()
+      const updates2 = await response2.updates
+      setFollowRequests(updates2)
+    } catch (TypeError) {}
+    try {
+      const opts3 = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          database: 'User_' + user.userName,
+          collection: 'personal',
+          data: {},
+        }),
+      }
+
+      const resp3 = await fetch(server + '/getManyUpdates', opts3)
+      const response3 = await resp3.json()
+      const updates3 = await response3.updates
+      setGotPersonal(true)
+      setPersonal(updates3)
+    } catch (TypeError) {}
+  }, [])
+  useEffect(async () => {
+    if (isSearched) {
+      try {
+        const opts3 = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            database: 'User_' + user.userName,
+            collection: 'followers',
+            data: { userName: accountUser.userName },
+          }),
+        }
+        const resp3 = await fetch(server + '/isDocPresent', opts3)
+        const response3 = await resp3.json()
+        const isPresent = await response3.isPresent
+        if (isPresent) {
+          setFollowStatus('Following')
+        } else {
+          if (!user.isPublic) {
+            const opts3 = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                database: 'User_' + user.userName,
+                collection: 'followRequests',
+                data: { userName: accountUser.userName },
+              }),
+            }
+            const resp3 = await fetch(server + '/isDocPresent', opts3)
+            const response3 = await resp3.json()
+            const isPresent = await response3.isPresent
+            if (isPresent) {
+              setFollowStatus('Request Sent')
+            } else {
+              setFollowStatus('Follow')
+            }
+          } else {
+            setFollowStatus('Follow')
+          }
+        }
+      } catch (TypeError) {}
+    }
+  }, [followers])
   useEffect(async () => {
     try {
       const opts = {
@@ -402,6 +535,103 @@ const Profile = ({
       }
     }
   }, [homerf, darkMode])
+  const handleFollowStatus = async () => {
+    if (followStatus === 'Follow') {
+      try {
+        const opts = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            database: 'User_' + user.userName,
+            collection: user.isPublic ? 'followers' : 'followRequests',
+            update: {
+              userName: accountUser.userName,
+              firstName: accountUser.firstName,
+              middleName: accountUser.middleName,
+              lastName: accountUser.lastName,
+              img: accountUser.img,
+              createdAt: Date.now(),
+            },
+          }),
+        }
+        const resp = await fetch(server + '/createDoc', opts)
+        const response = await resp.json()
+        const isDelivered = await response.isDelivered
+        if (isDelivered) {
+          const opts = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              database: 'User_' + accountUser.userName,
+              collection: 'following',
+              update: {
+                userName: user.userName,
+                firstName: user.firstName,
+                middleName: user.middleName,
+                lastName: user.lastName,
+                img: user.img,
+                creatdeAt: Date.now(),
+              },
+            }),
+          }
+          const resp = await fetch(server + '/createDoc', opts)
+          const response = await resp.json()
+          const isDelivered1 = await response.isDelivered
+          if (isDelivered1) {
+            if (user.isPublic) {
+              setFollowStatus('Following')
+            } else {
+              setFollowStatus('Request Sent')
+            }
+          }
+        }
+      } catch (TypeError) {}
+    } else if (
+      followStatus === 'Following' ||
+      followStatus === 'Request Sent'
+    ) {
+      try {
+        const opts = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            database: 'User_' + user.userName,
+            collection:
+              followStatus === 'Request Sent' ? 'followRequests' : 'followers',
+            update: { userName: accountUser.userName },
+          }),
+        }
+        const resp = await fetch(server + '/removeDoc', opts)
+        const response = await resp.json()
+        const isRemoved = await response.isRemoved
+        if (isRemoved) {
+          const opts = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              database: 'User_' + accountUser.userName,
+              collection: 'following',
+              update: { userName: user.userName },
+            }),
+          }
+          const resp = await fetch(server + '/removeDoc', opts)
+          const response = await resp.json()
+          const isRemoved1 = await response.isRemoved
+          if (isRemoved1) {
+            setFollowStatus('Follow')
+          }
+        }
+      } catch (TypeError) {}
+    }
+  }
   const handleProfMenuDrop = () => {
     if (showProfMenuDrop) {
       setShowProfMenuDrop(false)
@@ -1354,26 +1584,77 @@ const Profile = ({
                 : ''}
             </div>
           </div>
+          <div
+            style={{
+              display: 'flex',
+              textAlign: 'left',
+              marginTop: '30px',
+              fontSize: '.9rem',
+              marginLeft: '15px',
+            }}
+          >
+            {gotPersonal && (
+              <div
+                style={{
+                  display: 'block',
+                  textAlign: 'center',
+                  marginRight: '20px',
+                }}
+              >
+                <div style={{ fontWeight: 'bold' }}>{personal.length}</div>
+                <div>Posts</div>
+              </div>
+            )}
+            {gotFollowers && (
+              <div
+                style={{
+                  display: 'block',
+                  textAlign: 'center',
+                  marginRight: '20px',
+                }}
+              >
+                <div style={{ fontWeight: 'bold' }}> {followers.length}</div>
+                <div>Followers</div>
+              </div>
+            )}
+            {gotFollowing && (
+              <div
+                style={{
+                  display: 'block',
+                  textAlign: 'center',
+                  marginRight: '20px',
+                }}
+              >
+                <div style={{ fontWeight: 'bold' }}>{following.length}</div>
+                <div>Following</div>
+              </div>
+            )}
+          </div>
           {isSearched && (
             <div
               style={{ display: 'flex', textAlign: 'left', marginTop: '30px' }}
             >
-              <div style={{ marginLeft: '10px', marginRight: '5px' }}>
-                <label
-                  style={{
-                    padding: '10px 20px',
-                    color: 'white',
-                    fontSize: '.9rem',
-                    borderRadius: '15px',
-                    border: 'solid rgba(15,105,213) 1px',
-                    background: 'rgba(15,105,213)',
-                    cursor: 'pointer',
-                  }}
+              {followStatus !== '' && (
+                <div
+                  style={{ marginLeft: '10px', marginRight: '5px' }}
+                  onClick={handleFollowStatus}
                 >
-                  Follow
-                </label>
-              </div>
-              <div style={{ marginLeft: '5px' }}>
+                  <label
+                    style={{
+                      padding: '10px 20px',
+                      color: 'white',
+                      fontSize: '.9rem',
+                      borderRadius: '15px',
+                      border: 'solid rgba(15,105,213) 1px',
+                      background: 'rgba(15,105,213)',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {followStatus}
+                  </label>
+                </div>
+              )}
+              <div style={{ marginLeft: '10px' }}>
                 <label
                   style={{
                     padding: '10px 20px',
