@@ -234,7 +234,7 @@ const Post = ({
       var bd = {}
       var ind
       updt['react'].forEach((bdy, index) => {
-        if (bdy.matricNo === user.matricNo) {
+        if (bdy.userName === user.userName) {
           bd = bdy
           ind = index
         }
@@ -262,7 +262,7 @@ const Post = ({
     }
     if (updt['comment'] !== undefined) {
       updt['comment'].forEach((bdy) => {
-        if (bdy.matricNo === user.matricNo) {
+        if (bdy.userName === user.userName) {
           setIsCommented(true)
         }
       })
@@ -1021,8 +1021,8 @@ const Post = ({
                             : ''
                           : String(update['react'].length) +
                             (update['react'].length - 1 > 0
-                              ? ' Napsites'
-                              : ' Napsite')
+                              ? ' Users'
+                              : ' User')
                         : '') +
                       (update['react'].length - 1 > 0 && isReacted
                         ? ' Other(s)'

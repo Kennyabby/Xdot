@@ -137,7 +137,12 @@ const Finish = ({ server, confidentials }) => {
     identity: localStorage.getItem('identity'),
     nationality: localStorage.getItem('nationality'),
     userName: localStorage.getItem('userName').trim(),
-    img: '',
+    img: {
+      url: '',
+    },
+    imgcover: {
+      url: '',
+    },
     password: confidentials.password,
     access: 'User',
     isEditable: 'true',

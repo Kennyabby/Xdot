@@ -23,7 +23,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
   const [skipStats, setSkipStats] = useState('Skip')
   const [contStats, setContStats] = useState('Continue')
   useEffect(async () => {
-    if (user !== null && user.img == undefined && user.img !== '') {
+    if (user !== null && user.img !== undefined && user.img.url !== '') {
       setShowPhotoUpload(true)
       setShowCoverUpload(true)
       const opts1 = {
@@ -38,7 +38,11 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
       const url = response1.url
       setUserImgUrl(url)
     }
-    if (user !== null && user.imgcover !== undefined && user.imgcover !== '') {
+    if (
+      user !== null &&
+      user.imgcover !== undefined &&
+      user.imgcover.url !== ''
+    ) {
       setShowCoverUpload(true)
       const opts2 = {
         method: 'POST',
@@ -78,7 +82,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
-        history.push('./')
+        history.push('/dashboard/profile')
         setShowMessage(false)
       } else {
         setShowMessage(true)
@@ -110,7 +114,7 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
       const response = await resp.json()
       const updated = response.updated
       if (updated) {
-        history.push('./')
+        history.push('/dashboard/profile')
         setShowMessage(false)
       } else {
         setShowMessage(true)
@@ -146,10 +150,10 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
     setImgStatus('Uploading Please Wait...')
     var imgSrc =
       imgUpdateName === 'Cover Photo'
-        ? user.imgcover === undefined || user.imgcover === ''
+        ? user.imgcover === undefined || user.imgcover.url === ''
           ? user.userName + '_cover'
           : user.imgcover.url
-        : user.img === undefined || user.img === ''
+        : user.img === undefined || user.img.url === ''
         ? user.userName + '_img'
         : user.img.url
     const imageInfo = {
@@ -302,29 +306,33 @@ const ProfileUpload = ({ user, setShowHomeToggle, viewCategories }) => {
         <div style={{ fontFamily: 'MonteserratBold' }}>
           <h2>Let People Know It's You.</h2>
         </div>
-        <div
-          style={{
-            margin: '10px',
-            marginTop: '30px',
-            marginBottom: '30px',
-            marginLeft: 'auto',
-            width: 'fit-content',
-          }}
-        >
-          <label
+        {!showCoverUpload && (
+          <div
             style={{
-              cursor: 'pointer',
-              padding: '8px 15px',
-              borderRadius: '10px',
-              color: 'rgba(10, 105, 214)',
-              fontFamily: 'SourceCodeProBold',
-              boxShadow: darkMode ? '0px 0px 10px white' : '0px 0px 10px black',
+              margin: '10px',
+              marginTop: '30px',
+              marginBottom: '30px',
+              marginLeft: 'auto',
+              width: 'fit-content',
             }}
-            onClick={handleSkipped}
           >
-            {skipStats}
-          </label>
-        </div>
+            <label
+              style={{
+                cursor: 'pointer',
+                padding: '8px 15px',
+                borderRadius: '10px',
+                color: 'rgba(10, 105, 214)',
+                fontFamily: 'SourceCodeProBold',
+                boxShadow: darkMode
+                  ? '0px 0px 10px white'
+                  : '0px 0px 10px black',
+              }}
+              onClick={handleSkipped}
+            >
+              {skipStats}
+            </label>
+          </div>
+        )}
         {showPhotoUpload && (
           <div>
             <div style={{ fontFamily: 'MonteserratRegular' }}>

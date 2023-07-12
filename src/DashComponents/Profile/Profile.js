@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { PaystackButton } from 'react-paystack'
 import { BsCameraFill } from 'react-icons/bs'
 import { FiEdit3 } from 'react-icons/fi'
+import { BiLoaderCircle } from 'react-icons/bi'
 
 import ContextProvider from '../../ContextProvider'
 
@@ -674,10 +675,10 @@ const Profile = ({
     setImgUpdateStatus('Uploading Image Please Wait...')
     var imgSrc =
       imgUpdateName === 'Cover Photo'
-        ? user.imgcover === undefined
-          ? user.userName + '_cover-' + user.matricNo
+        ? user.imgcover === undefined || user.imgcover.url === ''
+          ? user.userName + '_cover'
           : user.imgcover.url
-        : user.img === undefined || user.img === ''
+        : user.img === undefined || user.img.url === ''
         ? user.userName + '_img'
         : user.img.url
     const imageInfo = {
@@ -1651,6 +1652,13 @@ const Profile = ({
                     }}
                   >
                     {followStatus}
+                    <BiLoaderCircle
+                      style={{
+                        fontSize: '1.1rem',
+                        margin: 'auto 7px',
+                        marginTop: '10px',
+                      }}
+                    />
                   </label>
                 </div>
               )}

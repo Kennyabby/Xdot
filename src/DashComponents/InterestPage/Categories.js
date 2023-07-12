@@ -149,31 +149,6 @@ const Categories = ({ user, setShowHomeToggle, viewProfileUpload }) => {
             fontFamily: 'MonteserratRegular',
           }}
         >
-          {!isEditting && (
-            <div
-              style={{
-                margin: '10px',
-                marginLeft: 'auto',
-                width: 'fit-content',
-              }}
-            >
-              <label
-                style={{
-                  cursor: 'pointer',
-                  padding: '8px 15px',
-                  borderRadius: '10px',
-                  color: 'rgba(10, 105, 214)',
-                  fontFamily: 'SourceCodeProBold',
-                  boxShadow: darkMode
-                    ? '0px 0px 10px white'
-                    : '0px 0px 10px black',
-                }}
-                onClick={handleSkipped}
-              >
-                {skipStats}
-              </label>
-            </div>
-          )}
           <h4>
             Pick From The Categories Below. Your Feeds Will Be Filtered
             Accordingly.

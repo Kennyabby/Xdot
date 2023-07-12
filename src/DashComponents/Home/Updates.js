@@ -136,7 +136,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
     }
   }, [winSize])
   useEffect(async () => {
-    if (user.userName !== undefined && user.img !== '') {
+    if (user.userName !== undefined && user.img.url !== '') {
       try {
         const opts1 = {
           method: 'POST',
@@ -855,7 +855,9 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                         cursor: 'pointer',
                         fontSize: '1.1rem',
                       }}
-                      onClick={() => {}}
+                      onClick={() => {
+                        window.location.reload()
+                      }}
                     >
                       Fetch Feeds
                     </div>
