@@ -146,6 +146,7 @@ const Finish = ({ server, confidentials }) => {
     password: confidentials.password,
     access: 'User',
     isEditable: 'true',
+    isPublic: 'true',
     createdAt: Date.now(),
     educationQualification: localStorage.getItem('educationQualification'),
     student:
