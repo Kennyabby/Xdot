@@ -3,7 +3,7 @@ import Resizer from 'react-image-file-resizer'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ConnectionModal from './ConnectionModal'
-import { FaAngleLeft } from 'react-icons/fa'
+import { FaAngleLeft, FaTemperatureLow } from 'react-icons/fa'
 
 const containerVariants = {
   hidden: {
@@ -146,7 +146,7 @@ const Finish = ({ server, confidentials }) => {
     password: confidentials.password,
     access: 'User',
     isEditable: 'true',
-    isPublic: 'true',
+    isPublic: true,
     createdAt: Date.now(),
     educationQualification: localStorage.getItem('educationQualification'),
     student:
