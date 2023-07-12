@@ -38,6 +38,7 @@ const Profile = ({
   const [showAllDetails, setShowAllDetails] = useState(false)
   const [showStatus, setShowStatus] = useState('View All Details')
   const [aboutSaveStatus, setAboutSaveStatus] = useState('Done')
+  const [followPointerEvent, setFollowPointerEvent] = useState('auto')
   const [allowedLength, setAllowedLength] = useState(61)
   const [imgUpdateName, setImgUpdateName] = useState('')
   const [file, setFile] = useState(null)
@@ -537,6 +538,7 @@ const Profile = ({
     }
   }, [homerf, darkMode])
   const handleFollowStatus = async () => {
+    setFollowPointerEvent('none')
     if (followStatus === 'Follow') {
       try {
         const opts = {
@@ -632,6 +634,7 @@ const Profile = ({
         }
       } catch (TypeError) {}
     }
+    setFollowPointerEvent('auto')
   }
   const handleProfMenuDrop = () => {
     if (showProfMenuDrop) {
@@ -1637,33 +1640,39 @@ const Profile = ({
             >
               {followStatus !== '' && (
                 <div
-                  style={{ marginLeft: '10px', marginRight: '5px' }}
-                  onClick={handleFollowStatus}
+                  style={{
+                    marginLeft: '10px',
+                    marginRight: '5px',
+                    display: 'inline-flex',
+                    padding: '10px 20px',
+                    color: 'white',
+                    fontSize: '.9rem',
+                    borderRadius: '15px',
+                    border: 'solid rgba(15,105,213) 1px',
+                    background: 'rgba(15,105,213)',
+                    cursor: 'pointer',
+                    pointerEvents: { followPointerEvent },
+                  }}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleFollowStatus()
+                  }}
                 >
-                  <label
-                    style={{
-                      padding: '10px 20px',
-                      color: 'white',
-                      fontSize: '.9rem',
-                      borderRadius: '15px',
-                      border: 'solid rgba(15,105,213) 1px',
-                      background: 'rgba(15,105,213)',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {followStatus}
-                    <BiLoaderCircle
-                      style={{
-                        fontSize: '1.1rem',
-                        margin: 'auto 7px',
-                        marginTop: '10px',
-                      }}
-                    />
-                  </label>
+                  <div>{followStatus}</div>
+                  {followPointerEvent === 'none' && (
+                    <div>
+                      <BiLoaderCircle
+                        style={{
+                          fontSize: '1.1rem',
+                          marginLeft: '7px',
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
               <div style={{ marginLeft: '10px' }}>
-                <label
+                <div
                   style={{
                     padding: '10px 20px',
                     fontSize: '.9rem',
@@ -1674,7 +1683,7 @@ const Profile = ({
                   }}
                 >
                   Message
-                </label>
+                </div>
               </div>
             </div>
           )}
