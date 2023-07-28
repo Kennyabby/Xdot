@@ -24,7 +24,7 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
         <div className='infos'>
           <h2 style={{ fontFamily: 'MonteserratBold' }}>WelCome (Intro)</h2>
           <section
-            style={{ fontFamily: 'SourceCodeProRegular', fontSize: '1rem' }}
+            style={{ fontFamily: 'MonteserratRegular', fontSize: '1rem' }}
           >
             <div>
               We are glad to see you take your first step towards contributing
@@ -98,7 +98,7 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
               margin: '15px auto',
               fontSize: '1.1rem',
               fontWeight: 'bold',
-              fontFamily: 'monospace',
+              fontFamily: 'MonteserratBold',
               cursor: 'pointer',
               padding: '12px 20px',
               backgroundColor: 'red',
@@ -114,7 +114,11 @@ const Intro = ({ fillAllFields, setFillAllFields }) => {
           </motion.button>
         </Link>
         <div
-          style={{ color: 'black', fontFamily: 'monospace', fontSize: '1rem' }}
+          style={{
+            color: 'black',
+            fontFamily: 'MonteserratRegular',
+            fontSize: '1rem',
+          }}
         >
           <label>Already have an account?{'  '}</label>
           <Link to='/signin' style={{ color: 'blue' }}>

@@ -21,7 +21,7 @@ const Acts = ({ title, content, clickVar, id }) => {
           style={{
             margin: '10px',
             fontWeight: 'bold',
-            fontFamily: 'SourceCodeProLight',
+            fontFamily: 'MonteserratBold',
             borderBottom: 'solid rgba(49,49,50,1) 2px',
           }}
         >
@@ -32,7 +32,7 @@ const Acts = ({ title, content, clickVar, id }) => {
         style={{
           margin: '10px',
           marginTop: '30px',
-          fontFamily: 'SourceCodeProLight',
+          fontFamily: 'MonteserratRegular',
           border: 'solid rgba(49,49,50,1) 2px',
           padding: '10px',
           borderRadius: '10px',
@@ -53,7 +53,7 @@ const Acts = ({ title, content, clickVar, id }) => {
           style={{
             padding: '13px 18px',
             border: 'solid blue 2px',
-            fontFamily: 'monospace',
+            fontFamily: 'MonteserratRegular',
             borderRadius: '25px',
             fontSize: '.9rem',
             backgroundColor: 'blue',

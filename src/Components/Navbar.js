@@ -167,7 +167,7 @@ const Navbar = ({ getTopBar }) => {
               className='top-left'
               style={{
                 color: darkMode ? 'white' : 'black',
-                fontFamily: 'SourceCodeProBold',
+                fontFamily: 'MonteserratBold',
               }}
             >
               <div
@@ -256,6 +256,7 @@ const Navbar = ({ getTopBar }) => {
                 padding: '5px 15px',
                 borderRadius: '15px',
                 cursor: 'pointer',
+                fontFamily: 'MonteserratRegular',
               }}
             >
               <label
@@ -345,6 +346,7 @@ const Navbar = ({ getTopBar }) => {
                       fontSize: '1.3rem',
                       borderRadius: '50%',
                       color: 'white',
+                      fontFamily: 'MonteserratBold',
                     }}
                   >
                     {user.firstName !== undefined
@@ -466,6 +468,7 @@ const Navbar = ({ getTopBar }) => {
                               borderRadius: '50%',
                               color: 'white',
                               lineHeight: '60px',
+                              fontFamily: 'MonteserratBold',
                             }}
                           >
                             {user.firstName !== undefined
@@ -473,7 +476,12 @@ const Navbar = ({ getTopBar }) => {
                               : 'G'}
                           </div>
                         )}
-                        <div style={{ margin: '10px' }}>
+                        <div
+                          style={{
+                            margin: '10px',
+                            fontFamily: 'MonteserratRegular',
+                          }}
+                        >
                           {user.firstName !== undefined
                             ? user.firstName.slice(0, 1).toUpperCase() +
                               user.firstName.slice(1) +
@@ -488,6 +496,7 @@ const Navbar = ({ getTopBar }) => {
                             color: darkMode
                               ? 'rgba(125,130,135)'
                               : 'rgba(100,110,115)',
+                            fontFamily: 'MonteserratRegular',
                           }}
                         >
                           {user.otherEmail !== undefined
@@ -513,7 +522,7 @@ const Navbar = ({ getTopBar }) => {
                               padding: '6px 12px',
                               color: 'darkorange',
                               outline: 'none',
-                              fontFamily: 'monospace',
+                              fontFamily: 'MonteserratRegular',
                               backgroundColor: 'rgba(0,0,0,0)',
                               margin: '10px',
                               border: 'solid rgba(39,39,40,1) 2px',

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import Resizer from 'react-image-file-resizer'
 import { Link, useHistory } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ConnectionModal from './ConnectionModal'

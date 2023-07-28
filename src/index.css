@@ -176,13 +176,13 @@ code {
   color: rgb(187, 183, 183);
   text-decoration: none;
   cursor: pointer;
-  font-family: 'SourceCodeProRegular';
+  font-family: 'MonteserratRegular';
 }
 .top-left {
   display: flex;
   font-size: 1.3rem;
   width: max-content;
-  font-family: 'SourceCodeProRegular';
+  font-family: 'MonteserratBold';
   gap: 10px;
   font-weight: bold;
   margin: 5px;
@@ -198,7 +198,7 @@ code {
   height: fit-content;
   margin-left: auto;
   color: white;
-  font-family: 'SourceCodeProRegular';
+  font-family: 'MonteserratRegular';
   text-decoration: none;
   box-shadow: -3px -3px 10px rgba(0, 0, 0, 0.1), 3px 3px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -237,7 +237,7 @@ code {
   width: 40vw;
   margin: 20px auto;
   padding: 20px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'MonteserratRegular';
   border-radius: 50px;
   word-spacing: 5px;
   font-size: 1.2rem;
@@ -268,7 +268,7 @@ code {
   padding: 15px;
   padding-left: 40px;
   padding-right: 40px;
-  font-family: monospace;
+  font-family: 'MonteserratRegular';
   font-size: 1rem;
   cursor: pointer;
 }
@@ -279,14 +279,14 @@ code {
 .infos {
   text-align: left;
   color: black;
-  font-family: 'monospace';
+  font-family: 'MonteserratRegular';
   word-spacing: 5px;
   font-size: 1.5rem;
 }
 .introLabel {
   list-style: none;
   margin: 20px;
-  font-family: 'SourceCodeProRegular';
+  font-family: 'MonteserratBold';
   font-size: 0.9rem;
   line-height: 1rem;
   font-style: italic;
@@ -347,7 +347,7 @@ code {
 }
 .close {
   font-size: 1.3rem;
-  font-family: monospace;
+  font-family: 'MonteserratRegular';
   color: red;
   padding: 5px;
   background-color: white;
@@ -377,7 +377,7 @@ code {
   list-style: none;
   display: inline-block;
   font-size: 1.1rem;
-  font-family: monospace;
+  font-family: 'MonteserratRegular';
   background-color: rgba(0, 0, 0, 1);
 }
 .left {
@@ -390,7 +390,7 @@ code {
 }
 .container {
   color: black;
-  font-family: monospace;
+  font-family: 'MonteserratRegular';
   padding-bottom: 170px;
   font-size: 1rem;
   margin: 20px;
@@ -464,7 +464,7 @@ code {
 }
 .nxt {
   outline: none;
-  font-family: monospace;
+  font-family: 'MonteserratBold';
   color: white;
   border: solid red 2px;
   background-color: red;
@@ -662,7 +662,7 @@ code {
   }
   .opt-left {
     display: inline-block;
-    font-family: 'SourceCodeProRegular';
+    font-family: 'MonteserratRegular';
     width: 70%;
     padding: 40px 25px;
     color: rgb(187, 183, 183);
@@ -675,7 +675,7 @@ code {
     text-align: left;
     margin: 0px;
     margin-top: -70px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'MonteserratRegular';
     font-size: 1.1rem;
   }
   .infos {
@@ -696,7 +696,7 @@ code {
     padding: 10px;
     padding-left: 30px;
     padding-right: 30px;
-    font-family: monospace;
+    font-family: 'MonteserratRegular';
     font-size: 1rem;
     cursor: pointer;
   }
@@ -768,7 +768,7 @@ code {
     text-align: left;
     justify-content: left;
     /* height: fit-content; */
-    font-family: monospace;
+    font-family: 'MonteserratRegular';
     background-color: rgba(0, 0, 0, 1);
   }
   .left {
@@ -783,7 +783,7 @@ code {
   }
   .container {
     color: black;
-    font-family: monospace;
+    font-family: 'MonteserratRegular';
     padding-bottom: 170px;
     font-size: 1rem;
     padding-left: 0px;

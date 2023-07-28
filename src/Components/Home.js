@@ -361,7 +361,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                         </motion.h2>
                         <div
                           style={{
-                            fontFamily: 'InterRegular',
+                            fontFamily: 'MonteserratRegular',
                             fontSize: winSize < 700 ? '' : '1rem',
                             backgroundColor: darkMode
                               ? 'rgba(10,10,10,1)'
@@ -385,7 +385,7 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                               cursor: 'pointer',
                               fontWeight: 'bold',
                               fontSize: '1.1rem',
-                              fontFamily: 'monospace',
+                              fontFamily: 'MonteserratRegular',
                             }}
                           >
                             {csl.button}

@@ -1253,7 +1253,7 @@ const FewSchoolInfo = ({
           style={{
             padding: '10px',
             margin: '20px',
-            fontFamily: 'Courier New',
+            fontFamily: 'MonteserratBold',
             fontWeight: 'bold',
             fontSize: '0.8rem',
             borderRadius: '10px',
@@ -1323,7 +1323,7 @@ const FewSchoolInfo = ({
             <label
               style={{
                 fontSize: '1rem',
-                fontFamily: 'Courier New',
+                fontFamily: 'MonteserratRegular',
                 fontStyle: 'italic',
               }}
             >

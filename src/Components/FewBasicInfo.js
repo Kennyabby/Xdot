@@ -287,6 +287,7 @@ const FewBasicInfo = ({ setBasicConfirmed }) => {
                 style={{
                   fontWeight: 'lighter',
                   fontStyle: 'italic',
+                  fontFamily: 'MonteserratRegular',
                   fontSize: '.8rem',
                   marginTop: '20px',
                   marginLeft: '5px',

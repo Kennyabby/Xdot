@@ -255,7 +255,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow, setShowNavOpt }) => {
                 </div>
                 <label
                   style={{
-                    fontFamily: 'SourceCodeProBold',
+                    fontFamily: 'MonteserratBold',
                     fontSize: '1.5rem',
                     color: darkMode ? 'white' : 'black',
                     fontWeight: 'bold',
@@ -355,7 +355,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow, setShowNavOpt }) => {
                           fontWeight: 'bold',
                           textAlign: 'left',
                           justifyContent: 'left',
-                          fontFamily: 'SourceCodeProRegular',
+                          fontFamily: 'MonteserratRegular',
                           cursor: 'pointer',
                           margin: '10px',
                           marginTop: '7px',
@@ -377,7 +377,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow, setShowNavOpt }) => {
                     style={{
                       padding: '10px',
                       marginTop: '-40px',
-                      fontFamily: 'SourceCodeProRegular',
+                      fontFamily: 'MonteserratRegular',
                     }}
                   >
                     <div
@@ -426,7 +426,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow, setShowNavOpt }) => {
                       textAlign: 'left',
                       padding: '10px',
                       fontSize: '.8rem',
-                      fontFamily: 'SourceCodeProRegular',
+                      fontFamily: 'MonteserratRegular',
                       borderTop: darkMode
                         ? 'solid rgba(15,15,15,1) 1px'
                         : 'solid rgba(200,200,200,1) 1px',
@@ -439,7 +439,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow, setShowNavOpt }) => {
                           padding: '6px 12px',
                           color: 'darkorange',
                           outline: 'none',
-                          fontFamily: 'SourceCodePro',
+                          fontFamily: 'MonteserratRegular',
                           backgroundColor: 'rgba(0,0,0,0)',
                           margin: '10px',
                           border: 'solid rgba(39,39,40,1) 2px',
@@ -497,7 +497,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow, setShowNavOpt }) => {
                     placeholder='Search For Services, Offers, Applications...'
                     style={{
                       color: darkMode ? 'white' : 'black',
-                      fontFamily: 'SourceCodeProRegular',
+                      fontFamily: 'MonteserratRegular',
                       width: '80%',
                       padding: '20px 10px',
                       borderRadius: '20px',
@@ -603,7 +603,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow, setShowNavOpt }) => {
                   to='/signin'
                   style={{
                     textDecoration: 'none',
-                    fontFamily: 'SourceCodeProRegular',
+                    fontFamily: 'MonteserratRegular',
                     color: 'white',
                     fontWeight: 'bold',
                     height: 'fit-content',
@@ -629,7 +629,7 @@ const NavOptbar = ({ getTopBar, isShow, setBackShow, setShowNavOpt }) => {
                   className='opt-left'
                   to='/signup'
                   style={{
-                    fontFamily: 'SourceCodeProRegular',
+                    fontFamily: 'MonteserratRegular',
                     textDecoration: 'none',
                     color: 'white',
                     fontWeight: 'bold',
