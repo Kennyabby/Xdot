@@ -695,7 +695,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                   boxShadow: darkMode
                     ? '-5px -5px 10px rgba(10,10,18,0.1),5px 5px 10px rgba(10,10,18,0.1)'
                     : '-5px -5px 10px rgba(243,243,255,0.1),5px 5px 10px rgba(243,243,255,0.1)',
-                  fontFamily: 'SourceCodeProRegular',
+                  fontFamily: 'MonteserratRegular',
                   fontWeight: 'bold',
                   border: 'solid rgba(15,105,213) 2px',
                   cursor: 'pointer',

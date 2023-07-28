@@ -1392,7 +1392,14 @@ const Profile = ({
             </motion.div>
           )}
         </AnimatePresence>
-        <div className='profcover'>
+        <div
+          className='profcover'
+          style={{
+            borderBottom: darkMode
+              ? 'solid rgba(190,190,200) 4px'
+              : 'solid rgba(210,210,210,1) 4px',
+          }}
+        >
           <div
             className='imgcover'
             style={{
@@ -1413,7 +1420,9 @@ const Profile = ({
                 backgroundImage: `url(${userImgUrl})`,
                 backgroundSize: 'cover',
                 backgroundColor: user.img.dominantColor,
-                border: 'solid white 2px',
+                border: darkMode
+                  ? 'solid rgba(190,190,200) 2px'
+                  : 'solid rgba(210,210,210,1) 2px',
               }}
               onClick={() => {
                 setShowImage((showImage) => {
@@ -1563,7 +1572,9 @@ const Profile = ({
               style={{
                 padding: '10px',
                 fontSize: '.8rem',
-                border: 'solid rgba(210,210,210,1) 2px',
+                border: darkMode
+                  ? 'solid rgba(190,190,200) 2px'
+                  : 'solid rgba(210,210,210,1) 2px',
                 width: 'fit-content',
                 fontFamily: 'MonteserratRegular',
                 margin: '10px 0px',
@@ -1691,7 +1702,14 @@ const Profile = ({
         <div style={{ textAlign: 'left' }}>
           {isSearched &&
           (user.about === undefined || user.about === '') ? undefined : (
-            <div className='userabout'>
+            <div
+              className='userabout'
+              style={{
+                borderBottom: darkMode
+                  ? 'solid rgba(190,190,200) 4px'
+                  : 'solid rgba(210,210,210,1) 4px',
+              }}
+            >
               <div
                 style={{
                   fontWeight: 'bold',
@@ -1741,7 +1759,9 @@ const Profile = ({
                   padding: '10px',
                   fontFamily: 'MonteserratRegular',
                   fontSize: '.8rem',
-                  border: 'solid rgba(210, 210, 210, 1) 2px',
+                  border: darkMode
+                    ? 'solid rgba(190,190,200) 2px'
+                    : 'solid rgba(210,210,210,1) 2px',
                   borderRadius: '10px',
                   whiteSpace: 'pre-wrap',
                 }}
@@ -1899,7 +1919,14 @@ const Profile = ({
               </div>
             </div>
           )}
-          <div className='userdetails'>
+          <div
+            className='userdetails'
+            style={{
+              borderBottom: darkMode
+                ? 'solid rgba(190,190,200) 4px'
+                : 'solid rgba(210,210,210,1) 4px',
+            }}
+          >
             <label
               style={{
                 fontWeight: 'bold',
@@ -1938,7 +1965,9 @@ const Profile = ({
                   margin: '15px auto',
                   padding: '10px 0px',
                   fontSize: '.8rem',
-                  border: 'solid rgba(210, 210, 210, 1) 2px',
+                  border: darkMode
+                    ? 'solid rgba(190,190,200) 2px'
+                    : 'solid rgba(210,210,210,1) 2px',
                   borderRadius: '10px',
                 }}
               >
@@ -1947,7 +1976,12 @@ const Profile = ({
                     <div>
                       <div
                         className='profiledetailsitem'
-                        style={{ fontFamily: 'MonteserratRegular' }}
+                        style={{
+                          fontFamily: 'MonteserratRegular',
+                          borderBottom: darkMode
+                            ? 'solid rgba(190,190,200) 2px'
+                            : 'solid rgba(210,210,210,1) 2px',
+                        }}
                       >
                         <div
                           className='profiledetailsitemtitle'
@@ -1962,7 +1996,12 @@ const Profile = ({
                       ) && (
                         <div
                           className='profiledetailsitem'
-                          style={{ fontFamily: 'MonteserratRegular' }}
+                          style={{
+                            fontFamily: 'MonteserratRegular',
+                            borderBottom: darkMode
+                              ? 'solid rgba(190,190,200) 2px'
+                              : 'solid rgba(210,210,210,1) 2px',
+                          }}
                         >
                           <label>
                             <b>{user.nationality}</b>
@@ -1974,7 +2013,12 @@ const Profile = ({
                       ) && (
                         <div
                           className='profiledetailsitem'
-                          style={{ fontFamily: 'MonteserratRegular' }}
+                          style={{
+                            fontFamily: 'MonteserratRegular',
+                            borderBottom: darkMode
+                              ? 'solid rgba(190,190,200) 2px'
+                              : 'solid rgba(210,210,210,1) 2px',
+                          }}
                         >
                           <label>
                             {'Current Education Qualification '}
@@ -1985,7 +2029,12 @@ const Profile = ({
                       {user.student.check && (
                         <div
                           className='profiledetailsitem'
-                          style={{ fontFamily: 'MonteserratRegular' }}
+                          style={{
+                            fontFamily: 'MonteserratRegular',
+                            borderBottom: darkMode
+                              ? 'solid rgba(190,190,200) 2px'
+                              : 'solid rgba(210,210,210,1) 2px',
+                          }}
                         >
                           <label>
                             {'Student of '}
@@ -1998,7 +2047,12 @@ const Profile = ({
                       {user.student.check && (
                         <div
                           className='profiledetailsitem'
-                          style={{ fontFamily: 'MonteserratRegular' }}
+                          style={{
+                            fontFamily: 'MonteserratRegular',
+                            borderBottom: darkMode
+                              ? 'solid rgba(190,190,200) 2px'
+                              : 'solid rgba(210,210,210,1) 2px',
+                          }}
                         >
                           <label>
                             {'Matric No / Student ID '}
@@ -2011,7 +2065,12 @@ const Profile = ({
                       ) && (
                         <div
                           className='profiledetailsitem'
-                          style={{ fontFamily: 'MonteserratRegular' }}
+                          style={{
+                            fontFamily: 'MonteserratRegular',
+                            borderBottom: darkMode
+                              ? 'solid rgba(190,190,200) 2px'
+                              : 'solid rgba(210,210,210,1) 2px',
+                          }}
                         >
                           <label>
                             {'Born on '}
@@ -2026,7 +2085,12 @@ const Profile = ({
                         return (
                           <div
                             className='profiledetailsitem'
-                            style={{ fontFamily: 'MonteserratRegular' }}
+                            style={{
+                              fontFamily: 'MonteserratRegular',
+                              borderBottom: darkMode
+                                ? 'solid rgba(190,190,200) 2px'
+                                : 'solid rgba(210,210,210,1) 2px',
+                            }}
                             key={i}
                           >
                             <div
@@ -2067,7 +2131,12 @@ const Profile = ({
                   <div>
                     <div
                       className='profiledetailsitem'
-                      style={{ fontFamily: 'MonteserratRegular' }}
+                      style={{
+                        fontFamily: 'MonteserratRegular',
+                        borderBottom: darkMode
+                          ? 'solid rgba(190,190,200) 2px'
+                          : 'solid rgba(210,210,210,1) 2px',
+                      }}
                     >
                       <div
                         className='profiledetailsitemtitle'
@@ -2082,7 +2151,12 @@ const Profile = ({
                     ) && (
                       <div
                         className='profiledetailsitem'
-                        style={{ fontFamily: 'MonteserratRegular' }}
+                        style={{
+                          fontFamily: 'MonteserratRegular',
+                          borderBottom: darkMode
+                            ? 'solid rgba(190,190,200) 2px'
+                            : 'solid rgba(210,210,210,1) 2px',
+                        }}
                       >
                         <label>
                           <b>{user.nationality}</b>
@@ -2094,7 +2168,12 @@ const Profile = ({
                     ) && (
                       <div
                         className='profiledetailsitem'
-                        style={{ fontFamily: 'MonteserratRegular' }}
+                        style={{
+                          fontFamily: 'MonteserratRegular',
+                          borderBottom: darkMode
+                            ? 'solid rgba(190,190,200) 2px'
+                            : 'solid rgba(210,210,210,1) 2px',
+                        }}
                       >
                         <label>
                           {'Current Education Qualification '}
@@ -2105,7 +2184,12 @@ const Profile = ({
                     {user.student.check && (
                       <div
                         className='profiledetailsitem'
-                        style={{ fontFamily: 'MonteserratRegular' }}
+                        style={{
+                          fontFamily: 'MonteserratRegular',
+                          borderBottom: darkMode
+                            ? 'solid rgba(190,190,200) 2px'
+                            : 'solid rgba(210,210,210,1) 2px',
+                        }}
                       >
                         <label>
                           {'Student of '}
@@ -2167,7 +2251,13 @@ const Profile = ({
           </div>
           <div
             className='userdetails'
-            style={{ backgroundColor: 'white', color: 'black' }}
+            style={{
+              backgroundColor: 'white',
+              color: 'black',
+              borderBottom: darkMode
+                ? 'solid rgba(190,190,200) 4px'
+                : 'solid rgba(210,210,210,1) 4px',
+            }}
           >
             <label
               style={{
@@ -2327,7 +2417,14 @@ const Profile = ({
               </div>
             </div>
           ) : undefined}
-          <div className='userdetails'>
+          <div
+            className='userdetails'
+            style={{
+              borderBottom: darkMode
+                ? 'solid rgba(190,190,200) 4px'
+                : 'solid rgba(210,210,210,1) 4px',
+            }}
+          >
             <div
               style={{
                 fontWeight: 'bold',
@@ -2573,7 +2670,9 @@ const Profile = ({
                   margin: '15px auto',
                   padding: '10px 0px',
                   fontSize: '.8rem',
-                  border: 'solid rgba(210, 210, 210, 1) 2px',
+                  border: darkMode
+                    ? 'solid rgba(190,190,200) 2px'
+                    : 'solid rgba(210,210,210,1) 2px',
                   borderRadius: '10px',
                 }}
               >
@@ -2589,7 +2688,12 @@ const Profile = ({
                         <div
                           className='profiledetailsitem'
                           key={i}
-                          style={{ fontFamily: 'MonteserratRegular' }}
+                          style={{
+                            fontFamily: 'MonteserratRegular',
+                            borderBottom: darkMode
+                              ? 'solid rgba(190,190,200) 2px'
+                              : 'solid rgba(210,210,210,1) 2px',
+                          }}
                         >
                           <div
                             className='profiledetailsitemtitle'
