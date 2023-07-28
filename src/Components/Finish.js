@@ -318,6 +318,7 @@ const Finish = ({ server, confidentials }) => {
             fontWeight: 'bold',
             fontSize: '1rem',
             textAlign: 'center',
+            fontFamily: 'MonteserratRegular',
           }}
         >
           {'Your Account Was Created Successfully!'}
@@ -357,7 +358,7 @@ const Finish = ({ server, confidentials }) => {
       {
         <div className='container'>
           <h2
-            style={{ fontFamily: 'fantasy', letterSpacing: '.2rem' }}
+            style={{ fontFamily: 'MonteserratBold', letterSpacing: '.2rem' }}
             ref={summaryLabelRef}
           >
             Info Summary
@@ -366,7 +367,7 @@ const Finish = ({ server, confidentials }) => {
             <h3
               style={{
                 marginLeft: '15px',
-                fontFamily: 'Courier New',
+                fontFamily: 'MonteserratBold',
                 fontWeight: 'bold',
                 position: 'relative',
               }}
@@ -404,7 +405,7 @@ const Finish = ({ server, confidentials }) => {
             <h3
               style={{
                 marginLeft: '15px',
-                fontFamily: 'Courier New',
+                fontFamily: 'MonteserratBold',
                 fontWeight: 'bold',
                 position: 'relative',
               }}
@@ -442,7 +443,7 @@ const Finish = ({ server, confidentials }) => {
             <h3
               style={{
                 marginLeft: '15px',
-                fontFamily: 'Courier New',
+                fontFamily: 'MonteserratBold',
                 fontWeight: 'bold',
                 position: 'relative',
               }}
@@ -481,7 +482,14 @@ const Finish = ({ server, confidentials }) => {
       }
       {isSuccess && (
         <motion.div variants={submitVariants}>
-          <p style={{ color: 'black', marginTop: '100px', margin: '50px' }}>
+          <p
+            style={{
+              color: 'black',
+              marginTop: '100px',
+              margin: '50px',
+              fontFamily: 'MonteserratRegular',
+            }}
+          >
             Dear {setCamelCase(studentInfo.lastName)}{' '}
             {setCamelCase(studentInfo.firstName)}{' '}
             {setCamelCase(studentInfo.middleName)}, Thank You For Your Time.
@@ -491,7 +499,11 @@ const Finish = ({ server, confidentials }) => {
             <motion.button
               variants={buttonVariants}
               className='nxt'
-              style={{ backgroundColor: 'green', color: 'white' }}
+              style={{
+                backgroundColor: 'green',
+                color: 'white',
+                fontFamily: 'MonteserratRegular',
+              }}
               title='Sign in'
               type='submit'
               name='button'

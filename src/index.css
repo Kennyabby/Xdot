@@ -493,6 +493,7 @@ code {
   left: 45px;
   z-index: 2;
   margin: 0px;
+  font-family: 'MonteserratRegular';
   border: none;
   outline: none;
   font-size: 0.8rem;
@@ -825,6 +826,7 @@ code {
   .inf {
     margin: 0px;
     border: none;
+    font-family: 'MonteserratRegular';
     outline: none;
     font-size: 0.8rem;
     padding: 5px;

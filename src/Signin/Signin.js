@@ -309,7 +309,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 style={{
                   fontWeight: 'bold',
                   fontSize: '1.6rem',
-                  fontFamily: 'Courier New',
+                  fontFamily: 'MonteserratBold',
                   cursor: 'pointer',
                 }}
                 onClick={() => {
@@ -338,7 +338,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                     border: 'solid rgba(200,200,200,1) 2px',
                     borderRadius: '5px',
                     fontWeight: 'bold',
-                    fontFamily: 'monospace',
+                    fontFamily: 'MonteserratRegular',
                     cursor: 'pointer',
                   }}
                 >
@@ -360,7 +360,10 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                   {error}
                 </p>
               )}
-              <div className='signover' style={{ padding: '13px' }}>
+              <div
+                className='signover'
+                style={{ padding: '13px', fontFamily: 'MonteserratRegular' }}
+              >
                 <div
                   ref={userNameRef}
                   className='signinfield'
@@ -402,7 +405,10 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                   }}
                 ></p>
               </div>
-              <div className='signover' style={{ padding: '13px' }}>
+              <div
+                className='signover'
+                style={{ padding: '13px', fontFamily: 'MonteserratRegular' }}
+              >
                 <div
                   ref={passwordRef}
                   className='signinfield'
@@ -472,6 +478,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 marginLeft: 'auto',
                 marginRight: 'auto',
                 fontStyle: 'italic',
+                fontFamily: 'MonteserratRegular',
               }}
             >
               <Link
@@ -508,6 +515,7 @@ const Signin = ({ showNavbar, showNavOpt, sendId, server }) => {
                 marginLeft: 'auto',
                 marginRight: 'auto',
                 fontStyle: 'italic',
+                fontFamily: 'MonteserratRegular',
               }}
             >
               <label>Don't have an account? </label>
