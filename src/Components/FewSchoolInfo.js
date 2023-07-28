@@ -1323,7 +1323,7 @@ const FewSchoolInfo = ({
             <label
               style={{
                 fontSize: '1rem',
-                fontFamily: 'MonteserratRegular',
+                fontFamily: 'MonteserratLight',
                 fontStyle: 'italic',
               }}
             >
