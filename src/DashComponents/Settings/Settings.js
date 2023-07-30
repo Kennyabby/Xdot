@@ -20,26 +20,12 @@ const Settings = ({ chatrf, homerf, notificationsrf, showHomeToggle }) => {
         homerf.current.childNodes[0].childNodes[0].style.color = darkMode
           ? 'rgba(190,190,230)'
           : 'rgba(16,16,66)'
-        homerf.current.childNodes[0].childNodes[1].style.color =
-          id === 'settings'
-            ? darkMode
-              ? 'white'
-              : 'black'
-            : darkMode
-            ? 'rgba(190,190,230)'
-            : 'rgba(16,16,66)'
-        homerf.current.childNodes[0].childNodes[1].style.fontWeight = 'bold'
       }
     }
     if (notificationsrf.current !== null) {
       notificationsrf.current.childNodes[0].childNodes[0].style.color = darkMode
         ? 'rgba(190,190,230)'
         : 'rgba(16,16,66)'
-      notificationsrf.current.childNodes[0].childNodes[1].style.color = darkMode
-        ? 'rgba(190,190,230)'
-        : 'rgba(16,16,66)'
-      notificationsrf.current.childNodes[0].childNodes[1].style.fontWeight =
-        'lighter'
     }
   }, [homerf, id])
   return (

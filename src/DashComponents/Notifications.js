@@ -22,29 +22,10 @@ const Notifications = ({ homerf, chatrf, notificationsrf }) => {
           : darkMode
           ? 'rgba(190,190,230)'
           : 'rgba(16,16,66)'
-      notificationsrf.current.childNodes[0].childNodes[1].style.color =
-        id === 'notifications'
-          ? darkMode
-            ? 'white'
-            : 'black'
-          : darkMode
-          ? 'rgba(190,190,230)'
-          : 'rgba(16,16,66)'
-      notificationsrf.current.childNodes[0].childNodes[1].style.fontWeight =
-        'bold'
     }
     homerf.current.childNodes[0].childNodes[0].style.color = darkMode
       ? 'rgba(190,190,230)'
       : 'rgba(16,16,66)'
-    homerf.current.childNodes[0].childNodes[1].style.color =
-      id === 'notifications'
-        ? darkMode
-          ? 'rgba(190,190,230)'
-          : 'rgba(16,16,66)'
-        : darkMode
-        ? 'white'
-        : 'black'
-    homerf.current.childNodes[0].childNodes[1].style.fontWeight = 'lighter'
   }, [notificationsrf, id, darkMode])
   return (
     <>

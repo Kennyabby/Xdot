@@ -974,18 +974,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                               name='close'
                               alt='close'
                             />
-                          )}{' '}
-                          <div
-                            style={{
-                              fontSize: '.7rem',
-                              color: darkMode
-                                ? 'rgba(190,190,230)'
-                                : 'rgba(16,16,66)',
-                              fontWeight: 'lighter',
-                            }}
-                          >
-                            <label>Menu</label>
-                          </div>
+                          )}{' '}                
                         </div>
                       )}
                       <div
@@ -1025,19 +1014,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                               }}
                               name='home'
                               alt='home'
-                            />
-
-                            <div
-                              style={{
-                                fontSize: '.7rem',
-                                color: darkMode
-                                  ? 'rgba(190,190,230)'
-                                  : 'rgba(16,16,66)',
-                                fontWeight: 'lighter',
-                              }}
-                            >
-                              <label>Home</label>
-                            </div>
+                            />                            
                           </div>
                         </Link>
                         <Link
@@ -1068,18 +1045,6 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                               name='chats'
                               alt='chats'
                             />
-
-                            <div
-                              style={{
-                                fontSize: '.7rem',
-                                color: darkMode
-                                  ? 'rgba(190,190,230)'
-                                  : 'rgba(16,16,66)',
-                                fontWeight: 'lighter',
-                              }}
-                            >
-                              <label>Chats</label>
-                            </div>
                           </div>
                         </Link>
                       </div>
@@ -1108,18 +1073,7 @@ const Napsboard = ({ rootView, userId, winSize, server }) => {
                               }}
                               name='notifications'
                               alt='notifcations'
-                            />
-                            <div
-                              style={{
-                                fontSize: '.7rem',
-                                color: darkMode
-                                  ? 'rgba(190,190,230)'
-                                  : 'rgba(16,16,66)',
-                                fontWeight: 'lighter',
-                              }}
-                            >
-                              <label>Updates</label>
-                            </div>
+                            />                            
                           </div>
                         </Link>
                       ) : undefined}
