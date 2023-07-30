@@ -38,10 +38,10 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
       show: false,
     },
     {
-      title: 'Meet Your AI (Kabby)',
-      info: 'As You preceed in your Learning and Goal orientated Objectives, get comfortable as you sit back and watch Kabby make your schedules and provide personal and experienced suggestions based on your activities and needs.',
+      title: 'Meet Your AI (Zygma)',
+      info: 'As You proceed in your Learning and Goal orientated Objectives, get comfortable as you sit back and watch Zygma make your schedules and provide personal and experienced suggestions based on your activities and needs.',
       src: roboai,
-      button: 'Get Familiar With Kabby',
+      button: 'Get Familiar With Zygma',
       buttonPath: '',
       show: false,
     },
@@ -706,11 +706,11 @@ const Home = ({ bars, showNavbar, winSize, showNavOpt, setIsShow }) => {
                 </p>
                 <p>
                   {
-                    'Get Comfortable as you sit back and watch Kabby make your schedules and provide personal and experienced suggestions based on your activities and needs.'
+                    'Get Comfortable as you sit back and watch Zygma make your schedules and provide personal and experienced suggestions based on your activities and needs.'
                   }
                 </p>
                 <p>
-                  Key Words: <b>Kabby</b>
+                  Key Words: <b>Zygma</b>
                 </p>
               </div>
             </motion.div>
