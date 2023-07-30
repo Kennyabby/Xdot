@@ -159,7 +159,9 @@ const Post = ({
       const resp1 = await fetch(server + '/getImgUrl', opts1)
       const response1 = await resp1.json()
       const url = response1.url
-      setUserImgUrl(url)
+      const timestamp = Date.now()
+      const updatedUrl = `${url}?t=${timestamp}`
+      setUserImgUrl(updatedUrl)
       setImgLoaded(true)
       if (updt.postPicture !== undefined && updt.postPicture.length) {
         if (!postPictures.length) {
@@ -179,11 +181,14 @@ const Post = ({
             const resp2 = await fetch(server + '/getImgUrl', opts2)
             const response2 = await resp2.json()
             const url1 = response2.url
+            const timestamp = Date.now()
+            const updatedUrl1 = `${url1}?t=${timestamp}`
+
             setPostPictures((postPictures) => {
               return [
                 ...postPictures,
                 {
-                  url: url1,
+                  url: updatedUrl1,
                   dominantColor: picture.dominantColor,
                   width: picture.width,
                   height: picture.height,
