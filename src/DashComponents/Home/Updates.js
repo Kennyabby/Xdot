@@ -401,7 +401,7 @@ const Updates = ({ user, server, showHomeToggle, viewRef }) => {
                 padding: '10px',
                 fontSize: '.8rem',
                 fontWeight: 'bold',
-                fontFamily: 'monospace',
+                fontFamily: 'MonteserratBold',
                 backgroundColor: darkMode
                   ? 'rgba(255,255,255,0.9)'
                   : 'rgba(0,0,0,0.9)',

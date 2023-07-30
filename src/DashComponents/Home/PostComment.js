@@ -102,6 +102,7 @@ const PostComment = ({
             backgroundColor: darkMode
               ? 'rgba(0,0,0,0.9)'
               : 'rgba(250,250,250,0.9)',
+            fontFamily: 'MonteserratRegular',
           }}
         >
           <img
@@ -217,7 +218,7 @@ const PostComment = ({
             style={{
               fontWeight: 'bold',
               fontSize: '.75rem',
-              fontFamily: 'verdana',
+              fontFamily: 'MonteserratBold',
             }}
           >
             {userName.slice(0, 1).toUpperCase() + userName.slice(1)}
@@ -227,7 +228,7 @@ const PostComment = ({
               style={{
                 fontSize: '.9rem',
                 whiteSpace: 'pre-wrap',
-                fontFamily: 'Calibri',
+                fontFamily: 'MonteserratRegular',
               }}
             >
               {statement !== undefined &&

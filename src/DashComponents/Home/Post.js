@@ -577,6 +577,7 @@ const Post = ({
             : status === undefined
             ? 'solid rgba(200,200,200,1) 0px'
             : 'solid rgba(200,200,200,1) 0px',
+          fontFamily: 'MonteserratRegular',
         }}
       >
         <AnimatePresence>
@@ -638,6 +639,7 @@ const Post = ({
                   ? 'rgba(255,255,255,0.3)'
                   : 'rgba(255,255,255,0.9)',
                 color: darkMode ? 'white' : 'black',
+                fontFamily: 'MonteserratRegular',
               }}
             >
               <img
@@ -970,7 +972,7 @@ const Post = ({
                 }}
               />
             ) : undefined}
-            <div>
+            <div style={{ fontFamily: 'MonteserratRegular' }}>
               <div
                 style={{
                   width: '90%',
@@ -1304,6 +1306,7 @@ const Post = ({
                     : 'rgba(253,253,253,1)',
                   paddingTop: '30px',
                   paddingBottom: '100px',
+                  fontFamily: 'MonteserratRegular',
                   color: darkMode ? 'white' : 'black',
                 }}
               >
@@ -1369,6 +1372,7 @@ const Post = ({
                         zIndex: '0',
                         height: '100%',
                         overflowY: 'auto',
+                        fontFamily: 'MonteserratRegular',
                       }}
                     >
                       <PostComment
@@ -1424,6 +1428,7 @@ const Post = ({
                       : 'rgba(245, 245, 245, 1)',
                     border: 'solid rgba(180, 180, 180, 1) 3px',
                     color: darkMode ? 'white' : 'black',
+                    fontFamily: 'MonteserratRegular',
                   }}
                 >
                   <div
@@ -1464,7 +1469,7 @@ const Post = ({
                       overflowY: 'auto',
                       textAlign: 'left',
                       wordSpacing: '3px',
-                      fontFamily: 'calibri',
+                      fontFamily: 'MonteserratRegular',
                       backgroundColor: 'rgba(0,0,0,0)',
                       border: 'none',
                       outline: 'none',
@@ -1510,6 +1515,7 @@ const Post = ({
                         marginBottom: '5px',
                         borderRadius: '5px',
                         cursor: 'pointer',
+                        fontFamily: 'MonteserratRegular',
                       }}
                       height='25px'
                     />

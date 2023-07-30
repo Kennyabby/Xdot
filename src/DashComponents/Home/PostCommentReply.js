@@ -91,6 +91,7 @@ const PostCommentReply = ({
             backgroundColor: darkMode
               ? 'rgba(0,0,0,0.8)'
               : 'rgba(255,255,255,0.9)',
+            fontFamily: 'MonteserratRegular',
           }}
         >
           <img
@@ -210,13 +211,19 @@ const PostCommentReply = ({
             style={{
               fontWeight: 'bold',
               fontSize: '.75rem',
-              fontFamily: 'verdana',
+              fontFamily: 'MonteserratBold',
             }}
           >
             {userName.slice(0, 1).toUpperCase() + userName.slice(1)}
           </label>
           <p>
-            <label style={{ fontSize: '.8rem', whiteSpace: 'pre-wrap' }}>
+            <label
+              style={{
+                fontSize: '.8rem',
+                whiteSpace: 'pre-wrap',
+                fontFamily: 'MonteserratRegular',
+              }}
+            >
               {statement.split(' ').map((cmt) => {
                 if (cmt.slice(0, 1) === '@' && cmt.length > 1) {
                   return (
